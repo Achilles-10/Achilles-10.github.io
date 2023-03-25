@@ -35,7 +35,7 @@ languages:
     weight: 1
     profileMode:
       enabled: true
-      # title: (〃'▽'〃)
+      title: 【垒山不止就是幸福】
       subtitle: 记录点滴💧，保持热情🔥
       # subtitle: "🧨学而时习之，不亦说乎？有朋自远方来，不亦乐乎？<br/>👇联系方式"
       imageUrl: "img/giphy.gif"
@@ -133,7 +133,7 @@ params:
       url: "index.xml"
 
   label: # 左上角图标
-    text: "烈烈风中、"
+    text: "烈烈风中、的个人博客"
     icon: "img/profile.jpg"
     iconHeight: 36
 
