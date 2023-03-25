@@ -1,3 +1,35 @@
-baseURL: http://example.org/
-languageCode: en-us
-title: My New Hugo Site
+baseURL: https://Achilles-10.github.io
+languageCode: zh-CN
+title: 🧑‍💻 Achilles
+theme: PaperMod
+hasCJKLanguage: true
+
+
+params:
+    # 目录
+    ShowToc: true
+    TocOpen: true
+
+    # 主页参数
+    homeInfoParams:
+        Title: Achilles Zhang's Blog
+        Content: Happiness lies in building mountains.
+
+    socialIcons: # optional
+        - name: Github
+          url: https://github.com/Achilles-10
+        # - name: "<platform 2>"
+        #     url: "<link2>"
+
+    # 评论系统
+    # comments: true
+    # commentsParams:
+    #   repo: Achilles-10/Achilles-10.github.io
+    #   repoId: R_kgDOG9Gq_Q
+    #   category: Announcements
+    #   categoryId: DIC_kwDOG9Gq_c4CO_p0
+    #   mapping: title
+    #   reactionsEnabled: 1
+    #   emitMetadata: 1
+    #   inputPosition: top
+    #   lang: zh-CN
