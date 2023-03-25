@@ -1,3 +1,7 @@
 *.sh
-/imgs
+.hugo_build.lock
+.idea
+.DS_Store
 /static
+/content
+/themes

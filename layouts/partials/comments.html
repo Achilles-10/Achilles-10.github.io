@@ -1,0 +1,25 @@
+<div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', '{{- site.Params.commentsParams.repo -}}');
+        s.setAttribute('data-repo-id', '{{- site.Params.commentsParams.repoId -}}');
+        s.setAttribute('data-category', '{{- site.Params.commentsParams.category -}}');
+        s.setAttribute('data-category-id', '{{- site.Params.commentsParams.categoryId -}}');
+        s.setAttribute('data-mapping', '{{- site.Params.commentsParams.mapping -}}');
+        s.setAttribute('data-reactions-enabled', '{{- site.Params.commentsParams.reactionsEnabled -}}');
+        s.setAttribute('data-emit-metadata', '{{- site.Params.commentsParams.emitMetadata -}}');
+        s.setAttribute('data-input-position', '{{- site.Params.commentsParams.inputPosition -}}');
+        s.setAttribute('data-lang', '{{- site.Params.commentsParams.lang -}}');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        // s.setAttribute('data-loading', '{{- site.Params.commentsParams.dataLoading -}}');
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
