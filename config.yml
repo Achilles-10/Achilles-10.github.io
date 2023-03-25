@@ -160,7 +160,7 @@ params:
     distance: 1000
     threshold: 0.4
     minMatchCharLength: 0
-    keys: [ "title", "permalink", "summary" ]
+    keys: [ "title", "permalink", "summary" , "content"]
 
   # StartYear: 2020 # 底部开始年份
   # FilingNo: 填写自己的备案号 # 底部备案号
