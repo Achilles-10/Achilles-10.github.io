@@ -4,4 +4,4 @@
 .DS_Store
 /static
 /content
-/themes
+# /themes

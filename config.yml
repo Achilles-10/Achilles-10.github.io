@@ -1,7 +1,7 @@
 baseURL: "https://Achilles-10.github.io" # 绑定的域名
 languageCode: zh-cn # en-us
 title: 烈烈风中、的博客
-theme: hugo-PaperMod  # 主题名字，和themes文件夹下的一致
+theme: PaperMod  # 主题名字，和themes文件夹下的一致
 
 enableInlineShortcodes: true
 enableEmoji: true # 允许使用 Emoji 表情，建议 true

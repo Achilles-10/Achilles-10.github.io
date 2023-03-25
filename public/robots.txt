@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://Achilles-10.github.io/sitemap.xml

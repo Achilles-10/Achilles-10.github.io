@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>📄 论文 on 烈烈风中、的博客</title>
+    <link>https://Achilles-10.github.io/posts/paper/</link>
+    <description>Recent content in 📄 论文 on 烈烈风中、的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 25 Mar 2023 20:37:10 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/paper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Detecting Deepfakes with Self-Blended Images</title>
+      <link>https://Achilles-10.github.io/posts/paper/sbi/</link>
+      <pubDate>Sat, 25 Mar 2023 20:37:10 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/sbi/</guid>
+      <description>动机与介绍 已有方法对跨域数据集和高压缩高曝光数据的检测能力大幅下降(泛化性差)； 难以识别的fake样本通常包含更一般伪造痕迹，故要学习更通用和鲁棒的面部伪造表征； 定义了四种常见的伪影(artifacts)： 主要贡献 提出了source-target generator (STG) and mask generator (MG)来学习更一般鲁棒</description>
+    </item>
+    
+  </channel>
+</rss>

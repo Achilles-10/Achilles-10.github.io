@@ -2,17 +2,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://Achilles-10.github.io/posts/</loc>
-    <lastmod>2023-03-25T13:59:33+08:00</lastmod>
+    <loc>https://Achilles-10.github.io/posts/paper/</loc>
+    <lastmod>2023-03-25T20:37:10+08:00</lastmod>
   </url><url>
-    <loc>https://Achilles-10.github.io/posts/quickstart/</loc>
-    <lastmod>2023-03-25T13:59:33+08:00</lastmod>
+    <loc>https://Achilles-10.github.io/posts/</loc>
+    <lastmod>2023-03-25T20:37:10+08:00</lastmod>
+  </url><url>
+    <loc>https://Achilles-10.github.io/tags/cvpr/</loc>
+    <lastmod>2023-03-25T20:37:10+08:00</lastmod>
+  </url><url>
+    <loc>https://Achilles-10.github.io/posts/paper/sbi/</loc>
+    <lastmod>2023-03-25T20:37:10+08:00</lastmod>
+  </url><url>
+    <loc>https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/</loc>
+    <lastmod>2023-03-25T20:37:10+08:00</lastmod>
   </url><url>
     <loc>https://Achilles-10.github.io/</loc>
-    <lastmod>2023-03-25T13:59:33+08:00</lastmod>
+    <lastmod>2023-03-25T20:37:10+08:00</lastmod>
+  </url><url>
+    <loc>https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</loc>
+    <lastmod>2023-03-25T20:37:10+08:00</lastmod>
+  </url><url>
+    <loc>https://Achilles-10.github.io/tags/</loc>
+    <lastmod>2023-03-25T20:37:10+08:00</lastmod>
+  </url><url>
+    <loc>https://Achilles-10.github.io/about/</loc>
+    <lastmod>2023-03-25T19:53:28+08:00</lastmod>
+  </url><url>
+    <loc>https://Achilles-10.github.io/archives/</loc>
+  </url><url>
+    <loc>https://Achilles-10.github.io/posts/algo/</loc>
+  </url><url>
+    <loc>https://Achilles-10.github.io/posts/tech/</loc>
+  </url><url>
+    <loc>https://Achilles-10.github.io/posts/other/</loc>
+  </url><url>
+    <loc>https://Achilles-10.github.io/search/</loc>
   </url><url>
     <loc>https://Achilles-10.github.io/categories/</loc>
   </url><url>
-    <loc>https://Achilles-10.github.io/tags/</loc>
+    <loc>https://Achilles-10.github.io/series/</loc>
   </url>
 </urlset>

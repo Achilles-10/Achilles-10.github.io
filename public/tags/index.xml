@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Tags on 🧑‍💻 Achilles</title>
+    <title>🧩 标签 on 烈烈风中、的博客</title>
     <link>https://Achilles-10.github.io/tags/</link>
-    <description>Recent content in Tags on 🧑‍💻 Achilles</description>
+    <description>Recent content in 🧩 标签 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language><atom:link href="https://Achilles-10.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 25 Mar 2023 20:37:10 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVPR</title>
+      <link>https://Achilles-10.github.io/tags/cvpr/</link>
+      <pubDate>Sat, 25 Mar 2023 20:37:10 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/tags/cvpr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>人脸伪造检测</title>
+      <link>https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/</link>
+      <pubDate>Sat, 25 Mar 2023 20:37:10 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>论文阅读</title>
+      <link>https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+      <pubDate>Sat, 25 Mar 2023 20:37:10 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
