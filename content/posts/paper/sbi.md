@@ -6,11 +6,7 @@ author: ["Achilles"]
 # keywords: 
 # - 
 categories: # 没有分类界面可以不填写
-- 
-tags: # 标签
-- 论文阅读
-- 人脸伪造检测
-- CVPR
+tags: ["论文阅读","人脸伪造检测", "CVPR"] # 标签
 description: ""
 weight:
 slug: ""
