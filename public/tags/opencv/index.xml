@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>👨🏻‍💻 技术 on 烈烈风中、的博客</title>
-    <link>https://Achilles-10.github.io/posts/tech/</link>
-    <description>Recent content in 👨🏻‍💻 技术 on 烈烈风中、的博客</description>
+    <title>OpenCV on 烈烈风中、的博客</title>
+    <link>https://Achilles-10.github.io/tags/opencv/</link>
+    <description>Recent content in OpenCV on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 26 Mar 2023 22:33:00 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 26 Mar 2023 22:33:00 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/opencv/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OpenCV-python学习笔记(1)：核心操作</title>
       <link>https://Achilles-10.github.io/posts/tech/opencv1/</link>

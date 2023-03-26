@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>OpenCV-python学习笔记(1)：核心操作 | 烈烈风中、的博客</title>
+<meta name="keywords" content="学习笔记, OpenCV">
+<meta name="description" content="图像入门 读取图像 使用cv2.imread(filename,flags)函数读取图像，参数说明如下： filename - 待读取图像的路径 flags - 读取图像的方式 cv2.IMREAD_COLOR - 加载彩色图像，图像的透明度会被忽略，默认标志 cv2.IMREAD_GRAYSCALE - 以灰度模式加载图像 cv2.IMREAD_UNCHANGED - 加载图像，不会忽略透明度 可以分别传递整数1，0，-1 import numpy as np import cv2 img =">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/opencv1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.bbeda8e1e549176967769f270888cf40bc16afa3aac9319d0bc6aa5e815ed5e8.css" integrity="sha256-u&#43;2o4eVJF2lndp8nCIjPQLwWr6OqyTGdC8aqXoFe1eg=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="OpenCV-python学习笔记(1)：核心操作" />
+<meta property="og:description" content="图像入门 读取图像 使用cv2.imread(filename,flags)函数读取图像，参数说明如下： filename - 待读取图像的路径 flags - 读取图像的方式 cv2.IMREAD_COLOR - 加载彩色图像，图像的透明度会被忽略，默认标志 cv2.IMREAD_GRAYSCALE - 以灰度模式加载图像 cv2.IMREAD_UNCHANGED - 加载图像，不会忽略透明度 可以分别传递整数1，0，-1 import numpy as np import cv2 img =" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/opencv1/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/opencv1/face0.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-26T22:33:00+08:00" />
+<meta property="article:modified_time" content="2023-03-26T22:33:00+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/opencv1/face0.png" />
+<meta name="twitter:title" content="OpenCV-python学习笔记(1)：核心操作"/>
+<meta name="twitter:description" content="图像入门 读取图像 使用cv2.imread(filename,flags)函数读取图像，参数说明如下： filename - 待读取图像的路径 flags - 读取图像的方式 cv2.IMREAD_COLOR - 加载彩色图像，图像的透明度会被忽略，默认标志 cv2.IMREAD_GRAYSCALE - 以灰度模式加载图像 cv2.IMREAD_UNCHANGED - 加载图像，不会忽略透明度 可以分别传递整数1，0，-1 import numpy as np import cv2 img ="/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "👨🏻‍💻 技术",
+          "item": "https://Achilles-10.github.io/posts/tech/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "OpenCV-python学习笔记(1)：核心操作",
+      "item": "https://Achilles-10.github.io/posts/tech/opencv1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenCV-python学习笔记(1)：核心操作",
+  "name": "OpenCV-python学习笔记(1)：核心操作",
+  "description": "图像入门 读取图像 使用cv2.imread(filename,flags)函数读取图像，参数说明如下： filename - 待读取图像的路径 flags - 读取图像的方式 cv2.IMREAD_COLOR - 加载彩色图像，图像的透明度会被忽略，默认标志 cv2.IMREAD_GRAYSCALE - 以灰度模式加载图像 cv2.IMREAD_UNCHANGED - 加载图像，不会忽略透明度 可以分别传递整数1，0，-1 import numpy as np import cv2 img =",
+  "keywords": [
+    "学习笔记", "OpenCV"
+  ],
+  "articleBody": "图像入门 读取图像 使用cv2.imread(filename,flags)函数读取图像，参数说明如下：\nfilename - 待读取图像的路径\nflags - 读取图像的方式\ncv2.IMREAD_COLOR - 加载彩色图像，图像的透明度会被忽略，默认标志 cv2.IMREAD_GRAYSCALE - 以灰度模式加载图像 cv2.IMREAD_UNCHANGED - 加载图像，不会忽略透明度 可以分别传递整数1，0，-1\nimport numpy as np import cv2 img = cv2.imread('face.png',0) 即使图像路径错误，也不会报错，但print(img)会输出None\n写入图像 使用cv2.imwrite(filename,image)函数保存图像，参数说明如下：\nfilename - 保存的文件名 image - 要保存的图像 cv2.imwrite('save.png', img) 使用Matplotlib显示图像 from matplotlib import pyplot as plt plt.imshow(img, cmap = 'gray', interpolation = 'bicubic') plt.xticks([]), plt.yticks([]) # 隐藏 x 轴和 y 轴上的刻度值 plt.show() 图像的基本操作 访问和修改像素值 可以通过行列坐标来访问和修改像素值。对于BGR图像，返回一个[BLUE值 GREEN值 RED值]数组；对于灰度图像，只返回对应的灰度。\n\u003e\u003e\u003e px=img[100,100] \u003e\u003e\u003e print(px) [237 217 186] # 访问BLUE值 \u003e\u003e\u003e blue = img[100,100,0] \u003e\u003e\u003e print(blue) 237 \u003e\u003e\u003e img[100,100]=[255,255,255] \u003e\u003e\u003e print(img[100,100]) [255 255 255] 上述方法用于选择数组的区域。对于单像素访问，Numpy数组方法array.item()和array.itemset()返回标量，相对更好。\n\u003e\u003e\u003e img.item(100,100,2) 255 \u003e\u003e\u003e # 修改RED值 \u003e\u003e\u003e img.itemset((10,10,2),99) \u003e\u003e\u003e img.item(10,10,2) 99 访问图像属性 图像属性包括行列通道数，数据类型和像素数等。\n图像的形状由img.shape访问，返回行列通道数的元组，如果图像是灰度的，返回值仅包括行列数。\n像素总数由img.size访问，图像数据类型由img.dtype访问。\n\u003e\u003e\u003e print('shape:',img.shape) shape: (512, 512, 3) \u003e\u003e\u003e print('size:',img.size) size: 786432 \u003e\u003e\u003e print('dtype:',img.dtype) dtype: uint8 img.dtype在调试时很重要，因为OpenCV代码中的大量错误是由无效的数据类型引起的。\n图像感兴趣区域(Region of Interest, ROI) 用Numpy获取ROI，例如将图像中的人脸复制到图像的另一个区域\n\u003e\u003e\u003e face = img[10:300,210:430] \u003e\u003e\u003e img[0:290,0:220]=face 拆分和合并图像通道 有时候需要分别处理图像的B, G, R通道，或者将单独的通道加入到BGR图像，在这种情况下需要拆分或合并图像通道。\n\u003e\u003e\u003e b,g,r=cv2.split(img) \u003e\u003e\u003e img=cv2.merge((b,g,r)) 或者采用Numpy索引，例如将所有红色值设置为零：\n\u003e\u003e\u003e img[:,:,2]=0 cv2.split()是一个耗时的操作，非必要时使用Numpy索引。\n为图像设置边框（填充） 可以使用copyMakeBorder(src, top, bottom, left, right, borderType[, dst[, value]]) -\u003e dst在图像周围创建边框，该函数在卷积运算，零填充等方面有更多应用。参数说明如下：\nsrc - 输入图像 top, bottom, left, right - 边界宽度 borderType - 边框类型标志，可以是一下类型： cv2.BORDER_CONSTANT - 添加恒定的彩色边框，该值由下一个参数给出 cv2.BORDER_REFLECT - 边框是边框元素的镜像 cv2.BORDER_REFLECT_101或cv2.BORDER_DEFAULT与上述相同，但略有变化 cv2.BORDER_REPLICATE - 最后一个元素被复制 cv2.BORDER_WRAP value - 边框的颜色，如果边框类型为cv2.BORDER_CONSTANT import cv2 import numpy as np from matplotlib import pyplot as plt BLUE = [255,0,0] img1 = cv2.imread('face.png') img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB) replicate = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_REPLICATE) reflect = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_REFLECT) reflect101 = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_REFLECT_101) wrap = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_WRAP) constant= cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_CONSTANT,value=BLUE) plt.subplot(231),plt.imshow(img1,'gray'),plt.title('ORIGINAL') plt.subplot(232),plt.imshow(replicate,'gray'),plt.title('REPLICATE') plt.subplot(233),plt.imshow(reflect,'gray'),plt.title('REFLECT') plt.subplot(234),plt.imshow(reflect101,'gray'),plt.title('REFLECT_101') plt.subplot(235),plt.imshow(wrap,'gray'),plt.title('WRAP') plt.subplot(236),plt.imshow(constant,'gray'),plt.title('CONSTANT') plt.show() 图像上的运算 图像加法 可以通过cv2.add()或Numpy操作res=img1+img2完成图像加法操作。相加的图像应该具有相同的深度和类型，或者第二个图像是一个标量值。\nOpenCV加法是饱和运算，Numpy加法是模运算。\n\u003e\u003e\u003e x=np.uint8([250]) \u003e\u003e\u003e y=np.uint8([10]) \u003e\u003e\u003e print(cv2.add(x,y)) [[255]] \u003e\u003e\u003e print(x+y) [4] 当添加两个图像时，尽量使用OpenCV的功能，能提供更好的结果。\n图像融合 这也是图像加法，但是对相加的图像赋予给定的权重，使其具有融合或透明的感觉。\n$$ G(x)=(1-\\alpha)f_0(x)+\\alpha f_1(x) $$\n将$\\alpha$从$0\\rightarrow1$更改，可以实现图像过渡的效果。cv2.addWeighted()在图像上应用以下公式：\n$$ dst=\\alpha\\cdot img_1+\\beta\\cdot img_2+\\gamma $$\n在这里，$\\gamma$ 被视为零。\nimg1 = cv2.imread('face1.png') img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB) img2 = cv2.imread('face2.png') img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB) dst = cv2.addWeighted(img1,0.6,img2,0.4,0) plt.figure(figsize=(15, 9)) plt.subplot(131),plt.imshow(img1),plt.title('IMG1') plt.axis('off') plt.subplot(132),plt.imshow(img2),plt.title('IMG2') plt.axis('off') plt.subplot(133),plt.imshow(dst),plt.title('DST') plt.axis('off') plt.show() 按位运算 按位运算包括AND,OR,NOT,XOR操作。这些操作在提取图像的任意部分、定义和处理非矩形ROI方面非常有用。下面的例子是想把OpenCV的标志放到一个图像上。\n如果我们直接使用图像加法，它会改变颜色，无法达到我们想要的效果；如果使用图像融合，会得到一个透明的效果，也不是我们想要的效果。如果是一个矩形区域，我们可以使用ROI，但OpenCV的标志并不是矩形的，故可以用按位操作来实现：\n# 加载两张图片 img1 = cv2.cvtColor(cv2.imread('shuyi.png'),cv2.COLOR_BGR2RGB) img2 = cv2.cvtColor(cv2.imread('logo.jpg'),cv2.COLOR_BGR2RGB) # 我想把logo放在左上角，所以我创建了ROI rows,cols,channels = img2.shape roi = img1[0:rows, 0:cols] # 现在创建logo的掩码，并同时创建其相反掩码 img2gray = cv2.cvtColor(img2,cv2.COLOR_BGR2GRAY) ret, mask = cv2.threshold(img2gray, 10, 255, cv2.THRESH_BINARY) mask_inv = cv2.bitwise_not(mask) # 现在将ROI中logo的区域涂黑 img1_bg = cv2.bitwise_and(roi,roi,mask = mask_inv) # 仅从logo图像中提取logo区域 img2_fg = cv2.bitwise_and(img2,img2,mask = mask) # 将logo放入ROI并修改主图像 dst = cv2.add(img1_bg,img2_fg) img1[0:rows, 0:cols ] = dst plt.figure(figsize=(9, 6)) plt.subplot(121),plt.imshow(mask,'gray'),plt.title('MASK') plt.axis('off') plt.subplot(122),plt.imshow(img1),plt.title('RESULT') plt.axis('off') plt.show() 在计算mask时用到了cv2.bitwise_not(src,dst=None,mask=None)函数，在计算前景和背景区域时用到了cv2.bitwise_and(src1,src2,dst=None,mask=None)，参数说明如下：\nsrc1 - 参与运算的图像 src2 - 参与运算的图像 dst - 可选运算结果输出数组 mask - 可选操作掩码 threshold(src, thresh, maxval, type[, dst])-\u003eret,dst函数的作用是将一幅灰度图二值化，参数说明如下：\nsrc - 输入的灰度图\nthresh - 阈值\nmaxval - 最大值\ntype - 阈值类型\n阈值类型 灰度值大于阈值(val\u003ethreshold) 其他情况 cv2.THRESH_BINARY maxval 0 cv2.THRESH_BINARY_INV 0 maxval cv2.THRESH_TRUNC thresh 当前灰度值 cv2.THRESH_TOZERO 当前灰度值 0 cv2.THRESH_TOZERO_INV 0 当前灰度值 ",
+  "wordCount" : "2075",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/tech/opencv1/face0.png","datePublished": "2023-03-26T22:33:00+08:00",
+  "dateModified": "2023-03-26T22:33:00+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/tech/opencv1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                OpenCV-python学习笔记(1)：核心操作
+            </h1>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 3 月 26 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2075字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>5分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/opencv/" style="color: var(--secondary)!important;">OpenCV</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/opencv1/face0.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e5%85%a5%e9%97%a8" aria-label="图像入门">图像入门</a><ul>
+                        
+                <li>
+                    <a href="#%e8%af%bb%e5%8f%96%e5%9b%be%e5%83%8f" aria-label="读取图像">读取图像</a></li>
+                <li>
+                    <a href="#%e5%86%99%e5%85%a5%e5%9b%be%e5%83%8f" aria-label="写入图像">写入图像</a></li>
+                <li>
+                    <a href="#%e4%bd%bf%e7%94%a8matplotlib%e6%98%be%e7%a4%ba%e5%9b%be%e5%83%8f" aria-label="使用Matplotlib显示图像">使用Matplotlib显示图像</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c" aria-label="图像的基本操作">图像的基本操作</a><ul>
+                        
+                <li>
+                    <a href="#%e8%ae%bf%e9%97%ae%e5%92%8c%e4%bf%ae%e6%94%b9%e5%83%8f%e7%b4%a0%e5%80%bc" aria-label="访问和修改像素值">访问和修改像素值</a></li>
+                <li>
+                    <a href="#%e8%ae%bf%e9%97%ae%e5%9b%be%e5%83%8f%e5%b1%9e%e6%80%a7" aria-label="访问图像属性">访问图像属性</a></li>
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e6%84%9f%e5%85%b4%e8%b6%a3%e5%8c%ba%e5%9f%9fregion-of-interest-roi" aria-label="图像感兴趣区域(Region of Interest, ROI)">图像感兴趣区域(Region of Interest, ROI)</a></li>
+                <li>
+                    <a href="#%e6%8b%86%e5%88%86%e5%92%8c%e5%90%88%e5%b9%b6%e5%9b%be%e5%83%8f%e9%80%9a%e9%81%93" aria-label="拆分和合并图像通道">拆分和合并图像通道</a></li>
+                <li>
+                    <a href="#%e4%b8%ba%e5%9b%be%e5%83%8f%e8%ae%be%e7%bd%ae%e8%be%b9%e6%a1%86%e5%a1%ab%e5%85%85" aria-label="为图像设置边框（填充）">为图像设置边框（填充）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e4%b8%8a%e7%9a%84%e8%bf%90%e7%ae%97" aria-label="图像上的运算">图像上的运算</a><ul>
+                        
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e5%8a%a0%e6%b3%95" aria-label="图像加法">图像加法</a></li>
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e8%9e%8d%e5%90%88" aria-label="图像融合">图像融合</a></li>
+                <li>
+                    <a href="#%e6%8c%89%e4%bd%8d%e8%bf%90%e7%ae%97" aria-label="按位运算">按位运算</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="图像入门">图像入门<a hidden class="anchor" aria-hidden="true" href="#图像入门">#</a></h2>
+<h3 id="读取图像">读取图像<a hidden class="anchor" aria-hidden="true" href="#读取图像">#</a></h3>
+<p>使用<code>cv2.imread(filename,flags)</code>函数读取图像，参数说明如下：</p>
+<ul>
+<li>
+<p><strong>filename</strong> - 待读取图像的路径</p>
+</li>
+<li>
+<p><strong>flags</strong> - 读取图像的方式</p>
+<ul>
+<li><strong>cv2.IMREAD_COLOR</strong> - 加载彩色图像，图像的透明度会被忽略，默认标志</li>
+<li><strong>cv2.IMREAD_GRAYSCALE</strong> - 以灰度模式加载图像</li>
+<li><strong>cv2.IMREAD_UNCHANGED</strong> - 加载图像，不会忽略透明度</li>
+</ul>
+<blockquote>
+<p>可以分别传递整数1，0，-1</p>
+</blockquote>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face.png&#39;</span>,<span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><blockquote>
+<p>即使图像路径错误，也不会报错，但<code>print(img)</code>会输出<code>None</code></p>
+</blockquote>
+<h3 id="写入图像">写入图像<a hidden class="anchor" aria-hidden="true" href="#写入图像">#</a></h3>
+<p>使用<code>cv2.imwrite(filename,image)</code>函数保存图像，参数说明如下：</p>
+<ul>
+<li><strong>filename</strong> - 保存的文件名</li>
+<li><strong>image</strong> - 要保存的图像</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>cv2<span style="color:#f92672">.</span>imwrite(<span style="color:#e6db74">&#39;save.png&#39;</span>, img)
+</span></span></code></pre></div><h3 id="使用matplotlib显示图像">使用Matplotlib显示图像<a hidden class="anchor" aria-hidden="true" href="#使用matplotlib显示图像">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> matplotlib <span style="color:#f92672">import</span> pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(img, cmap <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;gray&#39;</span>, interpolation <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;bicubic&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xticks([]), plt<span style="color:#f92672">.</span>yticks([])  <span style="color:#75715e"># 隐藏 x 轴和 y 轴上的刻度值</span>
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img loading="lazy" src="gray.png" alt=""  />
+</p>
+<h2 id="图像的基本操作">图像的基本操作<a hidden class="anchor" aria-hidden="true" href="#图像的基本操作">#</a></h2>
+<h3 id="访问和修改像素值">访问和修改像素值<a hidden class="anchor" aria-hidden="true" href="#访问和修改像素值">#</a></h3>
+<p>可以通过行列坐标来访问和修改像素值。对于BGR图像，返回一个[BLUE值 GREEN值 RED值]数组；对于灰度图像，只返回对应的灰度。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> px<span style="color:#f92672">=</span>img[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(px)
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">237</span> <span style="color:#ae81ff">217</span> <span style="color:#ae81ff">186</span>]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 访问BLUE值</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> blue <span style="color:#f92672">=</span> img[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(blue)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">237</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> img[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>]<span style="color:#f92672">=</span>[<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(img[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>])
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">255</span> <span style="color:#ae81ff">255</span> <span style="color:#ae81ff">255</span>]
+</span></span></code></pre></div><blockquote>
+<p>上述方法用于选择数组的区域。对于单像素访问，Numpy数组方法array.item()和array.itemset()返回标量，相对更好。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> img<span style="color:#f92672">.</span>item(<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">255</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#75715e"># 修改RED值</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> img<span style="color:#f92672">.</span>itemset((<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">2</span>),<span style="color:#ae81ff">99</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> img<span style="color:#f92672">.</span>item(<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">99</span>
+</span></span></code></pre></div><h3 id="访问图像属性">访问图像属性<a hidden class="anchor" aria-hidden="true" href="#访问图像属性">#</a></h3>
+<p>图像属性包括行列通道数，数据类型和像素数等。</p>
+<p>图像的形状由<code>img.shape</code>访问，返回行列通道数的元组，如果图像是灰度的，返回值仅包括行列数。</p>
+<p>像素总数由<code>img.size</code>访问，图像数据类型由<code>img.dtype</code>访问。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(<span style="color:#e6db74">&#39;shape:&#39;</span>,img<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>shape: (<span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(<span style="color:#e6db74">&#39;size:&#39;</span>,img<span style="color:#f92672">.</span>size)
+</span></span><span style="display:flex;"><span>size: <span style="color:#ae81ff">786432</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(<span style="color:#e6db74">&#39;dtype:&#39;</span>,img<span style="color:#f92672">.</span>dtype)
+</span></span><span style="display:flex;"><span>dtype: uint8
+</span></span></code></pre></div><blockquote>
+<p><code>img.dtype</code>在调试时很重要，因为OpenCV代码中的大量错误是由无效的数据类型引起的。</p>
+</blockquote>
+<h3 id="图像感兴趣区域region-of-interest-roi">图像感兴趣区域(Region of Interest, ROI)<a hidden class="anchor" aria-hidden="true" href="#图像感兴趣区域region-of-interest-roi">#</a></h3>
+<p>用Numpy获取ROI，例如将图像中的人脸复制到图像的另一个区域</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> face <span style="color:#f92672">=</span> img[<span style="color:#ae81ff">10</span>:<span style="color:#ae81ff">300</span>,<span style="color:#ae81ff">210</span>:<span style="color:#ae81ff">430</span>]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> img[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">290</span>,<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">220</span>]<span style="color:#f92672">=</span>face
+</span></span></code></pre></div><p><img loading="lazy" src="face1.png" alt="face"  />
+</p>
+<h3 id="拆分和合并图像通道">拆分和合并图像通道<a hidden class="anchor" aria-hidden="true" href="#拆分和合并图像通道">#</a></h3>
+<p>有时候需要分别处理图像的B, G, R通道，或者将单独的通道加入到BGR图像，在这种情况下需要拆分或合并图像通道。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> b,g,r<span style="color:#f92672">=</span>cv2<span style="color:#f92672">.</span>split(img)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> img<span style="color:#f92672">=</span>cv2<span style="color:#f92672">.</span>merge((b,g,r))
+</span></span></code></pre></div><p>或者采用Numpy索引，例如将所有红色值设置为零：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> img[:,:,<span style="color:#ae81ff">2</span>]<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><blockquote>
+<p><code>cv2.split()</code>是一个耗时的操作，非必要时使用Numpy索引。</p>
+</blockquote>
+<h3 id="为图像设置边框填充">为图像设置边框（填充）<a hidden class="anchor" aria-hidden="true" href="#为图像设置边框填充">#</a></h3>
+<p>可以使用<code>copyMakeBorder(src, top, bottom, left, right, borderType[, dst[, value]]) -&gt; dst</code>在图像周围创建边框，该函数在卷积运算，零填充等方面有更多应用。参数说明如下：</p>
+<ul>
+<li><strong>src</strong> - 输入图像</li>
+<li><strong>top</strong>, bottom, <strong>left</strong>, right - 边界宽度</li>
+<li><strong>borderType</strong> - 边框类型标志，可以是一下类型：
+<ul>
+<li><strong>cv2.BORDER_CONSTANT</strong> - 添加恒定的彩色边框，该值由下一个参数给出</li>
+<li><strong>cv2.BORDER_REFLECT</strong> - 边框是边框元素的镜像</li>
+<li><strong>cv2.BORDER_REFLECT_101</strong>或<strong>cv2.BORDER_DEFAULT</strong>与上述相同，但略有变化</li>
+<li><strong>cv2.BORDER_REPLICATE</strong> - 最后一个元素被复制</li>
+<li><strong>cv2.BORDER_WRAP</strong></li>
+</ul>
+</li>
+<li><strong>value</strong> - 边框的颜色，如果边框类型为<strong>cv2.BORDER_CONSTANT</strong></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> matplotlib <span style="color:#f92672">import</span> pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>BLUE <span style="color:#f92672">=</span> [<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>img1 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face.png&#39;</span>)
+</span></span><span style="display:flex;"><span>img1 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(img1, cv2<span style="color:#f92672">.</span>COLOR_BGR2RGB)
+</span></span><span style="display:flex;"><span>replicate <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>copyMakeBorder(img1,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,cv2<span style="color:#f92672">.</span>BORDER_REPLICATE)
+</span></span><span style="display:flex;"><span>reflect <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>copyMakeBorder(img1,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,cv2<span style="color:#f92672">.</span>BORDER_REFLECT)
+</span></span><span style="display:flex;"><span>reflect101 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>copyMakeBorder(img1,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,cv2<span style="color:#f92672">.</span>BORDER_REFLECT_101)
+</span></span><span style="display:flex;"><span>wrap <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>copyMakeBorder(img1,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,cv2<span style="color:#f92672">.</span>BORDER_WRAP)
+</span></span><span style="display:flex;"><span>constant<span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>copyMakeBorder(img1,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">10</span>,cv2<span style="color:#f92672">.</span>BORDER_CONSTANT,value<span style="color:#f92672">=</span>BLUE)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">231</span>),plt<span style="color:#f92672">.</span>imshow(img1,<span style="color:#e6db74">&#39;gray&#39;</span>),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;ORIGINAL&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">232</span>),plt<span style="color:#f92672">.</span>imshow(replicate,<span style="color:#e6db74">&#39;gray&#39;</span>),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;REPLICATE&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">233</span>),plt<span style="color:#f92672">.</span>imshow(reflect,<span style="color:#e6db74">&#39;gray&#39;</span>),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;REFLECT&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">234</span>),plt<span style="color:#f92672">.</span>imshow(reflect101,<span style="color:#e6db74">&#39;gray&#39;</span>),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;REFLECT_101&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">235</span>),plt<span style="color:#f92672">.</span>imshow(wrap,<span style="color:#e6db74">&#39;gray&#39;</span>),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;WRAP&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">236</span>),plt<span style="color:#f92672">.</span>imshow(constant,<span style="color:#e6db74">&#39;gray&#39;</span>),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;CONSTANT&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img loading="lazy" src="border.png" alt=""  />
+</p>
+<h2 id="图像上的运算">图像上的运算<a hidden class="anchor" aria-hidden="true" href="#图像上的运算">#</a></h2>
+<h3 id="图像加法">图像加法<a hidden class="anchor" aria-hidden="true" href="#图像加法">#</a></h3>
+<p>可以通过<code>cv2.add()</code>或Numpy操作<code>res=img1+img2</code>完成图像加法操作。相加的图像应该具有相同的深度和类型，或者第二个图像是一个标量值。</p>
+<blockquote>
+<p>OpenCV加法是<strong>饱和运算</strong>，Numpy加法是<strong>模运算</strong>。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> x<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>uint8([<span style="color:#ae81ff">250</span>])
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> y<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>uint8([<span style="color:#ae81ff">10</span>])
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(cv2<span style="color:#f92672">.</span>add(x,y))
+</span></span><span style="display:flex;"><span>[[<span style="color:#ae81ff">255</span>]]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> print(x<span style="color:#f92672">+</span>y)
+</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">4</span>]
+</span></span></code></pre></div><p>当添加两个图像时，尽量使用OpenCV的功能，能提供更好的结果。</p>
+<h3 id="图像融合">图像融合<a hidden class="anchor" aria-hidden="true" href="#图像融合">#</a></h3>
+<p>这也是图像加法，但是对相加的图像赋予给定的权重，使其具有融合或透明的感觉。</p>
+<p>$$ G(x)=(1-\alpha)f_0(x)+\alpha f_1(x) $$</p>
+<p>将$\alpha$从$0\rightarrow1$更改，可以实现图像过渡的效果。<code>cv2.addWeighted()</code>在图像上应用以下公式：</p>
+<p>$$ dst=\alpha\cdot img_1+\beta\cdot img_2+\gamma $$</p>
+<p>在这里，$\gamma$ 被视为零。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img1 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face1.png&#39;</span>)
+</span></span><span style="display:flex;"><span>img1 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(img1, cv2<span style="color:#f92672">.</span>COLOR_BGR2RGB)
+</span></span><span style="display:flex;"><span>img2 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face2.png&#39;</span>)
+</span></span><span style="display:flex;"><span>img2 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(img2, cv2<span style="color:#f92672">.</span>COLOR_BGR2RGB)
+</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>addWeighted(img1,<span style="color:#ae81ff">0.6</span>,img2,<span style="color:#ae81ff">0.4</span>,<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">131</span>),plt<span style="color:#f92672">.</span>imshow(img1),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;IMG1&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">132</span>),plt<span style="color:#f92672">.</span>imshow(img2),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;IMG2&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">133</span>),plt<span style="color:#f92672">.</span>imshow(dst),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;DST&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img loading="lazy" src="add.png" alt=""  />
+</p>
+<h3 id="按位运算">按位运算<a hidden class="anchor" aria-hidden="true" href="#按位运算">#</a></h3>
+<p>按位运算包括<code>AND,OR,NOT,XOR</code>操作。这些操作在提取图像的任意部分、定义和处理非矩形ROI方面非常有用。下面的例子是想把OpenCV的标志放到一个图像上。</p>
+<p>如果我们直接使用图像加法，它会改变颜色，无法达到我们想要的效果；如果使用图像融合，会得到一个透明的效果，也不是我们想要的效果。如果是一个矩形区域，我们可以使用ROI，但OpenCV的标志并不是矩形的，故可以用按位操作来实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 加载两张图片</span>
+</span></span><span style="display:flex;"><span>img1 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;shuyi.png&#39;</span>),cv2<span style="color:#f92672">.</span>COLOR_BGR2RGB)
+</span></span><span style="display:flex;"><span>img2 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;logo.jpg&#39;</span>),cv2<span style="color:#f92672">.</span>COLOR_BGR2RGB)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 我想把logo放在左上角，所以我创建了ROI</span>
+</span></span><span style="display:flex;"><span>rows,cols,channels <span style="color:#f92672">=</span> img2<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span>roi <span style="color:#f92672">=</span> img1[<span style="color:#ae81ff">0</span>:rows, <span style="color:#ae81ff">0</span>:cols]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 现在创建logo的掩码，并同时创建其相反掩码</span>
+</span></span><span style="display:flex;"><span>img2gray <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(img2,cv2<span style="color:#f92672">.</span>COLOR_BGR2GRAY)
+</span></span><span style="display:flex;"><span>ret, mask <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img2gray, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">255</span>, cv2<span style="color:#f92672">.</span>THRESH_BINARY)
+</span></span><span style="display:flex;"><span>mask_inv <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>bitwise_not(mask)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 现在将ROI中logo的区域涂黑</span>
+</span></span><span style="display:flex;"><span>img1_bg <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>bitwise_and(roi,roi,mask <span style="color:#f92672">=</span> mask_inv)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 仅从logo图像中提取logo区域</span>
+</span></span><span style="display:flex;"><span>img2_fg <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>bitwise_and(img2,img2,mask <span style="color:#f92672">=</span> mask)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 将logo放入ROI并修改主图像</span>
+</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>add(img1_bg,img2_fg)
+</span></span><span style="display:flex;"><span>img1[<span style="color:#ae81ff">0</span>:rows, <span style="color:#ae81ff">0</span>:cols ] <span style="color:#f92672">=</span> dst
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">121</span>),plt<span style="color:#f92672">.</span>imshow(mask,<span style="color:#e6db74">&#39;gray&#39;</span>),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;MASK&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">122</span>),plt<span style="color:#f92672">.</span>imshow(img1),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;RESULT&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>axis(<span style="color:#e6db74">&#39;off&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><p><img loading="lazy" src="or.png" alt=""  />
+</p>
+<p>在计算mask时用到了<code>cv2.bitwise_not(src,dst=None,mask=None)</code>函数，在计算前景和背景区域时用到了<code>cv2.bitwise_and(src1,src2,dst=None,mask=None)</code>，参数说明如下：</p>
+<ul>
+<li><strong>src1</strong> - 参与运算的图像</li>
+<li><strong>src2</strong> - 参与运算的图像</li>
+<li><strong>dst</strong> - 可选运算结果输出数组</li>
+<li><strong>mask</strong> - 可选操作掩码</li>
+</ul>
+<p><code>threshold(src, thresh, maxval, type[, dst])-&gt;ret,dst</code>函数的作用是将一幅灰度图<strong>二值化</strong>，参数说明如下：</p>
+<ul>
+<li>
+<p><strong>src</strong> - 输入的灰度图</p>
+</li>
+<li>
+<p><strong>thresh</strong> - 阈值</p>
+</li>
+<li>
+<p><strong>maxval</strong> - 最大值</p>
+</li>
+<li>
+<p><strong>type</strong> - 阈值类型</p>
+<table>
+<thead>
+<tr>
+<th>阈值类型</th>
+<th>灰度值大于阈值(val&gt;threshold)</th>
+<th>其他情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cv2.THRESH_BINARY</td>
+<td>maxval</td>
+<td>0</td>
+</tr>
+<tr>
+<td>cv2.THRESH_BINARY_INV</td>
+<td>0</td>
+<td>maxval</td>
+</tr>
+<tr>
+<td>cv2.THRESH_TRUNC</td>
+<td>thresh</td>
+<td>当前灰度值</td>
+</tr>
+<tr>
+<td>cv2.THRESH_TOZERO</td>
+<td>当前灰度值</td>
+<td>0</td>
+</tr>
+<tr>
+<td>cv2.THRESH_TOZERO_INV</td>
+<td>0</td>
+<td>当前灰度值</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/paper/sbi/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Detecting Deepfakes with Self-Blended Images</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>

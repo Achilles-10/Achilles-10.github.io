@@ -7,8 +7,7 @@ author: ["Achilles"]
 # - 
 categories: # 没有分类界面可以不填写
 - 
-tags: # 标签
-- 
+tags:[] # 标签
 description: ""
 weight:
 slug: ""
@@ -21,6 +20,7 @@ TocOpen: true # 自动展开目录
 hidemeta: false # 是否隐藏文章的元信息，如发布日期、作者等
 disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示路径
+math: true
 cover:
     image: "" #图片路径例如：posts/tech/123/123.png
     zoom: # 图片大小，例如填写 50% 表示原图像的一半大小
@@ -28,7 +28,6 @@ cover:
     alt: ""
     relative: false
 ---
-
 
 
 

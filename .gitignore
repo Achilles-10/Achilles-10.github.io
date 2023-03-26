@@ -2,5 +2,6 @@
 .hugo_build.lock
 .idea
 .DS_Store
+# /content
 # /static
 # /themes

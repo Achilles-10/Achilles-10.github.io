@@ -60,7 +60,7 @@ cover:
    * 计算面部landmarks的convex hull来初始化mask，然后对mask变形(elastic deformation)，在用两个不同参数的高斯滤波器(gaussian filter)对mask进行平滑处理。最后在{0.25, 0.5, 0.75, 1, 1, 1}中选取混合指数(blending ration)；
   
 3. **Blending:** 用Mask来混合source和target图得到SBI
- 
+
     $$I_{SB}=I_s\odot M+I_t\odot(1-M)$$
 
     ![sample](sample.png)
