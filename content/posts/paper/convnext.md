@@ -8,7 +8,7 @@ author: ["Achilles"]
 categories: # 没有分类界面可以不填写
 - 
 tags: ["论文阅读","模型","CVPR"] # 标签
-description: ""
+description: "运用先进的训练技巧和网络设计策略，探索纯卷积网络的极限"
 weight:
 slug: ""
 draft: false # 是否为草稿
@@ -35,7 +35,7 @@ cover:
 
 **Transformer** 取代了以往递归神经网络为主导的骨干架构，随着**ViT**的引入，彻底改变了网络架构设计的格局。但**ViT**的全局注意力机制对输入大小的复杂度过高，难以处理高分辨率的输入。
 
-层级Transformer采用混合方法来解决这个问题，例如**Swin Transformer**采用了“滑动窗口”策略，也说明了卷积仍然非常受欢迎。本文目标是为卷积网络弥补前ViT时代和后ViT时代的差距，并测试唇卷积网络可以达到的极限。
+层级Transformer采用混合方法来解决这个问题，例如**Swin Transformer**采用了“滑动窗口”策略，也说明了卷积仍然非常受欢迎。本文目标是为卷积网络弥补前ViT时代和后ViT时代的差距，并测试纯卷积网络可以达到的极限。
 
 ## 2. Modernizing a ConvNet: a Roadmap（研究路线图）
 

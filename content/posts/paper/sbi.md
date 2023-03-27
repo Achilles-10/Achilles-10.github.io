@@ -7,7 +7,7 @@ author: ["Achilles"]
 # - 
 categories: # 没有分类界面可以不填写
 tags: ["论文阅读","人脸伪造检测", "CVPR"] # 标签
-description: ""
+description: "采用自换脸生成负样本，检测伪造边界"
 weight:
 slug: ""
 draft: false # 是否为草稿
