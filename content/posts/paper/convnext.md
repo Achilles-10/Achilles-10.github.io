@@ -29,6 +29,8 @@ cover:
     relative: false
 ---
 
+[[paper]](https://arxiv.org/abs/2201.03545) [[code]](https://github.com/facebookresearch/ConvNeXt)
+
 ## 1. 引言
 
 **Transformer** 取代了以往递归神经网络为主导的骨干架构，随着**ViT**的引入，彻底改变了网络架构设计的格局。但**ViT**的全局注意力机制对输入大小的复杂度过高，难以处理高分辨率的输入。

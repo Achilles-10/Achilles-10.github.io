@@ -13,7 +13,7 @@
       <pubDate>Mon, 27 Mar 2023 22:28:33 +0800</pubDate>
       
       <guid>https://Achilles-10.github.io/posts/paper/convnext/</guid>
-      <description>1. 引言 Transformer 取代了以往递归神经网络为主导的骨干架构，随着ViT的引入，彻底改变了网络架构设计的格局。但ViT的全局注意力机制对输入大小的复杂度过高，难以处理高分辨率的输入。 层级Transformer采用混合方法来解决这个问题，例如Swin Transformer采用了“滑动窗口”策略，</description>
+      <description>[paper] [code] 1. 引言 Transformer 取代了以往递归神经网络为主导的骨干架构，随着ViT的引入，彻底改变了网络架构设计的格局。但ViT的全局注意力机制对输入大小的复杂度过高，难以处理高分辨率的输入。 层级Transformer采用混合方法来解决这个问题，例如Swin Transformer采用了“滑动窗口”策</description>
     </item>
     
     <item>
@@ -22,7 +22,7 @@
       <pubDate>Sat, 25 Mar 2023 20:37:10 +0800</pubDate>
       
       <guid>https://Achilles-10.github.io/posts/paper/sbi/</guid>
-      <description>动机与介绍 已有方法对跨域数据集和高压缩高曝光数据的检测能力大幅下降(泛化性差)； 难以识别的fake样本通常包含更一般伪造痕迹，故要学习更通用和鲁棒的面部伪造表征； 定义了四种常见的伪影(artifacts)： 主要贡献 提出了source-target generator (STG) and mask generator (MG)来学习更一般鲁棒</description>
+      <description>[paper] [code] 动机与介绍 已有方法对跨域数据集和高压缩高曝光数据的检测能力大幅下降(泛化性差)； 难以识别的fake样本通常包含更一般伪造痕迹，故要学习更通用和鲁棒的面部伪造表征； 定义了四种常见的伪影(artifacts)： 主要贡献 提出了source-target generator (STG) and mask generator (MG)来学习更一般</description>
     </item>
     
   </channel>

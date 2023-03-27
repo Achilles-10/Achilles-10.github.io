@@ -28,6 +28,8 @@ cover:
     relative: false
 ---
 
+[[paper]](https://arxiv.org/abs/2204.08376) [[code]](https://github.com/mapooon/SelfBlendedImages)
+
 ## 动机与介绍
 
 已有方法对跨域数据集和高压缩高曝光数据的检测能力大幅下降(泛化性差)；
