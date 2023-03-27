@@ -297,3 +297,83 @@ plt.show()
   | cv2.THRESH_TOZERO     | 当前灰度值                    | 0          |
   | cv2.THRESH_TOZERO_INV | 0                             | 当前灰度值 |
 
+## 性能衡量和提升技术
+
+### 使用OpenCV衡量性能
+
+`cv2.getTickCount()`函数返回从参考时间到调用此函数时的时钟周期数，可以在函数执行前后调用它获得执行函数的时钟周期数。
+
+`cv2.getTickFrequency()`函数返回时钟周期的频率或者每秒的时钟周期数。下列代码可以获得执行函数所用时间（以秒为单位）。
+
+```python
+e1 = cv2.getTickCount()
+# 你的执行代码
+e2 = cv2.getTickCount()
+time = (e2 - e1)/ cv2.getTickFrequency()
+```
+
+> 也可以使用两次`time.time()`函数，取两次的差来获得函数所用时间。
+
+### OpenCV中的默认优化
+
+OpenCV默认运行优化的代码。可以使用`cv2.useOptimized()`来检查是否启用优化，使用`cv2.setUseOptimized(bool)`来启用/禁用优化。
+
+```python
+cv2.setUseOptimized(True)
+print(cv2.useOptimized())
+%timeit res = cv2.medianBlur(img1,59)
+cv2.setUseOptimized(False)
+print(cv2.useOptimized())
+%timeit res = cv2.medianBlur(img1,59)
+
+True
+35 ms ± 2 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+False
+36.5 ms ± 2.37 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+```
+
+### 在IPython或者Jupyter中衡量性能
+
+使用`%timeit`。实例如下：
+
+```python
+x=5
+z=np.uint8([5])
+%timeit y=x**2
+%timeit y=z*z
+%timeit y=x**x
+%timeit y=np.square(z)
+
+273 ns ± 13.9 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+659 ns ± 37.2 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+334 ns ± 10.8 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+646 ns ± 48.1 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+```
+
+可以看到，Python的标量操作比Numpy的标量操作快，对于包含一两个元素的运算，Python标量比Numpy数组好，当数组大小稍大时Numpy会占优势。
+
+下面测试`cv2.countNonZero()`函数和`np.count_nonzero()`函数对于同一张图片的性能。
+
+```python
+img = cv2.cvtColor(img1,cv2.COLOR_BGR2GRAY)
+%timeit z=cv2.countNonZero(img)
+%timeit z=np.count_nonzero(img)
+
+13.5 µs ± 481 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+23.2 µs ± 970 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+```
+
+可以看到OpenCV函数比Numpy函数快。
+
+### 性能优化技术
+
+1. 尽量避免在Python中使用循环，特别是双重/三重循环等，因为它们本质上速度较慢。 
+2. 最大程度地向量化算法/代码，因为Numpy和OpenCV针对向量运算进行了优化。 
+3. 利用缓存一致性。 
+4. 尽量不要复制数组，因为数组复制是一项代价昂贵的操作。
+
+### 参考资源
+
+1. [Python优化技术](https://wiki.python.org/moin/PythonSpeed/PerformanceTips)
+2. [Scipy讲义-高级Numpy](http://scipy-lectures.org/advanced/advanced_numpy/index.html#advanced-numpy)
+3. [IPython中的时序和性能分析](https://pynash.org/2013/03/06/timing-and-profiling/)
