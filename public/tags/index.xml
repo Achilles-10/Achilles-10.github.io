@@ -6,7 +6,34 @@
     <description>Recent content in 🧩 标签 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 26 Mar 2023 22:33:00 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Mar 2023 22:28:33 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CVPR</title>
+      <link>https://Achilles-10.github.io/tags/cvpr/</link>
+      <pubDate>Mon, 27 Mar 2023 22:28:33 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/tags/cvpr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>模型</title>
+      <link>https://Achilles-10.github.io/tags/%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Mon, 27 Mar 2023 22:28:33 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/tags/%E6%A8%A1%E5%9E%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>论文阅读</title>
+      <link>https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
+      <pubDate>Mon, 27 Mar 2023 22:28:33 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>OpenCV</title>
       <link>https://Achilles-10.github.io/tags/opencv/</link>
@@ -26,29 +53,11 @@
     </item>
     
     <item>
-      <title>CVPR</title>
-      <link>https://Achilles-10.github.io/tags/cvpr/</link>
-      <pubDate>Sat, 25 Mar 2023 20:37:10 +0800</pubDate>
-      
-      <guid>https://Achilles-10.github.io/tags/cvpr/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>人脸伪造检测</title>
       <link>https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/</link>
       <pubDate>Sat, 25 Mar 2023 20:37:10 +0800</pubDate>
       
       <guid>https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>论文阅读</title>
-      <link>https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
-      <pubDate>Sat, 25 Mar 2023 20:37:10 +0800</pubDate>
-      
-      <guid>https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</guid>
       <description></description>
     </item>
     

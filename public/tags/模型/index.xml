@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>模型 on 烈烈风中、的博客</title>
+    <link>https://Achilles-10.github.io/tags/%E6%A8%A1%E5%9E%8B/</link>
+    <description>Recent content in 模型 on 烈烈风中、的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 27 Mar 2023 22:28:33 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E6%A8%A1%E5%9E%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A ConvNet for the 2020s</title>
+      <link>https://Achilles-10.github.io/posts/paper/convnext/</link>
+      <pubDate>Mon, 27 Mar 2023 22:28:33 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/convnext/</guid>
+      <description>1. 引言 Transformer 取代了以往递归神经网络为主导的骨干架构，随着ViT的引入，彻底改变了网络架构设计的格局。但ViT的全局注意力机制对输入大小的复杂度过高，难以处理高分辨率的输入。 层级Transformer采用混合方法来解决这个问题，例如Swin Transformer采用了“滑动窗口”策略，</description>
+    </item>
+    
+  </channel>
+</rss>
