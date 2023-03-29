@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>A ConvNet for the 2020s | 烈烈风中、的博客</title>
-<meta name="keywords" content="论文阅读, 模型, CVPR">
-<meta name="description" content="运用先进的训练技巧和网络设计策略，探索纯卷积网络的极限">
+<title>深度学习面试题：激活函数 | 烈烈风中、的博客</title>
+<meta name="keywords" content="面试, “学习笔记”">
+<meta name="description" content="深度学习算法岗激活函数常见面试题">
 <meta name="author" content="Achilles">
-<link rel="canonical" href="https://Achilles-10.github.io/posts/paper/convnext/">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/activation/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.bbeda8e1e549176967769f270888cf40bc16afa3aac9319d0bc6aa5e815ed5e8.css" integrity="sha256-u&#43;2o4eVJF2lndp8nCIjPQLwWr6OqyTGdC8aqXoFe1eg=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
         onload="hljs.initHighlightingOnLoad();"></script>
@@ -96,18 +96,18 @@ var _hmt = _hmt || [];
     });
 </script>
 
-<meta property="og:title" content="A ConvNet for the 2020s" />
-<meta property="og:description" content="运用先进的训练技巧和网络设计策略，探索纯卷积网络的极限" />
+<meta property="og:title" content="深度学习面试题：激活函数" />
+<meta property="og:description" content="深度学习算法岗激活函数常见面试题" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://Achilles-10.github.io/posts/paper/convnext/" />
-<meta property="og:image" content="https://Achilles-10.github.io/posts/paper/convnext/cover.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-27T22:28:33+08:00" />
-<meta property="article:modified_time" content="2023-03-27T22:28:33+08:00" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/activation/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/activation/cover.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-28T23:59:35+08:00" />
+<meta property="article:modified_time" content="2023-03-28T23:59:35+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://Achilles-10.github.io/posts/paper/convnext/cover.png" />
-<meta name="twitter:title" content="A ConvNet for the 2020s"/>
-<meta name="twitter:description" content="运用先进的训练技巧和网络设计策略，探索纯卷积网络的极限"/>
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/activation/cover.png" />
+<meta name="twitter:title" content="深度学习面试题：激活函数"/>
+<meta name="twitter:description" content="深度学习算法岗激活函数常见面试题"/>
 
 
 <script type="application/ld+json">
@@ -126,14 +126,14 @@ var _hmt = _hmt || [];
         {
           "@type": "ListItem",
           "position":  3 ,
-          "name": "📄 论文",
-          "item": "https://Achilles-10.github.io/posts/paper/"
+          "name": "👨🏻‍💻 技术",
+          "item": "https://Achilles-10.github.io/posts/tech/"
         }, 
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "A ConvNet for the 2020s",
-      "item": "https://Achilles-10.github.io/posts/paper/convnext/"
+      "name": "深度学习面试题：激活函数",
+      "item": "https://Achilles-10.github.io/posts/tech/activation/"
     }
   ]
 }
@@ -142,24 +142,24 @@ var _hmt = _hmt || [];
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "A ConvNet for the 2020s",
-  "name": "A ConvNet for the 2020s",
-  "description": "运用先进的训练技巧和网络设计策略，探索纯卷积网络的极限",
+  "headline": "深度学习面试题：激活函数",
+  "name": "深度学习面试题：激活函数",
+  "description": "深度学习算法岗激活函数常见面试题",
   "keywords": [
-    "论文阅读", "模型", "CVPR"
+    "面试", "“学习笔记”"
   ],
-  "articleBody": "[paper] [code]\n1. 引言 Transformer 取代了以往递归神经网络为主导的骨干架构，随着ViT的引入，彻底改变了网络架构设计的格局。但ViT的全局注意力机制对输入大小的复杂度过高，难以处理高分辨率的输入。\n层级Transformer采用混合方法来解决这个问题，例如Swin Transformer采用了“滑动窗口”策略，也说明了卷积仍然非常受欢迎。本文目标是为卷积网络弥补前ViT时代和后ViT时代的差距，并测试纯卷积网络可以达到的极限。\n2. Modernizing a ConvNet: a Roadmap（研究路线图） 以ResNet-50作为baseline，考虑以下几种设计决策：\nmarco design（宏观设计） ResNeXt inverted bottlenect（倒置瓶颈） large kernel size（更大的卷积核） various layer-wise micro designs（多样的分层微设计） 2.1 训练技巧 epoch: 90-\u003e300 optimizer: AdamW data augmentation: Mixup, Cutmix, RandAugment, RandomErasing… regularization: Stochastic Depth, Label Smoothing 2.2 Marco Design（宏观设计） 改变阶段计算比：Swin-T的阶段计算比为1:1:3:1，更大型的Swin的阶段计算比为1:1:9:1。对此，将ResNet-50中的(3,4,6,3)改为 (3,3,9,3)，使模型准确率从78.8%提升至79.4%。 将stem改为\"Patchify\"（非重叠的卷积）：标准的ResNet中stem为(k=7,p=3,s=2)的卷积后跟一个(k=3,p=1,s=2)的最大池化，这导致输入图像的4倍下采样。将其更换为 (k=4,s=4)的卷积，模型准确率从79.4%提升至79.5%。 2.3 ResNeXt-ify 采用深度可分离卷积，使得每个操作单独混合空间或通道的信息。使用分组卷积(depthwise conv)能够降低网络的FLOPs，但也会降低准确率(78.3%)。将网络宽度从64扩展到96，准确率提升到80.5%。\n2.4 Inverted Bottlenect（倒置瓶颈） Transformer中的MLP的隐藏维度比输入维度大4倍（384:96），这就是倒置瓶颈。对倒置瓶颈的探索如下图(a)(b)，这使得准确率提升(80.5%-\u003e80.6%)的同时降低了FLOPs(下采样残差1x1卷积的FLOPs减少)。\n2.5 Large Kernel Sizes（大卷积核） VGG推广的黄金标准是堆叠3x3的小卷积核，这在现代化GPU上更高效，但Swin中的窗口大小至少为7x7。\n上移分组卷积层：如上图(b)(c)，使复杂低效的模块(MSA)有更少的通道数，降低FLOPS至4.1G，性能暂时下降到79.9%。 增大卷积核：将卷积核大小从3x3增大到7x7，FLOPs大致保持不变，准确率提升至80.6%。当继续增大卷积核时并没有带来更大准确率增益。 2.6 Micro Design（微观设计） 将ReLU更换为GELU：准确率不变 更少的激活函数：如下图所示，复制Swin的样式，将残差块中的激活函数去掉，去掉两个卷积层中的一个激活函数，准确度提升至81.3%。 更少的归一化层：去掉两个归一化层，在1x1卷积前只留下一个BN层，准确率提升到81.4%，超过Swin。 将BN替换为LN：BN能够加速收敛并减少过拟合，但BN错综复杂，可能对模型的性能产生不利影响。在ResNet中直接将BN替换为LN会导致性能不佳，但随着对网络结构和训练技巧的修改，使用LN将准确率提升至81.5%。 可分离的下采样层：ResNet中的下采样是通过每个阶段开始时的残差块实现的。Swin中添加了一个单独的下采样层。本文用单独的(k=2,s=2)卷积实现下采样，后续实验发现在分辨率变化的地方添加归一化层有助于稳定训练，这时准确率达到82.0%。 3. 在ImageNet上的评估 构建了不同的ConvNeXt变体：\nConvNeXt-T: C =(96, 192, 384, 768), B =(3, 3, 9, 3) ConvNeXt-S: C =(96, 192, 384, 768), B =(3, 3, 27, 3) ConvNeXt-B: C =(128, 256, 512, 1024), B =(3, 3, 27, 3) ConvNeXt-L: C =(192, 384, 768, 1536), B =(3, 3, 27, 3) ConvNeXt-XL: C =(256, 512, 1024, 2048), B =(3, 3, 27, 3) 3.1 结果 ImageNet-1K：\nImageNet-22K 预训练，ImageNet-1K 微调：\n3.2 Isotropic ConvNeXt vs. ViT（同质性比较） 同质架构（Isotropic architecture）：同质架构模型没有下采样层，在所有深度都保持相同的特征图分辨率，只需要用特征大小（即patch embedding的维度）和网络深度（即blocks数量）两个参数定义。\nConvNeXt的性能同ViT相当，说明ConvNeXt块设计在用于非层级模型时具有竞争力。\n4. 在下游任务上的评估 4.1 COCO数据集上的目标检测和分割 4.2 ADE20K上的语义分割 4.3 关于模型效率的评论 5. 总结 ConvNeXt模型本身不是全新的，里面的许多设计都被单独测试过，但没有放在一起测试过。ConvNeXt的实验结果是优秀的，在多个计算机视觉基准测试中与最先进的层级Transformer竞争的同时，还保留着标准卷积网络的简单性和效率。\n",
-  "wordCount" : "1886",
+  "articleBody": "1. 说一下了解的激活函数和各自的应用场景 sigmoid: $$ \\sigma(x)=\\frac{1}{1+e^{-x}} $$ sigmoid是第一个被广泛应用于神级网络的激活函数，其值域为$[0,1]$，但是它存在输出均值不为0和梯度消失的问题，在深层网络中被其他激活函数替代。在逻辑回归中使用该激活函数用于输出分类。\ntanh: $$ tanh(x)=\\frac{e^x-e^{-x}}{e^x+e^{-x}}=2\\sigma(2x)-1 $$ tanh函数解决了sigmoid函数均值不为0的情况，值域为$[-1,1]$，但仍然存在梯度消失的问题。在LSTM中使用了tanh。\nReLU: $$ ReLU(x)= \\begin{cases} x,\\ x\\geq0\\\\\\ 0,\\ x\u003c0\\ \\end{cases} $$ ReLU函数能有效避免梯度消失的问题，但在负值区域处于饱和状态（“死区”）。Alex-Net使用了ReLU，在使用深层网络时最好使用ReLU而不是sigmoid。\nLeaky ReLU： $$ Leaky\\ ReLU(x)= \\begin{cases} x,\\ x\\geq0\\\\\\ \\alpha\\cdot x,\\ x\u003c0 \\end{cases} $$ Leaky ReLU在负值区添加了一个斜率参数，缓解了饱和性问题（“死区”）。但缺点是超参数$\\alpha$的合适值不好设定，当我们想让神经网络学习到负值区的信息时可以使用该函数。\n参数化ReLU(P-ReLU)：解决超参数$\\alpha$不好设定的问题，将其作为模型参数融入到模型的训练过程中，在反向传播时更新参数。\n随机化ReLU(R-ReLU)：随机化超参数$\\alpha$，使不同的层学习不同的参数。其随机化参数的分布符合均匀分布或高斯分布。\nELU： $$ ELU(x)= \\begin{cases} x,\\ x\\geq0\\\\\\ \\lambda\\cdot(e^x-1),\\ x\u003c0 \\end{cases} $$ 解决饱和性问题，但缺点是指数计算量大。\nGELU： $$ GELU(x)=x\\text{P}(\\text{X}\\leq x)=x\\Phi(x) $$ ​\t其中$\\Phi(x)$是正态分布的概率函数，计算时近似计算的数学公式如下： $$ GELU(x)=\\frac{1}{2}x(1+tanh[\\sqrt{\\frac{2}{\\pi}}(x+0.044715x^3)]) $$\n2. 为什么需要激活函数？ 在线性模型中引入非线性激活函数，可以使线性模型非线性化，提高模型的非线性表达能力，也就是拟合能力。\n3. 激活函数的特征？ 非线性性 几乎处处可微 计算简单 单调性：符号不变容易收敛 非饱和性：饱和指在某些区间的梯度接近零，即梯度消失，使得参数无法继续更新 输出范围有限 接近恒等变换 参数少 4. Leaky ReLU相对于ReLU的优势在哪？ Leaky ReLU在负值增加了一个斜率$\\alpha$，缓解了ReLU在$x\u003c0$时的饱和性问题(“死区”，梯度消失)，但Leaky ReLU得超参数$\\alpha$的合适值不好设定。\n当我们想让神经网络能够学到负值信息时可以使用该激活函数。\n5. 什么是ReLU6？ ReLU的值域为$[0,\\infty]$，在实际应用中需要限定输出的最大值，将输出在6处截断，即为ReLU6。\n6. Sigmoid函数有什么缺点？怎么解决？ 缺点：输出均值不为0，存在梯度消失的情况。\n解决办法：\n用ReLU，Leaky ReLU等其他激活函数代替 采用适合的权重初始化方法，如He_init 在分类问题中，sigmoid作为激活函数时，用交叉熵损失函数替代MSE 加入BN层 分层训练权重 7. ReLU在零点可导吗？如何进行反向传播？ 不可导，可以人为的将零点梯度规定为0。\ncaffe源码~/caffe/src/caffe/layers/relu_layer.cpp倒数第十行代码如下：\nbottom_diff[i] = top_diff[i] * ((bottom_data[i] \u003e 0)+ negative_slope * (bottom_data[i] \u003c= 0)); 可见，间断点（$\\leq0$）处的导数为negtive_slope（默认为0）。\n8. Softmax的溢出问题怎么解决？ 由于Softmax的指数运算，可能导致溢出问题。\n令$M=\\max(x_i)$，将计算$f(x_i)$转换为计算$f(x_i-M)$的值，就可以解决溢出问题了，且理论上计算结果与计算$f(x_i)$保持一致，该操作类似与Min-Max归一化。\n9. 推导Sigmoid的求导公式 sigmoid公式如下：\n$$ \\sigma(z)=\\frac{1}{1+e^{-z}} $$\n求导公式推导如下：\n$$ \\begin{align}\\sigma'(z)\u0026=(\\frac{1}{1+e^{-z}})'\\\\\u0026=(e^{-z})\\cdot\\frac{1}{(1+e^{-z})^2}\\\\\u0026=\\frac{1}{1+e^{-z}}\\cdot\\frac{e^{-z}}{1+e^{-z}}\\\\\u0026=\\frac{1}{1+e^{-z}}\\cdot(1-\\frac{1}{1+e^{-z}})\\\\\u0026=\\sigma(z)\\cdot(1-\\sigma(z))\\end{align} $$ 10. 推导Softmax的求导公式 softmax公式如下： $$ s(z_i)=\\frac{e^{z_i}}{\\sum_{k=1}^{n}{e^{z_k}}} $$ 求导公式推导如下：\n当$j=i$时： $$ \\begin{align} \\frac{\\partial s_i}{\\partial z_i} \u0026=\\frac{\\partial(\\frac{e^{z_i}}{\\sum_{k=1}^{n}{e^{z_k}}})}{\\partial z_i}\\\\ \u0026=\\frac{e^{z_i}\\cdot\\sum{e^{z_k}}-(e^{z_i})^2}{(\\sum{e^{z_k}})^2}\\\\ \u0026=\\frac{e^{z_i}}{\\sum{e^{z_k}}}\\cdot\\frac{\\sum{e^{z_k}}-e^{z_i}}{\\sum{e^{z_k}}}\\\\ \u0026=\\frac{e^{z_i}}{\\sum{e^{z_k}}}\\cdot(1-\\frac{e^{z_i}}{\\sum{e^{z_k}}})\\\\ \u0026=s_i(1-s_i) \\end{align} $$ 当$j\\neq i$时： $$ \\begin{align} \\frac{\\partial s_j}{\\partial z_i} \u0026=\\frac{\\partial(\\frac{e^{z_j}}{\\sum_{k=1}^{n}{e^{z_k}}})}{\\partial z_i}\\\\ \u0026=e^{z_j}\\cdot-(\\frac{1}{\\sum{e^{z_k}}})^2\\cdot e^{z_i}\\\\ \u0026=-\\frac{e^{z_j}}{\\sum{e^{z_k}}}\\cdot\\frac{e^{z_i}}{\\sum{e^{e_k}}}\\\\ \u0026=-s_j\\cdot s_i \\end{align} $$ p.s.基本初等函数的求导公式与法则 ",
+  "wordCount" : "1526",
   "inLanguage": "en",
-  "image":"https://Achilles-10.github.io/posts/paper/convnext/cover.png","datePublished": "2023-03-27T22:28:33+08:00",
-  "dateModified": "2023-03-27T22:28:33+08:00",
+  "image":"https://Achilles-10.github.io/posts/tech/activation/cover.png","datePublished": "2023-03-28T23:59:35+08:00",
+  "dateModified": "2023-03-28T23:59:35+08:00",
   "author":[{
     "@type": "Person",
     "name": "Achilles"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://Achilles-10.github.io/posts/paper/convnext/"
+    "@id": "https://Achilles-10.github.io/posts/tech/activation/"
   },
   "publisher": {
     "@type": "Organization",
@@ -273,12 +273,12 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/paper/">📄 论文</a></div>
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
             <h1 class="post-title">
-                A ConvNet for the 2020s
+                深度学习面试题：激活函数
             </h1>
             <div class="post-description">
-                运用先进的训练技巧和网络设计策略，探索纯卷积网络的极限
+                深度学习算法岗激活函数常见面试题
             </div>
             <div class="post-meta"><style>
     i[id*="post_meta_style"] {
@@ -297,7 +297,7 @@ var _hmt = _hmt || [];
 <span class="parent-post-meta">
     <span id="post_meta_style_1">
         <span class="fa fa-calendar-check-o"></span>
-        <span>2023 年 3 月 27 日
+        <span>2023 年 3 月 28 日
             &nbsp;&nbsp;
         </span>
     </span>
@@ -310,7 +310,7 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>1886字
+        <span>1526字
             &nbsp;&nbsp;
         </span>
     </span>
@@ -330,9 +330,8 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="color: var(--secondary)!important;">论文阅读</a>
-                &nbsp;<a href="https://Achilles-10.github.io/tags/%E6%A8%A1%E5%9E%8B/" style="color: var(--secondary)!important;">模型</a>
-                &nbsp;<a href="https://Achilles-10.github.io/tags/cvpr/" style="color: var(--secondary)!important;">CVPR</a>
+                <a href="https://Achilles-10.github.io/tags/%E9%9D%A2%E8%AF%95/" style="color: var(--secondary)!important;">面试</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">“学习笔记”</a>
             </span>
         </span>
     </span>
@@ -386,7 +385,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/paper/convnext/cover.png" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/activation/cover.png" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -397,43 +396,27 @@ var _hmt = _hmt || [];
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#1-%e5%bc%95%e8%a8%80" aria-label="1. 引言">1. 引言</a></li>
+                    <a href="#1-%e8%af%b4%e4%b8%80%e4%b8%8b%e4%ba%86%e8%a7%a3%e7%9a%84%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0%e5%92%8c%e5%90%84%e8%87%aa%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="1. 说一下了解的激活函数和各自的应用场景">1. 说一下了解的激活函数和各自的应用场景</a></li>
                 <li>
-                    <a href="#2-modernizing-a-convnet-a-roadmap%e7%a0%94%e7%a9%b6%e8%b7%af%e7%ba%bf%e5%9b%be" aria-label="2. Modernizing a ConvNet: a Roadmap（研究路线图）">2. Modernizing a ConvNet: a Roadmap（研究路线图）</a><ul>
-                        
+                    <a href="#2-%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0" aria-label="2. 为什么需要激活函数？">2. 为什么需要激活函数？</a></li>
                 <li>
-                    <a href="#21-%e8%ae%ad%e7%bb%83%e6%8a%80%e5%b7%a7" aria-label="2.1 训练技巧">2.1 训练技巧</a></li>
+                    <a href="#3-%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0%e7%9a%84%e7%89%b9%e5%be%81" aria-label="3. 激活函数的特征？">3. 激活函数的特征？</a></li>
                 <li>
-                    <a href="#22-marco-design%e5%ae%8f%e8%a7%82%e8%ae%be%e8%ae%a1" aria-label="2.2 Marco Design（宏观设计）">2.2 Marco Design（宏观设计）</a></li>
+                    <a href="#4-leaky-relu%e7%9b%b8%e5%af%b9%e4%ba%8erelu%e7%9a%84%e4%bc%98%e5%8a%bf%e5%9c%a8%e5%93%aa" aria-label="4. Leaky ReLU相对于ReLU的优势在哪？">4. Leaky ReLU相对于ReLU的优势在哪？</a></li>
                 <li>
-                    <a href="#23-resnext-ify" aria-label="2.3 ResNeXt-ify">2.3 ResNeXt-ify</a></li>
+                    <a href="#5-%e4%bb%80%e4%b9%88%e6%98%afrelu6" aria-label="5. 什么是ReLU6？">5. 什么是ReLU6？</a></li>
                 <li>
-                    <a href="#24-inverted-bottlenect%e5%80%92%e7%bd%ae%e7%93%b6%e9%a2%88" aria-label="2.4 Inverted Bottlenect（倒置瓶颈）">2.4 Inverted Bottlenect（倒置瓶颈）</a></li>
+                    <a href="#6-sigmoid%e5%87%bd%e6%95%b0%e6%9c%89%e4%bb%80%e4%b9%88%e7%bc%ba%e7%82%b9%e6%80%8e%e4%b9%88%e8%a7%a3%e5%86%b3" aria-label="6. Sigmoid函数有什么缺点？怎么解决？">6. Sigmoid函数有什么缺点？怎么解决？</a></li>
                 <li>
-                    <a href="#25-large-kernel-sizes%e5%a4%a7%e5%8d%b7%e7%a7%af%e6%a0%b8" aria-label="2.5 Large Kernel Sizes（大卷积核）">2.5 Large Kernel Sizes（大卷积核）</a></li>
+                    <a href="#7-relu%e5%9c%a8%e9%9b%b6%e7%82%b9%e5%8f%af%e5%af%bc%e5%90%97%e5%a6%82%e4%bd%95%e8%bf%9b%e8%a1%8c%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad" aria-label="7. ReLU在零点可导吗？如何进行反向传播？">7. ReLU在零点可导吗？如何进行反向传播？</a></li>
                 <li>
-                    <a href="#26-micro-design%e5%be%ae%e8%a7%82%e8%ae%be%e8%ae%a1" aria-label="2.6 Micro Design（微观设计）">2.6 Micro Design（微观设计）</a></li></ul>
-                </li>
+                    <a href="#8-softmax%e7%9a%84%e6%ba%a2%e5%87%ba%e9%97%ae%e9%a2%98%e6%80%8e%e4%b9%88%e8%a7%a3%e5%86%b3" aria-label="8. Softmax的溢出问题怎么解决？">8. Softmax的溢出问题怎么解决？</a></li>
                 <li>
-                    <a href="#3-%e5%9c%a8imagenet%e4%b8%8a%e7%9a%84%e8%af%84%e4%bc%b0" aria-label="3. 在ImageNet上的评估">3. 在ImageNet上的评估</a><ul>
-                        
+                    <a href="#9-%e6%8e%a8%e5%af%bcsigmoid%e7%9a%84%e6%b1%82%e5%af%bc%e5%85%ac%e5%bc%8f" aria-label="9. 推导Sigmoid的求导公式">9. 推导Sigmoid的求导公式</a></li>
                 <li>
-                    <a href="#31-%e7%bb%93%e6%9e%9c" aria-label="3.1 结果">3.1 结果</a></li>
+                    <a href="#10-%e6%8e%a8%e5%af%bcsoftmax%e7%9a%84%e6%b1%82%e5%af%bc%e5%85%ac%e5%bc%8f" aria-label="10. 推导Softmax的求导公式">10. 推导Softmax的求导公式</a></li>
                 <li>
-                    <a href="#32-isotropic-convnext-vs-vit%e5%90%8c%e8%b4%a8%e6%80%a7%e6%af%94%e8%be%83" aria-label="3.2 Isotropic ConvNeXt vs. ViT（同质性比较）">3.2 Isotropic ConvNeXt vs. ViT（同质性比较）</a></li></ul>
-                </li>
-                <li>
-                    <a href="#4-%e5%9c%a8%e4%b8%8b%e6%b8%b8%e4%bb%bb%e5%8a%a1%e4%b8%8a%e7%9a%84%e8%af%84%e4%bc%b0" aria-label="4. 在下游任务上的评估">4. 在下游任务上的评估</a><ul>
-                        
-                <li>
-                    <a href="#41-coco%e6%95%b0%e6%8d%ae%e9%9b%86%e4%b8%8a%e7%9a%84%e7%9b%ae%e6%a0%87%e6%a3%80%e6%b5%8b%e5%92%8c%e5%88%86%e5%89%b2" aria-label="4.1 COCO数据集上的目标检测和分割">4.1 COCO数据集上的目标检测和分割</a></li>
-                <li>
-                    <a href="#42-ade20k%e4%b8%8a%e7%9a%84%e8%af%ad%e4%b9%89%e5%88%86%e5%89%b2" aria-label="4.2 ADE20K上的语义分割">4.2 ADE20K上的语义分割</a></li>
-                <li>
-                    <a href="#43-%e5%85%b3%e4%ba%8e%e6%a8%a1%e5%9e%8b%e6%95%88%e7%8e%87%e7%9a%84%e8%af%84%e8%ae%ba" aria-label="4.3 关于模型效率的评论">4.3 关于模型效率的评论</a></li></ul>
-                </li>
-                <li>
-                    <a href="#5-%e6%80%bb%e7%bb%93" aria-label="5. 总结">5. 总结</a>
+                    <a href="#ps%e5%9f%ba%e6%9c%ac%e5%88%9d%e7%ad%89%e5%87%bd%e6%95%b0%e7%9a%84%e6%b1%82%e5%af%bc%e5%85%ac%e5%bc%8f%e4%b8%8e%e6%b3%95%e5%88%99" aria-label="p.s.基本初等函数的求导公式与法则">p.s.基本初等函数的求导公式与法则</a>
                 </li>
             </ul>
         </div>
@@ -498,88 +481,167 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><p><a href="https://arxiv.org/abs/2201.03545">[paper]</a> <a href="https://github.com/facebookresearch/ConvNeXt">[code]</a></p>
-<h2 id="1-引言">1. 引言<a hidden class="anchor" aria-hidden="true" href="#1-引言">#</a></h2>
-<p><strong>Transformer</strong> 取代了以往递归神经网络为主导的骨干架构，随着<strong>ViT</strong>的引入，彻底改变了网络架构设计的格局。但<strong>ViT</strong>的全局注意力机制对输入大小的复杂度过高，难以处理高分辨率的输入。</p>
-<p>层级Transformer采用混合方法来解决这个问题，例如<strong>Swin Transformer</strong>采用了“滑动窗口”策略，也说明了卷积仍然非常受欢迎。本文目标是为卷积网络弥补前ViT时代和后ViT时代的差距，并测试纯卷积网络可以达到的极限。</p>
-<h2 id="2-modernizing-a-convnet-a-roadmap研究路线图">2. Modernizing a ConvNet: a Roadmap（研究路线图）<a hidden class="anchor" aria-hidden="true" href="#2-modernizing-a-convnet-a-roadmap研究路线图">#</a></h2>
-<p><img loading="lazy" src="road.png" alt=""  />
-</p>
-<p>以<strong>ResNet-50</strong>作为baseline，考虑以下几种设计决策：</p>
-<ol>
-<li><strong>marco design</strong>（宏观设计）</li>
-<li><strong>ResNeXt</strong></li>
-<li><strong>inverted bottlenect</strong>（倒置瓶颈）</li>
-<li><strong>large kernel size</strong>（更大的卷积核）</li>
-<li><strong>various layer-wise micro designs</strong>（多样的分层微设计）</li>
-</ol>
-<h3 id="21-训练技巧">2.1 训练技巧<a hidden class="anchor" aria-hidden="true" href="#21-训练技巧">#</a></h3>
-<ul>
-<li><strong>epoch</strong>: 90-&gt;300</li>
-<li><strong>optimizer</strong>: AdamW</li>
-<li><strong>data augmentation</strong>: Mixup, Cutmix, RandAugment, RandomErasing&hellip;</li>
-<li><strong>regularization</strong>: Stochastic Depth, Label Smoothing</li>
-</ul>
-<h3 id="22-marco-design宏观设计">2.2 Marco Design（宏观设计）<a hidden class="anchor" aria-hidden="true" href="#22-marco-design宏观设计">#</a></h3>
-<ul>
-<li><strong>改变阶段计算比</strong>：Swin-T的阶段计算比为<strong>1:1:3:1</strong>，更大型的Swin的阶段计算比为1:1:9:1。对此，将ResNet-50中的(3,4,6,3)改为 <strong>(3,3,9,3)</strong>，使模型准确率从78.8%提升至<strong>79.4%</strong>。</li>
-<li><strong>将stem改为&quot;Patchify&quot;（非重叠的卷积）</strong>：标准的ResNet中stem为(k=7,p=3,s=2)的卷积后跟一个(k=3,p=1,s=2)的最大池化，这导致输入图像的4倍下采样。将其更换为 <strong>(k=4,s=4)<strong>的卷积，模型准确率从79.4%提升至</strong>79.5%</strong>。</li>
-</ul>
-<h3 id="23-resnext-ify">2.3 ResNeXt-ify<a hidden class="anchor" aria-hidden="true" href="#23-resnext-ify">#</a></h3>
-<p>采用深度可分离卷积，使得每个操作单独混合空间或通道的信息。使用分组卷积(<strong>depthwise conv</strong>)能够降低网络的FLOPs，但也会降低准确率(<strong>78.3%</strong>)。将网络宽度从64扩展到<strong>96</strong>，准确率提升到<strong>80.5%</strong>。</p>
-<h3 id="24-inverted-bottlenect倒置瓶颈">2.4 Inverted Bottlenect（倒置瓶颈）<a hidden class="anchor" aria-hidden="true" href="#24-inverted-bottlenect倒置瓶颈">#</a></h3>
-<p>Transformer中的MLP的隐藏维度比输入维度大<strong>4</strong>倍（384:96），这就是倒置瓶颈。对倒置瓶颈的探索如下图(a)(b)，这使得准确率提升(80.5%-&gt;<strong>80.6%</strong>)的同时降低了FLOPs(下采样残差1x1卷积的FLOPs减少)。</p>
-<p><img loading="lazy" src="bottle.png" alt=""  />
-</p>
-<h3 id="25-large-kernel-sizes大卷积核">2.5 Large Kernel Sizes（大卷积核）<a hidden class="anchor" aria-hidden="true" href="#25-large-kernel-sizes大卷积核">#</a></h3>
-<p>VGG推广的黄金标准是堆叠3x3的小卷积核，这在现代化GPU上更高效，但Swin中的窗口大小至少为7x7。</p>
-<ul>
-<li><strong>上移分组卷积层</strong>：如上图(b)(c)，使复杂低效的模块(MSA)有更少的通道数，降低FLOPS至4.1G，性能暂时下降到<strong>79.9%</strong>。</li>
-<li><strong>增大卷积核</strong>：将卷积核大小从3x3增大到<strong>7x7</strong>，FLOPs大致保持不变，准确率提升至<strong>80.6%</strong>。当继续增大卷积核时并没有带来更大准确率增益。</li>
-</ul>
-<h3 id="26-micro-design微观设计">2.6 Micro Design（微观设计）<a hidden class="anchor" aria-hidden="true" href="#26-micro-design微观设计">#</a></h3>
-<ul>
-<li><strong>将ReLU更换为GELU</strong>：准确率不变</li>
-<li><strong>更少的激活函数</strong>：如下图所示，复制Swin的样式，将残差块中的激活函数去掉，去掉两个卷积层中的一个激活函数，准确度提升至<strong>81.3%</strong>。</li>
-<li><strong>更少的归一化层</strong>：去掉两个归一化层，在1x1卷积前只留下一个BN层，准确率提升到<strong>81.4%</strong>，超过Swin。</li>
-<li><strong>将BN替换为LN</strong>：BN能够加速收敛并减少过拟合，但BN错综复杂，可能对模型的性能产生不利影响。在ResNet中直接将BN替换为LN会导致性能不佳，但随着对网络结构和训练技巧的修改，使用LN将准确率提升至<strong>81.5%</strong>。</li>
-<li><strong>可分离的下采样层</strong>：ResNet中的下采样是通过每个阶段开始时的残差块实现的。Swin中添加了一个单独的下采样层。本文用单独的(k=2,s=2)卷积实现下采样，后续实验发现在分辨率变化的地方添加归一化层有助于稳定训练，这时准确率达到<strong>82.0%</strong>。</li>
-</ul>
-<p><img loading="lazy" src="activation.png" alt=""  />
-</p>
-<h2 id="3-在imagenet上的评估">3. 在ImageNet上的评估<a hidden class="anchor" aria-hidden="true" href="#3-在imagenet上的评估">#</a></h2>
-<p>构建了不同的ConvNeXt变体：</p>
-<ul>
-<li><strong>ConvNeXt-T</strong>: C =(96, 192, 384, 768), B =(3, 3, 9, 3)</li>
-<li><strong>ConvNeXt-S</strong>: C =(96, 192, 384, 768), B =(3, 3, 27, 3)</li>
-<li><strong>ConvNeXt-B</strong>: C =(128, 256, 512, 1024), B =(3, 3, 27, 3)</li>
-<li><strong>ConvNeXt-L</strong>: C =(192, 384, 768, 1536), B =(3, 3, 27, 3)</li>
-<li><strong>ConvNeXt-XL</strong>: C =(256, 512, 1024, 2048), B =(3, 3, 27, 3)</li>
-</ul>
-<h3 id="31-结果">3.1 结果<a hidden class="anchor" aria-hidden="true" href="#31-结果">#</a></h3>
+        <div class="post-content"><h2 id="1-说一下了解的激活函数和各自的应用场景">1. 说一下了解的激活函数和各自的应用场景<a hidden class="anchor" aria-hidden="true" href="#1-说一下了解的激活函数和各自的应用场景">#</a></h2>
 <ul>
 <li>
-<p>ImageNet-1K：</p>
-<p><img loading="lazy" src="imgnet1.png" alt=""  />
+<p><strong><code>sigmoid</code></strong>:
+$$
+\sigma(x)=\frac{1}{1+e^{-x}}
+$$
+<img loading="lazy" src="sigmoid.png" alt=""  />
 </p>
+<p><code>sigmoid</code>是第一个被广泛应用于神级网络的激活函数，其值域为$[0,1]$，但是它存在输出均值不为0和梯度消失的问题，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用该激活函数用于输出<strong>分类</strong>。</p>
 </li>
 <li>
-<p>ImageNet-22K 预训练，ImageNet-1K 微调：</p>
-<p><img loading="lazy" src="imgnet2.png" alt=""  />
+<p><strong><code>tanh</code></strong>:
+$$
+tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}=2\sigma(2x)-1
+$$
+<img loading="lazy" src="tanh.png" alt=""  />
+</p>
+<p><code>tanh</code>函数解决了<code>sigmoid</code>函数均值不为0的情况，值域为$[-1,1]$，但仍然存在梯度消失的问题。在LSTM中使用了<code>tanh</code>。</p>
+</li>
+<li>
+<p><strong><code>ReLU</code></strong>:
+$$
+ReLU(x)=
+\begin{cases}
+x,\ x\geq0\\\
+0,\ x&lt;0\
+\end{cases}
+$$
+<img loading="lazy" src="relu.png" alt=""  />
+</p>
+<p><code>ReLU</code>函数能有效避免梯度消失的问题，但在负值区域处于饱和状态（“死区”）。Alex-Net使用了<code>ReLU</code>，在使用深层网络时最好使用<code>ReLU</code>而不是<code>sigmoid</code>。</p>
+</li>
+<li>
+<p><strong><code>Leaky ReLU</code></strong>：
+$$
+Leaky\ ReLU(x)=
+\begin{cases}
+x,\ x\geq0\\\
+\alpha\cdot x,\ x&lt;0
+\end{cases}
+$$
+<img loading="lazy" src="lrelu.png" alt=""  />
+</p>
+<p><code>Leaky ReLU</code>在负值区添加了一个斜率参数，缓解了饱和性问题（“死区”）。但缺点是超参数$\alpha$的合适值不好设定，当我们想让神经网络学习到负值区的信息时可以使用该函数。</p>
+</li>
+<li>
+<p><strong><code>参数化ReLU(P-ReLU)</code></strong>：解决超参数$\alpha$不好设定的问题，将其作为模型参数融入到模型的训练过程中，在反向传播时更新参数。</p>
+</li>
+<li>
+<p><strong><code>随机化ReLU(R-ReLU)</code></strong>：随机化超参数$\alpha$，使不同的层学习不同的参数。其随机化参数的分布符合均匀分布或高斯分布。</p>
+</li>
+<li>
+<p><strong><code>ELU</code></strong>：
+$$
+ELU(x)=
+\begin{cases}
+x,\ x\geq0\\\
+\lambda\cdot(e^x-1),\ x&lt;0
+\end{cases}
+$$
+解决饱和性问题，但缺点是指数计算量大。</p>
+</li>
+<li>
+<p><strong><code>GELU</code></strong>：
+$$
+GELU(x)=x\text{P}(\text{X}\leq x)=x\Phi(x)
+$$
+<img loading="lazy" src="gelu.png" alt=""  />
 </p>
 </li>
 </ul>
-<h3 id="32-isotropic-convnext-vs-vit同质性比较">3.2 Isotropic ConvNeXt vs. ViT（同质性比较）<a hidden class="anchor" aria-hidden="true" href="#32-isotropic-convnext-vs-vit同质性比较">#</a></h3>
-<p><strong>同质架构（Isotropic architecture）</strong>：同质架构模型没有下采样层，在所有深度都保持相同的特征图分辨率，只需要用特征大小（即patch embedding的维度）和网络深度（即blocks数量）两个参数定义。</p>
-<p>ConvNeXt的性能同ViT相当，说明ConvNeXt块设计在用于非层级模型时具有竞争力。</p>
-<p><img loading="lazy" src="isotropic.png" alt=""  />
+<p>​	其中$\Phi(x)$是正态分布的概率函数，计算时近似计算的数学公式如下：
+$$
+GELU(x)=\frac{1}{2}x(1+tanh[\sqrt{\frac{2}{\pi}}(x+0.044715x^3)])
+$$</p>
+<h2 id="2-为什么需要激活函数">2. 为什么需要激活函数？<a hidden class="anchor" aria-hidden="true" href="#2-为什么需要激活函数">#</a></h2>
+<p>在线性模型中引入非线性激活函数，可以使线性模型非线性化，提高模型的非线性表达能力，也就是拟合能力。</p>
+<h2 id="3-激活函数的特征">3. 激活函数的特征？<a hidden class="anchor" aria-hidden="true" href="#3-激活函数的特征">#</a></h2>
+<ul>
+<li>非线性性</li>
+<li>几乎处处可微</li>
+<li>计算简单</li>
+<li>单调性：符号不变容易收敛</li>
+<li>非饱和性：饱和指在某些区间的梯度接近零，即梯度消失，使得参数无法继续更新</li>
+<li>输出范围有限</li>
+<li>接近恒等变换</li>
+<li>参数少</li>
+</ul>
+<h2 id="4-leaky-relu相对于relu的优势在哪">4. Leaky ReLU相对于ReLU的优势在哪？<a hidden class="anchor" aria-hidden="true" href="#4-leaky-relu相对于relu的优势在哪">#</a></h2>
+<p>Leaky ReLU在负值增加了一个斜率$\alpha$，缓解了ReLU在$x&lt;0$时的饱和性问题(&ldquo;死区&rdquo;，梯度消失)，但Leaky ReLU得超参数$\alpha$的合适值不好设定。</p>
+<p>当我们想让神经网络能够学到负值信息时可以使用该激活函数。</p>
+<h2 id="5-什么是relu6">5. 什么是ReLU6？<a hidden class="anchor" aria-hidden="true" href="#5-什么是relu6">#</a></h2>
+<p>ReLU的值域为$[0,\infty]$，在实际应用中需要限定输出的最大值，将输出在6处截断，即为ReLU6。</p>
+<h2 id="6-sigmoid函数有什么缺点怎么解决">6. Sigmoid函数有什么缺点？怎么解决？<a hidden class="anchor" aria-hidden="true" href="#6-sigmoid函数有什么缺点怎么解决">#</a></h2>
+<p>缺点：输出均值不为0，存在梯度消失的情况。</p>
+<p>解决办法：</p>
+<ul>
+<li>用<code>ReLU</code>，<code>Leaky ReLU</code>等其他激活函数代替</li>
+<li>采用适合的权重初始化方法，如<code>He_init</code></li>
+<li>在分类问题中，<code>sigmoid</code>作为激活函数时，用交叉熵损失函数替代MSE</li>
+<li>加入BN层</li>
+<li>分层训练权重</li>
+</ul>
+<h2 id="7-relu在零点可导吗如何进行反向传播">7. ReLU在零点可导吗？如何进行反向传播？<a hidden class="anchor" aria-hidden="true" href="#7-relu在零点可导吗如何进行反向传播">#</a></h2>
+<p>不可导，可以人为的将零点梯度规定为0。</p>
+<p>caffe源码~/caffe/src/caffe/layers/relu_layer.cpp倒数第十行代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>bottom_diff[i] <span style="color:#f92672">=</span> top_diff[i] <span style="color:#f92672">*</span> ((bottom_data[i] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)<span style="color:#f92672">+</span> negative_slope <span style="color:#f92672">*</span> (bottom_data[i] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>));
+</span></span></code></pre></div><p>可见，间断点（$\leq0$）处的导数为negtive_slope（默认为0）。</p>
+<h2 id="8-softmax的溢出问题怎么解决">8. Softmax的溢出问题怎么解决？<a hidden class="anchor" aria-hidden="true" href="#8-softmax的溢出问题怎么解决">#</a></h2>
+<p>由于Softmax的指数运算，可能导致溢出问题。</p>
+<p>令$M=\max(x_i)$，将计算$f(x_i)$转换为计算$f(x_i-M)$的值，就可以解决溢出问题了，且理论上计算结果与计算$f(x_i)$保持一致，该操作类似与<strong>Min-Max归一化</strong>。</p>
+<h2 id="9-推导sigmoid的求导公式">9. 推导Sigmoid的求导公式<a hidden class="anchor" aria-hidden="true" href="#9-推导sigmoid的求导公式">#</a></h2>
+<p>sigmoid公式如下：</p>
+<p>$$
+\sigma(z)=\frac{1}{1+e^{-z}}
+$$</p>
+<p>求导公式推导如下：</p>
+<div>
+$$
+\begin{align}\sigma'(z)&=(\frac{1}{1+e^{-z}})'\\&=(e^{-z})\cdot\frac{1}{(1+e^{-z})^2}\\&=\frac{1}{1+e^{-z}}\cdot\frac{e^{-z}}{1+e^{-z}}\\&=\frac{1}{1+e^{-z}}\cdot(1-\frac{1}{1+e^{-z}})\\&=\sigma(z)\cdot(1-\sigma(z))\end{align}
+$$
+</div>
+<h2 id="10-推导softmax的求导公式">10. 推导Softmax的求导公式<a hidden class="anchor" aria-hidden="true" href="#10-推导softmax的求导公式">#</a></h2>
+<p>softmax公式如下：
+$$
+s(z_i)=\frac{e^{z_i}}{\sum_{k=1}^{n}{e^{z_k}}}
+$$
+求导公式推导如下：</p>
+<ul>
+<li>当$j=i$时：</li>
+</ul>
+<div>
+$$
+\begin{align}
+\frac{\partial s_i}{\partial z_i}
+&=\frac{\partial(\frac{e^{z_i}}{\sum_{k=1}^{n}{e^{z_k}}})}{\partial z_i}\\
+&=\frac{e^{z_i}\cdot\sum{e^{z_k}}-(e^{z_i})^2}{(\sum{e^{z_k}})^2}\\
+&=\frac{e^{z_i}}{\sum{e^{z_k}}}\cdot\frac{\sum{e^{z_k}}-e^{z_i}}{\sum{e^{z_k}}}\\
+&=\frac{e^{z_i}}{\sum{e^{z_k}}}\cdot(1-\frac{e^{z_i}}{\sum{e^{z_k}}})\\
+&=s_i(1-s_i)
+\end{align}
+$$
+</div>
+<ul>
+<li>当$j\neq i$时：</li>
+</ul>
+<div>
+$$
+\begin{align}
+\frac{\partial s_j}{\partial z_i}
+&=\frac{\partial(\frac{e^{z_j}}{\sum_{k=1}^{n}{e^{z_k}}})}{\partial z_i}\\
+&=e^{z_j}\cdot-(\frac{1}{\sum{e^{z_k}}})^2\cdot e^{z_i}\\
+&=-\frac{e^{z_j}}{\sum{e^{z_k}}}\cdot\frac{e^{z_i}}{\sum{e^{e_k}}}\\
+&=-s_j\cdot s_i
+\end{align}
+$$
+</div>
+<h2 id="ps基本初等函数的求导公式与法则">p.s.基本初等函数的求导公式与法则<a hidden class="anchor" aria-hidden="true" href="#ps基本初等函数的求导公式与法则">#</a></h2>
+<p><img loading="lazy" src="grad.jpg" alt=""  />
 </p>
-<h2 id="4-在下游任务上的评估">4. 在下游任务上的评估<a hidden class="anchor" aria-hidden="true" href="#4-在下游任务上的评估">#</a></h2>
-<h3 id="41-coco数据集上的目标检测和分割">4.1 COCO数据集上的目标检测和分割<a hidden class="anchor" aria-hidden="true" href="#41-coco数据集上的目标检测和分割">#</a></h3>
-<h3 id="42-ade20k上的语义分割">4.2 ADE20K上的语义分割<a hidden class="anchor" aria-hidden="true" href="#42-ade20k上的语义分割">#</a></h3>
-<h3 id="43-关于模型效率的评论">4.3 关于模型效率的评论<a hidden class="anchor" aria-hidden="true" href="#43-关于模型效率的评论">#</a></h3>
-<h2 id="5-总结">5. 总结<a hidden class="anchor" aria-hidden="true" href="#5-总结">#</a></h2>
-<p>ConvNeXt模型本身不是全新的，里面的许多设计都被单独测试过，但没有放在一起测试过。ConvNeXt的实验结果是优秀的，在多个计算机视觉基准测试中与最先进的层级Transformer竞争的同时，还保留着标准卷积网络的简单性和效率。</p>
 
 
         </div>
@@ -589,15 +651,10 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://Achilles-10.github.io/posts/tech/activation/">
-    <span class="title">« 上一页</span>
-    <br>
-    <span>深度学习面试题：激活函数</span>
-  </a>
-  <a class="next" href="https://Achilles-10.github.io/posts/tech/opencv1/">
+  <a class="next" href="https://Achilles-10.github.io/posts/paper/convnext/">
     <span class="title">下一页 »</span>
     <br>
-    <span>OpenCV-python学习笔记(1)：核心操作</span>
+    <span>A ConvNet for the 2020s</span>
   </a>
 </nav>
 

@@ -6,7 +6,16 @@
     <description>Recent content in 👨🏻‍💻 技术 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 26 Mar 2023 22:33:00 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 28 Mar 2023 23:59:35 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深度学习面试题：激活函数</title>
+      <link>https://Achilles-10.github.io/posts/tech/activation/</link>
+      <pubDate>Tue, 28 Mar 2023 23:59:35 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/activation/</guid>
+      <description>深度学习算法岗激活函数常见面试题</description>
+    </item>
+    
     <item>
       <title>OpenCV-python学习笔记(1)：核心操作</title>
       <link>https://Achilles-10.github.io/posts/tech/opencv1/</link>
