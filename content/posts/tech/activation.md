@@ -7,7 +7,7 @@ author: ["Achilles"]
 # - 
 categories: # 没有分类界面可以不填写
 - 
-tags: ["面试",“学习笔记”] # 标签
+tags: ["面试","学习笔记"] # 标签
 description: "深度学习算法岗激活函数常见面试题"
 weight:
 slug: ""

@@ -11,7 +11,7 @@ tags: [] # 标签
 description: ""
 weight:
 slug: ""
-draft: false # 是否为草稿
+draft: true # 是否为草稿
 comments: true # 本页面是否显示评论
 # reward: true # 打赏
 mermaid: true #是否开启mermaid

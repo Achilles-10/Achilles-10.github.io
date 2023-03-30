@@ -1,5 +1,5 @@
 ---
-title: "OpenCV-python学习笔记(1)：核心操作"
+title: "OpenCV-Python学习笔记(1)：核心操作"
 date: 2023-03-26T22:33:00+08:00
 lastmod: 2023-03-26T22:33:00+08:00
 author: ["Achilles"]
