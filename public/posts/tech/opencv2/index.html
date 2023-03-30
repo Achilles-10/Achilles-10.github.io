@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>深度学习面试题：激活函数 | 烈烈风中、的博客</title>
-<meta name="keywords" content="面试, 学习笔记">
-<meta name="description" content="深度学习算法岗激活函数常见面试题">
+<title>OpenCV-Python学习笔记(2)：颜色空间 | 烈烈风中、的博客</title>
+<meta name="keywords" content="OpenCV, 学习笔记">
+<meta name="description" content="颜色空间 RGB颜色空间 RGB（红绿蓝）是依据人眼识别的颜色定义出的空间，可表示大部分颜色。但在科学研究一般不采用RGB颜色空间，因为它的细节难以进行数字化的调整。它将色调，亮度，饱和度三个量放在一起表示，很难分开。它是最通用的面向硬件的彩色模型。RGB颜色空间适合于显示系统，不适">
 <meta name="author" content="Achilles">
-<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/activation/">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/opencv2/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.bbeda8e1e549176967769f270888cf40bc16afa3aac9319d0bc6aa5e815ed5e8.css" integrity="sha256-u&#43;2o4eVJF2lndp8nCIjPQLwWr6OqyTGdC8aqXoFe1eg=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
         onload="hljs.initHighlightingOnLoad();"></script>
@@ -96,18 +96,16 @@ var _hmt = _hmt || [];
     });
 </script>
 
-<meta property="og:title" content="深度学习面试题：激活函数" />
-<meta property="og:description" content="深度学习算法岗激活函数常见面试题" />
+<meta property="og:title" content="OpenCV-Python学习笔记(2)：颜色空间" />
+<meta property="og:description" content="颜色空间 RGB颜色空间 RGB（红绿蓝）是依据人眼识别的颜色定义出的空间，可表示大部分颜色。但在科学研究一般不采用RGB颜色空间，因为它的细节难以进行数字化的调整。它将色调，亮度，饱和度三个量放在一起表示，很难分开。它是最通用的面向硬件的彩色模型。RGB颜色空间适合于显示系统，不适" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/activation/" />
-<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/activation/cover.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-03-28T23:59:35+08:00" />
-<meta property="article:modified_time" content="2023-03-28T23:59:35+08:00" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/opencv2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-29T18:25:34+08:00" />
+<meta property="article:modified_time" content="2023-03-29T18:25:34+08:00" />
 
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/activation/cover.png" />
-<meta name="twitter:title" content="深度学习面试题：激活函数"/>
-<meta name="twitter:description" content="深度学习算法岗激活函数常见面试题"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenCV-Python学习笔记(2)：颜色空间"/>
+<meta name="twitter:description" content="颜色空间 RGB颜色空间 RGB（红绿蓝）是依据人眼识别的颜色定义出的空间，可表示大部分颜色。但在科学研究一般不采用RGB颜色空间，因为它的细节难以进行数字化的调整。它将色调，亮度，饱和度三个量放在一起表示，很难分开。它是最通用的面向硬件的彩色模型。RGB颜色空间适合于显示系统，不适"/>
 
 
 <script type="application/ld+json">
@@ -132,8 +130,8 @@ var _hmt = _hmt || [];
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "深度学习面试题：激活函数",
-      "item": "https://Achilles-10.github.io/posts/tech/activation/"
+      "name": "OpenCV-Python学习笔记(2)：颜色空间",
+      "item": "https://Achilles-10.github.io/posts/tech/opencv2/"
     }
   ]
 }
@@ -142,24 +140,24 @@ var _hmt = _hmt || [];
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "深度学习面试题：激活函数",
-  "name": "深度学习面试题：激活函数",
-  "description": "深度学习算法岗激活函数常见面试题",
+  "headline": "OpenCV-Python学习笔记(2)：颜色空间",
+  "name": "OpenCV-Python学习笔记(2)：颜色空间",
+  "description": "颜色空间 RGB颜色空间 RGB（红绿蓝）是依据人眼识别的颜色定义出的空间，可表示大部分颜色。但在科学研究一般不采用RGB颜色空间，因为它的细节难以进行数字化的调整。它将色调，亮度，饱和度三个量放在一起表示，很难分开。它是最通用的面向硬件的彩色模型。RGB颜色空间适合于显示系统，不适",
   "keywords": [
-    "面试", "学习笔记"
+    "OpenCV", "学习笔记"
   ],
-  "articleBody": "1. 说一下了解的激活函数和各自的应用场景 sigmoid: $$ \\sigma(x)=\\frac{1}{1+e^{-x}} $$ sigmoid是第一个被广泛应用于神级网络的激活函数，其值域为$[0,1]$，但是它存在输出均值不为0和梯度消失的问题，在深层网络中被其他激活函数替代。在逻辑回归中使用该激活函数用于输出分类。\ntanh: $$ tanh(x)=\\frac{e^x-e^{-x}}{e^x+e^{-x}}=2\\sigma(2x)-1 $$ tanh函数解决了sigmoid函数均值不为0的情况，值域为$[-1,1]$，但仍然存在梯度消失的问题。在LSTM中使用了tanh。\nReLU: $$ ReLU(x)= \\begin{cases} x,\\ x\\geq0\\\\\\ 0,\\ x\u003c0\\ \\end{cases} $$ ReLU函数能有效避免梯度消失的问题，但在负值区域处于饱和状态（“死区”）。Alex-Net使用了ReLU，在使用深层网络时最好使用ReLU而不是sigmoid。\nLeaky ReLU： $$ Leaky\\ ReLU(x)= \\begin{cases} x,\\ x\\geq0\\\\\\ \\alpha\\cdot x,\\ x\u003c0 \\end{cases} $$ Leaky ReLU在负值区添加了一个斜率参数，缓解了饱和性问题（“死区”）。但缺点是超参数$\\alpha$的合适值不好设定，当我们想让神经网络学习到负值区的信息时可以使用该函数。\n参数化ReLU(P-ReLU)：解决超参数$\\alpha$不好设定的问题，将其作为模型参数融入到模型的训练过程中，在反向传播时更新参数。\n随机化ReLU(R-ReLU)：随机化超参数$\\alpha$，使不同的层学习不同的参数。其随机化参数的分布符合均匀分布或高斯分布。\nELU： $$ ELU(x)= \\begin{cases} x,\\ x\\geq0\\\\\\ \\lambda\\cdot(e^x-1),\\ x\u003c0 \\end{cases} $$ 解决饱和性问题，但缺点是指数计算量大。\nGELU： $$ GELU(x)=x\\text{P}(\\text{X}\\leq x)=x\\Phi(x) $$ ​\t其中$\\Phi(x)$是正态分布的概率函数，计算时近似计算的数学公式如下： $$ GELU(x)=\\frac{1}{2}x(1+tanh[\\sqrt{\\frac{2}{\\pi}}(x+0.044715x^3)]) $$\n2. 为什么需要激活函数？ 在线性模型中引入非线性激活函数，可以使线性模型非线性化，提高模型的非线性表达能力，也就是拟合能力。\n3. 激活函数的特征？ 非线性性 几乎处处可微 计算简单 单调性：符号不变容易收敛 非饱和性：饱和指在某些区间的梯度接近零，即梯度消失，使得参数无法继续更新 输出范围有限 接近恒等变换 参数少 4. Leaky ReLU相对于ReLU的优势在哪？ Leaky ReLU在负值增加了一个斜率$\\alpha$，缓解了ReLU在$x\u003c0$时的饱和性问题(“死区”，梯度消失)，但Leaky ReLU得超参数$\\alpha$的合适值不好设定。\n当我们想让神经网络能够学到负值信息时可以使用该激活函数。\n5. 什么是ReLU6？ ReLU的值域为$[0,\\infty]$，在实际应用中需要限定输出的最大值，将输出在6处截断，即为ReLU6。\n6. Sigmoid函数有什么缺点？怎么解决？ 缺点：输出均值不为0，存在梯度消失的情况。\n解决办法：\n用ReLU，Leaky ReLU等其他激活函数代替 采用适合的权重初始化方法，如He_init 在分类问题中，sigmoid作为激活函数时，用交叉熵损失函数替代MSE 加入BN层 分层训练权重 7. ReLU在零点可导吗？如何进行反向传播？ 不可导，可以人为的将零点梯度规定为0。\ncaffe源码~/caffe/src/caffe/layers/relu_layer.cpp倒数第十行代码如下：\nbottom_diff[i] = top_diff[i] * ((bottom_data[i] \u003e 0)+ negative_slope * (bottom_data[i] \u003c= 0)); 可见，间断点（$\\leq0$）处的导数为negtive_slope（默认为0）。\n8. Softmax的溢出问题怎么解决？ 由于Softmax的指数运算，可能导致溢出问题。\n令$M=\\max(x_i)$，将计算$f(x_i)$转换为计算$f(x_i-M)$的值，就可以解决溢出问题了，且理论上计算结果与计算$f(x_i)$保持一致，该操作类似与Min-Max归一化。\n9. 推导Sigmoid的求导公式 sigmoid公式如下：\n$$ \\sigma(z)=\\frac{1}{1+e^{-z}} $$\n求导公式推导如下：\n$$ \\begin{align}\\sigma'(z)\u0026=(\\frac{1}{1+e^{-z}})'\\\\\u0026=(e^{-z})\\cdot\\frac{1}{(1+e^{-z})^2}\\\\\u0026=\\frac{1}{1+e^{-z}}\\cdot\\frac{e^{-z}}{1+e^{-z}}\\\\\u0026=\\frac{1}{1+e^{-z}}\\cdot(1-\\frac{1}{1+e^{-z}})\\\\\u0026=\\sigma(z)\\cdot(1-\\sigma(z))\\end{align} $$ 10. 推导Softmax的求导公式 softmax公式如下： $$ s(z_i)=\\frac{e^{z_i}}{\\sum_{k=1}^{n}{e^{z_k}}} $$ 求导公式推导如下：\n当$j=i$时： $$ \\begin{align} \\frac{\\partial s_i}{\\partial z_i} \u0026=\\frac{\\partial(\\frac{e^{z_i}}{\\sum_{k=1}^{n}{e^{z_k}}})}{\\partial z_i}\\\\ \u0026=\\frac{e^{z_i}\\cdot\\sum{e^{z_k}}-(e^{z_i})^2}{(\\sum{e^{z_k}})^2}\\\\ \u0026=\\frac{e^{z_i}}{\\sum{e^{z_k}}}\\cdot\\frac{\\sum{e^{z_k}}-e^{z_i}}{\\sum{e^{z_k}}}\\\\ \u0026=\\frac{e^{z_i}}{\\sum{e^{z_k}}}\\cdot(1-\\frac{e^{z_i}}{\\sum{e^{z_k}}})\\\\ \u0026=s_i(1-s_i) \\end{align} $$ 当$j\\neq i$时： $$ \\begin{align} \\frac{\\partial s_j}{\\partial z_i} \u0026=\\frac{\\partial(\\frac{e^{z_j}}{\\sum_{k=1}^{n}{e^{z_k}}})}{\\partial z_i}\\\\ \u0026=e^{z_j}\\cdot-(\\frac{1}{\\sum{e^{z_k}}})^2\\cdot e^{z_i}\\\\ \u0026=-\\frac{e^{z_j}}{\\sum{e^{z_k}}}\\cdot\\frac{e^{z_i}}{\\sum{e^{e_k}}}\\\\ \u0026=-s_j\\cdot s_i \\end{align} $$ p.s.基本初等函数的求导公式与法则 ",
-  "wordCount" : "1526",
+  "articleBody": "颜色空间 RGB颜色空间 RGB（红绿蓝）是依据人眼识别的颜色定义出的空间，可表示大部分颜色。但在科学研究一般不采用RGB颜色空间，因为它的细节难以进行数字化的调整。它将色调，亮度，饱和度三个量放在一起表示，很难分开。它是最通用的面向硬件的彩色模型。RGB颜色空间适合于显示系统，不适合于图像处理。\nHSV颜色空间 HSV表达彩色图像的方式由三个部分组成：\nHue（色调，色相） Saturation（饱和度，色彩纯净度） Value（明度） 在HSV颜色空间下，比RGB更容易跟踪某种颜色的物体，常用与分割指定颜色的物体。\n用下面这个圆柱体来表示HSV颜色空间，圆柱体的横截面可以看做是一个极坐标系 ，H用极坐标的极角表示，S用极坐标的极轴长度表示，V用圆柱中轴的高度表示。\n在RGB颜色空间中，颜色由三个值共同决定，比如黄色为(255,255,0)，在HSV颜色空间中，黄色只有一个值决定，Hue=60。\n饱和度表示颜色接近光谱色的程度：饱和度越高，说明颜色越深，越接近光谱色；饱和度为0表示纯白色。\n明度决定颜色空间中颜色的明暗程度：明度越高，表示颜色越明亮；明度为0表示纯黑色（此时颜色最暗）。\nHLS 颜色空间 HLS颜色空间和HSV颜色空间比较类似，区别在于最后一个分量不同。HLS中的L表示Lightness（亮度），亮度为100表示白色，亮度为0表示黑色。HSV中的V表示明度，明度为100表示光谱色，明度为0表示黑色。\n提取白色物体时，使用HLS更方便，因为HSV中的H没有白色，需要由S和V共同决定（S=0，V=100）；在HLS中白色仅有亮度L一个分量决定。\nYUV/YCbCr YUV是通过亮度-色差来描述颜色的颜色空间。Y是亮度信号，色度信号由两个互相独立的信号组成，根据颜色系统和格式不同，色度信号被称作UV/PbPr/CbCr。在DVD中，色度信号被存储为Cb和Cr（C表示颜色，b蓝色，r红色）。\n改变颜色空间 颜色空间 考虑BGR$\\leftrightarrow$Gray，BGR$\\leftrightarrow$HSV和BGR$\\leftrightarrow$YCrCB颜色空间的转换。\ncv2.cvtColor(input_image, flag)函数用于颜色空间转换，flag决定转换的类型：\ncv2.COLOR_BGR2GRAY cv2.COLOR_BGR2HSV cv2.COLOR_BGR2YCR_CB 可以用以下命令获取其他标记：\nflags = [i for i in dir(cv2) if i.startswith('COLOR_')] print(flags) HSV的色相范围为[0,179]，饱和度为[0,255]，值域为[0,255]。不同软件使用不同的规模，若要将OpenCV的值和它们比较，需要做标准化操作。\n对象追踪 HSV比BGR颜色空间更容易表示颜色，可以使用HSV来提取有颜色的对象。以下代码尝试提取一个蓝色对象，步骤：截取视频的每一帧$\\rightarrow$转换到HSV颜色空间$\\rightarrow$设置蓝色范围的阈值$\\rightarrow$单独提取蓝色对象。\nimport cv2 import numpy as np cap = cv2.VideoCapture(0) while(1): # 读取帧 _, frame = cap.read() # 转换颜色空间 BGR 到 HSV hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) # 定义HSV中蓝色的范围 lower_blue = np.array([110,50,50]) upper_blue = np.array([130,255,255]) # 设置HSV的阈值使得只取蓝色 mask = cv2.inRange(hsv, lower_blue, upper_blue) # 将掩膜和图像逐像素相加 res = cv2.bitwise_and(frame,frame, mask= mask) cv2.namedWindow('frame', cv2.WINDOW_NORMAL) cv2.imshow('frame',frame) cv2.namedWindow('mask', cv2.WINDOW_NORMAL) cv2.imshow('mask',mask) cv2.namedWindow('res', cv2.WINDOW_NORMAL) cv2.imshow('res',res) k = cv2.waitKey(5) \u0026 0xFF if k == 27: break cv2.destroyAllWindows() 在上面的HLS颜色空间示意图中测试白色的检测：\nimport cv2 import numpy as np import matplotlib.pyplot as plt img = cv2.imread(\"hls.jpeg\") # Convert BGR to HLS imgHLS = cv2.cvtColor(img, cv2.COLOR_BGR2HLS) # range of white color in L channel # mask = cv2.inRange(imgHLS[:,:,1], lowerb=250, upperb=255) mask = cv2.inRange(imgHLS, np.array([0,250,0]), np.array([255,255,255])) # Apply Mask to original image white_mask = cv2.bitwise_and(img, img, mask=mask) 找到要追踪的HSV值 使用cv2.cvtColor(color,cv2.COLOR_BGR2HSV)，传递颜色而非图像。示例如下：\nimport cv2 import numpy as np red = np.uint8([[[0,0,255 ]]]) hsv_red = cv2.cvtColor(red,cv2.COLOR_BGR2HSV) print( hsv_red ) 如果想要同时追踪多种颜色，可以将多种颜色的掩码经过按位或操作得到新的掩码：\nmask = cv2.bitwise_or(mask_blue,mask_green,mask_red) ",
+  "wordCount" : "1448",
   "inLanguage": "en",
-  "image":"https://Achilles-10.github.io/posts/tech/activation/cover.png","datePublished": "2023-03-28T23:59:35+08:00",
-  "dateModified": "2023-03-28T23:59:35+08:00",
+  "datePublished": "2023-03-29T18:25:34+08:00",
+  "dateModified": "2023-03-29T18:25:34+08:00",
   "author":[{
     "@type": "Person",
     "name": "Achilles"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://Achilles-10.github.io/posts/tech/activation/"
+    "@id": "https://Achilles-10.github.io/posts/tech/opencv2/"
   },
   "publisher": {
     "@type": "Organization",
@@ -275,11 +273,8 @@ var _hmt = _hmt || [];
         <header class="post-header">
             <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
             <h1 class="post-title">
-                深度学习面试题：激活函数
+                OpenCV-Python学习笔记(2)：颜色空间
             </h1>
-            <div class="post-description">
-                深度学习算法岗激活函数常见面试题
-            </div>
             <div class="post-meta"><style>
     i[id*="post_meta_style"] {
         display: flex;
@@ -297,7 +292,7 @@ var _hmt = _hmt || [];
 <span class="parent-post-meta">
     <span id="post_meta_style_1">
         <span class="fa fa-calendar-check-o"></span>
-        <span>2023 年 3 月 28 日
+        <span>2023 年 3 月 29 日
             &nbsp;&nbsp;
         </span>
     </span>
@@ -310,13 +305,13 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>1526字
+        <span>1448字
             &nbsp;&nbsp;
         </span>
     </span>
     <span id="post_meta_style_4">
         <span class="fa fa-clock-o"></span>
-        <span>4分钟
+        <span>3分钟
             &nbsp;&nbsp;
         </span>
     </span>
@@ -330,7 +325,7 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://Achilles-10.github.io/tags/%E9%9D%A2%E8%AF%95/" style="color: var(--secondary)!important;">面试</a>
+                <a href="https://Achilles-10.github.io/tags/opencv/" style="color: var(--secondary)!important;">OpenCV</a>
                 &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
             </span>
         </span>
@@ -384,10 +379,7 @@ var _hmt = _hmt || [];
                 </span>
 
 </div>
-        </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/activation/cover.png" alt="">
-    
-</figure><aside id="toc-container" class="toc-container wide">
+        </header> <aside id="toc-container" class="toc-container wide">
     <div class="toc">
         <details  open>
         <summary accesskey="c" title="(Alt + C)">
@@ -396,28 +388,29 @@ var _hmt = _hmt || [];
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#1-%e8%af%b4%e4%b8%80%e4%b8%8b%e4%ba%86%e8%a7%a3%e7%9a%84%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0%e5%92%8c%e5%90%84%e8%87%aa%e7%9a%84%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="1. 说一下了解的激活函数和各自的应用场景">1. 说一下了解的激活函数和各自的应用场景</a></li>
+                    <a href="#%e9%a2%9c%e8%89%b2%e7%a9%ba%e9%97%b4" aria-label="颜色空间">颜色空间</a><ul>
+                        
                 <li>
-                    <a href="#2-%e4%b8%ba%e4%bb%80%e4%b9%88%e9%9c%80%e8%a6%81%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0" aria-label="2. 为什么需要激活函数？">2. 为什么需要激活函数？</a></li>
+                    <a href="#rgb%e9%a2%9c%e8%89%b2%e7%a9%ba%e9%97%b4" aria-label="RGB颜色空间">RGB颜色空间</a></li>
                 <li>
-                    <a href="#3-%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0%e7%9a%84%e7%89%b9%e5%be%81" aria-label="3. 激活函数的特征？">3. 激活函数的特征？</a></li>
+                    <a href="#hsv%e9%a2%9c%e8%89%b2%e7%a9%ba%e9%97%b4" aria-label="HSV颜色空间">HSV颜色空间</a></li>
                 <li>
-                    <a href="#4-leaky-relu%e7%9b%b8%e5%af%b9%e4%ba%8erelu%e7%9a%84%e4%bc%98%e5%8a%bf%e5%9c%a8%e5%93%aa" aria-label="4. Leaky ReLU相对于ReLU的优势在哪？">4. Leaky ReLU相对于ReLU的优势在哪？</a></li>
+                    <a href="#hls-%e9%a2%9c%e8%89%b2%e7%a9%ba%e9%97%b4" aria-label="HLS 颜色空间">HLS 颜色空间</a></li>
                 <li>
-                    <a href="#5-%e4%bb%80%e4%b9%88%e6%98%afrelu6" aria-label="5. 什么是ReLU6？">5. 什么是ReLU6？</a></li>
-                <li>
-                    <a href="#6-sigmoid%e5%87%bd%e6%95%b0%e6%9c%89%e4%bb%80%e4%b9%88%e7%bc%ba%e7%82%b9%e6%80%8e%e4%b9%88%e8%a7%a3%e5%86%b3" aria-label="6. Sigmoid函数有什么缺点？怎么解决？">6. Sigmoid函数有什么缺点？怎么解决？</a></li>
-                <li>
-                    <a href="#7-relu%e5%9c%a8%e9%9b%b6%e7%82%b9%e5%8f%af%e5%af%bc%e5%90%97%e5%a6%82%e4%bd%95%e8%bf%9b%e8%a1%8c%e5%8f%8d%e5%90%91%e4%bc%a0%e6%92%ad" aria-label="7. ReLU在零点可导吗？如何进行反向传播？">7. ReLU在零点可导吗？如何进行反向传播？</a></li>
-                <li>
-                    <a href="#8-softmax%e7%9a%84%e6%ba%a2%e5%87%ba%e9%97%ae%e9%a2%98%e6%80%8e%e4%b9%88%e8%a7%a3%e5%86%b3" aria-label="8. Softmax的溢出问题怎么解决？">8. Softmax的溢出问题怎么解决？</a></li>
-                <li>
-                    <a href="#9-%e6%8e%a8%e5%af%bcsigmoid%e7%9a%84%e6%b1%82%e5%af%bc%e5%85%ac%e5%bc%8f" aria-label="9. 推导Sigmoid的求导公式">9. 推导Sigmoid的求导公式</a></li>
-                <li>
-                    <a href="#10-%e6%8e%a8%e5%af%bcsoftmax%e7%9a%84%e6%b1%82%e5%af%bc%e5%85%ac%e5%bc%8f" aria-label="10. 推导Softmax的求导公式">10. 推导Softmax的求导公式</a></li>
-                <li>
-                    <a href="#ps%e5%9f%ba%e6%9c%ac%e5%88%9d%e7%ad%89%e5%87%bd%e6%95%b0%e7%9a%84%e6%b1%82%e5%af%bc%e5%85%ac%e5%bc%8f%e4%b8%8e%e6%b3%95%e5%88%99" aria-label="p.s.基本初等函数的求导公式与法则">p.s.基本初等函数的求导公式与法则</a>
+                    <a href="#yuvycbcr" aria-label="YUV/YCbCr">YUV/YCbCr</a></li></ul>
                 </li>
+                <li>
+                    <a href="#%e6%94%b9%e5%8f%98%e9%a2%9c%e8%89%b2%e7%a9%ba%e9%97%b4" aria-label="改变颜色空间">改变颜色空间</a><ul>
+                        
+                <li>
+                    <a href="#%e9%a2%9c%e8%89%b2%e7%a9%ba%e9%97%b4-1" aria-label="颜色空间">颜色空间</a></li>
+                <li>
+                    <a href="#%e5%af%b9%e8%b1%a1%e8%bf%bd%e8%b8%aa" aria-label="对象追踪">对象追踪</a></li>
+                <li>
+                    <a href="#%e6%89%be%e5%88%b0%e8%a6%81%e8%bf%bd%e8%b8%aa%e7%9a%84hsv%e5%80%bc" aria-label="找到要追踪的HSV值">找到要追踪的HSV值</a>
+                </li>
+            </ul>
+            </li>
             </ul>
         </div>
         </details>
@@ -481,168 +474,100 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h2 id="1-说一下了解的激活函数和各自的应用场景">1. 说一下了解的激活函数和各自的应用场景<a hidden class="anchor" aria-hidden="true" href="#1-说一下了解的激活函数和各自的应用场景">#</a></h2>
+        <div class="post-content"><h2 id="颜色空间">颜色空间<a hidden class="anchor" aria-hidden="true" href="#颜色空间">#</a></h2>
+<h3 id="rgb颜色空间">RGB颜色空间<a hidden class="anchor" aria-hidden="true" href="#rgb颜色空间">#</a></h3>
+<p>RGB（红绿蓝）是依据人眼识别的颜色定义出的空间，可表示大部分颜色。但在科学研究一般不采用RGB颜色空间，因为它的细节难以进行数字化的调整。它将<strong>色调，亮度，饱和度三个量放在一起表示，很难分开</strong>。它是最通用的面向硬件的彩色模型。RGB颜色空间<strong>适合于显示系统，不适合于图像处理</strong>。</p>
+<p><img loading="lazy" src="rgb.png" alt=""  />
+</p>
+<h3 id="hsv颜色空间">HSV颜色空间<a hidden class="anchor" aria-hidden="true" href="#hsv颜色空间">#</a></h3>
+<p>HSV表达彩色图像的方式由三个部分组成：</p>
 <ul>
-<li>
-<p><strong><code>sigmoid</code></strong>:
-$$
-\sigma(x)=\frac{1}{1+e^{-x}}
-$$
-<img loading="lazy" src="sigmoid.png" alt=""  />
-</p>
-<p><code>sigmoid</code>是第一个被广泛应用于神级网络的激活函数，其值域为$[0,1]$，但是它存在输出均值不为0和梯度消失的问题，在深层网络中被其他激活函数替代。在<strong>逻辑回归</strong>中使用该激活函数用于输出<strong>分类</strong>。</p>
-</li>
-<li>
-<p><strong><code>tanh</code></strong>:
-$$
-tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}=2\sigma(2x)-1
-$$
-<img loading="lazy" src="tanh.png" alt=""  />
-</p>
-<p><code>tanh</code>函数解决了<code>sigmoid</code>函数均值不为0的情况，值域为$[-1,1]$，但仍然存在梯度消失的问题。在LSTM中使用了<code>tanh</code>。</p>
-</li>
-<li>
-<p><strong><code>ReLU</code></strong>:
-$$
-ReLU(x)=
-\begin{cases}
-x,\ x\geq0\\\
-0,\ x&lt;0\
-\end{cases}
-$$
-<img loading="lazy" src="relu.png" alt=""  />
-</p>
-<p><code>ReLU</code>函数能有效避免梯度消失的问题，但在负值区域处于饱和状态（“死区”）。Alex-Net使用了<code>ReLU</code>，在使用深层网络时最好使用<code>ReLU</code>而不是<code>sigmoid</code>。</p>
-</li>
-<li>
-<p><strong><code>Leaky ReLU</code></strong>：
-$$
-Leaky\ ReLU(x)=
-\begin{cases}
-x,\ x\geq0\\\
-\alpha\cdot x,\ x&lt;0
-\end{cases}
-$$
-<img loading="lazy" src="lrelu.png" alt=""  />
-</p>
-<p><code>Leaky ReLU</code>在负值区添加了一个斜率参数，缓解了饱和性问题（“死区”）。但缺点是超参数$\alpha$的合适值不好设定，当我们想让神经网络学习到负值区的信息时可以使用该函数。</p>
-</li>
-<li>
-<p><strong><code>参数化ReLU(P-ReLU)</code></strong>：解决超参数$\alpha$不好设定的问题，将其作为模型参数融入到模型的训练过程中，在反向传播时更新参数。</p>
-</li>
-<li>
-<p><strong><code>随机化ReLU(R-ReLU)</code></strong>：随机化超参数$\alpha$，使不同的层学习不同的参数。其随机化参数的分布符合均匀分布或高斯分布。</p>
-</li>
-<li>
-<p><strong><code>ELU</code></strong>：
-$$
-ELU(x)=
-\begin{cases}
-x,\ x\geq0\\\
-\lambda\cdot(e^x-1),\ x&lt;0
-\end{cases}
-$$
-解决饱和性问题，但缺点是指数计算量大。</p>
-</li>
-<li>
-<p><strong><code>GELU</code></strong>：
-$$
-GELU(x)=x\text{P}(\text{X}\leq x)=x\Phi(x)
-$$
-<img loading="lazy" src="gelu.png" alt=""  />
-</p>
-</li>
+<li><strong>Hue</strong>（色调，色相）</li>
+<li><strong>Saturation</strong>（饱和度，色彩纯净度）</li>
+<li><strong>Value</strong>（明度）</li>
 </ul>
-<p>​	其中$\Phi(x)$是正态分布的概率函数，计算时近似计算的数学公式如下：
-$$
-GELU(x)=\frac{1}{2}x(1+tanh[\sqrt{\frac{2}{\pi}}(x+0.044715x^3)])
-$$</p>
-<h2 id="2-为什么需要激活函数">2. 为什么需要激活函数？<a hidden class="anchor" aria-hidden="true" href="#2-为什么需要激活函数">#</a></h2>
-<p>在线性模型中引入非线性激活函数，可以使线性模型非线性化，提高模型的非线性表达能力，也就是拟合能力。</p>
-<h2 id="3-激活函数的特征">3. 激活函数的特征？<a hidden class="anchor" aria-hidden="true" href="#3-激活函数的特征">#</a></h2>
+<p>在HSV颜色空间下，比RGB更<strong>容易跟踪某种颜色的</strong>物体，常用与分割指定颜色的物体。</p>
+<p>用下面这个圆柱体来表示HSV颜色空间，圆柱体的横截面可以看做是一个极坐标系 ，H用极坐标的极角表示，S用极坐标的极轴长度表示，V用圆柱中轴的高度表示。</p>
+<p><img loading="lazy" src="hsv.jpeg" alt=""  />
+</p>
+<p>在RGB颜色空间中，颜色由三个值共同决定，比如黄色为(255,255,0)，在HSV颜色空间中，黄色只有一个值决定，Hue=60。</p>
+<p><strong>饱和度表示颜色接近光谱色的程度</strong>：饱和度越高，说明颜色越深，越接近光谱色；饱和度为0表示纯白色。</p>
+<p><strong>明度决定颜色空间中颜色的明暗程度</strong>：明度越高，表示颜色越明亮；明度为0表示纯黑色（此时颜色最暗）。</p>
+<h3 id="hls-颜色空间">HLS 颜色空间<a hidden class="anchor" aria-hidden="true" href="#hls-颜色空间">#</a></h3>
+<p>HLS颜色空间和HSV颜色空间比较类似，区别在于最后一个分量不同。<strong>HLS中的L表示Lightness（亮度），亮度为100表示白色，亮度为0表示黑色</strong>。HSV中的V表示明度，明度为100表示光谱色，明度为0表示黑色。</p>
+<p><img loading="lazy" src="hls.jpeg" alt=""  />
+</p>
+<p><strong>提取白色物体时，使用HLS更方便</strong>，因为HSV中的H没有白色，需要由S和V共同决定（S=0，V=100）；在HLS中白色仅有亮度L一个分量决定。</p>
+<h3 id="yuvycbcr">YUV/YCbCr<a hidden class="anchor" aria-hidden="true" href="#yuvycbcr">#</a></h3>
+<p>YUV是通过亮度-色差来描述颜色的颜色空间。Y是亮度信号，色度信号由两个互相独立的信号组成，根据颜色系统和格式不同，色度信号被称作UV/PbPr/CbCr。在DVD中，色度信号被存储为Cb和Cr（C表示颜色，b蓝色，r红色）。</p>
+<h2 id="改变颜色空间">改变颜色空间<a hidden class="anchor" aria-hidden="true" href="#改变颜色空间">#</a></h2>
+<h3 id="颜色空间-1">颜色空间<a hidden class="anchor" aria-hidden="true" href="#颜色空间-1">#</a></h3>
+<p>考虑BGR$\leftrightarrow$Gray，BGR$\leftrightarrow$HSV和BGR$\leftrightarrow$YCrCB颜色空间的转换。</p>
+<p><code>cv2.cvtColor(input_image, flag)</code>函数用于颜色空间转换，flag决定转换的类型：</p>
 <ul>
-<li>非线性性</li>
-<li>几乎处处可微</li>
-<li>计算简单</li>
-<li>单调性：符号不变容易收敛</li>
-<li>非饱和性：饱和指在某些区间的梯度接近零，即梯度消失，使得参数无法继续更新</li>
-<li>输出范围有限</li>
-<li>接近恒等变换</li>
-<li>参数少</li>
+<li>cv2.COLOR_BGR2GRAY</li>
+<li>cv2.COLOR_BGR2HSV</li>
+<li>cv2.COLOR_BGR2YCR_CB</li>
 </ul>
-<h2 id="4-leaky-relu相对于relu的优势在哪">4. Leaky ReLU相对于ReLU的优势在哪？<a hidden class="anchor" aria-hidden="true" href="#4-leaky-relu相对于relu的优势在哪">#</a></h2>
-<p>Leaky ReLU在负值增加了一个斜率$\alpha$，缓解了ReLU在$x&lt;0$时的饱和性问题(&ldquo;死区&rdquo;，梯度消失)，但Leaky ReLU得超参数$\alpha$的合适值不好设定。</p>
-<p>当我们想让神经网络能够学到负值信息时可以使用该激活函数。</p>
-<h2 id="5-什么是relu6">5. 什么是ReLU6？<a hidden class="anchor" aria-hidden="true" href="#5-什么是relu6">#</a></h2>
-<p>ReLU的值域为$[0,\infty]$，在实际应用中需要限定输出的最大值，将输出在6处截断，即为ReLU6。</p>
-<h2 id="6-sigmoid函数有什么缺点怎么解决">6. Sigmoid函数有什么缺点？怎么解决？<a hidden class="anchor" aria-hidden="true" href="#6-sigmoid函数有什么缺点怎么解决">#</a></h2>
-<p>缺点：输出均值不为0，存在梯度消失的情况。</p>
-<p>解决办法：</p>
-<ul>
-<li>用<code>ReLU</code>，<code>Leaky ReLU</code>等其他激活函数代替</li>
-<li>采用适合的权重初始化方法，如<code>He_init</code></li>
-<li>在分类问题中，<code>sigmoid</code>作为激活函数时，用交叉熵损失函数替代MSE</li>
-<li>加入BN层</li>
-<li>分层训练权重</li>
-</ul>
-<h2 id="7-relu在零点可导吗如何进行反向传播">7. ReLU在零点可导吗？如何进行反向传播？<a hidden class="anchor" aria-hidden="true" href="#7-relu在零点可导吗如何进行反向传播">#</a></h2>
-<p>不可导，可以人为的将零点梯度规定为0。</p>
-<p>caffe源码~/caffe/src/caffe/layers/relu_layer.cpp倒数第十行代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>bottom_diff[i] <span style="color:#f92672">=</span> top_diff[i] <span style="color:#f92672">*</span> ((bottom_data[i] <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)<span style="color:#f92672">+</span> negative_slope <span style="color:#f92672">*</span> (bottom_data[i] <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0</span>));
-</span></span></code></pre></div><p>可见，间断点（$\leq0$）处的导数为negtive_slope（默认为0）。</p>
-<h2 id="8-softmax的溢出问题怎么解决">8. Softmax的溢出问题怎么解决？<a hidden class="anchor" aria-hidden="true" href="#8-softmax的溢出问题怎么解决">#</a></h2>
-<p>由于Softmax的指数运算，可能导致溢出问题。</p>
-<p>令$M=\max(x_i)$，将计算$f(x_i)$转换为计算$f(x_i-M)$的值，就可以解决溢出问题了，且理论上计算结果与计算$f(x_i)$保持一致，该操作类似与<strong>Min-Max归一化</strong>。</p>
-<h2 id="9-推导sigmoid的求导公式">9. 推导Sigmoid的求导公式<a hidden class="anchor" aria-hidden="true" href="#9-推导sigmoid的求导公式">#</a></h2>
-<p>sigmoid公式如下：</p>
-<p>$$
-\sigma(z)=\frac{1}{1+e^{-z}}
-$$</p>
-<p>求导公式推导如下：</p>
-<div>
-$$
-\begin{align}\sigma'(z)&=(\frac{1}{1+e^{-z}})'\\&=(e^{-z})\cdot\frac{1}{(1+e^{-z})^2}\\&=\frac{1}{1+e^{-z}}\cdot\frac{e^{-z}}{1+e^{-z}}\\&=\frac{1}{1+e^{-z}}\cdot(1-\frac{1}{1+e^{-z}})\\&=\sigma(z)\cdot(1-\sigma(z))\end{align}
-$$
-</div>
-<h2 id="10-推导softmax的求导公式">10. 推导Softmax的求导公式<a hidden class="anchor" aria-hidden="true" href="#10-推导softmax的求导公式">#</a></h2>
-<p>softmax公式如下：
-$$
-s(z_i)=\frac{e^{z_i}}{\sum_{k=1}^{n}{e^{z_k}}}
-$$
-求导公式推导如下：</p>
-<ul>
-<li>当$j=i$时：</li>
-</ul>
-<div>
-$$
-\begin{align}
-\frac{\partial s_i}{\partial z_i}
-&=\frac{\partial(\frac{e^{z_i}}{\sum_{k=1}^{n}{e^{z_k}}})}{\partial z_i}\\
-&=\frac{e^{z_i}\cdot\sum{e^{z_k}}-(e^{z_i})^2}{(\sum{e^{z_k}})^2}\\
-&=\frac{e^{z_i}}{\sum{e^{z_k}}}\cdot\frac{\sum{e^{z_k}}-e^{z_i}}{\sum{e^{z_k}}}\\
-&=\frac{e^{z_i}}{\sum{e^{z_k}}}\cdot(1-\frac{e^{z_i}}{\sum{e^{z_k}}})\\
-&=s_i(1-s_i)
-\end{align}
-$$
-</div>
-<ul>
-<li>当$j\neq i$时：</li>
-</ul>
-<div>
-$$
-\begin{align}
-\frac{\partial s_j}{\partial z_i}
-&=\frac{\partial(\frac{e^{z_j}}{\sum_{k=1}^{n}{e^{z_k}}})}{\partial z_i}\\
-&=e^{z_j}\cdot-(\frac{1}{\sum{e^{z_k}}})^2\cdot e^{z_i}\\
-&=-\frac{e^{z_j}}{\sum{e^{z_k}}}\cdot\frac{e^{z_i}}{\sum{e^{e_k}}}\\
-&=-s_j\cdot s_i
-\end{align}
-$$
-</div>
-<h2 id="ps基本初等函数的求导公式与法则">p.s.基本初等函数的求导公式与法则<a hidden class="anchor" aria-hidden="true" href="#ps基本初等函数的求导公式与法则">#</a></h2>
-<p><img loading="lazy" src="grad.jpg" alt=""  />
+<p>可以用以下命令获取其他标记：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>flags <span style="color:#f92672">=</span> [i <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> dir(cv2) <span style="color:#66d9ef">if</span> i<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#39;COLOR_&#39;</span>)]
+</span></span><span style="display:flex;"><span>print(flags)
+</span></span></code></pre></div><blockquote>
+<p>HSV的色相范围为[0,179]，饱和度为[0,255]，值域为[0,255]。不同软件使用不同的规模，若要将OpenCV的值和它们比较，需要做标准化操作。</p>
+</blockquote>
+<h3 id="对象追踪">对象追踪<a hidden class="anchor" aria-hidden="true" href="#对象追踪">#</a></h3>
+<p>HSV比BGR颜色空间更容易表示颜色，可以使用HSV来提取有颜色的对象。以下代码尝试提取一个蓝色对象，步骤：截取视频的每一帧$\rightarrow$转换到HSV颜色空间$\rightarrow$设置蓝色范围的阈值$\rightarrow$单独提取蓝色对象。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>cap <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>VideoCapture(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span>(<span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 读取帧</span>
+</span></span><span style="display:flex;"><span>    _, frame <span style="color:#f92672">=</span> cap<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 转换颜色空间 BGR 到 HSV</span>
+</span></span><span style="display:flex;"><span>    hsv <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(frame, cv2<span style="color:#f92672">.</span>COLOR_BGR2HSV)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 定义HSV中蓝色的范围</span>
+</span></span><span style="display:flex;"><span>    lower_blue <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">110</span>,<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">50</span>])
+</span></span><span style="display:flex;"><span>    upper_blue <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">130</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 设置HSV的阈值使得只取蓝色</span>
+</span></span><span style="display:flex;"><span>    mask <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>inRange(hsv, lower_blue, upper_blue)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 将掩膜和图像逐像素相加</span>
+</span></span><span style="display:flex;"><span>    res <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>bitwise_and(frame,frame, mask<span style="color:#f92672">=</span> mask)
+</span></span><span style="display:flex;"><span>    cv2<span style="color:#f92672">.</span>namedWindow(<span style="color:#e6db74">&#39;frame&#39;</span>, cv2<span style="color:#f92672">.</span>WINDOW_NORMAL)
+</span></span><span style="display:flex;"><span>    cv2<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74">&#39;frame&#39;</span>,frame)
+</span></span><span style="display:flex;"><span>    cv2<span style="color:#f92672">.</span>namedWindow(<span style="color:#e6db74">&#39;mask&#39;</span>, cv2<span style="color:#f92672">.</span>WINDOW_NORMAL)
+</span></span><span style="display:flex;"><span>    cv2<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74">&#39;mask&#39;</span>,mask)
+</span></span><span style="display:flex;"><span>    cv2<span style="color:#f92672">.</span>namedWindow(<span style="color:#e6db74">&#39;res&#39;</span>, cv2<span style="color:#f92672">.</span>WINDOW_NORMAL)
+</span></span><span style="display:flex;"><span>    cv2<span style="color:#f92672">.</span>imshow(<span style="color:#e6db74">&#39;res&#39;</span>,res)
+</span></span><span style="display:flex;"><span>    k <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>waitKey(<span style="color:#ae81ff">5</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> k <span style="color:#f92672">==</span> <span style="color:#ae81ff">27</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>cv2<span style="color:#f92672">.</span>destroyAllWindows()
+</span></span></code></pre></div><p><img loading="lazy" src="color.png" alt=""  />
 </p>
-
+<p>在上面的HLS颜色空间示意图中测试白色的检测：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#34;hls.jpeg&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Convert BGR to HLS</span>
+</span></span><span style="display:flex;"><span>imgHLS <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(img, cv2<span style="color:#f92672">.</span>COLOR_BGR2HLS)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># range of white color in L channel</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mask = cv2.inRange(imgHLS[:,:,1], lowerb=250, upperb=255)</span>
+</span></span><span style="display:flex;"><span>mask <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>inRange(imgHLS, np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">250</span>,<span style="color:#ae81ff">0</span>]), np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>]))
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply Mask to original image</span>
+</span></span><span style="display:flex;"><span>white_mask <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>bitwise_and(img, img, mask<span style="color:#f92672">=</span>mask)
+</span></span></code></pre></div><p><img loading="lazy" src="hlsmask.png" alt=""  />
+</p>
+<h3 id="找到要追踪的hsv值">找到要追踪的HSV值<a hidden class="anchor" aria-hidden="true" href="#找到要追踪的hsv值">#</a></h3>
+<p>使用<code>cv2.cvtColor(color,cv2.COLOR_BGR2HSV)</code>，传递颜色而非图像。示例如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>red <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>uint8([[[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span> ]]])
+</span></span><span style="display:flex;"><span>hsv_red <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(red,cv2<span style="color:#f92672">.</span>COLOR_BGR2HSV)
+</span></span><span style="display:flex;"><span>print( hsv_red )
+</span></span></code></pre></div><p>如果想要同时追踪多种颜色，可以将多种颜色的掩码经过按位或操作得到新的掩码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>mask <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>bitwise_or(mask_blue,mask_green,mask_red)
+</span></span></code></pre></div>
 
         </div>
 
@@ -651,15 +576,10 @@ $$
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://Achilles-10.github.io/posts/tech/opencv2/">
-    <span class="title">« 上一页</span>
-    <br>
-    <span>OpenCV-Python学习笔记(2)：颜色空间</span>
-  </a>
-  <a class="next" href="https://Achilles-10.github.io/posts/paper/convnext/">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/activation/">
     <span class="title">下一页 »</span>
     <br>
-    <span>A ConvNet for the 2020s</span>
+    <span>深度学习面试题：激活函数</span>
   </a>
 </nav>
 

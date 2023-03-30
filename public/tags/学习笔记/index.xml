@@ -6,7 +6,16 @@
     <description>Recent content in 学习笔记 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 28 Mar 2023 23:59:35 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 29 Mar 2023 18:25:34 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenCV-Python学习笔记(2)：颜色空间</title>
+      <link>https://Achilles-10.github.io/posts/tech/opencv2/</link>
+      <pubDate>Wed, 29 Mar 2023 18:25:34 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/opencv2/</guid>
+      <description>颜色空间 RGB颜色空间 RGB（红绿蓝）是依据人眼识别的颜色定义出的空间，可表示大部分颜色。但在科学研究一般不采用RGB颜色空间，因为它的细节难以进行数字化的调整。它将色调，亮度，饱和度三个量放在一起表示，很难分开。它是最通用的面向硬件的彩色模型。RGB颜色空间适合于显示系统，不适</description>
+    </item>
+    
     <item>
       <title>深度学习面试题：激活函数</title>
       <link>https://Achilles-10.github.io/posts/tech/activation/</link>
