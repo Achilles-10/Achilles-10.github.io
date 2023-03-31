@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection | 烈烈风中、的博客</title>
+<meta name="keywords" content="论文阅读, TIFS, 人脸伪造检测">
+<meta name="description" content="ViT&#43;CNN双流网络，频域注意力和交互fusion">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/paper/hfinet/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3769034f0ff51ad9c75481921495dd5bf7de75a1385158d022b70c61ca509959.css" integrity="sha256-N2kDTw/1GtnHVIGSFJXdW/fedaE4UVjQIrcMYcpQmVk=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection" />
+<meta property="og:description" content="ViT&#43;CNN双流网络，频域注意力和交互fusion" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/paper/hfinet/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/paper/hfinet/cover.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-31T16:40:23+08:00" />
+<meta property="article:modified_time" content="2023-03-31T16:40:23+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/paper/hfinet/cover.png" />
+<meta name="twitter:title" content="Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection"/>
+<meta name="twitter:description" content="ViT&#43;CNN双流网络，频域注意力和交互fusion"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "📄 论文",
+          "item": "https://Achilles-10.github.io/posts/paper/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection",
+      "item": "https://Achilles-10.github.io/posts/paper/hfinet/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection",
+  "name": "Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection",
+  "description": "ViT+CNN双流网络，频域注意力和交互fusion",
+  "keywords": [
+    "论文阅读", "TIFS", "人脸伪造检测"
+  ],
+  "articleBody": "[paper]\n1. 介绍 使用结合CNN和Transformer的双流网络来融合伪造人脸的局部和全局伪造信息，进而提高模型的泛化能力。同时使用高频信息在CNN和Transformer之间交互，实现更通用和鲁棒的伪造检测。\n低频信息和中高频信息通常表现出不同的特征，其中低频分量主要包括图像的自然内容信息，中高频分量则主要包含混合边界、模糊伪影和棋盘格(checkboard)等细粒度信息。\n主要贡献如下：\n提出了一种用于人脸伪造检测的双流网络，分层频域辅助交互网络（Hierarchical Frequency-assisted Interactive Networks, HFI-Net）。 我们设计了一个新颖的频域特征改进模块（Frequency-based Feature Refinement，FFR）来提取RGB特征上的中高频信息，充分利用更通用和鲁棒的频域特征，避免了空间伪影的脆弱性。 我们提出了一种共享和频域辅助的全局局部交互模块（Global Local Interaction, GLI），该模块放置在HFI-Net的多级层中，以在全局上下文和局部特征之间进行有效的交互。 2. 方法 2.1 概述 HFI-Net是由CNN分支和Transformer分支组成的双流网络，旨在捕获全局上下文信息和局部细节信息。\nTransformer分支的backbone是ViT。CNN分支有一个瓶颈卷积(Bottleneck)和四个可分离阶段，其中瓶颈卷积包含两个3x3卷积层用于提取边缘和纹理等初始局部特征；每个可分离阶段有三个可分离卷积块组成，以及阶段输入和输出之间的残差连接。\nGLI模块放置在HFI-Net的每个阶段，由两个FFR模块组成，用于融合全局和局部信息，并在学习中高频伪造痕迹的同时抑制共享的高级语义特征。\nTransformer的输入为$x^g\\in\\mathbb{R}^{T\\times D},\\ T=196,\\ D=768$，bottleneck输入为$x^l\\in\\mathbb{R}^{C\\times H\\times W},\\ C=768,\\ H=W=14$。在CNN分支中没有下采样操作，故特征维度不会改变。\n最后，每个分支使用一个分类器进行训练。在训练阶段，采用交叉熵损失作为损失函数。在测试期间，将两个分类器的输出的均值作为最终预测结果。\n2.2 FFR (Frequency-based Feature Refinement) DCT\n频率选择准则（Frequency Selection Criterion, FSC）：\n与高频信息相比，CNN倾向于强调低频通道，其中包含图像的背景和真实部分；同时，已有许多研究证实了频域中的真实人脸和伪造人脸之间存在差异。如下图，伪造人脸和真实人脸在RGB图像，RGB特征图和低频特征图上几乎一致，但在中高频特征图上存在关键差异。\n所以本文在RGB特征图上使用2D DCT提取中高频分量，如下图，假设n表示提取的中高频基数，将这n个频域特征拼接在一起得到$\\tilde{X}_{u,v}=cat[F_i,\\dots,F_n]$。其中用到了FcaNet: Frequency Channel Attention Networks。\nFrequency-Based Feature Refinement（FFR）：\n聚合特征T： $$ T=\\sum_{h=0}^{H-1}\\sum_{w=0}^{W-1}\\tilde{X}_{h,w} $$ 用一个MLP层（2个全连接层）和一个sigmoid函数$\\sigma$来生成注意力权重： $$ W=\\sigma(MLP(T)) $$\n2.3 Global-Local Interaction Module（GLC）： Frequency-Assisted Global-Local Interaction (GLI) Module：\nGLI 模块利用FFR模块得到频域注意力权重，通过使用注意力权重和残差连接特征获得最终输出： $$ X^g_{freq}=X^g+W^l\\odot X^g\\\\\\ X^l_{freq}=X_l+W^g\\odot X^l $$\nMulti-Level Frequency Feature Extraction：\n浅层特征可以捕获局部区域的细微差异，但随着模型越来越深，人脸的高级语义特征仍然包含原始人脸和操纵人脸的许多共同特征。高级语义信息对人脸检测有负面影响，可能导致模型过拟合而导致泛化性能差。所以将GLI模块插入双流网络的每个阶段来增强局部伪造线索并抑制RGB特征图上共享的高级语义信息。\n3. 实验 3.1 数据集和设置 类内实验：FF++ 未知数据集实验： Celeb-DF(V2)：590+5639 TIMIT：320+640 DFDCp：1131+4113 UADFV：49+49 未知伪造方法实验：GID-DF/GID-FF，在DF/FF上训练，其余部分测试 未知扰动实验：DeeperForensics-1.0 (DFo)，60000+ 实现细节： backbone：ViT(ImageNet-1K), CNN(randomly init). optimizer: Adam; lr:2e-5; weight decay=1e-7 trainset: FF++(C40) 3.2 模块分析 在FF++(C40)上训练，测试指标为帧级AUC。\n消融实验：测试结果和可视化结果如下图，w/o FSC表示使用所有频域信息进行训练而非中高频信息；w/o dual-branch表示只使用ViT；w/o GLI表示不使用GLI交互模块。可视化结果中(a), (b), (c)和(d)分别对应消融实验的四种情况，可见HFI-Net能够对操纵区域有较高的响应。\n不同层级的交互作用分析：下图分别是将模型分割为n个阶段和在哪些阶段设置GLI模块的消融实验。可见，将模型划分为4个阶段，并在每个阶段都设置GLI模块能达到最佳性能。\n不同频率成分分析：如下图，FCS方法提取中高频的方法由于其他频率选择方法，对于未知的测试场景，中高频的特征比单频（低，中，高）更具一般性。\n对2D DCT的分析：实验测试不同U(V)参数的性能。\n$$ F^{2d}_{u,v}=\\sum_{i=0}^{H-1}\\sum_{j=0}^{W-1}{x^{2d}_{i,j}B^{i,j}_{u,v}}\\\\\\ B^{i,j}_{u,v}=\\cos(\\frac{\\pi u}{U}(i+\\frac{1}{2}))\\cos(\\frac{\\pi v}{U}(j+\\frac{1}{2})) $$\n不同频率变换方式的分析：对比DWT（小波换换）和DCT，DCT更适合这个网络架构。DWT捕获频率信息的同时会对特征图进行下采样，可能会损害与伪造区域相关的注意力权重。\n思考：使用DWT时将FFR中的FcaNet修改为WaveNets?\n不同特征细化方式的分析（FFR）：对比SE-Net和CBAM，本文的FFR模块强调中高频的伪造线索，抑制图像在空域上的原始部分和在RGB特征上的高阶语义信息，提高了泛化性。\n不同融合方式的分析（fusion）：比较特征图fusion和最后输出的fusion。\n3.3 和近期工作的比较 和SOTA对比： 未知数据集泛化性测试：下图评价指标为Image-level AUC 未知伪造方法泛化性测试：Image-based Video-level AUC 未知扰动的鲁棒性测试：Image-based Video-level AUC 计算复杂度对比：Image-level AUC ",
+  "wordCount" : "2365",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/paper/hfinet/cover.png","datePublished": "2023-03-31T16:40:23+08:00",
+  "dateModified": "2023-03-31T16:40:23+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/paper/hfinet/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/paper/">📄 论文</a></div>
+            <h1 class="post-title">
+                Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection
+            </h1>
+            <div class="post-description">
+                ViT&#43;CNN双流网络，频域注意力和交互fusion
+            </div>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 3 月 31 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2365字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>5分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="color: var(--secondary)!important;">论文阅读</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/tifs/" style="color: var(--secondary)!important;">TIFS</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/" style="color: var(--secondary)!important;">人脸伪造检测</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/paper/hfinet/cover.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1-%e4%bb%8b%e7%bb%8d" aria-label="1. 介绍">1. 介绍</a></li>
+                <li>
+                    <a href="#2-%e6%96%b9%e6%b3%95" aria-label="2. 方法">2. 方法</a><ul>
+                        
+                <li>
+                    <a href="#21-%e6%a6%82%e8%bf%b0" aria-label="2.1 概述">2.1 概述</a></li>
+                <li>
+                    <a href="#22-ffr-frequency-based-feature-refinement" aria-label="2.2 FFR (Frequency-based Feature Refinement)">2.2 FFR (Frequency-based Feature Refinement)</a></li>
+                <li>
+                    <a href="#23-global-local-interaction-moduleglc" aria-label="2.3 Global-Local Interaction Module（GLC）：">2.3 Global-Local Interaction Module（GLC）：</a></li></ul>
+                </li>
+                <li>
+                    <a href="#3-%e5%ae%9e%e9%aa%8c" aria-label="3. 实验">3. 实验</a><ul>
+                        
+                <li>
+                    <a href="#31-%e6%95%b0%e6%8d%ae%e9%9b%86%e5%92%8c%e8%ae%be%e7%bd%ae" aria-label="3.1 数据集和设置">3.1 数据集和设置</a></li>
+                <li>
+                    <a href="#32-%e6%a8%a1%e5%9d%97%e5%88%86%e6%9e%90" aria-label="3.2 模块分析">3.2 模块分析</a></li>
+                <li>
+                    <a href="#33-%e5%92%8c%e8%bf%91%e6%9c%9f%e5%b7%a5%e4%bd%9c%e7%9a%84%e6%af%94%e8%be%83" aria-label="3.3 和近期工作的比较">3.3 和近期工作的比较</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p><a href="https://ieeexplore.ieee.org/document/9854878">[paper]</a></p>
+<h2 id="1-介绍">1. 介绍<a hidden class="anchor" aria-hidden="true" href="#1-介绍">#</a></h2>
+<p>使用结合CNN和Transformer的双流网络来融合伪造人脸的局部和全局伪造信息，进而提高模型的泛化能力。同时使用高频信息在CNN和Transformer之间交互，实现更通用和鲁棒的伪造检测。</p>
+<p>低频信息和中高频信息通常表现出不同的特征，其中低频分量主要包括图像的自然内容信息，中高频分量则主要包含混合边界、模糊伪影和棋盘格(checkboard)等细粒度信息。</p>
+<p>主要贡献如下：</p>
+<ul>
+<li>提出了一种用于人脸伪造检测的双流网络，分层频域辅助交互网络（Hierarchical Frequency-assisted Interactive Networks, HFI-Net）。</li>
+<li>我们设计了一个新颖的频域特征改进模块（Frequency-based Feature Refinement，FFR）来提取RGB特征上的中高频信息，充分利用更通用和鲁棒的频域特征，避免了空间伪影的脆弱性。</li>
+<li>我们提出了一种共享和频域辅助的全局局部交互模块（Global Local Interaction, GLI），该模块放置在HFI-Net的多级层中，以在全局上下文和局部特征之间进行有效的交互。</li>
+</ul>
+<h2 id="2-方法">2. 方法<a hidden class="anchor" aria-hidden="true" href="#2-方法">#</a></h2>
+<h3 id="21-概述">2.1 概述<a hidden class="anchor" aria-hidden="true" href="#21-概述">#</a></h3>
+<p>HFI-Net是由CNN分支和Transformer分支组成的双流网络，旨在捕获全局上下文信息和局部细节信息。</p>
+<p>Transformer分支的backbone是ViT。CNN分支有一个瓶颈卷积(Bottleneck)和四个可分离阶段，其中瓶颈卷积包含两个3x3卷积层用于提取边缘和纹理等初始局部特征；每个可分离阶段有三个可分离卷积块组成，以及阶段输入和输出之间的残差连接。</p>
+<p>GLI模块放置在HFI-Net的每个阶段，由两个FFR模块组成，用于融合全局和局部信息，并在学习中高频伪造痕迹的同时抑制共享的高级语义特征。</p>
+<p>Transformer的输入为$x^g\in\mathbb{R}^{T\times D},\ T=196,\ D=768$，bottleneck输入为$x^l\in\mathbb{R}^{C\times H\times W},\ C=768,\ H=W=14$。在CNN分支中没有下采样操作，故特征维度不会改变。</p>
+<p>最后，每个分支使用一个分类器进行训练。在训练阶段，采用交叉熵损失作为损失函数。在测试期间，将两个分类器的输出的均值作为最终预测结果。</p>
+<div align=center><img src="hfi.png" /></div>
+<h3 id="22-ffr-frequency-based-feature-refinement">2.2 FFR (Frequency-based Feature Refinement)<a hidden class="anchor" aria-hidden="true" href="#22-ffr-frequency-based-feature-refinement">#</a></h3>
+<ul>
+<li>
+<p><strong>DCT</strong></p>
+</li>
+<li>
+<p><strong>频率选择准则（Frequency Selection Criterion, FSC）</strong>：</p>
+<p>与高频信息相比，CNN倾向于强调低频通道，其中包含图像的背景和真实部分；同时，已有许多研究证实了频域中的真实人脸和伪造人脸之间存在差异。如下图，伪造人脸和真实人脸在RGB图像，RGB特征图和低频特征图上几乎一致，但在中高频特征图上存在关键差异。</p>
+<!-- ![](featuremap.png) -->
+<div align=center><img src="featuremap.png" style="zoom:80%;" /></div>
+<p>所以本文在RGB特征图上使用2D DCT提取中高频分量，如下图，假设n表示提取的中高频基数，将这n个频域特征拼接在一起得到$\tilde{X}_{u,v}=cat[F_i,\dots,F_n]$。其中用到了<a href="https://openaccess.thecvf.com/content/ICCV2021/html/Qin_FcaNet_Frequency_Channel_Attention_Networks_ICCV_2021_paper.html">FcaNet: Frequency Channel Attention Networks</a>。</p>
+<!-- ![](frequency.png) -->
+<div align=center><img src="frequency.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>Frequency-Based Feature Refinement（FFR）</strong>：</p>
+<p>聚合特征T：
+$$
+T=\sum_{h=0}^{H-1}\sum_{w=0}^{W-1}\tilde{X}_{h,w}
+$$
+用一个MLP层（2个全连接层）和一个sigmoid函数$\sigma$来生成注意力权重：
+$$
+W=\sigma(MLP(T))
+$$</p>
+</li>
+</ul>
+<h3 id="23-global-local-interaction-moduleglc">2.3 Global-Local Interaction Module（GLC）：<a hidden class="anchor" aria-hidden="true" href="#23-global-local-interaction-moduleglc">#</a></h3>
+<!-- ![](gliflow.png) -->
+<div align=center><img src="gliflow.png" style="zoom:80%;" /></div>
+<ul>
+<li>
+<p><strong>Frequency-Assisted Global-Local Interaction (GLI) Module</strong>：</p>
+<p>GLI 模块利用FFR模块得到频域注意力权重，通过使用注意力权重和残差连接特征获得最终输出：
+$$
+X^g_{freq}=X^g+W^l\odot X^g\\\
+X^l_{freq}=X_l+W^g\odot X^l
+$$</p>
+</li>
+<li>
+<p><strong>Multi-Level Frequency Feature Extraction</strong>：</p>
+<p>浅层特征可以捕获局部区域的细微差异，但随着模型越来越深，人脸的高级语义特征仍然包含原始人脸和操纵人脸的许多共同特征。高级语义信息对人脸检测有负面影响，可能导致模型过拟合而导致泛化性能差。所以将GLI模块插入双流网络的每个阶段来增强局部伪造线索并抑制RGB特征图上共享的高级语义信息。</p>
+</li>
+</ul>
+<h2 id="3-实验">3. 实验<a hidden class="anchor" aria-hidden="true" href="#3-实验">#</a></h2>
+<h3 id="31-数据集和设置">3.1 数据集和设置<a hidden class="anchor" aria-hidden="true" href="#31-数据集和设置">#</a></h3>
+<ul>
+<li>类内实验：FF++</li>
+<li>未知数据集实验：
+<ul>
+<li>Celeb-DF(V2)：590+5639</li>
+<li>TIMIT：320+640</li>
+<li>DFDCp：1131+4113</li>
+<li>UADFV：49+49</li>
+</ul>
+</li>
+<li>未知伪造方法实验：GID-DF/GID-FF，在DF/FF上训练，其余部分测试</li>
+<li>未知扰动实验：DeeperForensics-1.0 (DFo)，60000+</li>
+<li>实现细节：
+<ul>
+<li>backbone：ViT(ImageNet-1K), CNN(randomly init).</li>
+<li>optimizer: Adam; lr:2e-5; weight decay=1e-7</li>
+<li>trainset: FF++(C40)</li>
+</ul>
+</li>
+</ul>
+<h3 id="32-模块分析">3.2 模块分析<a hidden class="anchor" aria-hidden="true" href="#32-模块分析">#</a></h3>
+<p>在FF++(C40)上训练，测试指标为帧级AUC。</p>
+<ul>
+<li>
+<p><strong>消融实验</strong>：测试结果和可视化结果如下图，w/o FSC表示使用所有频域信息进行训练而非中高频信息；w/o dual-branch表示只使用ViT；w/o GLI表示不使用GLI交互模块。可视化结果中(a), (b), (c)和(d)分别对应消融实验的四种情况，可见HFI-Net能够对操纵区域有较高的响应。</p>
+<!-- ![](abla.png) -->
+<div align=center><img src="abla.png" style="zoom:80%;" /></div>
+<div align=center><img src="ablavis.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>不同层级的交互作用分析</strong>：下图分别是将模型分割为n个阶段和在哪些阶段设置GLI模块的消融实验。可见，将模型划分为4个阶段，并在每个阶段都设置GLI模块能达到最佳性能。</p>
+<div align=center><img src="stage.png" style="zoom:80%;" /></div>
+<div align=center><img src="gli.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>不同频率成分分析</strong>：如下图，FCS方法提取中高频的方法由于其他频率选择方法，对于未知的测试场景，中高频的特征比单频（低，中，高）更具一般性。</p>
+<div align=center><img src="freq.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>对2D DCT的分析</strong>：实验测试不同U(V)参数的性能。</p>
+</li>
+</ul>
+<p>$$
+F^{2d}_{u,v}=\sum_{i=0}^{H-1}\sum_{j=0}^{W-1}{x^{2d}_{i,j}B^{i,j}_{u,v}}\\\
+B^{i,j}_{u,v}=\cos(\frac{\pi u}{U}(i+\frac{1}{2}))\cos(\frac{\pi v}{U}(j+\frac{1}{2}))
+$$</p>
+  <div align=center><img src="dct.png" style="zoom:80%;" /></div>
+<ul>
+<li>
+<p><strong>不同频率变换方式的分析</strong>：对比DWT（小波换换）和DCT，DCT更适合这个网络架构。DWT捕获频率信息的同时会对特征图进行下采样，可能会损害与伪造区域相关的注意力权重。</p>
+<p><em>思考</em>：使用DWT时将FFR中的<code>FcaNet</code>修改为<a href="https://arxiv.org/abs/2211.02695"><code>WaveNets</code></a>?</p>
+<div align=center><img src="dwt.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>不同特征细化方式的分析（FFR）</strong>：对比<a href="https://arxiv.org/abs/1709.01507"><code>SE-Net</code></a>和<a href="https://arxiv.org/abs/1807.06521"><code>CBAM</code></a>，本文的FFR模块强调中高频的伪造线索，抑制图像在空域上的原始部分和在RGB特征上的高阶语义信息，提高了泛化性。</p>
+<div align=center><img src="ffr.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>不同融合方式的分析（fusion）</strong>：比较特征图fusion和最后输出的fusion。</p>
+</li>
+</ul>
+ <div align=center><img src="fusion.png" style="zoom:80%;"/></div>
+<h3 id="33-和近期工作的比较">3.3 和近期工作的比较<a hidden class="anchor" aria-hidden="true" href="#33-和近期工作的比较">#</a></h3>
+<ul>
+<li><strong>和SOTA对比</strong>：</li>
+</ul>
+<div align=center><img src="compare.png"/></div>
+<ul>
+<li><strong>未知数据集泛化性测试</strong>：下图评价指标为Image-level AUC</li>
+</ul>
+<div align=center><img src="generalize.png"/></div>
+<ul>
+<li><strong>未知伪造方法泛化性测试</strong>：Image-based Video-level AUC</li>
+</ul>
+<div align=center><img src="gid.png" style="zoom:80%;" /></div>
+<ul>
+<li><strong>未知扰动的鲁棒性测试</strong>：Image-based Video-level AUC</li>
+</ul>
+<div align=center><img src="robst.png" style="zoom:80%;" /></div>
+<ul>
+<li><strong>计算复杂度对比</strong>：Image-level AUC</li>
+</ul>
+<div align=center><img src="flops.png" style="zoom:80%;" /></div>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/opencv2/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>OpenCV-Python学习笔记(2)：颜色空间</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>

@@ -6,7 +6,16 @@
     <description>Recent content in 📄 论文 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 27 Mar 2023 22:28:33 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/paper/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 31 Mar 2023 16:40:23 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/paper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection</title>
+      <link>https://Achilles-10.github.io/posts/paper/hfinet/</link>
+      <pubDate>Fri, 31 Mar 2023 16:40:23 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/hfinet/</guid>
+      <description>ViT&#43;CNN双流网络，频域注意力和交互fusion</description>
+    </item>
+    
     <item>
       <title>A ConvNet for the 2020s</title>
       <link>https://Achilles-10.github.io/posts/paper/convnext/</link>
