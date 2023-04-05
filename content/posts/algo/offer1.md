@@ -8,7 +8,7 @@ author: ["Achilles"]
 categories: # 没有分类界面可以不填写
 - 
 tags: ["算法题","学习笔记"] # 标签
-description: ""
+description: "leetcode 剑指offer 前25题提示清单"
 weight:
 slug: ""
 draft: false # 是否为草稿

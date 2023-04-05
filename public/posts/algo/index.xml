@@ -13,7 +13,7 @@
       <pubDate>Wed, 05 Apr 2023 22:38:12 +0800</pubDate>
       
       <guid>https://Achilles-10.github.io/posts/algo/offer1/</guid>
-      <description>1. 剑指 Offer 03. 数组中重复的数字(简单) 哈希表：用哈希表（Set）记录遍历到的数字，若找到重复的数字则返回。 原地交换：数组元素的索引和值是一对多的关系。因此，可遍历数组并通过交换操作，使元素的索引与值一一对应（即$nums[i]=i$）。 算法流程 遍历数组，索引初始值i=0; 若nums[</description>
+      <description>leetcode 剑指offer 前25题提示清单</description>
     </item>
     
   </channel>
