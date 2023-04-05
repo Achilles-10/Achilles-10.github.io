@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>剑指offer复习笔记(1) | 烈烈风中、的博客</title>
+<meta name="keywords" content="算法题, 学习笔记">
+<meta name="description" content="1. 剑指 Offer 03. 数组中重复的数字(简单) 哈希表：用哈希表（Set）记录遍历到的数字，若找到重复的数字则返回。 原地交换：数组元素的索引和值是一对多的关系。因此，可遍历数组并通过交换操作，使元素的索引与值一一对应（即$nums[i]=i$）。 算法流程 遍历数组，索引初始值i=0; 若nums[">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/algo/offer1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.3769034f0ff51ad9c75481921495dd5bf7de75a1385158d022b70c61ca509959.css" integrity="sha256-N2kDTw/1GtnHVIGSFJXdW/fedaE4UVjQIrcMYcpQmVk=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="剑指offer复习笔记(1)" />
+<meta property="og:description" content="1. 剑指 Offer 03. 数组中重复的数字(简单) 哈希表：用哈希表（Set）记录遍历到的数字，若找到重复的数字则返回。 原地交换：数组元素的索引和值是一对多的关系。因此，可遍历数组并通过交换操作，使元素的索引与值一一对应（即$nums[i]=i$）。 算法流程 遍历数组，索引初始值i=0; 若nums[" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/algo/offer1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-05T22:38:12+08:00" />
+<meta property="article:modified_time" content="2023-04-05T22:38:12+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="剑指offer复习笔记(1)"/>
+<meta name="twitter:description" content="1. 剑指 Offer 03. 数组中重复的数字(简单) 哈希表：用哈希表（Set）记录遍历到的数字，若找到重复的数字则返回。 原地交换：数组元素的索引和值是一对多的关系。因此，可遍历数组并通过交换操作，使元素的索引与值一一对应（即$nums[i]=i$）。 算法流程 遍历数组，索引初始值i=0; 若nums["/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "📕 算法",
+          "item": "https://Achilles-10.github.io/posts/algo/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "剑指offer复习笔记(1)",
+      "item": "https://Achilles-10.github.io/posts/algo/offer1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "剑指offer复习笔记(1)",
+  "name": "剑指offer复习笔记(1)",
+  "description": "1. 剑指 Offer 03. 数组中重复的数字(简单) 哈希表：用哈希表（Set）记录遍历到的数字，若找到重复的数字则返回。 原地交换：数组元素的索引和值是一对多的关系。因此，可遍历数组并通过交换操作，使元素的索引与值一一对应（即$nums[i]=i$）。 算法流程 遍历数组，索引初始值i=0; 若nums[",
+  "keywords": [
+    "算法题", "学习笔记"
+  ],
+  "articleBody": "1. 剑指 Offer 03. 数组中重复的数字(简单) 哈希表：用哈希表（Set）记录遍历到的数字，若找到重复的数字则返回。\n原地交换：数组元素的索引和值是一对多的关系。因此，可遍历数组并通过交换操作，使元素的索引与值一一对应（即$nums[i]=i$）。\n算法流程\n遍历数组，索引初始值i=0; 若nums[i]=i：说明该数字已在对应的索引处，无需交换，跳过； 若nums[nums[i]]=nums[i]：说明索引nums[i]处和索引i处的值均为nums[i]，即找到一组重复，返回nums[i]； 否则交换nums[nums[i]]与nums[i]； 若遍历完未返回，返回-1。 复杂度：时间O(N)，空间O(1)\n代码：\nclass Solution: def findRepeatNumber(self, nums: List[int]) -\u003e int: n=len(nums) i=0 while i\u003cn: if nums[i]==i: i+=1 continue if nums[nums[i]]==nums[i]: return nums[i] nums[nums[i]],nums[i]=nums[i],nums[nums[i]] Python中a,b=c,d的原理是暂存元组(c,d)，然后按左右顺序赋值，在此处需要先给nums[nums[i]]赋值。\n2. 剑指 Offer 04. 二维数组中的查找(中等) 暴力法：时间复杂度O(MN)，未利用到数组的排序信息\n二分法：时间复杂度O(M+N)\n如下图，考虑将二维数组旋转45°，类似一棵二叉搜索树：故我们可以从数组的左下角(n-1,0)或右上角(0,m-1)开始，运用二分的思想进行搜索。\nclass Solution: def findNumberIn2DArray(self, matrix: List[List[int]], target: int) -\u003e bool: i,j=len(matrix)-1,0 while 0\u003c=i and j\u003clen(matrix[0]): if target==matrix[i][j]: return True elif target\u003ematrix[i][j]: j+=1 else: i-=1 return False 3. 剑指 Offer 05. 替换空格(简单) 库函数:return s.replace(' ','%20')\n遍历添加：初始化一个新的str，时间空间复杂度O(N)\n原地修改(python str是不可修改，无法实现)：\n遍历得到空格数cnt 修改s长度为len+2*cnt 倒序遍历，i指向原字符串末尾，j指向新字符串末尾，当i=j时跳出（左方已没有空格）； s[i]=' '：s[j-2:j]=’%20’，j-=2 s[i]!=' '：s[j]=s[i] string replaceSpace(string s) { int count = 0, len = s.size(); for (char c : s) { if (c == ' ') count++; } s.resize(len + 2 * count); for(int i = len - 1, j = s.size() - 1; i \u003c j; i--, j--) { if (s[i] != ' ') s[j] = s[i]; else { s[j - 2] = '%'; s[j - 1] = '2'; s[j] = '0'; j -= 2; } } return s; } 4. 剑指 Offer 06. 从尾到头打印链表(简单) 辅助栈：遍历链表，将各节点入栈，返回倒序列表。时间空间复杂度O(N)\n递归：时间空间复杂度O(N)\nclass Solution: def reversePrint(self, head: ListNode) -\u003e List[int]: return self.reversePrint(head.next) + [head.val] if head else [] 5. 剑指 Offer 07. 重建二叉树(中等) 递归：\npreorder=[root,L,R], inorder=[L,root,R]\n找到root在inorder中的下标，构建root的左右子树\nclass Solution: def buildTree(self, preorder: List[int], inorder: List[int]) -\u003e TreeNode: if not preorder: return None root=TreeNode(preorder[0]) rootidx=inorder.index(preorder[0]) root.left=self.buildTree(preorder[1:rootidx+1],inorder[:rootidx]) root.right=self.buildTree(preorder[rootidx+1:],inorder[rootidx+1:]) return root 迭代：待续\n6. 剑指 Offer 09. 用两个栈实现队列(简单) 双栈：将一个栈当作输入栈，用于将数据入队；另一个栈当作输出栈，用于数据出队。每次出队时，若输出栈不为空，则直接从输出栈弹出；否则现将所有数据从输入栈弹出并压入输出栈，再从输出栈弹出。 class CQueue: def __init__(self): self.stack1, self.stack2=[],[] def appendTail(self, value: int) -\u003e None: self.stack1.append(value) def deleteHead(self) -\u003e int: if self.stack2: return self.stack2.pop() if not self.stack1: return -1 while self.stack1: self.stack2.append(self.stack1.pop()) return self.stack2.pop() 7. 剑指 Offer 10- I. 斐波那契数列(简单) 动态规划：\nclass Solution: def fib(self, n: int) -\u003e int: a,b=0,1 while n: a,b=b,a+b n-=1 return a%(10**9+7) 矩阵快速幂：时间复杂度O(log n)，空间复杂度O(1)\n$$ \\left[\\begin{matrix} 1\u00261 \\\\ 1\u00260 \\end{matrix} \\right] \\left[\\begin{matrix} F(n) \\\\ F(n-1) \\end{matrix} \\right] = \\left[ \\begin{matrix} F(n)+F(n-1)\\\\ F(n) \\end{matrix} \\right] =\\left[\\begin{matrix} F(n+1) \\\\ F(n) \\end{matrix}\\right] $$\n$$ \\left[\\begin{matrix} F(n+1) \\\\ F(n) \\end{matrix}\\right] = \\left[\\begin{matrix} 1\u00261 \\\\ 1\u00260 \\end{matrix} \\right]^n \\left[\\begin{matrix} F(1) \\\\ F(0) \\end{matrix}\\right] $$\n令： $$ M=\\left[\\begin{matrix} 1\u00261 \\\\ 1\u00260 \\end{matrix} \\right] $$ 关键在于快速计算矩阵M的n次幂。\nclass Solution: def fib(self, n: int) -\u003e int: MOD = 10 ** 9 + 7 if n \u003c 2: return n def multiply(a: List[List[int]], b: List[List[int]]) -\u003e List[List[int]]: c = [[0, 0], [0, 0]] for i in range(2): for j in range(2): c[i][j] = (a[i][0] * b[0][j] + a[i][1] * b[1][j]) % MOD return c def matrix_pow(a: List[List[int]], n: int) -\u003e List[List[int]]: ret = [[1, 0], [0, 1]] while n \u003e 0: if n \u0026 1: ret = multiply(ret, a) n \u003e\u003e= 1 a = multiply(a, a) return ret res = matrix_pow([[1, 1], [1, 0]], n - 1) return res[0][0] 8. 剑指 Offer 11. 旋转数组的最小数字(简单) 二分法：\n如下图，考虑数组最后一个元素x，最小值右侧的元素一定小于等于x，最小值左侧的元素一定大于等于x。\n可以分为三种情况：\nnums[mid]\u003ex：left=mid+1 nums[mid] nums[mid]=x：此时无法判断nums[mid]在最小值左侧还是右侧，但可以确定nums[right]有nums[mid]这个替代值，故可以忽略右端点。right-=1 class Solution: def minArray(self, numbers: List[int]) -\u003e int: n=len(numbers) l,r=0,n-1 while l\u003cr: mid = l+(r-l)//2 if numbers[mid]\u003enumbers[r]: l=mid+1 elif numbers[mid]\u003cnumbers[r]: r=mid else: r-=1 return numbers[l] 9. 剑指 Offer 12. 矩阵中的路径(中等) 回溯(DFS)：时间复杂度$O(MN3^L)$，空间复杂度O(MN)\n用backtracking(i,j,idx)表示从位置(i,j)出发能否匹配字符串word[idx:]，执行步骤如下：\n若board[i][j]!=word[idx]，不匹配返回False 若当前字符匹配且到了字符串末尾，返回True 否则，遍历当前相邻位置 class Solution: def exist(self, board: List[List[str]], word: str) -\u003e bool: m,n=len(board),len(board[0]) vis=set() directions=[(1,0),(-1,0),(0,1),(0,-1)] def backtracking(i,j,idx): if board[i][j]!=word[idx]: return False if idx==len(word)-1: return True vis.add((i,j)) flag=False for di,dj in directions: ii,jj=i+di,j+dj if 0\u003c=ii\u003cm and 0\u003c=jj\u003cn and (ii,jj) not in vis: if backtracking(ii,jj,idx+1): flag=True break vis.remove((i,j)) return flag for i in range(m): for j in range(n): if backtracking(i,j,0): return True return False 10. 剑指 Offer 14- I. 剪绳子(中等) 动态规划：时间空间复杂度O(n)\ndp[1]=1,dp[2]=1,状态转移方程： $$ dp[i]=max(2dp[i-2],3dp[i-3],2*(i-2),3*(i-3)) $$\nclass Solution: def cuttingRope(self, n: int) -\u003e int: dp=[0]*(n+1) dp[1]=dp[2]=1 for i in range(3,n+1): dp[i]=max(2*dp[i-2],3*dp[i-3],2*(i-2),3*(i-3)) return dp[n] 数学推导（贪心）:\nclass Solution: def cuttingRope(self, n: int) -\u003e int: if n\u003c4: return n-1 a,b=n//3,n%3 if b==1: return int(math.pow(3,a-1)*4) elif b==2: return int(math.pow(3,a)*2) return int(math.pow(3,a)) 11. 剑指 Offer 15. 二进制中1的个数(简单) 循环遍历\n位运算优化：时间复杂度O(log n)。每次将n与n-1做与操作，可以将n的最低位的1变为0。例如6(110)\u00265(101)=4(100)。\nclass Solution: def hammingWeight(self, n: int) -\u003e int: ans=0 while n: n\u0026=(n-1) ans+=1 return ans 12. 剑指 Offer 16. 数值的整数次方(中等) 快速幂乘法：递归和迭代\nclass Solution: def myPow(self, x: float, n: int) -\u003e float: # 迭代 def quickMul(n): ans=1.0 xx=x while n: if n\u00261: ans*=xx xx*=xx n\u003e\u003e=1 return ans return quickMul(n) if n\u003e=0 else 1/quickMul(-n) class Solution: def myPow(self, x: float, n: int) -\u003e float: def quickMul(n): if n==0: return 1.0 y=quickMul(n//2) return y*y if n\u00261==0 else y*y*x return quickMul(n) if n\u003e=0 else 1/quickMul(-n) 13. 剑指 Offer 17. 打印从1到最大的n位数(简单) DFS：用字符串来正确表示大数（本题不需要），依次遍历长度1~n的数，第一位只能为1~9，其他位为0~9。\nclass Solution: def printNumbers(self, n: int) -\u003e List[int]: ans=[] def dfs(k,n,s): if k==n: ans.append(int(s)) return for i in range(10): dfs(k+1,n,s+str(i)) for i in range(1,n+1): for j in range(1,10): dfs(1,i,str(j)) return ans 15. 剑指 Offer 18. 删除链表的节点(简单) 前驱结点遍历：考虑要删除节点为头结点的特殊情况。\nclass Solution: def deleteNode(self, head: ListNode, val: int) -\u003e ListNode: if head.val==val: return head.next pre,p=head,head.next while p and p.val!=val: pre,p=p,p.next if p: pre.next = p.next return head 16. 剑指 Offer 19. 正则表达式匹配(困难) 动态规划：\ndp[i][j]表示s[:i]与p[:j]是否匹配，考虑以下情况：\np[j]='*': 若s[i]与p[j-1不匹配，则p[j-1]匹配零次即为dp[i][j]=dp[i][j-2]；否则p[j-1]匹配1次或多次，即dp[i][j]=dp[i-1][j] or dp[i][j-2] p[j]!='*'：若s[i]与p[j]匹配，则dp[i][j]=dp[i-1[j-1] s[i]与p[j]匹配时满足，s[i]=p[j] or p[j]=='.' 初始化时，dp[0][0]=True，考虑s为空数组，只有p的偶数位为*时能够匹配 class Solution: def isMatch(self, s: str, p: str) -\u003e bool: m,n=len(s),len(p) dp = [[False for _ in range(n+1)]for _ in range(m+1)] dp[0][0]=True for j in range(2,n+1,2): if p[j-1]=='*': dp[0][j]=dp[0][j-2] for i in range(1,m+1): for j in range(1,n+1): if p[j-1]=='*': if s[i-1]==p[j-2] or p[j-2]=='.': dp[i][j]=dp[i-1][j] or dp[i][j-2] else: dp[i][j]=dp[i][j-2] else: if s[i-1]==p[j-1] or p[j-1]=='.': dp[i][j]=dp[i-1][j-1] return dp[-1][-1] 17. 剑指 Offer 20. 表示数值的字符串(中等) 模拟\n有限状态机：定义状态-\u003e画状态转移图-\u003e编写代码\n字符类型：空格 ，数字1-9，正负号+-，小数点.，幂符号eE。\n状态定义：\n开始的空格 幂符号前的正负号 小数点前的数字 小数点，小数点后的数字 当小数点前为空格时，小数点和小数点后的数字 幂符号 幂符号后的正负号 幂符号后的数字 结尾的空格 状态转移图：\nclass Solution: def isNumber(self, s: str) -\u003e bool: states = [ {' ':0,'s':1,'d':2,'.':4}, # 0. start with 'blank' {'d':2,'.':4}, # 1. 'sign' before 'e' {'d':2,'.':3,'e':5,' ':8}, # 2. 'digit' before 'dot' {'d':3,'e':5,' ':8}, # 3. 'digit' after 'dot' {'d':3}, # 4. 'digit' after 'dot' (‘blank’ before 'dot') {'s':6,'d':7}, # 5. 'e' {'d':7}, # 6. 'sign' after 'e' {'d':7,' ':8}, # 7. 'digit' after 'e' {' ':8} # 8. end with 'blank' ] p = 0 # start with state 0 for c in s: if '0'\u003c=c\u003c='9': t = 'd' # digit elif c in \"+-\": t = 's' # sign elif c in \"eE\": t = 'e' # e or E elif c in \". \": t = c # dot, blank else: t = '?' # unknown if t not in states[p]: return False p = states[p][t] return p in (2, 3, 7, 8) 18. 剑指 Offer 21. 调整数组顺序使奇数位于偶数前面(简单) 双指针交换\nclass Solution: def exchange(self, nums: List[int]) -\u003e List[int]: i,j=0,len(nums)-1 while i\u003cj: while i\u003cj and nums[i]%2: i+=1 while i\u003cj and nums[j]%2==0: j-=1 nums[i],nums[j]=nums[j],nums[i] return nums 19. 剑指 Offer 22. 链表中倒数第k个节点(简单) 双指针：让快指针先走k个节点\nclass Solution: def getKthFromEnd(self, head: ListNode, k: int) -\u003e ListNode: former, latter = head, head for _ in range(k): former = former.next while former: former, latter = former.next, latter.next return latter 20. 剑指 Offer 24. 反转链表(简单) 迭代（双指针）：\nclass Solution: def reverseList(self, head: ListNode) -\u003e ListNode: pre,cur=None,head while cur: cur.next,pre,cur=pre,cur,cur.next return pre 递归：\nclass Solution: def reverseList(self, head: ListNode) -\u003e ListNode: def recur(pre,cur): if not cur: return pre res = recur(cur,cur.next) cur.next=pre return res return recur(None,head) 21. 剑指 Offer 25. 合并两个排序的链表(简单) 递归：\nclass Solution: def mergeTwoLists(self, l1: ListNode, l2: ListNode) -\u003e ListNode: if not l1 or not l2: return l1 or l2 if l1.val\u003cl2.val: l1.next = self.mergeTwoLists(l1.next,l2) return l1 else: l2.next = self.mergeTwoLists(l1,l2.next) return l2 22. 剑指 Offer 26. 树的子结构(中等) 先序遍历：\n分为两步，先序遍历树A中的每个节点$n_A$；判断以$n_A$为根节点的子树是否包含树B。\nsame函数判断以$n_A$为根节点的子树是否包含树B，若B为空，则表示树B匹配完成，返回True；若A为空，则说明越过A，返回False；若A和B值不同，则不匹配，返回False。\nclass Solution: def isSubStructure(self, A: TreeNode, B: TreeNode) -\u003e bool: def same(A,B): if not B: return True if not A: return False return A.val==B.val and same(A.left,B.left) and same(A.right,B.right) return bool(A and B) and (same(A,B) or self.isSubStructure(A.left,B) or self.isSubStructure(A.right,B)) 23. 剑指 Offer 27. 二叉树的镜像(简单) 递归：注意同时赋值或者临时保存子树\nclass Solution: def mirrorTree(self, root: TreeNode) -\u003e TreeNode: if not root: return None root.left,root.right = self.mirrorTree(root.right),self.mirrorTree(root.left) return root 迭代：用栈保存节点\nclass Solution: def mirrorTree(self, root: TreeNode) -\u003e TreeNode: if not root: return None stack=[root] while stack: node = stack.pop() if node.left: stack.append(node.left) if node.right: stack.append(node.right) node.left,node.right=node.right,node.left return root 24. 剑指 Offer 28. 对称的二叉树(简单) 递归：\nclass Solution: def isSymmetric(self, root: TreeNode) -\u003e bool: def recur(L,R): if not L and not R: return True if not L or not R: return False return L.val==R.val and recur(L.left,R.right) and recur(L.right,R.left) return not root or recur(root.left,root.right) 迭代：\nclass Solution: def isSymmetric(self, root: TreeNode) -\u003e bool: if not root or not (root.left or root.right): return True queue=[root.left,root.right] while queue: l=queue.pop(0) r=queue.pop(0) if not l and not r: continue if not l or not r or l.val!=r.val: return False queue.append(l.left) queue.append(r.right) queue.append(l.right) queue.append(r.left) return True 25. 剑指 Offer 29. 顺时针打印矩阵(简单) 设置边界：设置top，bottom，left，right，遍历\nclass Solution: def spiralOrder(self, matrix: List[List[int]]) -\u003e List[int]: if not matrix: return [] top,bottom,left,right,ans=0,len(matrix)-1,0,len(matrix[0])-1,[] while True: for j in range(left,right+1): ans.append(matrix[top][j]) top+=1 if top\u003ebottom: break for i in range(top,bottom+1): ans.append(matrix[i][right]) right-=1 if right\u003cleft: break for j in range(right,left-1,-1): ans.append(matrix[bottom][j]) bottom-=1 if top\u003ebottom: break for i in range(bottom,top-1,-1): ans.append(matrix[i][left]) left+=1 if right\u003cleft: break return ans ",
+  "wordCount" : "3622",
+  "inLanguage": "en",
+  "datePublished": "2023-04-05T22:38:12+08:00",
+  "dateModified": "2023-04-05T22:38:12+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/algo/offer1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/algo/">📕 算法</a></div>
+            <h1 class="post-title">
+                剑指offer复习笔记(1)
+            </h1>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 4 月 5 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>3622字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>8分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E7%AE%97%E6%B3%95%E9%A2%98/" style="color: var(--secondary)!important;">算法题</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1-%e5%89%91%e6%8c%87-offer-03-%e6%95%b0%e7%bb%84%e4%b8%ad%e9%87%8d%e5%a4%8d%e7%9a%84%e6%95%b0%e5%ad%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemsshu-zu-zhong-zhong-fu-de-shu-zi-lcof" aria-label="1. 剑指 Offer 03. 数组中重复的数字(简单)">1. <a href="https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/">剑指 Offer 03. 数组中重复的数字(简单)</a></a></li>
+                <li>
+                    <a href="#2-%e5%89%91%e6%8c%87-offer-04-%e4%ba%8c%e7%bb%b4%e6%95%b0%e7%bb%84%e4%b8%ad%e7%9a%84%e6%9f%a5%e6%89%be%e4%b8%ad%e7%ad%89httpsleetcodecnproblemser-wei-shu-zu-zhong-de-cha-zhao-lcof" aria-label="2. 剑指 Offer 04. 二维数组中的查找(中等)">2. <a href="https://leetcode.cn/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/">剑指 Offer 04. 二维数组中的查找(中等)</a></a></li>
+                <li>
+                    <a href="#3-%e5%89%91%e6%8c%87-offer-05-%e6%9b%bf%e6%8d%a2%e7%a9%ba%e6%a0%bc%e7%ae%80%e5%8d%95httpsleetcodecnproblemsti-huan-kong-ge-lcof" aria-label="3. 剑指 Offer 05. 替换空格(简单)">3. <a href="https://leetcode.cn/problems/ti-huan-kong-ge-lcof/">剑指 Offer 05. 替换空格(简单)</a></a></li>
+                <li>
+                    <a href="#4-%e5%89%91%e6%8c%87-offer-06-%e4%bb%8e%e5%b0%be%e5%88%b0%e5%a4%b4%e6%89%93%e5%8d%b0%e9%93%be%e8%a1%a8%e7%ae%80%e5%8d%95httpsleetcodecnproblemscong-wei-dao-tou-da-yin-lian-biao-lcof" aria-label="4. 剑指 Offer 06. 从尾到头打印链表(简单)">4. <a href="https://leetcode.cn/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/">剑指 Offer 06. 从尾到头打印链表(简单)</a></a></li>
+                <li>
+                    <a href="#5-%e5%89%91%e6%8c%87-offer-07-%e9%87%8d%e5%bb%ba%e4%ba%8c%e5%8f%89%e6%a0%91%e4%b8%ad%e7%ad%89httpsleetcodecnproblemszhong-jian-er-cha-shu-lcof" aria-label="5. 剑指 Offer 07. 重建二叉树(中等)">5. <a href="https://leetcode.cn/problems/zhong-jian-er-cha-shu-lcof/">剑指 Offer 07. 重建二叉树(中等)</a></a></li>
+                <li>
+                    <a href="#6-%e5%89%91%e6%8c%87-offer-09-%e7%94%a8%e4%b8%a4%e4%b8%aa%e6%a0%88%e5%ae%9e%e7%8e%b0%e9%98%9f%e5%88%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemsyong-liang-ge-zhan-shi-xian-dui-lie-lcof" aria-label="6. 剑指 Offer 09. 用两个栈实现队列(简单)">6. <a href="https://leetcode.cn/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/">剑指 Offer 09. 用两个栈实现队列(简单)</a></a></li>
+                <li>
+                    <a href="#7-%e5%89%91%e6%8c%87-offer-10--i-%e6%96%90%e6%b3%a2%e9%82%a3%e5%a5%91%e6%95%b0%e5%88%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemsfei-bo-na-qi-shu-lie-lcof" aria-label="7. 剑指 Offer 10- I. 斐波那契数列(简单)">7. <a href="https://leetcode.cn/problems/fei-bo-na-qi-shu-lie-lcof/">剑指 Offer 10- I. 斐波那契数列(简单)</a></a></li>
+                <li>
+                    <a href="#8-%e5%89%91%e6%8c%87-offer-11-%e6%97%8b%e8%bd%ac%e6%95%b0%e7%bb%84%e7%9a%84%e6%9c%80%e5%b0%8f%e6%95%b0%e5%ad%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemsxuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof" aria-label="8. 剑指 Offer 11. 旋转数组的最小数字(简单)">8. <a href="https://leetcode.cn/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/">剑指 Offer 11. 旋转数组的最小数字(简单)</a></a></li>
+                <li>
+                    <a href="#9-%e5%89%91%e6%8c%87-offer-12-%e7%9f%a9%e9%98%b5%e4%b8%ad%e7%9a%84%e8%b7%af%e5%be%84%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsju-zhen-zhong-de-lu-jing-lcof" aria-label="9. 剑指 Offer 12. 矩阵中的路径(中等)">9. <a href="https://leetcode.cn/problems/ju-zhen-zhong-de-lu-jing-lcof/">剑指 Offer 12. 矩阵中的路径(中等)</a></a></li>
+                <li>
+                    <a href="#10-%e5%89%91%e6%8c%87-offer-14--i-%e5%89%aa%e7%bb%b3%e5%ad%90%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsjian-sheng-zi-lcof" aria-label="10. 剑指 Offer 14- I. 剪绳子(中等)">10. <a href="https://leetcode.cn/problems/jian-sheng-zi-lcof/">剑指 Offer 14- I. 剪绳子(中等)</a></a></li>
+                <li>
+                    <a href="#11-%e5%89%91%e6%8c%87-offer-15-%e4%ba%8c%e8%bf%9b%e5%88%b6%e4%b8%ad1%e7%9a%84%e4%b8%aa%e6%95%b0%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-jin-zhi-zhong-1de-ge-shu-lcof" aria-label="11. 剑指 Offer 15. 二进制中1的个数(简单)">11. <a href="https://leetcode.cn/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/">剑指 Offer 15. 二进制中1的个数(简单)</a></a></li>
+                <li>
+                    <a href="#12-%e5%89%91%e6%8c%87-offer-16-%e6%95%b0%e5%80%bc%e7%9a%84%e6%95%b4%e6%95%b0%e6%ac%a1%e6%96%b9%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsshu-zhi-de-zheng-shu-ci-fang-lcof" aria-label="12. 剑指 Offer 16. 数值的整数次方(中等)">12. <a href="https://leetcode.cn/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/">剑指 Offer 16. 数值的整数次方(中等)</a></a></li>
+                <li>
+                    <a href="#13-%e5%89%91%e6%8c%87-offer-17-%e6%89%93%e5%8d%b0%e4%bb%8e1%e5%88%b0%e6%9c%80%e5%a4%a7%e7%9a%84n%e4%bd%8d%e6%95%b0%e7%ae%80%e5%8d%95httpsleetcodecnproblemsda-yin-cong-1dao-zui-da-de-nwei-shu-lcof" aria-label="13. 剑指 Offer 17. 打印从1到最大的n位数(简单)">13. <a href="https://leetcode.cn/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/">剑指 Offer 17. 打印从1到最大的n位数(简单)</a></a></li>
+                <li>
+                    <a href="#15-%e5%89%91%e6%8c%87-offer-18-%e5%88%a0%e9%99%a4%e9%93%be%e8%a1%a8%e7%9a%84%e8%8a%82%e7%82%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemsshan-chu-lian-biao-de-jie-dian-lcof" aria-label="15. 剑指 Offer 18. 删除链表的节点(简单)">15. <a href="https://leetcode.cn/problems/shan-chu-lian-biao-de-jie-dian-lcof/">剑指 Offer 18. 删除链表的节点(简单)</a></a></li>
+                <li>
+                    <a href="#16-%e5%89%91%e6%8c%87-offer-19-%e6%ad%a3%e5%88%99%e8%a1%a8%e8%be%be%e5%bc%8f%e5%8c%b9%e9%85%8d%e5%9b%b0%e9%9a%behttpsleetcodecnproblemszheng-ze-biao-da-shi-pi-pei-lcof" aria-label="16. 剑指 Offer 19. 正则表达式匹配(困难)">16. <a href="https://leetcode.cn/problems/zheng-ze-biao-da-shi-pi-pei-lcof/">剑指 Offer 19. 正则表达式匹配(困难)</a></a></li>
+                <li>
+                    <a href="#17-%e5%89%91%e6%8c%87-offer-20-%e8%a1%a8%e7%a4%ba%e6%95%b0%e5%80%bc%e7%9a%84%e5%ad%97%e7%ac%a6%e4%b8%b2%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsbiao-shi-shu-zhi-de-zi-fu-chuan-lcof" aria-label="17. 剑指 Offer 20. 表示数值的字符串(中等)">17. <a href="https://leetcode.cn/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof/">剑指 Offer 20. 表示数值的字符串(中等)</a></a></li>
+                <li>
+                    <a href="#18-%e5%89%91%e6%8c%87-offer-21-%e8%b0%83%e6%95%b4%e6%95%b0%e7%bb%84%e9%a1%ba%e5%ba%8f%e4%bd%bf%e5%a5%87%e6%95%b0%e4%bd%8d%e4%ba%8e%e5%81%b6%e6%95%b0%e5%89%8d%e9%9d%a2%e7%ae%80%e5%8d%95httpsleetcodecnproblemsdiao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof" aria-label="18. 剑指 Offer 21. 调整数组顺序使奇数位于偶数前面(简单)">18. <a href="https://leetcode.cn/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/">剑指 Offer 21. 调整数组顺序使奇数位于偶数前面(简单)</a></a></li>
+                <li>
+                    <a href="#19-%e5%89%91%e6%8c%87-offer-22-%e9%93%be%e8%a1%a8%e4%b8%ad%e5%80%92%e6%95%b0%e7%ac%ack%e4%b8%aa%e8%8a%82%e7%82%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemslian-biao-zhong-dao-shu-di-kge-jie-dian-lcof" aria-label="19. 剑指 Offer 22. 链表中倒数第k个节点(简单)">19. <a href="https://leetcode.cn/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/">剑指 Offer 22. 链表中倒数第k个节点(简单)</a></a></li>
+                <li>
+                    <a href="#20-%e5%89%91%e6%8c%87-offer-24-%e5%8f%8d%e8%bd%ac%e9%93%be%e8%a1%a8%e7%ae%80%e5%8d%95httpsleetcodecnproblemsfan-zhuan-lian-biao-lcof" aria-label="20. 剑指 Offer 24. 反转链表(简单)">20. <a href="https://leetcode.cn/problems/fan-zhuan-lian-biao-lcof/">剑指 Offer 24. 反转链表(简单)</a></a></li>
+                <li>
+                    <a href="#21-%e5%89%91%e6%8c%87-offer-25-%e5%90%88%e5%b9%b6%e4%b8%a4%e4%b8%aa%e6%8e%92%e5%ba%8f%e7%9a%84%e9%93%be%e8%a1%a8%e7%ae%80%e5%8d%95httpsleetcodecnproblemshe-bing-liang-ge-pai-xu-de-lian-biao-lcof" aria-label="21. 剑指 Offer 25. 合并两个排序的链表(简单)">21. <a href="https://leetcode.cn/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/">剑指 Offer 25. 合并两个排序的链表(简单)</a></a></li>
+                <li>
+                    <a href="#22-%e5%89%91%e6%8c%87-offer-26-%e6%a0%91%e7%9a%84%e5%ad%90%e7%bb%93%e6%9e%84%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsshu-de-zi-jie-gou-lcof" aria-label="22. 剑指 Offer 26. 树的子结构(中等)">22. <a href="https://leetcode.cn/problems/shu-de-zi-jie-gou-lcof/">剑指 Offer 26. 树的子结构(中等)</a></a></li>
+                <li>
+                    <a href="#23-%e5%89%91%e6%8c%87-offer-27-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%95%9c%e5%83%8f%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-shu-de-jing-xiang-lcof" aria-label="23. 剑指 Offer 27. 二叉树的镜像(简单)">23. <a href="https://leetcode.cn/problems/er-cha-shu-de-jing-xiang-lcof/">剑指 Offer 27. 二叉树的镜像(简单)</a></a></li>
+                <li>
+                    <a href="#24-%e5%89%91%e6%8c%87-offer-28-%e5%af%b9%e7%a7%b0%e7%9a%84%e4%ba%8c%e5%8f%89%e6%a0%91%e7%ae%80%e5%8d%95httpsleetcodecnproblemsdui-cheng-de-er-cha-shu-lcof" aria-label="24. 剑指 Offer 28. 对称的二叉树(简单)">24. <a href="https://leetcode.cn/problems/dui-cheng-de-er-cha-shu-lcof/">剑指 Offer 28. 对称的二叉树(简单)</a></a></li>
+                <li>
+                    <a href="#25-%e5%89%91%e6%8c%87-offer-29-%e9%a1%ba%e6%97%b6%e9%92%88%e6%89%93%e5%8d%b0%e7%9f%a9%e9%98%b5%e7%ae%80%e5%8d%95httpsleetcodecnproblemsshun-shi-zhen-da-yin-ju-zhen-lcof" aria-label="25. 剑指 Offer 29. 顺时针打印矩阵(简单)">25. <a href="https://leetcode.cn/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/">剑指 Offer 29. 顺时针打印矩阵(简单)</a></a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="1-剑指-offer-03-数组中重复的数字简单httpsleetcodecnproblemsshu-zu-zhong-zhong-fu-de-shu-zi-lcof">1. <a href="https://leetcode.cn/problems/shu-zu-zhong-zhong-fu-de-shu-zi-lcof/">剑指 Offer 03. 数组中重复的数字(简单)</a><a hidden class="anchor" aria-hidden="true" href="#1-剑指-offer-03-数组中重复的数字简单httpsleetcodecnproblemsshu-zu-zhong-zhong-fu-de-shu-zi-lcof">#</a></h2>
+<div align=center><img src="03.png" /></div>
+<ul>
+<li>
+<p>哈希表：用哈希表（Set）记录遍历到的数字，若找到重复的数字则返回。</p>
+</li>
+<li>
+<p><strong>原地交换</strong>：数组元素的<strong>索引</strong>和<strong>值</strong>是一对多的关系。因此，可遍历数组并通过交换操作，使元素的索引与值一一对应（即$nums[i]=i$）。</p>
+<p><strong>算法流程</strong></p>
+<ol>
+<li>遍历数组，索引初始值i=0;
+<ol>
+<li>若<code>nums[i]=i</code>：说明该数字已在对应的索引处，无需交换，跳过；</li>
+<li>若<code>nums[nums[i]]=nums[i]</code>：说明索引nums[i]处和索引i处的值均为nums[i]，即找到一组重复，返回nums[i]；</li>
+<li>否则交换nums[nums[i]]与nums[i]；</li>
+</ol>
+</li>
+<li>若遍历完未返回，返回-1。</li>
+</ol>
+<p><strong>复杂度</strong>：时间O(N)，空间O(1)</p>
+<p><strong>代码</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">findRepeatNumber</span>(self, nums: List[int]) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        n<span style="color:#f92672">=</span>len(nums)
+</span></span><span style="display:flex;"><span>        i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> i<span style="color:#f92672">&lt;</span>n:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> nums[i]<span style="color:#f92672">==</span>i:
+</span></span><span style="display:flex;"><span>                i<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> nums[nums[i]]<span style="color:#f92672">==</span>nums[i]:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> nums[i]
+</span></span><span style="display:flex;"><span>            nums[nums[i]],nums[i]<span style="color:#f92672">=</span>nums[i],nums[nums[i]]
+</span></span></code></pre></div><blockquote>
+<p>Python中a,b=c,d的原理是暂存元组(c,d)，然后按左右顺序赋值，在此处需要先给nums[nums[i]]赋值。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="2-剑指-offer-04-二维数组中的查找中等httpsleetcodecnproblemser-wei-shu-zu-zhong-de-cha-zhao-lcof">2. <a href="https://leetcode.cn/problems/er-wei-shu-zu-zhong-de-cha-zhao-lcof/">剑指 Offer 04. 二维数组中的查找(中等)</a><a hidden class="anchor" aria-hidden="true" href="#2-剑指-offer-04-二维数组中的查找中等httpsleetcodecnproblemser-wei-shu-zu-zhong-de-cha-zhao-lcof">#</a></h2>
+<div align=center><img src="04.png" /></div>
+<ul>
+<li>
+<p>暴力法：时间复杂度O(MN)，未利用到数组的排序信息</p>
+</li>
+<li>
+<p><strong>二分法</strong>：时间复杂度O(M+N)</p>
+<p>如下图，考虑将二维数组旋转45°，类似一棵二叉搜索树：故我们可以从数组的左下角(n-1,0)或右上角(0,m-1)开始，运用二分的思想进行搜索。</p>
+<div align=center><img src="04_1.png" style="zoom: 50%;" /></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">findNumberIn2DArray</span>(self, matrix: List[List[int]], target: int) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>        i,j<span style="color:#f92672">=</span>len(matrix)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">&lt;=</span>i <span style="color:#f92672">and</span> j<span style="color:#f92672">&lt;</span>len(matrix[<span style="color:#ae81ff">0</span>]):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> target<span style="color:#f92672">==</span>matrix[i][j]: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> target<span style="color:#f92672">&gt;</span>matrix[i][j]: j<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>: i<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="3-剑指-offer-05-替换空格简单httpsleetcodecnproblemsti-huan-kong-ge-lcof">3. <a href="https://leetcode.cn/problems/ti-huan-kong-ge-lcof/">剑指 Offer 05. 替换空格(简单)</a><a hidden class="anchor" aria-hidden="true" href="#3-剑指-offer-05-替换空格简单httpsleetcodecnproblemsti-huan-kong-ge-lcof">#</a></h2>
+<div align=center><img src="05.png" /></div>
+<ul>
+<li>
+<p>库函数:<code>return s.replace(' ','%20')</code></p>
+</li>
+<li>
+<p>遍历添加：初始化一个新的str，时间空间复杂度O(N)</p>
+</li>
+<li>
+<p><strong>原地修改</strong>(python str是不可修改，无法实现)：</p>
+<ol>
+<li>遍历得到空格数<code>cnt</code></li>
+<li>修改s长度为<code>len+2*cnt</code></li>
+<li>倒序遍历，i指向原字符串末尾，j指向新字符串末尾，当<code>i=j</code>时跳出（左方已没有空格）；
+<ol>
+<li><code>s[i]=' '</code>：s[j-2:j]=&rsquo;%20&rsquo;，j-=2</li>
+<li><code>s[i]!=' '</code>：s[j]=s[i]</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span>string <span style="color:#a6e22e">replaceSpace</span>(string s) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, len <span style="color:#f92672">=</span> s.size();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">char</span> c : s) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (c <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39; &#39;</span>) count<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    s.resize(len <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> count);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> len <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, j <span style="color:#f92672">=</span> s.size() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> j; i<span style="color:#f92672">--</span>, j<span style="color:#f92672">--</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (s[i] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39; &#39;</span>)
+</span></span><span style="display:flex;"><span>            s[j] <span style="color:#f92672">=</span> s[i];
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            s[j <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;%&#39;</span>;
+</span></span><span style="display:flex;"><span>            s[j <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;2&#39;</span>;
+</span></span><span style="display:flex;"><span>            s[j] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0&#39;</span>;
+</span></span><span style="display:flex;"><span>            j <span style="color:#f92672">-=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> s;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="4-剑指-offer-06-从尾到头打印链表简单httpsleetcodecnproblemscong-wei-dao-tou-da-yin-lian-biao-lcof">4. <a href="https://leetcode.cn/problems/cong-wei-dao-tou-da-yin-lian-biao-lcof/">剑指 Offer 06. 从尾到头打印链表(简单)</a><a hidden class="anchor" aria-hidden="true" href="#4-剑指-offer-06-从尾到头打印链表简单httpsleetcodecnproblemscong-wei-dao-tou-da-yin-lian-biao-lcof">#</a></h2>
+<div align=center><img src="06.png" /></div>
+<ul>
+<li>
+<p>辅助栈：遍历链表，将各节点入栈，返回倒序列表。时间空间复杂度O(N)</p>
+</li>
+<li>
+<p>递归：时间空间复杂度O(N)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reversePrint</span>(self, head: ListNode) <span style="color:#f92672">-&gt;</span> List[int]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>reversePrint(head<span style="color:#f92672">.</span>next) <span style="color:#f92672">+</span> [head<span style="color:#f92672">.</span>val] <span style="color:#66d9ef">if</span> head <span style="color:#66d9ef">else</span> []
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="5-剑指-offer-07-重建二叉树中等httpsleetcodecnproblemszhong-jian-er-cha-shu-lcof">5. <a href="https://leetcode.cn/problems/zhong-jian-er-cha-shu-lcof/">剑指 Offer 07. 重建二叉树(中等)</a><a hidden class="anchor" aria-hidden="true" href="#5-剑指-offer-07-重建二叉树中等httpsleetcodecnproblemszhong-jian-er-cha-shu-lcof">#</a></h2>
+<div align=center><img src="07.png" /></div>
+<ul>
+<li>
+<p><strong>递归</strong>：</p>
+<p>preorder=[root,L,R], inorder=[L,root,R]</p>
+<p>找到root在inorder中的下标，构建root的左右子树</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">buildTree</span>(self, preorder: List[int], inorder: List[int]) <span style="color:#f92672">-&gt;</span> TreeNode:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> preorder:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        root<span style="color:#f92672">=</span>TreeNode(preorder[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>        rootidx<span style="color:#f92672">=</span>inorder<span style="color:#f92672">.</span>index(preorder[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>        root<span style="color:#f92672">.</span>left<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>buildTree(preorder[<span style="color:#ae81ff">1</span>:rootidx<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>],inorder[:rootidx])
+</span></span><span style="display:flex;"><span>        root<span style="color:#f92672">.</span>right<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>buildTree(preorder[rootidx<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:],inorder[rootidx<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> root
+</span></span></code></pre></div></li>
+<li>
+<p>迭代：待续</p>
+</li>
+</ul>
+<h2 id="6-剑指-offer-09-用两个栈实现队列简单httpsleetcodecnproblemsyong-liang-ge-zhan-shi-xian-dui-lie-lcof">6. <a href="https://leetcode.cn/problems/yong-liang-ge-zhan-shi-xian-dui-lie-lcof/">剑指 Offer 09. 用两个栈实现队列(简单)</a><a hidden class="anchor" aria-hidden="true" href="#6-剑指-offer-09-用两个栈实现队列简单httpsleetcodecnproblemsyong-liang-ge-zhan-shi-xian-dui-lie-lcof">#</a></h2>
+<div align=center><img src="09.png" /></div>
+<ul>
+<li>双栈：将一个栈当作输入栈，用于将数据入队；另一个栈当作输出栈，用于数据出队。每次出队时，若输出栈不为空，则直接从输出栈弹出；否则现将所有数据从输入栈弹出并压入输出栈，再从输出栈弹出。
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CQueue</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>stack1, self<span style="color:#f92672">.</span>stack2<span style="color:#f92672">=</span>[],[]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">appendTail</span>(self, value: int) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>stack1<span style="color:#f92672">.</span>append(value)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">deleteHead</span>(self) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>stack2: <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>stack2<span style="color:#f92672">.</span>pop()   
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> self<span style="color:#f92672">.</span>stack1: <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> self<span style="color:#f92672">.</span>stack1:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>stack2<span style="color:#f92672">.</span>append(self<span style="color:#f92672">.</span>stack1<span style="color:#f92672">.</span>pop())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>stack2<span style="color:#f92672">.</span>pop()
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="7-剑指-offer-10--i-斐波那契数列简单httpsleetcodecnproblemsfei-bo-na-qi-shu-lie-lcof">7. <a href="https://leetcode.cn/problems/fei-bo-na-qi-shu-lie-lcof/">剑指 Offer 10- I. 斐波那契数列(简单)</a><a hidden class="anchor" aria-hidden="true" href="#7-剑指-offer-10--i-斐波那契数列简单httpsleetcodecnproblemsfei-bo-na-qi-shu-lie-lcof">#</a></h2>
+<div align=center><img src="10.png" /></div>
+<ul>
+<li>
+<p>动态规划：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(self, n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        a,b<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> n:
+</span></span><span style="display:flex;"><span>            a,b<span style="color:#f92672">=</span>b,a<span style="color:#f92672">+</span>b
+</span></span><span style="display:flex;"><span>            n<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> a<span style="color:#f92672">%</span>(<span style="color:#ae81ff">10</span><span style="color:#f92672">**</span><span style="color:#ae81ff">9</span><span style="color:#f92672">+</span><span style="color:#ae81ff">7</span>)
+</span></span></code></pre></div></li>
+<li>
+<p><strong>矩阵快速幂</strong>：时间复杂度O(log n)，空间复杂度O(1)</p>
+</li>
+</ul>
+<p>$$
+\left[\begin{matrix}
+1&amp;1 \\
+1&amp;0
+\end{matrix}
+\right]
+\left[\begin{matrix}
+F(n) \\
+F(n-1)
+\end{matrix}
+\right]
+= \left[
+\begin{matrix}
+F(n)+F(n-1)\\
+F(n)
+\end{matrix}
+\right]
+=\left[\begin{matrix}
+F(n+1) \\
+F(n)
+\end{matrix}\right]
+$$</p>
+<p>$$
+\left[\begin{matrix}
+F(n+1) \\
+F(n)
+\end{matrix}\right]
+=
+\left[\begin{matrix}
+1&amp;1 \\
+1&amp;0
+\end{matrix}
+\right]^n
+\left[\begin{matrix}
+F(1) \\
+F(0)
+\end{matrix}\right]
+$$</p>
+<p>令：
+$$
+M=\left[\begin{matrix}
+1&amp;1 \\
+1&amp;0
+\end{matrix}
+\right]
+$$
+关键在于快速计算矩阵M的n次幂。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fib</span>(self, n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        MOD <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">**</span> <span style="color:#ae81ff">9</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">2</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> n
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">multiply</span>(a: List[List[int]], b: List[List[int]]) <span style="color:#f92672">-&gt;</span> List[List[int]]:
+</span></span><span style="display:flex;"><span>            c <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>                    c[i][j] <span style="color:#f92672">=</span> (a[i][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> b[<span style="color:#ae81ff">0</span>][j] <span style="color:#f92672">+</span> a[i][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">*</span> b[<span style="color:#ae81ff">1</span>][j]) <span style="color:#f92672">%</span> MOD
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> c
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">matrix_pow</span>(a: List[List[int]], n: int) <span style="color:#f92672">-&gt;</span> List[List[int]]:
+</span></span><span style="display:flex;"><span>            ret <span style="color:#f92672">=</span> [[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>], [<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>]]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> n <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                    ret <span style="color:#f92672">=</span> multiply(ret, a)
+</span></span><span style="display:flex;"><span>                n <span style="color:#f92672">&gt;&gt;=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                a <span style="color:#f92672">=</span> multiply(a, a)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> ret
+</span></span><span style="display:flex;"><span>        res <span style="color:#f92672">=</span> matrix_pow([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>], [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>]], n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> res[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>]
+</span></span></code></pre></div><h2 id="8-剑指-offer-11-旋转数组的最小数字简单httpsleetcodecnproblemsxuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof">8. <a href="https://leetcode.cn/problems/xuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof/">剑指 Offer 11. 旋转数组的最小数字(简单)</a><a hidden class="anchor" aria-hidden="true" href="#8-剑指-offer-11-旋转数组的最小数字简单httpsleetcodecnproblemsxuan-zhuan-shu-zu-de-zui-xiao-shu-zi-lcof">#</a></h2>
+<div align=center><img src="11.png" /></div>
+<ul>
+<li>
+<p><strong>二分法</strong>：</p>
+<p>如下图，考虑数组最后一个元素x，最小值右侧的元素一定小于等于x，最小值左侧的元素一定大于等于x。</p>
+<p>可以分为三种情况：</p>
+<ul>
+<li>nums[mid]&gt;x：left=mid+1</li>
+<li>nums[mid]&lt;x：right=mid</li>
+<li>nums[mid]=x：此时无法判断nums[mid]在最小值左侧还是右侧，但<strong>可以确定nums[right]有nums[mid]这个替代值，故可以忽略右端点</strong>。right-=1</li>
+</ul>
+<div align=center><img src="11_1.png" /></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">minArray</span>(self, numbers: List[int]) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        n<span style="color:#f92672">=</span>len(numbers)
+</span></span><span style="display:flex;"><span>        l,r<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> l<span style="color:#f92672">&lt;</span>r:
+</span></span><span style="display:flex;"><span>            mid <span style="color:#f92672">=</span> l<span style="color:#f92672">+</span>(r<span style="color:#f92672">-</span>l)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> numbers[mid]<span style="color:#f92672">&gt;</span>numbers[r]:
+</span></span><span style="display:flex;"><span>                l<span style="color:#f92672">=</span>mid<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> numbers[mid]<span style="color:#f92672">&lt;</span>numbers[r]:
+</span></span><span style="display:flex;"><span>                r<span style="color:#f92672">=</span>mid
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>: r<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> numbers[l]
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="9-剑指-offer-12-矩阵中的路径中等httpsleetcodecnproblemsju-zhen-zhong-de-lu-jing-lcof">9. <a href="https://leetcode.cn/problems/ju-zhen-zhong-de-lu-jing-lcof/">剑指 Offer 12. 矩阵中的路径(中等)</a><a hidden class="anchor" aria-hidden="true" href="#9-剑指-offer-12-矩阵中的路径中等httpsleetcodecnproblemsju-zhen-zhong-de-lu-jing-lcof">#</a></h2>
+<div align=center><img src="12.png" /></div>
+<ul>
+<li>
+<p><strong>回溯</strong>(DFS)：时间复杂度$O(MN3^L)$，空间复杂度O(MN)</p>
+<p>用backtracking(i,j,idx)表示从位置(i,j)出发能否匹配字符串word[idx:]，执行步骤如下：</p>
+<ul>
+<li>若board[i][j]!=word[idx]，不匹配返回False</li>
+<li>若当前字符匹配且到了字符串末尾，返回True</li>
+<li>否则，遍历当前相邻位置</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">exist</span>(self, board: List[List[str]], word: str) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>        m,n<span style="color:#f92672">=</span>len(board),len(board[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>        vis<span style="color:#f92672">=</span>set()
+</span></span><span style="display:flex;"><span>        directions<span style="color:#f92672">=</span>[(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>),(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>),(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>),(<span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">backtracking</span>(i,j,idx):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> board[i][j]<span style="color:#f92672">!=</span>word[idx]:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> idx<span style="color:#f92672">==</span>len(word)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            vis<span style="color:#f92672">.</span>add((i,j))
+</span></span><span style="display:flex;"><span>            flag<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> di,dj <span style="color:#f92672">in</span> directions:
+</span></span><span style="display:flex;"><span>                ii,jj<span style="color:#f92672">=</span>i<span style="color:#f92672">+</span>di,j<span style="color:#f92672">+</span>dj
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">&lt;=</span>ii<span style="color:#f92672">&lt;</span>m <span style="color:#f92672">and</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">&lt;=</span>jj<span style="color:#f92672">&lt;</span>n <span style="color:#f92672">and</span> (ii,jj) <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> vis:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> backtracking(ii,jj,idx<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>                        flag<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            vis<span style="color:#f92672">.</span>remove((i,j))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> flag
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(m):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> backtracking(i,j,<span style="color:#ae81ff">0</span>):
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="10-剑指-offer-14--i-剪绳子中等httpsleetcodecnproblemsjian-sheng-zi-lcof">10. <a href="https://leetcode.cn/problems/jian-sheng-zi-lcof/">剑指 Offer 14- I. 剪绳子(中等)</a><a hidden class="anchor" aria-hidden="true" href="#10-剑指-offer-14--i-剪绳子中等httpsleetcodecnproblemsjian-sheng-zi-lcof">#</a></h2>
+<div align=center><img src="14.png" /></div>
+<ul>
+<li>
+<p><strong>动态规划</strong>：时间空间复杂度O(n)</p>
+<p>dp[1]=1,dp[2]=1,状态转移方程：
+$$
+dp[i]=max(2<em>dp[i-2],3</em>dp[i-3],2*(i-2),3*(i-3))
+$$</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cuttingRope</span>(self, n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        dp<span style="color:#f92672">=</span>[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>(n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        dp[<span style="color:#ae81ff">1</span>]<span style="color:#f92672">=</span>dp[<span style="color:#ae81ff">2</span>]<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>,n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            dp[i]<span style="color:#f92672">=</span>max(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>dp[i<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>],<span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>dp[i<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>],<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>(i<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>),<span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>(i<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> dp[n]
+</span></span></code></pre></div></li>
+<li>
+<p>数学推导（贪心）:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cuttingRope</span>(self, n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> n<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">4</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        a,b<span style="color:#f92672">=</span>n<span style="color:#f92672">//</span><span style="color:#ae81ff">3</span>,n<span style="color:#f92672">%</span><span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> b<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">return</span> int(math<span style="color:#f92672">.</span>pow(<span style="color:#ae81ff">3</span>,a<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> b<span style="color:#f92672">==</span><span style="color:#ae81ff">2</span>: <span style="color:#66d9ef">return</span> int(math<span style="color:#f92672">.</span>pow(<span style="color:#ae81ff">3</span>,a)<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> int(math<span style="color:#f92672">.</span>pow(<span style="color:#ae81ff">3</span>,a))
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="11-剑指-offer-15-二进制中1的个数简单httpsleetcodecnproblemser-jin-zhi-zhong-1de-ge-shu-lcof">11. <a href="https://leetcode.cn/problems/er-jin-zhi-zhong-1de-ge-shu-lcof/">剑指 Offer 15. 二进制中1的个数(简单)</a><a hidden class="anchor" aria-hidden="true" href="#11-剑指-offer-15-二进制中1的个数简单httpsleetcodecnproblemser-jin-zhi-zhong-1de-ge-shu-lcof">#</a></h2>
+<div align=center><img src="15.png" /></div>
+<ul>
+<li>
+<p>循环遍历</p>
+</li>
+<li>
+<p><strong>位运算优化</strong>：时间复杂度O(log n)。每次将n与n-1做与操作，可以将n的最低位的1变为0。例如<code>6(110)&amp;5(101)=4(100)</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hammingWeight</span>(self, n: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        ans<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> n:
+</span></span><span style="display:flex;"><span>            n<span style="color:#f92672">&amp;=</span>(n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="12-剑指-offer-16-数值的整数次方中等httpsleetcodecnproblemsshu-zhi-de-zheng-shu-ci-fang-lcof">12. <a href="https://leetcode.cn/problems/shu-zhi-de-zheng-shu-ci-fang-lcof/">剑指 Offer 16. 数值的整数次方(中等)</a><a hidden class="anchor" aria-hidden="true" href="#12-剑指-offer-16-数值的整数次方中等httpsleetcodecnproblemsshu-zhi-de-zheng-shu-ci-fang-lcof">#</a></h2>
+<div align=center><img src="16.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p><strong>快速幂乘法</strong>：递归和迭代</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">myPow</span>(self, x: float, n: int) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>      	<span style="color:#75715e"># 迭代</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">quickMul</span>(n):
+</span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>
+</span></span><span style="display:flex;"><span>            xx<span style="color:#f92672">=</span>x
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> n:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> n<span style="color:#f92672">&amp;</span><span style="color:#ae81ff">1</span>: ans<span style="color:#f92672">*=</span>xx
+</span></span><span style="display:flex;"><span>                xx<span style="color:#f92672">*=</span>xx
+</span></span><span style="display:flex;"><span>                n<span style="color:#f92672">&gt;&gt;=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> ans
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> quickMul(n) <span style="color:#66d9ef">if</span> n<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>quickMul(<span style="color:#f92672">-</span>n)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">myPow</span>(self, x: float, n: int) <span style="color:#f92672">-&gt;</span> float:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">quickMul</span>(n):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> n<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1.0</span>
+</span></span><span style="display:flex;"><span>            y<span style="color:#f92672">=</span>quickMul(n<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> y<span style="color:#f92672">*</span>y <span style="color:#66d9ef">if</span> n<span style="color:#f92672">&amp;</span><span style="color:#ae81ff">1</span><span style="color:#f92672">==</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> y<span style="color:#f92672">*</span>y<span style="color:#f92672">*</span>x
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> quickMul(n) <span style="color:#66d9ef">if</span> n<span style="color:#f92672">&gt;=</span><span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>quickMul(<span style="color:#f92672">-</span>n)
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="13-剑指-offer-17-打印从1到最大的n位数简单httpsleetcodecnproblemsda-yin-cong-1dao-zui-da-de-nwei-shu-lcof">13. <a href="https://leetcode.cn/problems/da-yin-cong-1dao-zui-da-de-nwei-shu-lcof/">剑指 Offer 17. 打印从1到最大的n位数(简单)</a><a hidden class="anchor" aria-hidden="true" href="#13-剑指-offer-17-打印从1到最大的n位数简单httpsleetcodecnproblemsda-yin-cong-1dao-zui-da-de-nwei-shu-lcof">#</a></h2>
+<div align=center><img src="17.png" style="zoom: 50%;" /></div>
+<ul>
+<li>
+<p><strong>DFS</strong>：用字符串来正确表示大数（本题不需要），依次遍历长度1~n的数，第一位只能为1~9，其他位为0~9。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">printNumbers</span>(self, n: int) <span style="color:#f92672">-&gt;</span> List[int]:
+</span></span><span style="display:flex;"><span>        ans<span style="color:#f92672">=</span>[]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dfs</span>(k,n,s):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> k<span style="color:#f92672">==</span>n:
+</span></span><span style="display:flex;"><span>                ans<span style="color:#f92672">.</span>append(int(s))
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>                dfs(k<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>,n,s<span style="color:#f92672">+</span>str(i))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">10</span>):
+</span></span><span style="display:flex;"><span>                dfs(<span style="color:#ae81ff">1</span>,i,str(j))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="15-剑指-offer-18-删除链表的节点简单httpsleetcodecnproblemsshan-chu-lian-biao-de-jie-dian-lcof">15. <a href="https://leetcode.cn/problems/shan-chu-lian-biao-de-jie-dian-lcof/">剑指 Offer 18. 删除链表的节点(简单)</a><a hidden class="anchor" aria-hidden="true" href="#15-剑指-offer-18-删除链表的节点简单httpsleetcodecnproblemsshan-chu-lian-biao-de-jie-dian-lcof">#</a></h2>
+<div align=center><img src="18.png" style="zoom: 50%;" /></div>
+<ul>
+<li>
+<p>前驱结点遍历：考虑要删除节点为头结点的特殊情况。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">deleteNode</span>(self, head: ListNode, val: int) <span style="color:#f92672">-&gt;</span> ListNode:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> head<span style="color:#f92672">.</span>val<span style="color:#f92672">==</span>val: <span style="color:#66d9ef">return</span> head<span style="color:#f92672">.</span>next
+</span></span><span style="display:flex;"><span>        pre,p<span style="color:#f92672">=</span>head,head<span style="color:#f92672">.</span>next
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> p <span style="color:#f92672">and</span> p<span style="color:#f92672">.</span>val<span style="color:#f92672">!=</span>val:
+</span></span><span style="display:flex;"><span>            pre,p<span style="color:#f92672">=</span>p,p<span style="color:#f92672">.</span>next
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> p: pre<span style="color:#f92672">.</span>next <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>next
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> head
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="16-剑指-offer-19-正则表达式匹配困难httpsleetcodecnproblemszheng-ze-biao-da-shi-pi-pei-lcof">16. <a href="https://leetcode.cn/problems/zheng-ze-biao-da-shi-pi-pei-lcof/">剑指 Offer 19. 正则表达式匹配(困难)</a><a hidden class="anchor" aria-hidden="true" href="#16-剑指-offer-19-正则表达式匹配困难httpsleetcodecnproblemszheng-ze-biao-da-shi-pi-pei-lcof">#</a></h2>
+<div align=center><img src="19.png" style="zoom:67%;" /></div>
+<ul>
+<li>
+<p><strong>动态规划</strong>：</p>
+<p>dp[i][j]表示s[:i]与p[:j]是否匹配，考虑以下情况：</p>
+<ul>
+<li><code>p[j]='*'</code>: 若<code>s[i]</code>与<code>p[j-1</code>不匹配，则<code>p[j-1]</code>匹配零次即为<code>dp[i][j]=dp[i][j-2]</code>；否则<code>p[j-1]</code>匹配1次或多次，即<code>dp[i][j]=dp[i-1][j] or dp[i][j-2]</code></li>
+<li><code>p[j]!='*'</code>：若<code>s[i]</code>与<code>p[j]</code>匹配，则<code>dp[i][j]=dp[i-1[j-1]</code></li>
+<li><code>s[i]</code>与<code>p[j]</code>匹配时满足，<code>s[i]=p[j] or p[j]=='.'</code></li>
+<li>初始化时，<code>dp[0][0]=True</code>，考虑s为空数组，只有p的偶数位为<code>*</code>时能够匹配</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">isMatch</span>(self, s: str, p: str) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>        m,n<span style="color:#f92672">=</span>len(s),len(p)
+</span></span><span style="display:flex;"><span>        dp <span style="color:#f92672">=</span> [[<span style="color:#66d9ef">False</span> <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)]<span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(m<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)]
+</span></span><span style="display:flex;"><span>        dp[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>,n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> p[j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;*&#39;</span>:
+</span></span><span style="display:flex;"><span>                dp[<span style="color:#ae81ff">0</span>][j]<span style="color:#f92672">=</span>dp[<span style="color:#ae81ff">0</span>][j<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,m<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,n<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> p[j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;*&#39;</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> s[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span>p[j<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">or</span> p[j<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;.&#39;</span>:
+</span></span><span style="display:flex;"><span>                        dp[i][j]<span style="color:#f92672">=</span>dp[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][j] <span style="color:#f92672">or</span> dp[i][j<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                        dp[i][j]<span style="color:#f92672">=</span>dp[i][j<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> s[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span>p[j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">or</span> p[j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;.&#39;</span>:
+</span></span><span style="display:flex;"><span>                        dp[i][j]<span style="color:#f92672">=</span>dp[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> dp[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="17-剑指-offer-20-表示数值的字符串中等httpsleetcodecnproblemsbiao-shi-shu-zhi-de-zi-fu-chuan-lcof">17. <a href="https://leetcode.cn/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof/">剑指 Offer 20. 表示数值的字符串(中等)</a><a hidden class="anchor" aria-hidden="true" href="#17-剑指-offer-20-表示数值的字符串中等httpsleetcodecnproblemsbiao-shi-shu-zhi-de-zi-fu-chuan-lcof">#</a></h2>
+<div align=center><img src="20.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>模拟</p>
+</li>
+<li>
+<p><strong>有限状态机</strong>：定义状态-&gt;画状态转移图-&gt;编写代码</p>
+<ul>
+<li>
+<p>字符类型：空格<code> </code>，数字<code>1-9</code>，正负号<code>+-</code>，小数点<code>.</code>，幂符号<code>eE</code>。</p>
+</li>
+<li>
+<p>状态定义：</p>
+<ol>
+<li>开始的空格</li>
+<li>幂符号前的正负号</li>
+<li>小数点前的数字</li>
+<li>小数点，小数点后的数字</li>
+<li>当小数点前为空格时，小数点和小数点后的数字</li>
+<li>幂符号</li>
+<li>幂符号后的正负号</li>
+<li>幂符号后的数字</li>
+<li>结尾的空格</li>
+</ol>
+<p>状态转移图：</p>
+<div align=center><img src="20_1.png" style="zoom:67%;" /></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">isNumber</span>(self, s: str) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>        states <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39; &#39;</span>:<span style="color:#ae81ff">0</span>,<span style="color:#e6db74">&#39;s&#39;</span>:<span style="color:#ae81ff">1</span>,<span style="color:#e6db74">&#39;d&#39;</span>:<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;.&#39;</span>:<span style="color:#ae81ff">4</span>}, <span style="color:#75715e"># 0. start with &#39;blank&#39;</span>
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39;d&#39;</span>:<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;.&#39;</span>:<span style="color:#ae81ff">4</span>},             <span style="color:#75715e"># 1. &#39;sign&#39; before &#39;e&#39;</span>
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39;d&#39;</span>:<span style="color:#ae81ff">2</span>,<span style="color:#e6db74">&#39;.&#39;</span>:<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#39;e&#39;</span>:<span style="color:#ae81ff">5</span>,<span style="color:#e6db74">&#39; &#39;</span>:<span style="color:#ae81ff">8</span>}, <span style="color:#75715e"># 2. &#39;digit&#39; before &#39;dot&#39;</span>
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39;d&#39;</span>:<span style="color:#ae81ff">3</span>,<span style="color:#e6db74">&#39;e&#39;</span>:<span style="color:#ae81ff">5</span>,<span style="color:#e6db74">&#39; &#39;</span>:<span style="color:#ae81ff">8</span>},       <span style="color:#75715e"># 3. &#39;digit&#39; after &#39;dot&#39;</span>
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39;d&#39;</span>:<span style="color:#ae81ff">3</span>},                   <span style="color:#75715e"># 4. &#39;digit&#39; after &#39;dot&#39; (‘blank’ before &#39;dot&#39;)</span>
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39;s&#39;</span>:<span style="color:#ae81ff">6</span>,<span style="color:#e6db74">&#39;d&#39;</span>:<span style="color:#ae81ff">7</span>},             <span style="color:#75715e"># 5. &#39;e&#39;</span>
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39;d&#39;</span>:<span style="color:#ae81ff">7</span>},                   <span style="color:#75715e"># 6. &#39;sign&#39; after &#39;e&#39;</span>
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39;d&#39;</span>:<span style="color:#ae81ff">7</span>,<span style="color:#e6db74">&#39; &#39;</span>:<span style="color:#ae81ff">8</span>},             <span style="color:#75715e"># 7. &#39;digit&#39; after &#39;e&#39;</span>
+</span></span><span style="display:flex;"><span>            {<span style="color:#e6db74">&#39; &#39;</span>:<span style="color:#ae81ff">8</span>}                    <span style="color:#75715e"># 8. end with &#39;blank&#39;</span>
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span>        p <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>                          <span style="color:#75715e"># start with state 0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> s:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#39;0&#39;</span><span style="color:#f92672">&lt;=</span>c<span style="color:#f92672">&lt;=</span><span style="color:#e6db74">&#39;9&#39;</span>: t <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;d&#39;</span>    <span style="color:#75715e"># digit</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">in</span> <span style="color:#e6db74">&#34;+-&#34;</span>: t <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;s&#39;</span>    <span style="color:#75715e"># sign</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">in</span> <span style="color:#e6db74">&#34;eE&#34;</span>: t <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;e&#39;</span>    <span style="color:#75715e"># e or E</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> c <span style="color:#f92672">in</span> <span style="color:#e6db74">&#34;. &#34;</span>: t <span style="color:#f92672">=</span>  c     <span style="color:#75715e"># dot, blank</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>: t <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;?&#39;</span>              <span style="color:#75715e"># unknown</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> t <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> states[p]: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            p <span style="color:#f92672">=</span> states[p][t]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> p <span style="color:#f92672">in</span> (<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>)
+</span></span></code></pre></div></li>
+</ul>
+</li>
+</ul>
+<h2 id="18-剑指-offer-21-调整数组顺序使奇数位于偶数前面简单httpsleetcodecnproblemsdiao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof">18. <a href="https://leetcode.cn/problems/diao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof/">剑指 Offer 21. 调整数组顺序使奇数位于偶数前面(简单)</a><a hidden class="anchor" aria-hidden="true" href="#18-剑指-offer-21-调整数组顺序使奇数位于偶数前面简单httpsleetcodecnproblemsdiao-zheng-shu-zu-shun-xu-shi-qi-shu-wei-yu-ou-shu-qian-mian-lcof">#</a></h2>
+<div align=center><img src="21.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>双指针交换</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">exchange</span>(self, nums: List[int]) <span style="color:#f92672">-&gt;</span> List[int]:
+</span></span><span style="display:flex;"><span>        i,j<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,len(nums)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> i<span style="color:#f92672">&lt;</span>j:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> i<span style="color:#f92672">&lt;</span>j <span style="color:#f92672">and</span> nums[i]<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span>: i<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> i<span style="color:#f92672">&lt;</span>j <span style="color:#f92672">and</span> nums[j]<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span><span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>: j<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            nums[i],nums[j]<span style="color:#f92672">=</span>nums[j],nums[i]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> nums
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="19-剑指-offer-22-链表中倒数第k个节点简单httpsleetcodecnproblemslian-biao-zhong-dao-shu-di-kge-jie-dian-lcof">19. <a href="https://leetcode.cn/problems/lian-biao-zhong-dao-shu-di-kge-jie-dian-lcof/">剑指 Offer 22. 链表中倒数第k个节点(简单)</a><a hidden class="anchor" aria-hidden="true" href="#19-剑指-offer-22-链表中倒数第k个节点简单httpsleetcodecnproblemslian-biao-zhong-dao-shu-di-kge-jie-dian-lcof">#</a></h2>
+<div align=center><img src="22.png" style="zoom: 50%;" /></div>
+<ul>
+<li>
+<p><strong>双指针</strong>：让快指针先走k个节点</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getKthFromEnd</span>(self, head: ListNode, k: int) <span style="color:#f92672">-&gt;</span> ListNode:
+</span></span><span style="display:flex;"><span>        former, latter <span style="color:#f92672">=</span> head, head
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(k):
+</span></span><span style="display:flex;"><span>            former <span style="color:#f92672">=</span> former<span style="color:#f92672">.</span>next
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> former:
+</span></span><span style="display:flex;"><span>            former, latter <span style="color:#f92672">=</span> former<span style="color:#f92672">.</span>next, latter<span style="color:#f92672">.</span>next
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> latter
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="20-剑指-offer-24-反转链表简单httpsleetcodecnproblemsfan-zhuan-lian-biao-lcof">20. <a href="https://leetcode.cn/problems/fan-zhuan-lian-biao-lcof/">剑指 Offer 24. 反转链表(简单)</a><a hidden class="anchor" aria-hidden="true" href="#20-剑指-offer-24-反转链表简单httpsleetcodecnproblemsfan-zhuan-lian-biao-lcof">#</a></h2>
+<div align=center><img src="24.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p><strong>迭代（双指针）</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reverseList</span>(self, head: ListNode) <span style="color:#f92672">-&gt;</span> ListNode:
+</span></span><span style="display:flex;"><span>        pre,cur<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>,head
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> cur:
+</span></span><span style="display:flex;"><span>            cur<span style="color:#f92672">.</span>next,pre,cur<span style="color:#f92672">=</span>pre,cur,cur<span style="color:#f92672">.</span>next
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> pre
+</span></span></code></pre></div></li>
+<li>
+<p><strong>递归</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reverseList</span>(self, head: ListNode) <span style="color:#f92672">-&gt;</span> ListNode:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">recur</span>(pre,cur):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> cur: <span style="color:#66d9ef">return</span> pre
+</span></span><span style="display:flex;"><span>            res <span style="color:#f92672">=</span> recur(cur,cur<span style="color:#f92672">.</span>next)
+</span></span><span style="display:flex;"><span>            cur<span style="color:#f92672">.</span>next<span style="color:#f92672">=</span>pre
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> res
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> recur(<span style="color:#66d9ef">None</span>,head)
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="21-剑指-offer-25-合并两个排序的链表简单httpsleetcodecnproblemshe-bing-liang-ge-pai-xu-de-lian-biao-lcof">21. <a href="https://leetcode.cn/problems/he-bing-liang-ge-pai-xu-de-lian-biao-lcof/">剑指 Offer 25. 合并两个排序的链表(简单)</a><a hidden class="anchor" aria-hidden="true" href="#21-剑指-offer-25-合并两个排序的链表简单httpsleetcodecnproblemshe-bing-liang-ge-pai-xu-de-lian-biao-lcof">#</a></h2>
+<div align=center><img src="25.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p><strong>递归</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mergeTwoLists</span>(self, l1: ListNode, l2: ListNode) <span style="color:#f92672">-&gt;</span> ListNode:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> l1 <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> l2:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> l1 <span style="color:#f92672">or</span> l2
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> l1<span style="color:#f92672">.</span>val<span style="color:#f92672">&lt;</span>l2<span style="color:#f92672">.</span>val:
+</span></span><span style="display:flex;"><span>            l1<span style="color:#f92672">.</span>next <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>mergeTwoLists(l1<span style="color:#f92672">.</span>next,l2)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> l1
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            l2<span style="color:#f92672">.</span>next <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>mergeTwoLists(l1,l2<span style="color:#f92672">.</span>next)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> l2
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="22-剑指-offer-26-树的子结构中等httpsleetcodecnproblemsshu-de-zi-jie-gou-lcof">22. <a href="https://leetcode.cn/problems/shu-de-zi-jie-gou-lcof/">剑指 Offer 26. 树的子结构(中等)</a><a hidden class="anchor" aria-hidden="true" href="#22-剑指-offer-26-树的子结构中等httpsleetcodecnproblemsshu-de-zi-jie-gou-lcof">#</a></h2>
+<div align=center><img src="26.png" style="zoom: 50%;" /></div>
+<ul>
+<li>
+<p>先序遍历：</p>
+<p>分为两步，先序遍历树<em>A</em>中的每个节点$n_A$；判断以$n_A$为根节点的子树是否包含树B。</p>
+<p>same函数判断以$n_A$为根节点的子树是否包含树B，若B为空，则表示树B匹配完成，返回True；若A为空，则说明越过A，返回False；若A和B值不同，则不匹配，返回False。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">isSubStructure</span>(self, A: TreeNode, B: TreeNode) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">same</span>(A,B):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> B: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> A: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> A<span style="color:#f92672">.</span>val<span style="color:#f92672">==</span>B<span style="color:#f92672">.</span>val <span style="color:#f92672">and</span> same(A<span style="color:#f92672">.</span>left,B<span style="color:#f92672">.</span>left) <span style="color:#f92672">and</span> same(A<span style="color:#f92672">.</span>right,B<span style="color:#f92672">.</span>right)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> bool(A <span style="color:#f92672">and</span> B) <span style="color:#f92672">and</span> (same(A,B) <span style="color:#f92672">or</span> self<span style="color:#f92672">.</span>isSubStructure(A<span style="color:#f92672">.</span>left,B) <span style="color:#f92672">or</span> self<span style="color:#f92672">.</span>isSubStructure(A<span style="color:#f92672">.</span>right,B))
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="23-剑指-offer-27-二叉树的镜像简单httpsleetcodecnproblemser-cha-shu-de-jing-xiang-lcof">23. <a href="https://leetcode.cn/problems/er-cha-shu-de-jing-xiang-lcof/">剑指 Offer 27. 二叉树的镜像(简单)</a><a hidden class="anchor" aria-hidden="true" href="#23-剑指-offer-27-二叉树的镜像简单httpsleetcodecnproblemser-cha-shu-de-jing-xiang-lcof">#</a></h2>
+<div align=center><img src="27.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>递归：注意同时赋值或者临时保存子树</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mirrorTree</span>(self, root: TreeNode) <span style="color:#f92672">-&gt;</span> TreeNode:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> root:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        root<span style="color:#f92672">.</span>left,root<span style="color:#f92672">.</span>right <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>mirrorTree(root<span style="color:#f92672">.</span>right),self<span style="color:#f92672">.</span>mirrorTree(root<span style="color:#f92672">.</span>left)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> root
+</span></span></code></pre></div></li>
+<li>
+<p>迭代：用栈保存节点</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">mirrorTree</span>(self, root: TreeNode) <span style="color:#f92672">-&gt;</span> TreeNode:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> root:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>        stack<span style="color:#f92672">=</span>[root]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> stack:
+</span></span><span style="display:flex;"><span>            node <span style="color:#f92672">=</span> stack<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> node<span style="color:#f92672">.</span>left: stack<span style="color:#f92672">.</span>append(node<span style="color:#f92672">.</span>left)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> node<span style="color:#f92672">.</span>right: stack<span style="color:#f92672">.</span>append(node<span style="color:#f92672">.</span>right)
+</span></span><span style="display:flex;"><span>            node<span style="color:#f92672">.</span>left,node<span style="color:#f92672">.</span>right<span style="color:#f92672">=</span>node<span style="color:#f92672">.</span>right,node<span style="color:#f92672">.</span>left
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> root
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="24-剑指-offer-28-对称的二叉树简单httpsleetcodecnproblemsdui-cheng-de-er-cha-shu-lcof">24. <a href="https://leetcode.cn/problems/dui-cheng-de-er-cha-shu-lcof/">剑指 Offer 28. 对称的二叉树(简单)</a><a hidden class="anchor" aria-hidden="true" href="#24-剑指-offer-28-对称的二叉树简单httpsleetcodecnproblemsdui-cheng-de-er-cha-shu-lcof">#</a></h2>
+<div align=center><img src="28.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>递归：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">isSymmetric</span>(self, root: TreeNode) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">recur</span>(L,R):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> L <span style="color:#f92672">and</span> <span style="color:#f92672">not</span> R: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> L <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> R: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> L<span style="color:#f92672">.</span>val<span style="color:#f92672">==</span>R<span style="color:#f92672">.</span>val <span style="color:#f92672">and</span> recur(L<span style="color:#f92672">.</span>left,R<span style="color:#f92672">.</span>right) <span style="color:#f92672">and</span> recur(L<span style="color:#f92672">.</span>right,R<span style="color:#f92672">.</span>left)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">not</span> root <span style="color:#f92672">or</span> recur(root<span style="color:#f92672">.</span>left,root<span style="color:#f92672">.</span>right)
+</span></span></code></pre></div></li>
+<li>
+<p>迭代：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">isSymmetric</span>(self, root: TreeNode) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> root <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> (root<span style="color:#f92672">.</span>left <span style="color:#f92672">or</span> root<span style="color:#f92672">.</span>right):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>        queue<span style="color:#f92672">=</span>[root<span style="color:#f92672">.</span>left,root<span style="color:#f92672">.</span>right]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> queue:
+</span></span><span style="display:flex;"><span>            l<span style="color:#f92672">=</span>queue<span style="color:#f92672">.</span>pop(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            r<span style="color:#f92672">=</span>queue<span style="color:#f92672">.</span>pop(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> l <span style="color:#f92672">and</span> <span style="color:#f92672">not</span> r:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> l <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> r <span style="color:#f92672">or</span> l<span style="color:#f92672">.</span>val<span style="color:#f92672">!=</span>r<span style="color:#f92672">.</span>val:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>            queue<span style="color:#f92672">.</span>append(l<span style="color:#f92672">.</span>left)
+</span></span><span style="display:flex;"><span>            queue<span style="color:#f92672">.</span>append(r<span style="color:#f92672">.</span>right)
+</span></span><span style="display:flex;"><span>            queue<span style="color:#f92672">.</span>append(l<span style="color:#f92672">.</span>right)
+</span></span><span style="display:flex;"><span>            queue<span style="color:#f92672">.</span>append(r<span style="color:#f92672">.</span>left)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span></code></pre></div></li>
+</ul>
+<h2 id="25-剑指-offer-29-顺时针打印矩阵简单httpsleetcodecnproblemsshun-shi-zhen-da-yin-ju-zhen-lcof">25. <a href="https://leetcode.cn/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/">剑指 Offer 29. 顺时针打印矩阵(简单)</a><a hidden class="anchor" aria-hidden="true" href="#25-剑指-offer-29-顺时针打印矩阵简单httpsleetcodecnproblemsshun-shi-zhen-da-yin-ju-zhen-lcof">#</a></h2>
+<div align=center><img src="29.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p><strong>设置边界</strong>：设置top，bottom，left，right，遍历</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">spiralOrder</span>(self, matrix: List[List[int]]) <span style="color:#f92672">-&gt;</span> List[int]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> matrix: <span style="color:#66d9ef">return</span> []
+</span></span><span style="display:flex;"><span>        top,bottom,left,right,ans<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,len(matrix)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,len(matrix[<span style="color:#ae81ff">0</span>])<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,[]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(left,right<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>): ans<span style="color:#f92672">.</span>append(matrix[top][j])
+</span></span><span style="display:flex;"><span>            top<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> top<span style="color:#f92672">&gt;</span>bottom: <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(top,bottom<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>): ans<span style="color:#f92672">.</span>append(matrix[i][right])
+</span></span><span style="display:flex;"><span>            right<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> right<span style="color:#f92672">&lt;</span>left: <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(right,left<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>): ans<span style="color:#f92672">.</span>append(matrix[bottom][j])
+</span></span><span style="display:flex;"><span>            bottom<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> top<span style="color:#f92672">&gt;</span>bottom: <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(bottom,top<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>): ans<span style="color:#f92672">.</span>append(matrix[i][left])
+</span></span><span style="display:flex;"><span>            left<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> right<span style="color:#f92672">&lt;</span>left: <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/paper/hfinet/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>
