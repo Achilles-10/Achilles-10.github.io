@@ -99,11 +99,13 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="OpenCV-Python学习笔记(3)：几何变换" />
 <meta property="og:description" content="变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/opencv3/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/opencv3/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/opencv3/affine.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-04-11T22:14:19+08:00" />
 <meta property="article:modified_time" content="2023-04-11T22:14:19+08:00" />
 
-<meta name="twitter:card" content="summary"/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/opencv3/affine.png" />
 <meta name="twitter:title" content="OpenCV-Python学习笔记(3)：几何变换"/>
 <meta name="twitter:description" content="变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比"/>
 
@@ -149,7 +151,7 @@ var _hmt = _hmt || [];
   "articleBody": "变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。\n缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比例，以及插值方法。首选的插值方法是用于缩小的 cv2.INTER_AREA 和用于缩放的 cv2.INTER_CUBIC（慢）和 cv2.INTER_LINEAR。cv2.INTER_LINEAR是默认的缩放插值方法。可以用一下两种方法实现：\nimport numpy as np import cv2 img = cv2.imread('face.png') res = cv2.resize(img, None,fx=2, fy=2, interpolation = cv2.INTER_CUBIC) # OR height, width = img.shape[:2] res = cv2.resize(img,(2*width, 2*height), interpolation = cv2.INTER_CUBIC) 平移 如果在(x,y)方向上的平移量为$(t_x,t_y)$，则可以得到转换矩阵M: $$ M=\\begin{bmatrix} 1 \u0026 0 \u0026 t_x \\\\ 0 \u0026 1 \u0026 t_y \\end{bmatrix} $$ 将其转换为np.float32的numpy数组并传入cv2.warpAffine函数，以平移(100,50)为例：\nrows,cols,_ = img.shape M = np.float32([[1,0,100],[0,1,50]]) dst = cv2.warpAffine(img,M,(cols,rows)) cv2.warpAffine的第三个参数是输出图像的大小，形式为(width,height)\n旋转 图像旋转角度为$\\theta$是通过以下变换矩阵实现的： $$ M = \\begin{bmatrix} \\cos\\theta \u0026 -\\sin\\theta \\\\ \\sin\\theta \u0026 \\cos\\theta \\end{bmatrix} $$ OpenCV提供了可缩放的旋转和可调整的旋转中心，修改后的变换矩阵为： $$ \\begin{bmatrix} \\alpha \u0026 \\beta \u0026 (1- \\alpha ) \\cdot center.x - \\beta \\cdot center.y \\\\ - \\beta \u0026 \\alpha \u0026 \\beta \\cdot center.x + (1- \\alpha ) \\cdot center.y \\end{bmatrix} $$ 其中： $$ \\alpha=scale\\cdot\\cos\\theta,\\\\\\beta=scale\\cdot\\sin\\theta $$ 为了得到该变换矩阵，OpenCV提供了cv2.getRotationMatrix2D函数，以将图像相对于中心旋转逆时针90度缩放比例为1：\nrows,cols,_ = img.shape # cols-1 和 rows-1 是坐标限制 M = cv2.getRotationMatrix2D(((cols-1)/2.0,(rows-1)/2.0),90,1) dst = cv2.warpAffine(img,M,(cols,rows)) 仿射变换（Affine Transformation） 在仿射转换中，原始图像中的所有并行线仍将在输出图像中平行。为了得到转换矩阵，需要从输入图像中的三个点及其在输出图像中的对应位置。通过cv2.getAffineTransform函数创建一个2x3的矩阵，并传递给cv2.warpAffine。\nrows,cols,ch = img.shape pts1 = np.float32([[100,100],[100,400],[400,100]]) pts2 = np.float32([[50,50],[100,400],[350,50]]) M = cv2.getAffineTransform(pts1,pts2) dst = cv2.warpAffine(img,M,(cols,rows)) 透视变换（Perspective Transformation） 透视转换需要一个3x3转换矩阵。即使在转换后，直线也将保持直线。需要在输入图像上有四个点，在输出图像中需要对应的四个点，其中三个点不共线。可通过cv2.getPersperctiveTransform得到变换矩阵，并传递给cv2.warpPerspective。\nrows,cols,ch = img.shape pts1 = np.float32([[40,100],[400,100],[0,400],[360,400]]) pts2 = np.float32([[0,0],[500,0],[0,500],[500,500]]) M = cv2.getPerspectiveTransform(pts1,pts2) dst = cv2.warpPerspective(img,M,(cols,rows)) ",
   "wordCount" : "983",
   "inLanguage": "en",
-  "datePublished": "2023-04-11T22:14:19+08:00",
+  "image":"https://Achilles-10.github.io/posts/tech/opencv3/affine.png","datePublished": "2023-04-11T22:14:19+08:00",
   "dateModified": "2023-04-11T22:14:19+08:00",
   "author":[{
     "@type": "Person",
@@ -379,7 +381,10 @@ var _hmt = _hmt || [];
                 </span>
 
 </div>
-        </header> <aside id="toc-container" class="toc-container wide">
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/opencv3/affine.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
         <details  open>
         <summary accesskey="c" title="(Alt + C)">
