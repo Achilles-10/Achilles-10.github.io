@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>OpenCV-Python学习笔记(3)：几何变换 | 烈烈风中、的博客</title>
+<meta name="keywords" content="OpenCV, 学习笔记">
+<meta name="description" content="变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/opencv3/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="OpenCV-Python学习笔记(3)：几何变换" />
+<meta property="og:description" content="变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/opencv3/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-11T22:14:19+08:00" />
+<meta property="article:modified_time" content="2023-04-11T22:14:19+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OpenCV-Python学习笔记(3)：几何变换"/>
+<meta name="twitter:description" content="变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "👨🏻‍💻 技术",
+          "item": "https://Achilles-10.github.io/posts/tech/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "OpenCV-Python学习笔记(3)：几何变换",
+      "item": "https://Achilles-10.github.io/posts/tech/opencv3/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenCV-Python学习笔记(3)：几何变换",
+  "name": "OpenCV-Python学习笔记(3)：几何变换",
+  "description": "变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比",
+  "keywords": [
+    "OpenCV", "学习笔记"
+  ],
+  "articleBody": "变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。\n缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比例，以及插值方法。首选的插值方法是用于缩小的 cv2.INTER_AREA 和用于缩放的 cv2.INTER_CUBIC（慢）和 cv2.INTER_LINEAR。cv2.INTER_LINEAR是默认的缩放插值方法。可以用一下两种方法实现：\nimport numpy as np import cv2 img = cv2.imread('face.png') res = cv2.resize(img, None,fx=2, fy=2, interpolation = cv2.INTER_CUBIC) # OR height, width = img.shape[:2] res = cv2.resize(img,(2*width, 2*height), interpolation = cv2.INTER_CUBIC) 平移 如果在(x,y)方向上的平移量为$(t_x,t_y)$，则可以得到转换矩阵M: $$ M=\\begin{bmatrix} 1 \u0026 0 \u0026 t_x \\\\ 0 \u0026 1 \u0026 t_y \\end{bmatrix} $$ 将其转换为np.float32的numpy数组并传入cv2.warpAffine函数，以平移(100,50)为例：\nrows,cols,_ = img.shape M = np.float32([[1,0,100],[0,1,50]]) dst = cv2.warpAffine(img,M,(cols,rows)) cv2.warpAffine的第三个参数是输出图像的大小，形式为(width,height)\n旋转 图像旋转角度为$\\theta$是通过以下变换矩阵实现的： $$ M = \\begin{bmatrix} \\cos\\theta \u0026 -\\sin\\theta \\\\ \\sin\\theta \u0026 \\cos\\theta \\end{bmatrix} $$ OpenCV提供了可缩放的旋转和可调整的旋转中心，修改后的变换矩阵为： $$ \\begin{bmatrix} \\alpha \u0026 \\beta \u0026 (1- \\alpha ) \\cdot center.x - \\beta \\cdot center.y \\\\ - \\beta \u0026 \\alpha \u0026 \\beta \\cdot center.x + (1- \\alpha ) \\cdot center.y \\end{bmatrix} $$ 其中： $$ \\alpha=scale\\cdot\\cos\\theta,\\\\\\beta=scale\\cdot\\sin\\theta $$ 为了得到该变换矩阵，OpenCV提供了cv2.getRotationMatrix2D函数，以将图像相对于中心旋转逆时针90度缩放比例为1：\nrows,cols,_ = img.shape # cols-1 和 rows-1 是坐标限制 M = cv2.getRotationMatrix2D(((cols-1)/2.0,(rows-1)/2.0),90,1) dst = cv2.warpAffine(img,M,(cols,rows)) 仿射变换（Affine Transformation） 在仿射转换中，原始图像中的所有并行线仍将在输出图像中平行。为了得到转换矩阵，需要从输入图像中的三个点及其在输出图像中的对应位置。通过cv2.getAffineTransform函数创建一个2x3的矩阵，并传递给cv2.warpAffine。\nrows,cols,ch = img.shape pts1 = np.float32([[100,100],[100,400],[400,100]]) pts2 = np.float32([[50,50],[100,400],[350,50]]) M = cv2.getAffineTransform(pts1,pts2) dst = cv2.warpAffine(img,M,(cols,rows)) 透视变换（Perspective Transformation） 透视转换需要一个3x3转换矩阵。即使在转换后，直线也将保持直线。需要在输入图像上有四个点，在输出图像中需要对应的四个点，其中三个点不共线。可通过cv2.getPersperctiveTransform得到变换矩阵，并传递给cv2.warpPerspective。\nrows,cols,ch = img.shape pts1 = np.float32([[40,100],[400,100],[0,400],[360,400]]) pts2 = np.float32([[0,0],[500,0],[0,500],[500,500]]) M = cv2.getPerspectiveTransform(pts1,pts2) dst = cv2.warpPerspective(img,M,(cols,rows)) ",
+  "wordCount" : "983",
+  "inLanguage": "en",
+  "datePublished": "2023-04-11T22:14:19+08:00",
+  "dateModified": "2023-04-11T22:14:19+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/tech/opencv3/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                OpenCV-Python学习笔记(3)：几何变换
+            </h1>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 4 月 11 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>983字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>2分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/opencv/" style="color: var(--secondary)!important;">OpenCV</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%8f%98%e6%8d%a2" aria-label="变换">变换</a><ul>
+                        
+                <li>
+                    <a href="#%e7%bc%a9%e6%94%be" aria-label="缩放">缩放</a></li>
+                <li>
+                    <a href="#%e5%b9%b3%e7%a7%bb" aria-label="平移">平移</a></li>
+                <li>
+                    <a href="#%e6%97%8b%e8%bd%ac" aria-label="旋转">旋转</a></li>
+                <li>
+                    <a href="#%e4%bb%bf%e5%b0%84%e5%8f%98%e6%8d%a2affine-transformation" aria-label="仿射变换（Affine Transformation）">仿射变换（Affine Transformation）</a></li>
+                <li>
+                    <a href="#%e9%80%8f%e8%a7%86%e5%8f%98%e6%8d%a2perspective-transformation" aria-label="透视变换（Perspective Transformation）">透视变换（Perspective Transformation）</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="变换">变换<a hidden class="anchor" aria-hidden="true" href="#变换">#</a></h2>
+<p>OpenCV提供了<code>cv2.warpAffine</code>和<code>cv2.warpPerspective</code>两个转换函数，<code>cv2.warpAffine</code>采用<code>2x3</code>的转换矩阵，<code>cv2.warpPerspective</code>采用<code>3x3</code>转换矩阵。</p>
+<h3 id="缩放">缩放<a hidden class="anchor" aria-hidden="true" href="#缩放">#</a></h3>
+<p>使用<code>cv2.resize</code>实现图像的缩放，可以指定缩放尺寸或缩放比例，以及插值方法。首选的插值方法是用于缩小的 <code>cv2.INTER_AREA </code>和用于缩放的 <code>cv2.INTER_CUBIC</code>（慢）和 <code>cv2.INTER_LINEAR</code>。<code>cv2.INTER_LINEAR</code>是默认的缩放插值方法。可以用一下两种方法实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face.png&#39;</span>)
+</span></span><span style="display:flex;"><span>res <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>resize(img, <span style="color:#66d9ef">None</span>,fx<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, fy<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, interpolation <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>INTER_CUBIC)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># OR</span>
+</span></span><span style="display:flex;"><span>height, width <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape[:<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>res <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>resize(img,(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>width, <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>height), interpolation <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>INTER_CUBIC)
+</span></span></code></pre></div><h3 id="平移">平移<a hidden class="anchor" aria-hidden="true" href="#平移">#</a></h3>
+<p>如果在(x,y)方向上的平移量为$(t_x,t_y)$，则可以得到转换矩阵<strong>M</strong>:
+$$
+M=\begin{bmatrix} 1 &amp; 0 &amp; t_x \\ 0 &amp; 1 &amp; t_y \end{bmatrix}
+$$
+将其转换为<code>np.float32</code>的numpy数组并传入<code>cv2.warpAffine</code>函数，以平移<code>(100,50)</code>为例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rows,cols,_ = img.shape
+</span></span><span style="display:flex;"><span>M = np.float32([[1,0,100],[0,1,50]])
+</span></span><span style="display:flex;"><span>dst = cv2.warpAffine(img,M,(cols,rows))
+</span></span></code></pre></div><div align=center><img src="shift.png" style="zoom:120%"/></div>
+<blockquote>
+<p><code>cv2.warpAffine</code>的第三个参数是输出图像的大小，形式为<code>(width,height)</code></p>
+</blockquote>
+<h3 id="旋转">旋转<a hidden class="anchor" aria-hidden="true" href="#旋转">#</a></h3>
+<p>图像旋转角度为$\theta$是通过以下变换矩阵实现的：
+$$
+M = \begin{bmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta \end{bmatrix}
+$$
+OpenCV提供了可缩放的旋转和可调整的旋转中心，修改后的变换矩阵为：
+$$
+\begin{bmatrix} \alpha &amp; \beta &amp; (1- \alpha ) \cdot center.x - \beta \cdot center.y \\ - \beta &amp; \alpha &amp; \beta \cdot center.x + (1- \alpha ) \cdot center.y \end{bmatrix}
+$$
+其中：
+$$
+\alpha=scale\cdot\cos\theta,\\\beta=scale\cdot\sin\theta
+$$
+为了得到该变换矩阵，OpenCV提供了<code>cv2.getRotationMatrix2D</code>函数，以将图像相对于中心旋转逆时针90度缩放比例为1：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rows,cols,_ <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># cols-1 和 rows-1 是坐标限制</span>
+</span></span><span style="display:flex;"><span>M <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>getRotationMatrix2D(((cols<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>,(rows<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>),<span style="color:#ae81ff">90</span>,<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpAffine(img,M,(cols,rows))
+</span></span></code></pre></div><div align=center><img src="rotate.png" style="zoom:120%"/></div>
+<h3 id="仿射变换affine-transformation">仿射变换（Affine Transformation）<a hidden class="anchor" aria-hidden="true" href="#仿射变换affine-transformation">#</a></h3>
+<p>在仿射转换中，原始图像中的所有并行线仍将在输出图像中平行。为了得到转换矩阵，需要从输入图像中的三个点及其在输出图像中的对应位置。通过<code>cv2.getAffineTransform</code>函数创建一个2x3的矩阵，并传递给<code>cv2.warpAffine</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rows,cols,ch <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span>pts1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>],[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">400</span>],[<span style="color:#ae81ff">400</span>,<span style="color:#ae81ff">100</span>]])
+</span></span><span style="display:flex;"><span>pts2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">50</span>],[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">400</span>],[<span style="color:#ae81ff">350</span>,<span style="color:#ae81ff">50</span>]])
+</span></span><span style="display:flex;"><span>M <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>getAffineTransform(pts1,pts2)
+</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpAffine(img,M,(cols,rows))
+</span></span></code></pre></div><div align=center><img src="affine.png" style="zoom:120%"/></div>
+<h3 id="透视变换perspective-transformation">透视变换（Perspective Transformation）<a hidden class="anchor" aria-hidden="true" href="#透视变换perspective-transformation">#</a></h3>
+<p>透视转换需要一个3x3转换矩阵。即使在转换后，直线也将保持直线。需要在输入图像上有四个点，在输出图像中需要对应的四个点，其中三个点不共线。可通过<code>cv2.getPersperctiveTransform</code>得到变换矩阵，并传递给<code>cv2.warpPerspective</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rows,cols,ch <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
+</span></span><span style="display:flex;"><span>pts1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">40</span>,<span style="color:#ae81ff">100</span>],[<span style="color:#ae81ff">400</span>,<span style="color:#ae81ff">100</span>],[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">400</span>],[<span style="color:#ae81ff">360</span>,<span style="color:#ae81ff">400</span>]])
+</span></span><span style="display:flex;"><span>pts2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],[<span style="color:#ae81ff">500</span>,<span style="color:#ae81ff">0</span>],[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">500</span>],[<span style="color:#ae81ff">500</span>,<span style="color:#ae81ff">500</span>]])
+</span></span><span style="display:flex;"><span>M <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>getPerspectiveTransform(pts1,pts2)
+</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpPerspective(img,M,(cols,rows))
+</span></span></code></pre></div><div align=center><img src="perspective.png" style="zoom:120%"/></div>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/algo/offer1/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>剑指offer复习笔记(1)</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>

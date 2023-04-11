@@ -20,7 +20,7 @@ Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-cs
     --nav-width: 1300px;
     /*--nav-width: 1024px;*/
     --article-width: 650px;
-    --toc-width: 300px;
+    --toc-width: 260px;
 }
 
 .main {

@@ -222,7 +222,7 @@ $$
 \end{matrix}\right]
 $$
 
-  $$
+$$
   \left[\begin{matrix}
      F(n+1) \\\\
      F(n)
@@ -237,16 +237,16 @@ $$
      F(1) \\\\
      F(0)
     \end{matrix}\right]
-  $$
+$$
 
   令：
-  $$
+$$
   M=\left[\begin{matrix}
      1&1 \\\\
      1&0
     \end{matrix}
     \right]
-  $$
+$$
   关键在于快速计算矩阵M的n次幂。
 
   ```python
@@ -352,9 +352,7 @@ $$
 * **动态规划**：时间空间复杂度O(n)
 
   dp[1]=1,dp[2]=1,状态转移方程：
-  $$
-  dp[i]=max(2*dp[i-2],3*dp[i-3],2*(i-2),3*(i-3))
-  $$
+  $$ dp[i]=max(2\*dp[i-2],3\*dp[i-3],2\*(i-2),3\*(i-3)) $$
 
   ```python
   class Solution:

@@ -6,7 +6,16 @@
     <description>Recent content in 👨🏻‍💻 技术 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 29 Mar 2023 18:25:34 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Apr 2023 22:14:19 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenCV-Python学习笔记(3)：几何变换</title>
+      <link>https://Achilles-10.github.io/posts/tech/opencv3/</link>
+      <pubDate>Tue, 11 Apr 2023 22:14:19 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/opencv3/</guid>
+      <description>变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比</description>
+    </item>
+    
     <item>
       <title>OpenCV-Python学习笔记(2)：颜色空间</title>
       <link>https://Achilles-10.github.io/posts/tech/opencv2/</link>
