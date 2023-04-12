@@ -28,7 +28,7 @@ cover:
     alt: ""
     relative: false
 ---
-## [26. 剑指 Offer 30. 包含min函数的栈(简单)](https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/)
+## 26. [剑指 Offer 30. 包含min函数的栈(简单)](https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/)
 
 <div align=center><img src="30.png" style="zoom:50%;"/></div>
 
@@ -51,7 +51,7 @@ cover:
           return self.minstack[-1]
   ```
 
-## [27. 剑指 Offer 31. 栈的压入、弹出序列](https://leetcode.cn/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/)
+## 27. [剑指 Offer 31. 栈的压入、弹出序列](https://leetcode.cn/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/)
 
 <div align=center><img src="31.png" style="zoom:50%;"/></div>
 
@@ -70,7 +70,7 @@ cover:
   ```
 
 
-## [28. 剑指 Offer 32 - II. 从上到下打印二叉树 II(简单)](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/)
+## 28. [剑指 Offer 32 - II. 从上到下打印二叉树 II(简单)](https://leetcode.cn/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/)
 
 <div align=center><img src="322.png"/></div>
 
@@ -92,7 +92,7 @@ cover:
           return ans
   ```
 
-## [29. 剑指 Offer 33. 二叉搜索树的后序遍历序列](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/)
+## 29. [剑指 Offer 33. 二叉搜索树的后序遍历序列](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/)
 
 <div align=center><img src="33.png" style="zoom:100%;"/></div>
 
@@ -131,7 +131,7 @@ cover:
           return True
   ```
 
-## [30. 剑指 Offer 34. 二叉树中和为某一值的路径(中等)](https://leetcode.cn/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
+## 30. [剑指 Offer 34. 二叉树中和为某一值的路径(中等)](https://leetcode.cn/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
 
 <div align=center><img src="34.png" style="zoom:67%;"/></div>
 
@@ -154,7 +154,7 @@ cover:
           return ans
   ```
 
-## [31. 剑指 Offer 35. 复杂链表的复制(中等)](https://leetcode.cn/problems/fu-za-lian-biao-de-fu-zhi-lcof/)
+## 31. [剑指 Offer 35. 复杂链表的复制(中等)](https://leetcode.cn/problems/fu-za-lian-biao-de-fu-zhi-lcof/)
 
 <div align=center><img src="35.png" /></div>
 
@@ -467,7 +467,7 @@ cover:
 
 <div align=center><img src="46.png" /></div>
 
-* `动态规划`：若`s[i-1:i+1]`位于10~25之间，则可以翻译在一起，此时`dp[i]=dp[i-1]+dp[i-2]`，否则`dp[i]=dp[i-1]`
+* **动态规划**：若`s[i-1:i+1]`位于10~25之间，则可以翻译在一起，此时`dp[i]=dp[i-1]+dp[i-2]`，否则`dp[i]=dp[i-1]`
 
   ```python
   class Solution:
@@ -480,4 +480,141 @@ cover:
                   dp[i+1]=dp[i]+dp[i-1]
               else: dp[i+1]=dp[i]
           return dp[-1]
+  ```
+
+## 42. [剑指 Offer 47. 礼物的最大价值(中等)](https://leetcode.cn/problems/li-wu-de-zui-da-jie-zhi-lcof/)
+
+<div align=center><img src="47.png" /></div>
+
+* 动态规划
+
+  ```python
+  class Solution:
+      def maxValue(self, grid: List[List[int]]) -> int:
+          m,n=len(grid),len(grid[0])
+          dp=[[0 for _ in range(n+1)]for _ in range(m+1)]
+          for i in range(1,m+1):
+              for j in range(1,n+1):
+                  dp[i][j]=max(dp[i-1][j],dp[i][j-1])+grid[i-1][j-1]
+          return dp[-1][-1]
+  ```
+
+## 43. [剑指 Offer 48. 最长不含重复字符的子字符串(中等)](https://leetcode.cn/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/)
+
+<div align=center><img src="48.png" /></div>
+
+* 双指针+哈希表：哈希表记录字符最右的位置，当遍历到哈希表中存在的字符时，更新i为`max(i,vis[s[j]])`，每次计算最长长度`j-i`
+
+  ```python
+  class Solution:
+      def lengthOfLongestSubstring(self, s: str) -> int:
+          vis,ans,i={},0,-1
+          for j in range(len(s)):
+              if s[j] in vis: i=max(i,vis[s[j]])
+              vis[s[j]]=j
+              ans=max(ans,j-i)     
+          return ans
+  ```
+
+## 44. [剑指 Offer 49. 丑数(中等)](https://leetcode.cn/problems/chou-shu-lcof/)
+
+<div align=center><img src="49.png" /></div>
+
+* 最小堆：每次取出堆顶元素x，然后将`2x,3x,5x`加入堆中，用哈希表去重，最后返回堆顶元素
+
+  ```python
+  import heapq
+  class Solution:
+      def nthUglyNumber(self, n: int) -> int:
+          factors = [2,3,5]
+          heap,vis=[1],{1}
+          for i in range(n-1):
+              curr = heapq.heappop(heap)
+              for factor in factors:
+                  nxt = curr*factor
+                  if nxt not in vis:
+                      vis.add(nxt)
+                      heapq.heappush(heap,nxt)
+          return heapq.heappop(heap)
+  ```
+
+* **动态规划**：设置p2,p3,p5三个索引，`dp[i]=min(dp[p2]*2,dp[p3]*3,dp[p5]*5)`，独立判断`dp[i]`与这三个值的大小关系，若相等则将相应的索引+1
+
+  ```python
+  class Solution:
+      def nthUglyNumber(self, n: int) -> int:
+          dp=[1]*n
+          p2,p3,p5=0,0,0
+          for i in range(1,n):
+              n2,n3,n5=dp[p2]*2,dp[p3]*3,dp[p5]*5
+              dp[i]=min(n2,n3,n5)
+              if dp[i]==n2: p2+=1
+              if dp[i]==n3: p3+=1
+              if dp[i]==n5: p5+=1
+          return dp[-1]
+  ```
+
+## 45. [剑指 Offer 50. 第一个只出现一次的字符(简单)](https://leetcode.cn/problems/di-yi-ge-zhi-chu-xian-yi-ci-de-zi-fu-lcof/)
+
+<div align=center><img src="50.png" /></div>
+
+* **有序哈希表**：`OrderedDict()`
+
+  ```python
+  class Solution:
+      def firstUniqChar(self, s: str) -> str:
+          dic = collections.OrderedDict()
+          for c in s: dic[c] = not c in dic
+          for k,v in dic.items():
+              if v: return k
+          return ' '
+  ```
+
+## 46. [剑指 Offer 51. 数组中的逆序对(困难)](https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
+
+<div align=center><img src="51.png" /></div>
+
+* **归并排序**：在归并排序的合并阶段，每当遇到`左子数组当前元素>右子数组当前元素`，意味着`左子数组当前元素至末尾元素`与`右子树组当前元素`构成了若干`逆序对`
+
+  <div align=center><img src="51_1.png" /></div>
+
+  ```python
+  class Solution:
+      def reversePairs(self, nums: List[int]) -> int:
+          def merge(l,r):
+              if l>=r: return 0
+              m=l+(r-l)//2
+              res = merge(l,m)+merge(m+1,r)
+              tmp[l:r+1]=nums[l:r+1]
+              i,j=l,m+1
+              for k in range(l,r+1):
+                  if i==m+1:
+                      nums[k]=tmp[j]
+                      j+=1
+                  elif j==r+1 or tmp[i]<=tmp[j]:
+                      nums[k]=tmp[i]
+                      i+=1
+                  else:
+                      nums[k]=tmp[j]
+                      res+= m-i+1
+                      j+=1
+              return res
+          tmp=[0]*len(nums)
+          return merge(0,len(nums)-1)
+  ```
+
+## 47. [剑指 Offer 52. 两个链表的第一个公共节点(简单)](https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/)
+
+<div align=center><img src="52.png" /></div>
+
+* **双指针**：当指针为空时，转移到另一个链表表头；当两个指针相遇时，即为第一个公共节点
+
+  ```python
+  class Solution:
+      def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
+          pA,pB=headA,headB
+          while pA!=pB:
+              pA=pA.next if pA else headB
+              pB=pB.next if pB else headA
+          return pA
   ```
