@@ -8,10 +8,10 @@ author: ["Achilles"]
 categories: # 没有分类界面可以不填写
 - 
 tags: ["算法题","学习笔记"] # 标签
-description: "leetcode 剑指offer 26~50题提示清单"
+description: "leetcode 剑指offer 26~47题提示清单"
 weight:
 slug: ""
-draft: true # 是否为草稿
+draft: false # 是否为草稿
 comments: true # 本页面是否显示评论
 # reward: true # 打赏
 mermaid: true #是否开启mermaid
@@ -28,6 +28,7 @@ cover:
     alt: ""
     relative: false
 ---
+
 ## 26. [剑指 Offer 30. 包含min函数的栈(简单)](https://leetcode.cn/problems/bao-han-minhan-shu-de-zhan-lcof/)
 
 <div align=center><img src="30.png" style="zoom:50%;"/></div>
