@@ -6,7 +6,16 @@
     <description>Recent content on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 11 Apr 2023 22:14:19 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Apr 2023 22:25:07 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>FcaNet: Frequency Channel Attention Networks</title>
+      <link>https://Achilles-10.github.io/posts/paper/fcanet/</link>
+      <pubDate>Wed, 12 Apr 2023 22:25:07 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/fcanet/</guid>
+      <description>利用DCT得到的频域信息生成通道注意力，改进SENet</description>
+    </item>
+    
     <item>
       <title>OpenCV-Python学习笔记(3)：几何变换</title>
       <link>https://Achilles-10.github.io/posts/tech/opencv3/</link>

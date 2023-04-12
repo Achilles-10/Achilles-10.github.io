@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>OpenCV-Python学习笔记(3)：几何变换 | 烈烈风中、的博客</title>
-<meta name="keywords" content="OpenCV, 学习笔记">
-<meta name="description" content="变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比">
+<title>FcaNet: Frequency Channel Attention Networks | 烈烈风中、的博客</title>
+<meta name="keywords" content="论文阅读, 注意力, ICCV">
+<meta name="description" content="利用DCT得到的频域信息生成通道注意力，改进SENet">
 <meta name="author" content="Achilles">
-<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/opencv3/">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/paper/fcanet/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
         onload="hljs.initHighlightingOnLoad();"></script>
@@ -96,18 +96,18 @@ var _hmt = _hmt || [];
     });
 </script>
 
-<meta property="og:title" content="OpenCV-Python学习笔记(3)：几何变换" />
-<meta property="og:description" content="变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比" />
+<meta property="og:title" content="FcaNet: Frequency Channel Attention Networks" />
+<meta property="og:description" content="利用DCT得到的频域信息生成通道注意力，改进SENet" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/opencv3/" />
-<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/opencv3/affine.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-04-11T22:14:19+08:00" />
-<meta property="article:modified_time" content="2023-04-11T22:14:19+08:00" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/paper/fcanet/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/paper/fcanet/msatt.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-12T22:25:07+08:00" />
+<meta property="article:modified_time" content="2023-04-12T22:25:07+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/opencv3/affine.png" />
-<meta name="twitter:title" content="OpenCV-Python学习笔记(3)：几何变换"/>
-<meta name="twitter:description" content="变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比"/>
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/paper/fcanet/msatt.png" />
+<meta name="twitter:title" content="FcaNet: Frequency Channel Attention Networks"/>
+<meta name="twitter:description" content="利用DCT得到的频域信息生成通道注意力，改进SENet"/>
 
 
 <script type="application/ld+json">
@@ -126,14 +126,14 @@ var _hmt = _hmt || [];
         {
           "@type": "ListItem",
           "position":  3 ,
-          "name": "👨🏻‍💻 技术",
-          "item": "https://Achilles-10.github.io/posts/tech/"
+          "name": "📄 论文",
+          "item": "https://Achilles-10.github.io/posts/paper/"
         }, 
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "OpenCV-Python学习笔记(3)：几何变换",
-      "item": "https://Achilles-10.github.io/posts/tech/opencv3/"
+      "name": "FcaNet: Frequency Channel Attention Networks",
+      "item": "https://Achilles-10.github.io/posts/paper/fcanet/"
     }
   ]
 }
@@ -142,24 +142,24 @@ var _hmt = _hmt || [];
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "OpenCV-Python学习笔记(3)：几何变换",
-  "name": "OpenCV-Python学习笔记(3)：几何变换",
-  "description": "变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。 缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比",
+  "headline": "FcaNet: Frequency Channel Attention Networks",
+  "name": "FcaNet: Frequency Channel Attention Networks",
+  "description": "利用DCT得到的频域信息生成通道注意力，改进SENet",
   "keywords": [
-    "OpenCV", "学习笔记"
+    "论文阅读", "注意力", "ICCV"
   ],
-  "articleBody": "变换 OpenCV提供了cv2.warpAffine和cv2.warpPerspective两个转换函数，cv2.warpAffine采用2x3的转换矩阵，cv2.warpPerspective采用3x3转换矩阵。\n缩放 使用cv2.resize实现图像的缩放，可以指定缩放尺寸或缩放比例，以及插值方法。首选的插值方法是用于缩小的 cv2.INTER_AREA 和用于缩放的 cv2.INTER_CUBIC（慢）和 cv2.INTER_LINEAR。cv2.INTER_LINEAR是默认的缩放插值方法。可以用一下两种方法实现：\nimport numpy as np import cv2 img = cv2.imread('face.png') res = cv2.resize(img, None,fx=2, fy=2, interpolation = cv2.INTER_CUBIC) # OR height, width = img.shape[:2] res = cv2.resize(img,(2*width, 2*height), interpolation = cv2.INTER_CUBIC) 平移 如果在(x,y)方向上的平移量为$(t_x,t_y)$，则可以得到转换矩阵M: $$ M=\\begin{bmatrix} 1 \u0026 0 \u0026 t_x \\\\ 0 \u0026 1 \u0026 t_y \\end{bmatrix} $$ 将其转换为np.float32的numpy数组并传入cv2.warpAffine函数，以平移(100,50)为例：\nrows,cols,_ = img.shape M = np.float32([[1,0,100],[0,1,50]]) dst = cv2.warpAffine(img,M,(cols,rows)) cv2.warpAffine的第三个参数是输出图像的大小，形式为(width,height)\n旋转 图像旋转角度为$\\theta$是通过以下变换矩阵实现的： $$ M = \\begin{bmatrix} \\cos\\theta \u0026 -\\sin\\theta \\\\ \\sin\\theta \u0026 \\cos\\theta \\end{bmatrix} $$ OpenCV提供了可缩放的旋转和可调整的旋转中心，修改后的变换矩阵为： $$ \\begin{bmatrix} \\alpha \u0026 \\beta \u0026 (1- \\alpha ) \\cdot center.x - \\beta \\cdot center.y \\\\ - \\beta \u0026 \\alpha \u0026 \\beta \\cdot center.x + (1- \\alpha ) \\cdot center.y \\end{bmatrix} $$ 其中： $$ \\alpha=scale\\cdot\\cos\\theta,\\\\\\beta=scale\\cdot\\sin\\theta $$ 为了得到该变换矩阵，OpenCV提供了cv2.getRotationMatrix2D函数，以将图像相对于中心旋转逆时针90度缩放比例为1：\nrows,cols,_ = img.shape # cols-1 和 rows-1 是坐标限制 M = cv2.getRotationMatrix2D(((cols-1)/2.0,(rows-1)/2.0),90,1) dst = cv2.warpAffine(img,M,(cols,rows)) 仿射变换（Affine Transformation） 在仿射转换中，原始图像中的所有并行线仍将在输出图像中平行。为了得到转换矩阵，需要从输入图像中的三个点及其在输出图像中的对应位置。通过cv2.getAffineTransform函数创建一个2x3的矩阵，并传递给cv2.warpAffine。\nrows,cols,ch = img.shape pts1 = np.float32([[100,100],[100,400],[400,100]]) pts2 = np.float32([[50,50],[100,400],[350,50]]) M = cv2.getAffineTransform(pts1,pts2) dst = cv2.warpAffine(img,M,(cols,rows)) 透视变换（Perspective Transformation） 透视转换需要一个3x3转换矩阵。即使在转换后，直线也将保持直线。需要在输入图像上有四个点，在输出图像中需要对应的四个点，其中三个点不共线。可通过cv2.getPersperctiveTransform得到变换矩阵，并传递给cv2.warpPerspective。\nrows,cols,ch = img.shape pts1 = np.float32([[40,100],[400,100],[0,400],[360,400]]) pts2 = np.float32([[0,0],[500,0],[0,500],[500,500]]) M = cv2.getPerspectiveTransform(pts1,pts2) dst = cv2.warpPerspective(img,M,(cols,rows)) ",
-  "wordCount" : "983",
+  "articleBody": "[paper] [code]\n引言 由于通道注意力在特征建模上的简单性和有效性，成为深度学习领域流行的工具。而全局平均池化（GAP）由于其简单性成为了默认选择，但它的简单性也使得它很难很好地捕获各种输入的复杂信息。\n本文将信道的标量表示看作一个压缩问题。也就是说，一个通道的信息应该被一个标量紧凑地编码，同时尽可能地保留整个通道的表示能力。而如何有效地压缩具有标量的信道是一大难点。\n由于DCT的高压缩比可以满足用标量表示信道注意力的需求，以及它可微的性质可以简单地集成到CNN中，选择DCT定制通道注意力。本文主要贡献如下：\n把通道注意力看作一个压缩问题，并在通道注意力中引入DCT。证明了传统GAP是DCT的一个特例。基于这一证明，在频域推广了通道注意力，并提出了多谱通道注意力框架（Multi-Spectral Channel Attention , MSCA），称为FcaNet； 我们提出了三种频率成分选择标准（LF低频选择，TS两步选择，NAS神经架构搜索选择）以及所提出的多光谱通道注意框架来实现FcaNet。 在ImageNet和COCO数据集上达到SOTA水平。 方法 回顾DCT和通道注意力 DCT： $$ f^{2d}_{h,w}=\\sum_{i=0}^{H-1}\\sum_{j=0}^{W-1}{x^{2d}_{i,j}B^{i,j}_{h,w}}\\\\ B^{i,j}_{h,w}=\\cos(\\frac{\\pi h}{H}(i+\\frac{1}{2}))\\cos(\\frac{\\pi w}{W}(j+\\frac{1}{2}))\\tag{1} $$\n通道注意力：通道注意力用标量来表示和评估每个通道的重要性，可以写成如下形式： $$ att=sigmoid(fc(compress(X))) $$ compress: $\\mathbb {R}^{C\\times H\\times W}\\rightarrow\\mathbb{R}^C$ 是压缩方法。全局平均池化（GAP）可以视作一种压缩方法。\n多谱通道注意力（Multi-Spectral Channel Attention，MSCA） 通道注意力的理论分析，定理1：GAP是2D DCT的特例，其结果与2D DCT的最低频率成分成正比。\n证明：在公式(1)中，令h和w为0，有\n$$ \\begin{align} f^{2d}_{0,0} \u0026=\\sum_{i=0}^{H-1}\\sum_{j=0}^{W-1}{x^{2d}_{i,j}B^{i,j}_{0,0}}\\\\ \u0026=\\sum_{i=0}^{H-1}\\sum_{j=0}^{W-1}x^{2d}_{i,j}\\\\ \u0026=GAP(x^{2d})\\cdot HW \\end{align}\\tag{2} $$\n在公式(2)中，$f^{2d}_{0,0}$表示2D DCT的最低频率成分，与GAP成正比，定理1得证。\n多谱通道注意力模块：\n通过定理1可知，在使用通道注意力中使用GAP意味着只保留了最低频的信息，为了更好地压缩信道并引入更多信息，需要利用DCT中更多的频率信息。\n首先，将输入X沿通道方向分块为$[X^0,X^1,\\dots,X^{n-1}]$，其中$X^i\\in\\mathbb{R}^{C’\\times H\\times W},\\ C’=\\frac{C}{n}$，C能被n整除。对每部分进行2D DCT操作，有： $$ Freq^i=2\\text{DDCT}(X^i) $$ 最终的压缩向量可以表示如下： $$ \\begin{align} Freq\u0026=compress(X)\\ \u0026=cat([Freq^0,Freq^1,\\dots,Freq^{n-1}]) \\end{align} $$ 最终的多谱注意力表示如下： $$ ms_att=sigmoid(fc(Freq)) $$\n频率成分选择标准（Criteria for Choosing Frequency Components）\n提出三种选择频率成分的标准：\nFcaNet-LF：选择低频成分 FceNet-TS：通过两步选择方案确定，首先确定每个频率分量的重要性，然后评估不同频率分量数量的效果 FcaNet-NAS：通过神经架构搜索来搜索通道的最佳频率成分 实验 消融实验 单体频率分量的影响（The effects of individual frequency components）\nImageNet上的最小特征图大小为7x7，因此将2D DCT的频率空间划分为7x7，测试每部分的性能如下图（TOP-1 准确率）：\n可以看出，低频有更好的表现，也验证了SENet的成功和深度网络偏好低频信息的结论。然而几乎所有的频率成分(除最高频率外)与最低频率成分之间的差距非常小(\u003c=0.5% Top-1准确率)。这说明其他频率成分也能很好地应对通道注意力机制，在频域上泛化通道注意力是有效的。\n频率分量的数量的影响（The effects of different numbers of frequency components）\n对于TS，选取上图中Top-K性能最高的频率成分；对于LF，选取K个最低频率成分的结果。结果如下图所示，可以发现：\n使用多谱注意力的性能比仅使用通道注意力中的GAP都有提高 当k=2和16时效果最好 与完全可学习的通道注意力相比：2D DCT的基函数可以看做是包含DCT系数的张量\nFR：Fixed tensor with Random initialization，随机初始化固定张量\nLR：Learned tensor with Random initialization，随机初始化可学习张量\nLD：Learned tensor with DCT initialization，DCT初始化可学习张量\nFD：Fixed tensor with DCT initialization，DCT初始化固定张量\n讨论 多谱框架（multi-spectrum framework）如何压缩和嵌入更多信息：\n由于深度网络是冗余的，若两个通道是冗余的，则通过GAP只能得到相同的信息；而在多谱注意力中，不同的频率分量包含不同的信息，因此可以从冗余通道中提取更多的信息。\n复杂度分析：\nDCT权重是预定义的常数，没有额外参数；额外计算成本与SENet相当。\n代码实现：\n多谱注意力与SENet的区别仅在于信道压缩方法（GAP vs. multi-spectrum 2D DCT），2D DCT可以看做是输入的加权和，因此该方法可以很容易地集成到任意通道注意力方法中。\n在ImageNet上的图像分类 在COCO上的目标检测 ",
+  "wordCount" : "1918",
   "inLanguage": "en",
-  "image":"https://Achilles-10.github.io/posts/tech/opencv3/affine.png","datePublished": "2023-04-11T22:14:19+08:00",
-  "dateModified": "2023-04-11T22:14:19+08:00",
+  "image":"https://Achilles-10.github.io/posts/paper/fcanet/msatt.png","datePublished": "2023-04-12T22:25:07+08:00",
+  "dateModified": "2023-04-12T22:25:07+08:00",
   "author":[{
     "@type": "Person",
     "name": "Achilles"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://Achilles-10.github.io/posts/tech/opencv3/"
+    "@id": "https://Achilles-10.github.io/posts/paper/fcanet/"
   },
   "publisher": {
     "@type": "Organization",
@@ -273,10 +273,13 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/paper/">📄 论文</a></div>
             <h1 class="post-title">
-                OpenCV-Python学习笔记(3)：几何变换
+                FcaNet: Frequency Channel Attention Networks
             </h1>
+            <div class="post-description">
+                利用DCT得到的频域信息生成通道注意力，改进SENet
+            </div>
             <div class="post-meta"><style>
     i[id*="post_meta_style"] {
         display: flex;
@@ -294,7 +297,7 @@ var _hmt = _hmt || [];
 <span class="parent-post-meta">
     <span id="post_meta_style_1">
         <span class="fa fa-calendar-check-o"></span>
-        <span>2023 年 4 月 11 日
+        <span>2023 年 4 月 12 日
             &nbsp;&nbsp;
         </span>
     </span>
@@ -307,13 +310,13 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>983字
+        <span>1918字
             &nbsp;&nbsp;
         </span>
     </span>
     <span id="post_meta_style_4">
         <span class="fa fa-clock-o"></span>
-        <span>2分钟
+        <span>4分钟
             &nbsp;&nbsp;
         </span>
     </span>
@@ -327,8 +330,9 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://Achilles-10.github.io/tags/opencv/" style="color: var(--secondary)!important;">OpenCV</a>
-                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+                <a href="https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="color: var(--secondary)!important;">论文阅读</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E6%B3%A8%E6%84%8F%E5%8A%9B/" style="color: var(--secondary)!important;">注意力</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/iccv/" style="color: var(--secondary)!important;">ICCV</a>
             </span>
         </span>
     </span>
@@ -382,7 +386,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/opencv3/affine.png" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/paper/fcanet/msatt.png" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -393,18 +397,26 @@ var _hmt = _hmt || [];
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#%e5%8f%98%e6%8d%a2" aria-label="变换">变换</a><ul>
+                    <a href="#%e5%bc%95%e8%a8%80" aria-label="引言">引言</a></li>
+                <li>
+                    <a href="#%e6%96%b9%e6%b3%95" aria-label="方法">方法</a><ul>
                         
                 <li>
-                    <a href="#%e7%bc%a9%e6%94%be" aria-label="缩放">缩放</a></li>
+                    <a href="#%e5%9b%9e%e9%a1%bedct%e5%92%8c%e9%80%9a%e9%81%93%e6%b3%a8%e6%84%8f%e5%8a%9b" aria-label="回顾DCT和通道注意力">回顾DCT和通道注意力</a></li>
                 <li>
-                    <a href="#%e5%b9%b3%e7%a7%bb" aria-label="平移">平移</a></li>
+                    <a href="#%e5%a4%9a%e8%b0%b1%e9%80%9a%e9%81%93%e6%b3%a8%e6%84%8f%e5%8a%9bmulti-spectral-channel-attentionmsca" aria-label="多谱通道注意力（Multi-Spectral Channel Attention，MSCA）">多谱通道注意力（Multi-Spectral Channel Attention，MSCA）</a></li></ul>
+                </li>
                 <li>
-                    <a href="#%e6%97%8b%e8%bd%ac" aria-label="旋转">旋转</a></li>
+                    <a href="#%e5%ae%9e%e9%aa%8c" aria-label="实验">实验</a><ul>
+                        
                 <li>
-                    <a href="#%e4%bb%bf%e5%b0%84%e5%8f%98%e6%8d%a2affine-transformation" aria-label="仿射变换（Affine Transformation）">仿射变换（Affine Transformation）</a></li>
+                    <a href="#%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c" aria-label="消融实验">消融实验</a></li>
                 <li>
-                    <a href="#%e9%80%8f%e8%a7%86%e5%8f%98%e6%8d%a2perspective-transformation" aria-label="透视变换（Perspective Transformation）">透视变换（Perspective Transformation）</a>
+                    <a href="#%e8%ae%a8%e8%ae%ba" aria-label="讨论">讨论</a></li>
+                <li>
+                    <a href="#%e5%9c%a8imagenet%e4%b8%8a%e7%9a%84%e5%9b%be%e5%83%8f%e5%88%86%e7%b1%bb" aria-label="在ImageNet上的图像分类">在ImageNet上的图像分类</a></li>
+                <li>
+                    <a href="#%e5%9c%a8coco%e4%b8%8a%e7%9a%84%e7%9b%ae%e6%a0%87%e6%a3%80%e6%b5%8b" aria-label="在COCO上的目标检测">在COCO上的目标检测</a>
                 </li>
             </ul>
             </li>
@@ -471,66 +483,129 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h2 id="变换">变换<a hidden class="anchor" aria-hidden="true" href="#变换">#</a></h2>
-<p>OpenCV提供了<code>cv2.warpAffine</code>和<code>cv2.warpPerspective</code>两个转换函数，<code>cv2.warpAffine</code>采用<code>2x3</code>的转换矩阵，<code>cv2.warpPerspective</code>采用<code>3x3</code>转换矩阵。</p>
-<h3 id="缩放">缩放<a hidden class="anchor" aria-hidden="true" href="#缩放">#</a></h3>
-<p>使用<code>cv2.resize</code>实现图像的缩放，可以指定缩放尺寸或缩放比例，以及插值方法。首选的插值方法是用于缩小的 <code>cv2.INTER_AREA </code>和用于缩放的 <code>cv2.INTER_CUBIC</code>（慢）和 <code>cv2.INTER_LINEAR</code>。<code>cv2.INTER_LINEAR</code>是默认的缩放插值方法。可以用一下两种方法实现：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> cv2
-</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face.png&#39;</span>)
-</span></span><span style="display:flex;"><span>res <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>resize(img, <span style="color:#66d9ef">None</span>,fx<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, fy<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, interpolation <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>INTER_CUBIC)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># OR</span>
-</span></span><span style="display:flex;"><span>height, width <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape[:<span style="color:#ae81ff">2</span>]
-</span></span><span style="display:flex;"><span>res <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>resize(img,(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>width, <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>height), interpolation <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>INTER_CUBIC)
-</span></span></code></pre></div><h3 id="平移">平移<a hidden class="anchor" aria-hidden="true" href="#平移">#</a></h3>
-<p>如果在(x,y)方向上的平移量为$(t_x,t_y)$，则可以得到转换矩阵<strong>M</strong>:
+        <div class="post-content"><p><a href="https://openaccess.thecvf.com/content/ICCV2021/html/Qin_FcaNet_Frequency_Channel_Attention_Networks_ICCV_2021_paper.html">[paper]</a> <a href="https://github.com/cfzd/FcaNet">[code]</a></p>
+<h2 id="引言">引言<a hidden class="anchor" aria-hidden="true" href="#引言">#</a></h2>
+<p>由于通道注意力在特征建模上的简单性和有效性，成为深度学习领域流行的工具。而全局平均池化（GAP）由于其简单性成为了默认选择，但它的简单性也使得它很难很好地捕获各种输入的复杂信息。</p>
+<p>本文将信道的标量表示看作一个压缩问题。也就是说，一个通道的信息应该被一个标量紧凑地编码，同时尽可能地保留整个通道的表示能力。而如何有效地压缩具有标量的信道是一大难点。</p>
+<p>由于DCT的高压缩比可以满足用标量表示信道注意力的需求，以及它可微的性质可以简单地集成到CNN中，选择DCT定制通道注意力。本文主要贡献如下：</p>
+<ol>
+<li>把通道注意力看作一个压缩问题，并在通道注意力中引入DCT。证明了传统GAP是DCT的一个特例。基于这一证明，在频域推广了通道注意力，并提出了多谱通道注意力框架（Multi-Spectral Channel Attention , MSCA），称为FcaNet；</li>
+<li>我们提出了三种频率成分选择标准（LF低频选择，TS两步选择，NAS神经架构搜索选择）以及所提出的多光谱通道注意框架来实现FcaNet。</li>
+<li>在ImageNet和COCO数据集上达到SOTA水平。</li>
+</ol>
+<h2 id="方法">方法<a hidden class="anchor" aria-hidden="true" href="#方法">#</a></h2>
+<h3 id="回顾dct和通道注意力">回顾DCT和通道注意力<a hidden class="anchor" aria-hidden="true" href="#回顾dct和通道注意力">#</a></h3>
+<ul>
+<li>
+<p>DCT：
 $$
-M=\begin{bmatrix} 1 &amp; 0 &amp; t_x \\ 0 &amp; 1 &amp; t_y \end{bmatrix}
+f^{2d}_{h,w}=\sum_{i=0}^{H-1}\sum_{j=0}^{W-1}{x^{2d}_{i,j}B^{i,j}_{h,w}}\\
+B^{i,j}_{h,w}=\cos(\frac{\pi h}{H}(i+\frac{1}{2}))\cos(\frac{\pi w}{W}(j+\frac{1}{2}))\tag{1}
+$$</p>
+</li>
+<li>
+<p>通道注意力：通道注意力用标量来表示和评估每个通道的重要性，可以写成如下形式：
 $$
-将其转换为<code>np.float32</code>的numpy数组并传入<code>cv2.warpAffine</code>函数，以平移<code>(100,50)</code>为例：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>rows,cols,_ = img.shape
-</span></span><span style="display:flex;"><span>M = np.float32([[1,0,100],[0,1,50]])
-</span></span><span style="display:flex;"><span>dst = cv2.warpAffine(img,M,(cols,rows))
-</span></span></code></pre></div><div align=center><img src="shift.png" style="zoom:120%"/></div>
-<blockquote>
-<p><code>cv2.warpAffine</code>的第三个参数是输出图像的大小，形式为<code>(width,height)</code></p>
-</blockquote>
-<h3 id="旋转">旋转<a hidden class="anchor" aria-hidden="true" href="#旋转">#</a></h3>
-<p>图像旋转角度为$\theta$是通过以下变换矩阵实现的：
+att=sigmoid(fc(compress(X)))
 $$
-M = \begin{bmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta \end{bmatrix}
+compress: $\mathbb {R}^{C\times H\times W}\rightarrow\mathbb{R}^C$ 是压缩方法。全局平均池化（GAP）可以视作一种压缩方法。</p>
+</li>
+</ul>
+<h3 id="多谱通道注意力multi-spectral-channel-attentionmsca">多谱通道注意力（Multi-Spectral Channel Attention，MSCA）<a hidden class="anchor" aria-hidden="true" href="#多谱通道注意力multi-spectral-channel-attentionmsca">#</a></h3>
+<ul>
+<li>
+<p>通道注意力的理论分析，<strong>定理1：GAP是2D DCT的特例，其结果与2D DCT的最低频率成分成正比</strong>。</p>
+<ul>
+<li>
+<p>证明：在公式(1)中，令h和w为0，有</p>
+<p>$$
+\begin{align}
+f^{2d}_{0,0}
+&amp;=\sum_{i=0}^{H-1}\sum_{j=0}^{W-1}{x^{2d}_{i,j}B^{i,j}_{0,0}}\\
+&amp;=\sum_{i=0}^{H-1}\sum_{j=0}^{W-1}x^{2d}_{i,j}\\
+&amp;=GAP(x^{2d})\cdot HW
+\end{align}\tag{2}
+$$</p>
+<p>在公式(2)中，$f^{2d}_{0,0}$表示2D DCT的最低频率成分，与GAP成正比，定理1得证。</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>多谱通道注意力模块</strong>：</p>
+<p>通过定理1可知，在使用通道注意力中使用GAP意味着只保留了最低频的信息，为了更好地压缩信道并引入更多信息，需要利用DCT中更多的频率信息。</p>
+<p>首先，将输入X沿通道方向分块为$[X^0,X^1,\dots,X^{n-1}]$，其中$X^i\in\mathbb{R}^{C&rsquo;\times H\times W},\ C&rsquo;=\frac{C}{n}$，C能被n整除。对每部分进行2D DCT操作，有：
 $$
-OpenCV提供了可缩放的旋转和可调整的旋转中心，修改后的变换矩阵为：
+Freq^i=2\text{DDCT}(X^i)
 $$
-\begin{bmatrix} \alpha &amp; \beta &amp; (1- \alpha ) \cdot center.x - \beta \cdot center.y \\ - \beta &amp; \alpha &amp; \beta \cdot center.x + (1- \alpha ) \cdot center.y \end{bmatrix}
+最终的压缩向量可以表示如下：
 $$
-其中：
+\begin{align}
+Freq&amp;=compress(X)\
+&amp;=cat([Freq^0,Freq^1,\dots,Freq^{n-1}])
+\end{align}
 $$
-\alpha=scale\cdot\cos\theta,\\\beta=scale\cdot\sin\theta
+最终的多谱注意力表示如下：
 $$
-为了得到该变换矩阵，OpenCV提供了<code>cv2.getRotationMatrix2D</code>函数，以将图像相对于中心旋转逆时针90度缩放比例为1：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rows,cols,_ <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># cols-1 和 rows-1 是坐标限制</span>
-</span></span><span style="display:flex;"><span>M <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>getRotationMatrix2D(((cols<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>,(rows<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>),<span style="color:#ae81ff">90</span>,<span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpAffine(img,M,(cols,rows))
-</span></span></code></pre></div><div align=center><img src="rotate.png" style="zoom:120%"/></div>
-<h3 id="仿射变换affine-transformation">仿射变换（Affine Transformation）<a hidden class="anchor" aria-hidden="true" href="#仿射变换affine-transformation">#</a></h3>
-<p>在仿射转换中，原始图像中的所有并行线仍将在输出图像中平行。为了得到转换矩阵，需要从输入图像中的三个点及其在输出图像中的对应位置。通过<code>cv2.getAffineTransform</code>函数创建一个2x3的矩阵，并传递给<code>cv2.warpAffine</code>。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rows,cols,ch <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
-</span></span><span style="display:flex;"><span>pts1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">100</span>],[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">400</span>],[<span style="color:#ae81ff">400</span>,<span style="color:#ae81ff">100</span>]])
-</span></span><span style="display:flex;"><span>pts2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">50</span>,<span style="color:#ae81ff">50</span>],[<span style="color:#ae81ff">100</span>,<span style="color:#ae81ff">400</span>],[<span style="color:#ae81ff">350</span>,<span style="color:#ae81ff">50</span>]])
-</span></span><span style="display:flex;"><span>M <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>getAffineTransform(pts1,pts2)
-</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpAffine(img,M,(cols,rows))
-</span></span></code></pre></div><div align=center><img src="affine.png" style="zoom:120%"/></div>
-<h3 id="透视变换perspective-transformation">透视变换（Perspective Transformation）<a hidden class="anchor" aria-hidden="true" href="#透视变换perspective-transformation">#</a></h3>
-<p>透视转换需要一个3x3转换矩阵。即使在转换后，直线也将保持直线。需要在输入图像上有四个点，在输出图像中需要对应的四个点，其中三个点不共线。可通过<code>cv2.getPersperctiveTransform</code>得到变换矩阵，并传递给<code>cv2.warpPerspective</code>。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rows,cols,ch <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
-</span></span><span style="display:flex;"><span>pts1 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">40</span>,<span style="color:#ae81ff">100</span>],[<span style="color:#ae81ff">400</span>,<span style="color:#ae81ff">100</span>],[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">400</span>],[<span style="color:#ae81ff">360</span>,<span style="color:#ae81ff">400</span>]])
-</span></span><span style="display:flex;"><span>pts2 <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>float32([[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],[<span style="color:#ae81ff">500</span>,<span style="color:#ae81ff">0</span>],[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">500</span>],[<span style="color:#ae81ff">500</span>,<span style="color:#ae81ff">500</span>]])
-</span></span><span style="display:flex;"><span>M <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>getPerspectiveTransform(pts1,pts2)
-</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>warpPerspective(img,M,(cols,rows))
-</span></span></code></pre></div><div align=center><img src="perspective.png" style="zoom:120%"/></div>
-
+ms_att=sigmoid(fc(Freq))
+$$</p>
+<div align=center><img src="msatt.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>频率成分选择标准</strong>（Criteria for Choosing Frequency Components）</p>
+<p>提出三种选择频率成分的标准：</p>
+<ul>
+<li>FcaNet-LF：选择低频成分</li>
+<li>FceNet-TS：通过两步选择方案确定，首先确定每个频率分量的重要性，然后评估不同频率分量数量的效果</li>
+<li>FcaNet-NAS：通过神经架构搜索来搜索通道的最佳频率成分</li>
+</ul>
+</li>
+</ul>
+<h2 id="实验">实验<a hidden class="anchor" aria-hidden="true" href="#实验">#</a></h2>
+<h3 id="消融实验">消融实验<a hidden class="anchor" aria-hidden="true" href="#消融实验">#</a></h3>
+<ul>
+<li>
+<p><strong>单体频率分量的影响</strong>（The effects of individual frequency components）</p>
+<p>ImageNet上的最小特征图大小为7x7，因此将2D DCT的频率空间划分为7x7，测试每部分的性能如下图（TOP-1 准确率）：</p>
+<div align=center><img src="individual.png" style="zoom:80%;" /></div>
+<p>可以看出，低频有更好的表现，也验证了SENet的成功和深度网络偏好低频信息的结论。然而几乎所有的频率成分(除最高频率外)与最低频率成分之间的差距非常小(&lt;=0.5% Top-1准确率)。这说明其他频率成分也能很好地应对通道注意力机制，在频域上泛化通道注意力是有效的。</p>
+</li>
+<li>
+<p><strong>频率分量的数量的影响</strong>（The effects of different numbers of frequency components）</p>
+<p>对于TS，选取上图中Top-K性能最高的频率成分；对于LF，选取K个最低频率成分的结果。结果如下图所示，可以发现：</p>
+<ul>
+<li>使用多谱注意力的性能比仅使用通道注意力中的GAP都有提高</li>
+<li>当k=2和16时效果最好</li>
+</ul>
+<div align=center><img src="topk.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>与完全可学习的通道注意力相比</strong>：2D DCT的基函数可以看做是包含DCT系数的张量</p>
+<p>FR：Fixed tensor with Random initialization，随机初始化固定张量</p>
+<p>LR：Learned tensor with Random initialization，随机初始化可学习张量</p>
+<p>LD：Learned tensor with DCT initialization，DCT初始化可学习张量</p>
+<p>FD：Fixed tensor with DCT initialization，DCT初始化固定张量</p>
+<div align=center><img src="learn.png" style="zoom:80%;" /></div>
+</li>
+</ul>
+<h3 id="讨论">讨论<a hidden class="anchor" aria-hidden="true" href="#讨论">#</a></h3>
+<ul>
+<li>
+<p>多谱框架（multi-spectrum framework）如何压缩和嵌入更多信息：</p>
+<p>由于深度网络是冗余的，若两个通道是冗余的，则通过GAP只能得到相同的信息；而在多谱注意力中，不同的频率分量包含不同的信息，因此可以从冗余通道中提取更多的信息。</p>
+</li>
+<li>
+<p>复杂度分析：</p>
+<p>DCT权重是预定义的常数，没有额外参数；额外计算成本与SENet相当。</p>
+</li>
+<li>
+<p>代码实现：</p>
+<p>多谱注意力与SENet的区别仅在于信道压缩方法（GAP vs. multi-spectrum 2D DCT），2D DCT可以看做是输入的加权和，因此该方法可以很容易地集成到任意通道注意力方法中。</p>
+</li>
+</ul>
+<h3 id="在imagenet上的图像分类">在ImageNet上的图像分类<a hidden class="anchor" aria-hidden="true" href="#在imagenet上的图像分类">#</a></h3>
+<div align=center><img src="imagenet.png" style="zoom:80%;" /></div>
+<h3 id="在coco上的目标检测">在COCO上的目标检测<a hidden class="anchor" aria-hidden="true" href="#在coco上的目标检测">#</a></h3>
+<div align=center><img src="coco.png" style="zoom:80%;" /></div>
 
         </div>
 
@@ -539,15 +614,10 @@ $$
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://Achilles-10.github.io/posts/paper/fcanet/">
-    <span class="title">« 上一页</span>
-    <br>
-    <span>FcaNet: Frequency Channel Attention Networks</span>
-  </a>
-  <a class="next" href="https://Achilles-10.github.io/posts/algo/offer1/">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/opencv3/">
     <span class="title">下一页 »</span>
     <br>
-    <span>剑指offer复习笔记(1)</span>
+    <span>OpenCV-Python学习笔记(3)：几何变换</span>
   </a>
 </nav>
 
