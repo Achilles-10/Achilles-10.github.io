@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>OpenCV-Python学习笔记(4)：图像阈值与图像平滑 | 烈烈风中、的博客</title>
+<meta name="keywords" content="OpenCV, 学习笔记">
+<meta name="description" content="图像阈值 全局简单阈值 对于图像里的每个像素，应用相同的阈值，如果像素值小于阈值，则将其设置为0，否者设置为最大值。使用函数cv2.threshold(src, thresh, maxval, type, dst)，src是原图像，必须是单通道图像(灰度)，type表示阈值类型，所有简单的阈值类型为： cv2.THRESH_">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/opencv4/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="OpenCV-Python学习笔记(4)：图像阈值与图像平滑" />
+<meta property="og:description" content="图像阈值 全局简单阈值 对于图像里的每个像素，应用相同的阈值，如果像素值小于阈值，则将其设置为0，否者设置为最大值。使用函数cv2.threshold(src, thresh, maxval, type, dst)，src是原图像，必须是单通道图像(灰度)，type表示阈值类型，所有简单的阈值类型为： cv2.THRESH_" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/opencv4/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/opencv4/cover.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-04-17T20:18:38+08:00" />
+<meta property="article:modified_time" content="2023-04-17T20:18:38+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/opencv4/cover.png" />
+<meta name="twitter:title" content="OpenCV-Python学习笔记(4)：图像阈值与图像平滑"/>
+<meta name="twitter:description" content="图像阈值 全局简单阈值 对于图像里的每个像素，应用相同的阈值，如果像素值小于阈值，则将其设置为0，否者设置为最大值。使用函数cv2.threshold(src, thresh, maxval, type, dst)，src是原图像，必须是单通道图像(灰度)，type表示阈值类型，所有简单的阈值类型为： cv2.THRESH_"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "👨🏻‍💻 技术",
+          "item": "https://Achilles-10.github.io/posts/tech/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "OpenCV-Python学习笔记(4)：图像阈值与图像平滑",
+      "item": "https://Achilles-10.github.io/posts/tech/opencv4/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "OpenCV-Python学习笔记(4)：图像阈值与图像平滑",
+  "name": "OpenCV-Python学习笔记(4)：图像阈值与图像平滑",
+  "description": "图像阈值 全局简单阈值 对于图像里的每个像素，应用相同的阈值，如果像素值小于阈值，则将其设置为0，否者设置为最大值。使用函数cv2.threshold(src, thresh, maxval, type, dst)，src是原图像，必须是单通道图像(灰度)，type表示阈值类型，所有简单的阈值类型为： cv2.THRESH_",
+  "keywords": [
+    "OpenCV", "学习笔记"
+  ],
+  "articleBody": "图像阈值 全局简单阈值 对于图像里的每个像素，应用相同的阈值，如果像素值小于阈值，则将其设置为0，否者设置为最大值。使用函数cv2.threshold(src, thresh, maxval, type, dst)，src是原图像，必须是单通道图像(灰度)，type表示阈值类型，所有简单的阈值类型为：\ncv2.THRESH_BINARY：小于阈值置0，大于阈值置为最大值maxval cv2.THRESH_BINARY_INV：与上相反 cv2.THRESH_TRUNC：小于阈值不变，大于阈值置为阈值thresh，即大于阈值的部分显示为白色 cv2.THRESH_TOZERO：小于阈值置0，大于阈值保持原色 cv2.THRESH_TOZERO_INV：与上相反 有两个输出，第一个是使用的阈值，第二个是阈值处理后的图像。\n示例如下，灰度图像黑色为0，白色为255：\nimg = cv2.imread('face.png',0) ret,thresh1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY) ret,thresh2 = cv2.threshold(img,127,255,cv2.THRESH_BINARY_INV) ret,thresh3 = cv2.threshold(img,127,255,cv2.THRESH_TRUNC) ret,thresh4 = cv2.threshold(img,127,255,cv2.THRESH_TOZERO) ret,thresh5 = cv2.threshold(img,127,255,cv2.THRESH_TOZERO_INV) titles = ['Original Image','BINARY','BINARY_INV','TRUNC','TOZERO','TOZERO_INV'] images = [img, thresh1, thresh2, thresh3, thresh4, thresh5] plt.figure(figsize=(9,6)) for i in range(6): plt.subplot(2,3,i+1),plt.imshow(images[i],'gray') plt.title(titles[i]) plt.xticks([]),plt.yticks([]) plt.show() 自适应阈值 使用cv2.adaptiveThreshold(src, maxValue, adaptiveMethod, thresholdType, blockSize, C, dst)实现自适应阈。thresholdType有cv2.THRESH_BINARY和cv2.THRESH_BINARY_INV两种，blockSize确定邻域大小，C是减去的常数，adaptiveMethod决定如何计算阈值，有以下两种：\ncv2.ADAPTIVE_THRESH_MEAN_C：局部邻域块均值减去常数C cv2.ADAPTIVE_THRESH_GAUSSIAN_C：局部邻域块高斯加权和减去常数C； 自适应阈值可以根据像素周围的区域来确定像素的阈值；亮度较高的图像区域的二值化阈值通常会较高，而亮度低的图像区域的二值化阈值则会相适应的变小；不同亮度、对比度、纹理的局部图像区域将会拥有相对应的局部二值化阈值。\n示例如下：\nimg = cv2.imread('sudoku.png',0) img = cv2.medianBlur(img,5) ret,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY) th2 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY,11,2) th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,11,2) titles = ['Original', 'Global(v = 127)','Mean', 'Gaussian'] images = [img, th1, th2, th3] plt.figure(figsize=(8,8)) for i in range(4): plt.subplot(2,2,i+1),plt.imshow(images[i],'gray') plt.title(titles[i]) plt.xticks([]),plt.yticks([]) plt.show() Otsu的二值化 在全局简单阈值中，我们使用任意选择的值作为阈值。Otsu的方法可以自动确定阈值，避免了必须选择一个值的情况。考虑仅具有两个不同图像值的图像（双峰图像），其中直方图将仅包含两个峰。一个好的阈值应该在这两个值的中间，Otsu的方法能从图像直方图中确定最佳全局阈值。\n仍然使用cv2.threshold函数，将cv2.THRESH_OTSU作为额外的标志位传递到函数，阈值thresh可任意选择。\n示例如下，三种情况分别是全局阈值(thresh=127)、Otsu阈值，经过高斯滤波去噪后的Otsu阈值：\nimg = cv2.imread('noisy.jpeg',0) ret1,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY) ret2,th2 = cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU) blur = cv2.GaussianBlur(img,(5,5),0) ret3,th3 = cv2.threshold(blur,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU) # plot all the images and their histograms images = [img, 0, th1, img, 0, th2, blur, 0, th3] titles = ['Original Noisy Image','Histogram','Global Thresholding (v=127)', 'Original Noisy Image','Histogram',\"Otsu's Thresholding\", 'Gaussian filtered Image','Histogram',\"Otsu's Thresholding\"] plt.figure(figsize=(9,9)) for i in range(3): plt.subplot(3,3,i*3+1),plt.imshow(images[i*3],'gray') plt.title(titles[i*3]), plt.xticks([]), plt.yticks([]) plt.subplot(3,3,i*3+2),plt.hist(images[i*3].ravel(),256) plt.title(titles[i*3+1]), plt.xticks([]), plt.yticks([]) plt.subplot(3,3,i*3+3),plt.imshow(images[i*3+2],'gray') plt.title(titles[i*3+2]), plt.xticks([]), plt.yticks([]) plt.show() 图像平滑 2D卷积（图像过滤） 可以使用各类低通滤波器(LPF)和高通滤波器(HPF)对图像进行滤波，LPF有助于消除噪声、使图像模糊等，HPF有助于在图像中寻找边缘信息。使用函数cv2.filter2D(src, ddepth, kernel, dst, anchor, delta, borderType)来将滤波核与图像进行卷积，例如，5x5的均值滤波核如下： $$ K = \\frac{1}{25} \\begin{bmatrix} 1 \u0026 1 \u0026 1 \u0026 1 \u0026 1 \\\\ 1 \u0026 1 \u0026 1 \u0026 1 \u0026 1 \\\\ 1 \u0026 1 \u0026 1 \u0026 1 \u0026 1 \\\\ 1 \u0026 1 \u0026 1 \u0026 1 \u0026 1 \\\\ 1 \u0026 1 \u0026 1 \u0026 1 \u0026 1 \\end{bmatrix} $$ 使用7x7的均值滤波示例如下：\nimg = cv.imread('face.png') img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) kernel = np.ones((7,7),np.float32)/49 dst = cv.filter2D(img,-1,kernel) plt.subplot(121),plt.imshow(img),plt.title('Original') plt.xticks([]), plt.yticks([]) plt.subplot(122),plt.imshow(dst),plt.title('Averaging') plt.xticks([]), plt.yticks([]) plt.show() 图像模糊（图像平滑） 通过将图像与低通滤波器进行卷积来实现图像模糊，这对于消除噪声很有用。它实际上从图像中消除了噪声和边缘等高频部分。因此此操作会使边缘模糊，OpenCV主要提供四种模糊类型：\n均值\n获取核区域下所有像素的均值，然后替换中心元素。可以通过cv2.blur(src, ksize, dst, anchor, borderType)或cv2.boxFilter(src, ddepth, ksize, dst, anchor, normalize, borderType)完成。示例如下：\nimg = cv2.imread('face.png') img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) blur = cv2.blur(img,(5,5)) plt.subplot(121),plt.imshow(img),plt.title('Original') plt.xticks([]), plt.yticks([]) plt.subplot(122),plt.imshow(blur),plt.title('Blurred') plt.xticks([]), plt.yticks([]) plt.show() 若不想使用标准化的滤波器，可以使用cv2.boxFilter()并且设置normalize=False。\n高斯模糊\n使用cv2.GaussianBlur()。需要指定高斯核的宽度和高度，宽度和高度都应该为正奇整数；还需指定X和Y方向的标准差sigmaX和sigmaY，如果仅指定sigmaX，则两者相同，若两者均为零，则根据高斯核大小计算。高斯模糊对于从图像中去除高斯噪声非常有效。\n可通过cv2.getGaussianKernel()创建高斯内核。\n修改上述代码实现高斯模糊：\nblur = cv2.GaussianBlur(img,(5,5),0) 中值模糊\n将中心元素替换为和区域的中值，对于消除椒盐噪声非常有效。内核大小应该为正奇整数。示例如下：\nmedian = cv.medianBlur(img,5) 椒盐噪声就是黑白噪点，椒指黑色噪点，盐指白色噪点。\n双边滤波\n双边滤波cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace, dst, borderType)在去除噪声的同时保持边缘清晰锐利非常有效。但是该操作相较于其他滤波器速度较慢。\nd表示滤波时使用的每个像素邻域的直径 sigmaColor表示色彩空间中滤波的标准差，该值越大，滤波器在保留边缘信息上越弱 sigmaSpace表示坐标空间中滤波的标准差，该值越大，更远的颜色相近的元素会互相影响 双边滤波器在空间中也采用高斯滤波器，但是还有一个高斯滤波器，它是像素差的函数。空间的高斯函数确保仅考虑附近像素的模糊，而强度差的高斯函数确保仅考虑强度与中心像素相似的那些像素的模糊。由于边缘的像素强度变化较大，因此可以保留边缘。\nblur = cv.bilateralFilter(img,9,75,75) ",
+  "wordCount" : "2182",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/tech/opencv4/cover.png","datePublished": "2023-04-17T20:18:38+08:00",
+  "dateModified": "2023-04-17T20:18:38+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/tech/opencv4/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                OpenCV-Python学习笔记(4)：图像阈值与图像平滑
+            </h1>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 4 月 17 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2182字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>5分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/opencv/" style="color: var(--secondary)!important;">OpenCV</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/opencv4/cover.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e9%98%88%e5%80%bc" aria-label="图像阈值">图像阈值</a><ul>
+                        
+                <li>
+                    <a href="#%e5%85%a8%e5%b1%80%e7%ae%80%e5%8d%95%e9%98%88%e5%80%bc" aria-label="全局简单阈值">全局简单阈值</a></li>
+                <li>
+                    <a href="#%e8%87%aa%e9%80%82%e5%ba%94%e9%98%88%e5%80%bc" aria-label="自适应阈值">自适应阈值</a></li>
+                <li>
+                    <a href="#otsu%e7%9a%84%e4%ba%8c%e5%80%bc%e5%8c%96" aria-label="Otsu的二值化">Otsu的二值化</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e5%b9%b3%e6%bb%91" aria-label="图像平滑">图像平滑</a><ul>
+                        
+                <li>
+                    <a href="#2d%e5%8d%b7%e7%a7%af%e5%9b%be%e5%83%8f%e8%bf%87%e6%bb%a4" aria-label="2D卷积（图像过滤）">2D卷积（图像过滤）</a></li>
+                <li>
+                    <a href="#%e5%9b%be%e5%83%8f%e6%a8%a1%e7%b3%8a%e5%9b%be%e5%83%8f%e5%b9%b3%e6%bb%91" aria-label="图像模糊（图像平滑）">图像模糊（图像平滑）</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="图像阈值">图像阈值<a hidden class="anchor" aria-hidden="true" href="#图像阈值">#</a></h2>
+<h3 id="全局简单阈值">全局简单阈值<a hidden class="anchor" aria-hidden="true" href="#全局简单阈值">#</a></h3>
+<p>对于图像里的每个像素，应用相同的阈值，如果像素值小于阈值，则将其设置为0，否者设置为最大值。使用函数<code>cv2.threshold(src, thresh, maxval, type, dst)</code>，<code>src</code>是原图像，必须是单通道图像(灰度)，<code>type</code>表示阈值类型，所有简单的阈值类型为：</p>
+<ul>
+<li><strong>cv2.THRESH_BINARY</strong>：小于阈值置<code>0</code>，大于阈值置为最大值<code>maxval</code></li>
+<li><strong>cv2.THRESH_BINARY_INV</strong>：与上相反</li>
+<li><strong>cv2.THRESH_TRUNC</strong>：小于阈值<code>不变</code>，大于阈值置为阈值<code>thresh</code>，即大于阈值的部分显示为白色</li>
+<li><strong>cv2.THRESH_TOZERO</strong>：小于阈值置<code>0</code>，大于阈值<code>保持原色</code></li>
+<li><strong>cv2.THRESH_TOZERO_INV</strong>：与上相反</li>
+</ul>
+<p>有两个输出，第一个是使用的<strong>阈值</strong>，第二个是<strong>阈值处理后的图像</strong>。</p>
+<p>示例如下，灰度图像黑色为0，白色为255：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face.png&#39;</span>,<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>ret,thresh1 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_BINARY)
+</span></span><span style="display:flex;"><span>ret,thresh2 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_BINARY_INV)
+</span></span><span style="display:flex;"><span>ret,thresh3 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_TRUNC)
+</span></span><span style="display:flex;"><span>ret,thresh4 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_TOZERO)
+</span></span><span style="display:flex;"><span>ret,thresh5 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_TOZERO_INV)
+</span></span><span style="display:flex;"><span>titles <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;Original Image&#39;</span>,<span style="color:#e6db74">&#39;BINARY&#39;</span>,<span style="color:#e6db74">&#39;BINARY_INV&#39;</span>,<span style="color:#e6db74">&#39;TRUNC&#39;</span>,<span style="color:#e6db74">&#39;TOZERO&#39;</span>,<span style="color:#e6db74">&#39;TOZERO_INV&#39;</span>]
+</span></span><span style="display:flex;"><span>images <span style="color:#f92672">=</span> [img, thresh1, thresh2, thresh3, thresh4, thresh5]
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">6</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">6</span>):
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>),plt<span style="color:#f92672">.</span>imshow(images[i],<span style="color:#e6db74">&#39;gray&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(titles[i])
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xticks([]),plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><div align=center><img src="thresh.png" style="zoom:120%"/></div>
+<h3 id="自适应阈值">自适应阈值<a hidden class="anchor" aria-hidden="true" href="#自适应阈值">#</a></h3>
+<p>使用<code>cv2.adaptiveThreshold(src, maxValue, adaptiveMethod, thresholdType, blockSize, C, dst)</code>实现自适应阈。<code>thresholdType</code>有<strong>cv2.THRESH_BINARY</strong>和<strong>cv2.THRESH_BINARY_INV</strong>两种，<code>blockSize</code>确定邻域大小，<code>C</code>是减去的常数，<code>adaptiveMethod</code>决定如何计算阈值，有以下两种：</p>
+<ul>
+<li><strong>cv2.ADAPTIVE_THRESH_MEAN_C</strong>：局部邻域块均值减去常数<strong>C</strong></li>
+<li><strong>cv2.ADAPTIVE_THRESH_GAUSSIAN_C</strong>：局部邻域块高斯加权和减去常数<strong>C</strong>；</li>
+</ul>
+<p>自适应阈值可以根据像素周围的区域来确定像素的阈值；亮度较高的图像区域的二值化阈值通常会较高，而亮度低的图像区域的二值化阈值则会相适应的变小；不同亮度、对比度、纹理的局部图像区域将会拥有相对应的局部二值化阈值。</p>
+<p>示例如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;sudoku.png&#39;</span>,<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>medianBlur(img,<span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>ret,th1 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_BINARY)
+</span></span><span style="display:flex;"><span>th2 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>adaptiveThreshold(img,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>ADAPTIVE_THRESH_MEAN_C, cv2<span style="color:#f92672">.</span>THRESH_BINARY,<span style="color:#ae81ff">11</span>,<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>th3 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>adaptiveThreshold(img,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>ADAPTIVE_THRESH_GAUSSIAN_C, cv2<span style="color:#f92672">.</span>THRESH_BINARY,<span style="color:#ae81ff">11</span>,<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>titles <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;Original&#39;</span>, <span style="color:#e6db74">&#39;Global(v = 127)&#39;</span>,<span style="color:#e6db74">&#39;Mean&#39;</span>, <span style="color:#e6db74">&#39;Gaussian&#39;</span>]
+</span></span><span style="display:flex;"><span>images <span style="color:#f92672">=</span> [img, th1, th2, th3]
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>,<span style="color:#ae81ff">8</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">2</span>,i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>),plt<span style="color:#f92672">.</span>imshow(images[i],<span style="color:#e6db74">&#39;gray&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(titles[i])
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>xticks([]),plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><div align=center><img src="adaptive.png" style="zoom:120%"/></div>
+<h3 id="otsu的二值化">Otsu的二值化<a hidden class="anchor" aria-hidden="true" href="#otsu的二值化">#</a></h3>
+<p>在全局简单阈值中，我们使用任意选择的值作为阈值。Otsu的方法可以自动确定阈值，避免了必须选择一个值的情况。考虑仅具有两个不同图像值的图像（<em>双峰图像</em>），其中直方图将仅包含两个峰。一个好的阈值应该在这两个值的中间，Otsu的方法能从图像直方图中确定最佳全局阈值。</p>
+<p>仍然使用<code>cv2.threshold</code>函数，将<code>cv2.THRESH_OTSU</code>作为额外的标志位传递到函数，阈值<code>thresh</code>可任意选择。</p>
+<p>示例如下，三种情况分别是<code>全局阈值(thresh=127)</code>、<code>Otsu阈值</code>，经过高斯滤波去噪后的<code>Otsu阈值</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;noisy.jpeg&#39;</span>,<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>ret1,th1 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img,<span style="color:#ae81ff">127</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_BINARY)
+</span></span><span style="display:flex;"><span>ret2,th2 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(img,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_BINARY<span style="color:#f92672">+</span>cv2<span style="color:#f92672">.</span>THRESH_OTSU)
+</span></span><span style="display:flex;"><span>blur <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>GaussianBlur(img,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>),<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>ret3,th3 <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>threshold(blur,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>,cv2<span style="color:#f92672">.</span>THRESH_BINARY<span style="color:#f92672">+</span>cv2<span style="color:#f92672">.</span>THRESH_OTSU)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># plot all the images and their histograms</span>
+</span></span><span style="display:flex;"><span>images <span style="color:#f92672">=</span> [img, <span style="color:#ae81ff">0</span>, th1,
+</span></span><span style="display:flex;"><span>          img, <span style="color:#ae81ff">0</span>, th2,
+</span></span><span style="display:flex;"><span>          blur, <span style="color:#ae81ff">0</span>, th3]
+</span></span><span style="display:flex;"><span>titles <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;Original Noisy Image&#39;</span>,<span style="color:#e6db74">&#39;Histogram&#39;</span>,<span style="color:#e6db74">&#39;Global Thresholding (v=127)&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;Original Noisy Image&#39;</span>,<span style="color:#e6db74">&#39;Histogram&#39;</span>,<span style="color:#e6db74">&#34;Otsu&#39;s Thresholding&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;Gaussian filtered Image&#39;</span>,<span style="color:#e6db74">&#39;Histogram&#39;</span>,<span style="color:#e6db74">&#34;Otsu&#39;s Thresholding&#34;</span>]
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">9</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>):
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>,i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>),plt<span style="color:#f92672">.</span>imshow(images[i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span>],<span style="color:#e6db74">&#39;gray&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(titles[i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span>]), plt<span style="color:#f92672">.</span>xticks([]), plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>,i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>),plt<span style="color:#f92672">.</span>hist(images[i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span>]<span style="color:#f92672">.</span>ravel(),<span style="color:#ae81ff">256</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(titles[i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]), plt<span style="color:#f92672">.</span>xticks([]), plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>,i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>),plt<span style="color:#f92672">.</span>imshow(images[i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>],<span style="color:#e6db74">&#39;gray&#39;</span>)
+</span></span><span style="display:flex;"><span>    plt<span style="color:#f92672">.</span>title(titles[i<span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>]), plt<span style="color:#f92672">.</span>xticks([]), plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><div align=center><img src="otsu.png" style="zoom:120%"/></div>
+<h2 id="图像平滑">图像平滑<a hidden class="anchor" aria-hidden="true" href="#图像平滑">#</a></h2>
+<h3 id="2d卷积图像过滤">2D卷积（图像过滤）<a hidden class="anchor" aria-hidden="true" href="#2d卷积图像过滤">#</a></h3>
+<p>可以使用各类低通滤波器(LPF)和高通滤波器(HPF)对图像进行滤波，LPF有助于消除噪声、使图像模糊等，HPF有助于在图像中寻找边缘信息。使用函数<code>cv2.filter2D(src, ddepth, kernel, dst, anchor, delta, borderType)</code>来将滤波核与图像进行卷积，例如，5x5的均值滤波核如下：
+$$
+K = \frac{1}{25}
+\begin{bmatrix}
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1
+\end{bmatrix}
+$$
+使用7x7的均值滤波示例如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face.png&#39;</span>)
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(img, cv2<span style="color:#f92672">.</span>COLOR_BGR2RGB)
+</span></span><span style="display:flex;"><span>kernel <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>ones((<span style="color:#ae81ff">7</span>,<span style="color:#ae81ff">7</span>),np<span style="color:#f92672">.</span>float32)<span style="color:#f92672">/</span><span style="color:#ae81ff">49</span>
+</span></span><span style="display:flex;"><span>dst <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>filter2D(img,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,kernel)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">121</span>),plt<span style="color:#f92672">.</span>imshow(img),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Original&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xticks([]), plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">122</span>),plt<span style="color:#f92672">.</span>imshow(dst),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Averaging&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xticks([]), plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><div align=center><img src="mean.png" style="zoom:120%"/></div>
+<h3 id="图像模糊图像平滑">图像模糊（图像平滑）<a hidden class="anchor" aria-hidden="true" href="#图像模糊图像平滑">#</a></h3>
+<p>通过将图像与低通滤波器进行卷积来实现图像模糊，这对于消除噪声很有用。它实际上从图像中消除了噪声和边缘等高频部分。因此此操作会使边缘模糊，OpenCV主要提供四种模糊类型：</p>
+<ul>
+<li>
+<p><strong>均值</strong></p>
+<p>获取核区域下所有像素的均值，然后替换中心元素。可以通过<code>cv2.blur(src, ksize, dst, anchor, borderType)</code>或<code>cv2.boxFilter(src, ddepth, ksize, dst, anchor, normalize, borderType)</code>完成。示例如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#39;face.png&#39;</span>)
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>cvtColor(img, cv2<span style="color:#f92672">.</span>COLOR_BGR2RGB)
+</span></span><span style="display:flex;"><span>blur <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>blur(img,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>))
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">121</span>),plt<span style="color:#f92672">.</span>imshow(img),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Original&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xticks([]), plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>subplot(<span style="color:#ae81ff">122</span>),plt<span style="color:#f92672">.</span>imshow(blur),plt<span style="color:#f92672">.</span>title(<span style="color:#e6db74">&#39;Blurred&#39;</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>xticks([]), plt<span style="color:#f92672">.</span>yticks([])
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>show()
+</span></span></code></pre></div><div align=center><img src="blur.png" style="zoom:120%"/></div>
+<blockquote>
+<p>若不想使用标准化的滤波器，可以使用<code>cv2.boxFilter()</code>并且设置<code>normalize=False</code>。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>高斯模糊</strong></p>
+<p>使用<code>cv2.GaussianBlur()</code>。需要指定高斯核的宽度和高度，宽度和高度都应该为正奇整数；还需指定X和Y方向的标准差<code>sigmaX</code>和<code>sigmaY</code>，如果仅指定<code>sigmaX</code>，则两者相同，若两者均为零，则根据高斯核大小计算。高斯模糊对于从图像中去除高斯噪声非常有效。</p>
+<p>可通过<code>cv2.getGaussianKernel()</code>创建高斯内核。</p>
+<p>修改上述代码实现高斯模糊：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>blur <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>GaussianBlur(img,(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">5</span>),<span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><div align=center><img src="gaussian.png" style="zoom:120%"/></div>
+</li>
+<li>
+<p><strong>中值模糊</strong></p>
+<p>将中心元素替换为和区域的中值，对于消除椒盐噪声非常有效。内核大小应该为正奇整数。示例如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>median <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>medianBlur(img,<span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><div align=center><img src="median.png" style="zoom:120%"/></div>
+<blockquote>
+<p>椒盐噪声就是黑白噪点，椒指<strong>黑色噪点</strong>，盐指<strong>白色噪点</strong>。</p>
+</blockquote>
+</li>
+<li>
+<p><strong>双边滤波</strong></p>
+<p>双边滤波<code>cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace, dst, borderType)</code>在去除噪声的同时保持边缘清晰锐利非常有效。但是该操作相较于其他滤波器速度较慢。</p>
+<ul>
+<li><code>d</code>表示滤波时使用的每个像素邻域的直径</li>
+<li><code>sigmaColor</code>表示色彩空间中滤波的标准差，该值越大，滤波器在保留边缘信息上越弱</li>
+<li><code>sigmaSpace</code>表示坐标空间中滤波的标准差，该值越大，更远的颜色相近的元素会互相影响</li>
+</ul>
+<p>双边滤波器在空间中也采用高斯滤波器，但是还有一个高斯滤波器，它是像素差的函数。空间的高斯函数确保仅考虑附近像素的模糊，而强度差的高斯函数确保仅考虑强度与中心像素相似的那些像素的模糊。由于边缘的像素强度变化较大，因此可以保留边缘。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>blur <span style="color:#f92672">=</span> cv<span style="color:#f92672">.</span>bilateralFilter(img,<span style="color:#ae81ff">9</span>,<span style="color:#ae81ff">75</span>,<span style="color:#ae81ff">75</span>)
+</span></span></code></pre></div><div align=center><img src="bilateral.png" style="zoom:120%"/></div>
+</li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/algo/offer2/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>剑指offer复习笔记(2)</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>
