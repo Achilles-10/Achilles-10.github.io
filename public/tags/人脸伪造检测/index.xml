@@ -6,7 +6,16 @@
     <description>Recent content in 人脸伪造检测 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 31 Mar 2023 16:40:23 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Apr 2023 20:48:52 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exploring Temporal Coherence for More General Video Face Forgery Detection</title>
+      <link>https://Achilles-10.github.io/posts/paper/ftcn/</link>
+      <pubDate>Wed, 26 Apr 2023 20:48:52 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/ftcn/</guid>
+      <description>利用3D卷积提取时序信息，结合Transformer实现伪造检测和伪造区域定位</description>
+    </item>
+    
     <item>
       <title>Hierarchical Frequency-Assisted Interactive Networks for Face Manipulation Detection</title>
       <link>https://Achilles-10.github.io/posts/paper/hfinet/</link>

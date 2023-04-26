@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>时序信息 on 烈烈风中、的博客</title>
+    <link>https://Achilles-10.github.io/tags/%E6%97%B6%E5%BA%8F%E4%BF%A1%E6%81%AF/</link>
+    <description>Recent content in 时序信息 on 烈烈风中、的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 26 Apr 2023 20:48:52 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E6%97%B6%E5%BA%8F%E4%BF%A1%E6%81%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exploring Temporal Coherence for More General Video Face Forgery Detection</title>
+      <link>https://Achilles-10.github.io/posts/paper/ftcn/</link>
+      <pubDate>Wed, 26 Apr 2023 20:48:52 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/ftcn/</guid>
+      <description>利用3D卷积提取时序信息，结合Transformer实现伪造检测和伪造区域定位</description>
+    </item>
+    
+  </channel>
+</rss>
