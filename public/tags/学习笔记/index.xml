@@ -6,7 +6,16 @@
     <description>Recent content in 学习笔记 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 17 Apr 2023 20:18:38 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 May 2023 09:29:43 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>剑指offer复习笔记(3)</title>
+      <link>https://Achilles-10.github.io/posts/algo/offer3/</link>
+      <pubDate>Tue, 02 May 2023 09:29:43 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/algo/offer3/</guid>
+      <description>leetcode 剑指offer 48~72题提示清单</description>
+    </item>
+    
     <item>
       <title>OpenCV-Python学习笔记(4)：图像阈值与图像平滑</title>
       <link>https://Achilles-10.github.io/posts/tech/opencv4/</link>

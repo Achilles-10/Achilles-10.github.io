@@ -6,7 +6,16 @@
     <description>Recent content on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 26 Apr 2023 20:48:52 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 02 May 2023 09:29:43 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>剑指offer复习笔记(3)</title>
+      <link>https://Achilles-10.github.io/posts/algo/offer3/</link>
+      <pubDate>Tue, 02 May 2023 09:29:43 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/algo/offer3/</guid>
+      <description>leetcode 剑指offer 48~72题提示清单</description>
+    </item>
+    
     <item>
       <title>Exploring Temporal Coherence for More General Video Face Forgery Detection</title>
       <link>https://Achilles-10.github.io/posts/paper/ftcn/</link>
