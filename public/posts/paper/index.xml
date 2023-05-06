@@ -6,7 +6,16 @@
     <description>Recent content in 📄 论文 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 26 Apr 2023 20:48:52 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/paper/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 May 2023 14:46:12 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/paper/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DINOv2: Learning Robust Visual Features without Supervision</title>
+      <link>https://Achilles-10.github.io/posts/paper/dinov2/</link>
+      <pubDate>Sat, 06 May 2023 14:46:12 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/dinov2/</guid>
+      <description>[paper] [code] 1. 引言 参考NLP在大规模预训练模型上的突破，在CV中提取通用的视觉特征，可以是用于分类任务的图像级别特征，也可以是用于分割任务的像素级别特征。利用自监督的方法，在不同源、足够多的数据上训练即可生成这样的特征。 本文工作探索了自监督学习是否在大规模数据上预训练有潜力学习通用的视觉</description>
+    </item>
+    
     <item>
       <title>Exploring Temporal Coherence for More General Video Face Forgery Detection</title>
       <link>https://Achilles-10.github.io/posts/paper/ftcn/</link>

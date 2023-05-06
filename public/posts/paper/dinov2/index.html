@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>DINOv2: Learning Robust Visual Features without Supervision | 烈烈风中、的博客</title>
+<meta name="keywords" content="自监督, 通用视觉特征">
+<meta name="description" content="[paper] [code] 1. 引言 参考NLP在大规模预训练模型上的突破，在CV中提取通用的视觉特征，可以是用于分类任务的图像级别特征，也可以是用于分割任务的像素级别特征。利用自监督的方法，在不同源、足够多的数据上训练即可生成这样的特征。 本文工作探索了自监督学习是否在大规模数据上预训练有潜力学习通用的视觉">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/paper/dinov2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="DINOv2: Learning Robust Visual Features without Supervision" />
+<meta property="og:description" content="[paper] [code] 1. 引言 参考NLP在大规模预训练模型上的突破，在CV中提取通用的视觉特征，可以是用于分类任务的图像级别特征，也可以是用于分割任务的像素级别特征。利用自监督的方法，在不同源、足够多的数据上训练即可生成这样的特征。 本文工作探索了自监督学习是否在大规模数据上预训练有潜力学习通用的视觉" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/paper/dinov2/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/paper/dinov2/cover.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-06T14:46:12+08:00" />
+<meta property="article:modified_time" content="2023-05-06T14:46:12+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/paper/dinov2/cover.png" />
+<meta name="twitter:title" content="DINOv2: Learning Robust Visual Features without Supervision"/>
+<meta name="twitter:description" content="[paper] [code] 1. 引言 参考NLP在大规模预训练模型上的突破，在CV中提取通用的视觉特征，可以是用于分类任务的图像级别特征，也可以是用于分割任务的像素级别特征。利用自监督的方法，在不同源、足够多的数据上训练即可生成这样的特征。 本文工作探索了自监督学习是否在大规模数据上预训练有潜力学习通用的视觉"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "📄 论文",
+          "item": "https://Achilles-10.github.io/posts/paper/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "DINOv2: Learning Robust Visual Features without Supervision",
+      "item": "https://Achilles-10.github.io/posts/paper/dinov2/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "DINOv2: Learning Robust Visual Features without Supervision",
+  "name": "DINOv2: Learning Robust Visual Features without Supervision",
+  "description": "[paper] [code] 1. 引言 参考NLP在大规模预训练模型上的突破，在CV中提取通用的视觉特征，可以是用于分类任务的图像级别特征，也可以是用于分割任务的像素级别特征。利用自监督的方法，在不同源、足够多的数据上训练即可生成这样的特征。 本文工作探索了自监督学习是否在大规模数据上预训练有潜力学习通用的视觉",
+  "keywords": [
+    "自监督", "通用视觉特征"
+  ],
+  "articleBody": "[paper] [code]\n1. 引言 参考NLP在大规模预训练模型上的突破，在CV中提取通用的视觉特征，可以是用于分类任务的图像级别特征，也可以是用于分割任务的像素级别特征。利用自监督的方法，在不同源、足够多的数据上训练即可生成这样的特征。\n本文工作探索了自监督学习是否在大规模数据上预训练有潜力学习通用的视觉特征。本文大部分技术贡献都是专为稳定和加速判别性自监督学习定制。\n对于预训练数据，本文构建了一个自动管道，从大量未处理的图像集合中筛选和平衡数据集。在本文工作中，使用一种朴素的聚类方法解决了在处理wild数据时重新平衡概念并避免在少数主导模式上的过拟合问题，并构建了一个小型但多样的142M图像的语料库来验证本文方法。\n本文提出了用不同ViT框架训练的DINOv2模型，下图展示了DINOv2在多种图像级和像素级CV任务中的性能（深蓝色为DINOv2，浅橙色是自监督方法，深粉色为弱监督方法），验证了与最好的开源的弱监督模型相比，自监督训练是学习可迁移冻结特征的一个很好的候选方法。\n2. 数据处理(Data Processing) 数据处理pipeline如下图所示：\n数据来源(Data selection)\n构建的LVD-142M数据集的所用的数据集如下表所示，该集合旨在为图像级和密集识别提供涵盖各种下游视觉任务的图像。总共有1.2B图像。\n图像相似度(Image similarity)\n使用余弦相似度(cosine similarity)将图像特征与下面的相似度函数m比较： $$ m(s,r)=\\text{cos-similarity}(f(s),f(r))=\\frac{f(s)\\cdot f(r)}{||f(s)||_2||f(r)||_2} $$ 其中s和r是一对比较的图像，f是模型生成的特征。\n去重(Deduplication)\n将[A self-supervised descriptor for image copy detection]的拷贝检测流程应用到未处理的数据中去除重复图像，减少冗余增加图像多样性。\nSelf-deduplication：检索每幅图像的k=64最近邻(余弦相似度)，只考虑相似度\u003e0.6的邻居，通过可扩展的不相交集数据结构实现来提取关联k-NN图的连通分支，对重复图像的每个分量只保留一个代表性图像。自去重的结果有1.1B图像。 Relative deduplication：丢弃上一步骤中与评估数据集的训练和测试划分中相似的图像，采用与自去重中相似的步骤，丢弃相似度\u003e0.45的所有重复图像。剩下744M数据。 Retrieval：检索相似图像来构建数据集。首先使用在ImageNet-22k预训练的ViT-H/16网络来计算Image Embedding，并使用余弦相似度来作为图像之间的距离度量。然后对未处理的数据进行k-means聚类。给定一个用于检索的查询数据集，如果它足够大，为每个查询图像检索N个(4)最近邻。如果较小，则从每个查询图像对应的簇中采样M张图像。 3. 判别性自监督预训练(Discriminative Self-supervised Pre-training) 使用一种判别性的自监督方法来学习特征，该方法可以看作是以SwAV为中心的DINO和iBOT损失的组合\nImage-level objective：考虑从学生和教师网络中提取特征之间的交叉熵损失。这两个特征来自ViT的class token，由同一张图的不同crop得到。学习学生网络的参数，通过指数异动平均(EMA)来构建教师网络。 Patch-level objective：随机mask学生网络输入图像的一些patch，然后在两个网络的每个掩码快上添加交叉熵损失，与图像级的损失结合。 Untying head weights between both objectives：将两个目标相关的权重绑定在一起会使得模型在patch-level上欠拟合，image-level上过拟合。通过解绑这些权重提高了在两个尺度上的性能。 Sinkhorn-Knopp centering：使用Sinkhorn-Knopp(SK)批归一化替代DINO和iBot的教师softmax-centering步骤。运行SK算法进行3轮迭代；对于学生，使用softmax归一化。 KoLeo regularizer：KoLeo 正则项来自于 Kozachenko-Leonenko differential entropy estimator.给定一个含有n向量的集合$(x_i,\\dots,x_n)$，$L_{\\text{koleo}}=-\\frac{1}{n}\\sum_{i=1}^{n}{\\log(d_{n,i})}$ ，其中 $d_{n,i}=\\min_{j\\neq i}||x_i-x_j||$是$x_i$与batch内其他点的最小距离。在计算koLeo正则项前还对特征进行L2正则化。 Adapting the resolution：高分辨率是分割或检测等像素级下游任务的关键，因为小物体在低分辨率下消失。然而，在高分辨率下进行训练需要更长的时间和更大内存。相反，在预训练结束的短时间内将图像的分辨率提高到518 × 518。Fixing the train-test resolution discrepancy 4. 高效实现(Efficient implementation) 相较于iBOT，DINOv2运行速度快2倍，使用1/3的内存。\nFast and memory-efficient attention：实现自己版本的FlashAttention以提高自注意力层的效率。由于GPU硬件的特性，当每个头(head)的嵌入维度为64倍数时效率最高，当全嵌入维度为256倍数时矩阵运算更高效。因此本文的ViT-g架构使用embedding dimension = 1536(24 heads, 64 dim/head)，而非embedding dimension = 1408(16 heads, 88 dim/head)。本文的ViT-g有1.1B参数。 Nested tensors in self-attention Efficient stochastic depth：本文实现了随机深度的一个高效版本，它跳过了丢弃残差计算而不是掩盖结果，以近似丢弃率的比例节省内存和计算量。本文丢弃率d=40%，显著提高计算效率和内存使用率。该实现在批维度上随机重排B个样本，并对前$(1-d)\\times B$个样本分块计算。 Fully-Sharded Data Parallel (FSDP)：使用AdamW优化器，对于ViT-g将使用16G内存。FSDP节省跨GPU的通信开销。 模型蒸馏(Model Distillation) 5. 消融研究(Ablation Studies) 设置一系列消融研究来验证本文pipeline中不同组件：技术修改、预训练数据和模型蒸馏。\n5.1 Improved Training Recipe 本文方法在iBOT基础上进行改进。本文通过在一个baseline iBOT模型中依次添加各个组件，训练了多个模型，结果如下图所示。几乎每个组件都能带来性能的提升，只有Layer Scale和Stochastic Depth在linear中降低了性能，但它们提高了训练的稳定性。\n5.2 Pretraining Data Source 预训练数据的质量直接影响到特征的质量，本实验对比LVD-142M，ImageNet-22k和未处理的原始数据。结果如下图所示。可见，在LVD-142M上预训练能够在ImageNet-1k上取得最好性能，同时在其他测试集也能取得较好的性能。于是可以得出LVD-142M数据集提供了不同类型的平衡的数据，能带来性能的提升。\n5.3 Model Size and Data 模型大小与数据量大小的重要性实验结果如下图所示。\n5.4 Loss Components 验证KoLeo Loss和masked image modeling(MIM)的影响，结果如下图所示：\n5.5 Impact of Knowledge Distillation 验证模型蒸馏的有效性，比较ViT-L/14从头训练和从ViT-g/14蒸馏的性能，结果如下图所示。可见，蒸馏得到的模型性能更高，甚至在有的benchmark上超过了教师模型。\n5.6 Impact of Resolution 衡量在预训练过程中改变分辨率对图像级和patch级特征的影响，结果如下图所示。可见，在训练结尾使用高分辨率训练10k次迭代，在增加很少计算量的同时带来和高分辨率训练几乎一样好的性能。\n6. 结果(Results) Baseline. ImageNet-1k top-1 ACC. 在其他评估中报告SSL(自监督)模型中最好的四个，以及弱监督中最好的OpenCLIP-G模型。\n与开源的SOTA自监督模型比较：MAE, DINO, SEERv2, MSN, EsViT, Mugs, iBOT.\n弱监督模型：CLIP, OpenCLIP, SWAG.\n6.1 ImageNet Classification 冻结特征层，仅训练一个线性分类器。\n能否微调编码器(Can we finetune the encoders)？\n下图是微调后的实验结果，取得了明显的性能提升，因此微调是可选的策略。\n鲁棒性分析(Robustness analysis)\n下图是泛化性(鲁棒性)的测试结果，相较于SSL模型，本文方法取得了明显更好的鲁棒性；相较于弱监督模型，仅在Im-R和Sketch上稍微落后。\n6.2 Additional Image and Video classification Benchmarks 6.3 Instance Recognition 6.4 Dense Recognition Tasks 语义分割(Semantic segmentation)\n深度估计(Depth estimation)\n6.5 定性结果(Qualitative Results) 语义分割和深度估计(Semantic Segmentation and Depth Estimation)\n分布外的泛化性(Out-of-distribution generalization)\n分布外数据的分割和深度估计例子如下图所示，展现了在不同特征域中良好的迁移性。\nPCA of patch features\n块匹配(Patch matching)\n7. Fairness and Bias Analysis 7.1 Geographical Fairness 7.2 Gender, Skintones and Age 8. Estimating the Environmental Impact of Training our Models ",
+  "wordCount" : "3323",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/paper/dinov2/cover.png","datePublished": "2023-05-06T14:46:12+08:00",
+  "dateModified": "2023-05-06T14:46:12+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/paper/dinov2/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/paper/">📄 论文</a></div>
+            <h1 class="post-title">
+                DINOv2: Learning Robust Visual Features without Supervision
+            </h1>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 5 月 6 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>3323字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>7分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E8%87%AA%E7%9B%91%E7%9D%A3/" style="color: var(--secondary)!important;">自监督</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E9%80%9A%E7%94%A8%E8%A7%86%E8%A7%89%E7%89%B9%E5%BE%81/" style="color: var(--secondary)!important;">通用视觉特征</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/paper/dinov2/cover.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#1-%e5%bc%95%e8%a8%80" aria-label="1. 引言">1. 引言</a></li>
+                <li>
+                    <a href="#2-%e6%95%b0%e6%8d%ae%e5%a4%84%e7%90%86data-processing" aria-label="2. 数据处理(Data Processing)">2. 数据处理(Data Processing)</a></li>
+                <li>
+                    <a href="#3-%e5%88%a4%e5%88%ab%e6%80%a7%e8%87%aa%e7%9b%91%e7%9d%a3%e9%a2%84%e8%ae%ad%e7%bb%83discriminative-self-supervised-pre-training" aria-label="3. 判别性自监督预训练(Discriminative Self-supervised Pre-training)">3. 判别性自监督预训练(Discriminative Self-supervised Pre-training)</a></li>
+                <li>
+                    <a href="#4-%e9%ab%98%e6%95%88%e5%ae%9e%e7%8e%b0efficient-implementation" aria-label="4. 高效实现(Efficient implementation)">4. 高效实现(Efficient implementation)</a></li>
+                <li>
+                    <a href="#5-%e6%b6%88%e8%9e%8d%e7%a0%94%e7%a9%b6ablation-studies" aria-label="5. 消融研究(Ablation Studies)">5. 消融研究(Ablation Studies)</a><ul>
+                        
+                <li>
+                    <a href="#51-improved-training-recipe" aria-label="5.1 Improved Training Recipe">5.1 Improved Training Recipe</a></li>
+                <li>
+                    <a href="#52-pretraining-data-source" aria-label="5.2 Pretraining Data Source">5.2 Pretraining Data Source</a></li>
+                <li>
+                    <a href="#53-model-size-and-data" aria-label="5.3 Model Size and Data">5.3 Model Size and Data</a></li>
+                <li>
+                    <a href="#54-loss-components" aria-label="5.4 Loss Components">5.4 Loss Components</a></li>
+                <li>
+                    <a href="#55-impact-of-knowledge-distillation" aria-label="5.5 Impact of Knowledge Distillation">5.5 Impact of Knowledge Distillation</a></li>
+                <li>
+                    <a href="#56-impact-of-resolution" aria-label="5.6 Impact of Resolution">5.6 Impact of Resolution</a></li></ul>
+                </li>
+                <li>
+                    <a href="#6-%e7%bb%93%e6%9e%9cresults" aria-label="6. 结果(Results)">6. 结果(Results)</a><ul>
+                        
+                <li>
+                    <a href="#61-imagenet-classification" aria-label="6.1 ImageNet Classification">6.1 ImageNet Classification</a></li>
+                <li>
+                    <a href="#62-additional-image-and-video-classification-benchmarks" aria-label="6.2 Additional Image and Video classification Benchmarks">6.2 Additional Image and Video classification Benchmarks</a></li>
+                <li>
+                    <a href="#63-instance-recognition" aria-label="6.3 Instance Recognition">6.3 Instance Recognition</a></li>
+                <li>
+                    <a href="#64-dense-recognition-tasks" aria-label="6.4 Dense Recognition Tasks">6.4 Dense Recognition Tasks</a></li>
+                <li>
+                    <a href="#65-%e5%ae%9a%e6%80%a7%e7%bb%93%e6%9e%9cqualitative-results" aria-label="6.5 定性结果(Qualitative Results)">6.5 定性结果(Qualitative Results)</a></li></ul>
+                </li>
+                <li>
+                    <a href="#7-fairness-and-bias-analysis" aria-label="7. Fairness and Bias Analysis">7. Fairness and Bias Analysis</a><ul>
+                        
+                <li>
+                    <a href="#71-geographical-fairness" aria-label="7.1 Geographical Fairness">7.1 Geographical Fairness</a></li>
+                <li>
+                    <a href="#72-gender-skintones-and-age" aria-label="7.2 Gender, Skintones and Age">7.2 Gender, Skintones and Age</a></li></ul>
+                </li>
+                <li>
+                    <a href="#8-estimating-the-environmental-impact-of-training-our-models" aria-label="8. Estimating the Environmental Impact of Training our Models">8. Estimating the Environmental Impact of Training our Models</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p><a href="https://arxiv.org/abs/2304.07193">[paper]</a> <a href="https://github.com/facebookresearch/dinov2">[code]</a></p>
+<h2 id="1-引言">1. 引言<a hidden class="anchor" aria-hidden="true" href="#1-引言">#</a></h2>
+<p>参考NLP在大规模预训练模型上的突破，在CV中提取通用的视觉特征，可以是用于分类任务的图像级别特征，也可以是用于分割任务的像素级别特征。利用<strong>自监督</strong>的方法，在<strong>不同源、足够多</strong>的数据上训练即可生成这样的特征。</p>
+<p>本文工作探索了自监督学习是否在大规模数据上预训练有潜力学习通用的视觉特征。本文大部分技术贡献都是专为稳定和加速判别性自监督学习定制。</p>
+<p>对于预训练数据，本文构建了一个自动管道，从大量未处理的图像集合中筛选和平衡数据集。在本文工作中，使用一种朴素的聚类方法解决了<strong>在处理wild数据时重新平衡概念并避免在少数主导模式上的过拟合问题</strong>，并构建了一个小型但多样的142M图像的语料库来验证本文方法。</p>
+<p>本文提出了用不同ViT框架训练的DINOv2模型，下图展示了DINOv2在多种图像级和像素级CV任务中的性能（深<em>蓝色为DINOv2，浅橙色是自监督方法，深粉色为弱监督方法</em>），验证了与最好的开源的弱监督模型相比，自监督训练是学习可迁移冻结特征的一个很好的候选方法。</p>
+<div align=center><img src="eval.png" style="zoom:80%;" /></div>
+<h2 id="2-数据处理data-processing">2. 数据处理(Data Processing)<a hidden class="anchor" aria-hidden="true" href="#2-数据处理data-processing">#</a></h2>
+<p>数据处理pipeline如下图所示：</p>
+<div align=center><img src="data.png" style="zoom:80%;" /></div>
+<ul>
+<li>
+<p><strong>数据来源(Data selection)</strong></p>
+<p>构建的LVD-142M数据集的所用的数据集如下表所示，该集合旨在为图像级和密集识别提供涵盖各种下游视觉任务的图像。总共有1.2B图像。</p>
+<div align=center><img src="selection.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>图像相似度(Image similarity)</strong></p>
+<p>使用余弦相似度(cosine similarity)将图像特征与下面的相似度函数m比较：
+$$
+m(s,r)=\text{cos-similarity}(f(s),f(r))=\frac{f(s)\cdot f(r)}{||f(s)||_2||f(r)||_2}
+$$
+其中<code>s</code>和<code>r</code>是一对比较的图像，<code>f</code>是模型生成的特征。</p>
+</li>
+<li>
+<p><strong>去重(Deduplication)</strong></p>
+<p>将<a href="https://openaccess.thecvf.com/content/CVPR2022/html/Pizzi_A_Self-Supervised_Descriptor_for_Image_Copy_Detection_CVPR_2022_paper.html"><code>[A self-supervised descriptor for image copy detection]</code></a>的拷贝检测流程应用到未处理的数据中去除重复图像，减少冗余增加图像多样性。</p>
+<ul>
+<li><strong>Self-deduplication</strong>：检索每幅图像的k=64最近邻(余弦相似度)，只考虑相似度&gt;0.6的邻居，通过可扩展的不相交集数据结构实现来提取关联k-NN图的连通分支，对重复图像的每个分量只保留一个代表性图像。自去重的结果有1.1B图像。</li>
+<li><strong>Relative deduplication</strong>：丢弃上一步骤中与评估数据集的训练和测试划分中相似的图像，采用与自去重中相似的步骤，丢弃相似度&gt;0.45的所有重复图像。剩下744M数据。</li>
+<li><strong>Retrieval</strong>：检索相似图像来构建数据集。首先使用在ImageNet-22k预训练的ViT-H/16网络来计算Image Embedding，并使用余弦相似度来作为图像之间的距离度量。然后对未处理的数据进行k-means聚类。给定一个用于检索的查询数据集，如果它足够大，为每个查询图像检索N个(4)最近邻。如果较小，则从每个查询图像对应的簇中采样M张图像。</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-判别性自监督预训练discriminative-self-supervised-pre-training">3. 判别性自监督预训练(Discriminative Self-supervised Pre-training)<a hidden class="anchor" aria-hidden="true" href="#3-判别性自监督预训练discriminative-self-supervised-pre-training">#</a></h2>
+<p>使用一种判别性的自监督方法来学习特征，该方法可以看作是以<a href="https://proceedings.neurips.cc/paper/2020/hash/70feb62b69f16e0238f741fab228fec2-Abstract.html"><code>SwAV</code></a>为中心的DINO和iBOT损失的组合</p>
+<ul>
+<li><strong>Image-level objective</strong>：考虑从学生和教师网络中提取特征之间的交叉熵损失。这两个特征来自ViT的class token，由同一张图的不同crop得到。学习学生网络的参数，通过指数异动平均(EMA)来构建教师网络。</li>
+<li><strong>Patch-level objective</strong>：随机mask学生网络输入图像的一些patch，然后在两个网络的每个掩码快上添加交叉熵损失，与图像级的损失结合。</li>
+<li><strong>Untying head weights between both objectives</strong>：将两个目标相关的权重绑定在一起会使得模型在patch-level上欠拟合，image-level上过拟合。通过解绑这些权重提高了在两个尺度上的性能。</li>
+<li><strong>Sinkhorn-Knopp centering</strong>：使用<a href="https://arxiv.org/abs/2211.09981"><code>Sinkhorn-Knopp(SK)</code></a>批归一化替代DINO和iBot的教师softmax-centering步骤。运行SK算法进行3轮迭代；对于学生，使用softmax归一化。</li>
+<li><strong>KoLeo regularizer</strong>：KoLeo 正则项来自于 <em>Kozachenko-Leonenko differential entropy estimator</em>.给定一个含有n向量的集合$(x_i,\dots,x_n)$，$L_{\text{koleo}}=-\frac{1}{n}\sum_{i=1}^{n}{\log(d_{n,i})}$ ，其中 $d_{n,i}=\min_{j\neq i}||x_i-x_j||$是$x_i$与batch内其他点的最小距离。在计算koLeo正则项前还对特征进行L2正则化。</li>
+<li><strong>Adapting the resolution</strong>：高分辨率是分割或检测等像素级下游任务的关键，因为小物体在低分辨率下消失。然而，在高分辨率下进行训练需要更长的时间和更大内存。相反，在预训练结束的短时间内将图像的分辨率提高到518 × 518。<a href="https://papers.nips.cc/paper_files/paper/2019/hash/d03a857a23b5285736c4d55e0bb067c8-Abstract.html"><code>Fixing the train-test resolution discrepancy</code></a></li>
+</ul>
+<h2 id="4-高效实现efficient-implementation">4. 高效实现(Efficient implementation)<a hidden class="anchor" aria-hidden="true" href="#4-高效实现efficient-implementation">#</a></h2>
+<p>相较于iBOT，DINOv2运行速度快2倍，使用1/3的内存。</p>
+<ul>
+<li><strong>Fast and memory-efficient attention</strong>：实现自己版本的<a href="https://arxiv.org/abs/2205.14135"><code>FlashAttention</code></a>以提高自注意力层的效率。由于GPU硬件的特性，当每个头(head)的嵌入维度为64倍数时效率最高，当全嵌入维度为256倍数时矩阵运算更高效。因此本文的ViT-g架构使用<code>embedding dimension = 1536(24 heads, 64 dim/head)</code>，而非<code>embedding dimension = 1408(16 heads, 88 dim/head)</code>。本文的ViT-g有1.1B参数。</li>
+<li><strong>Nested tensors in self-attention</strong></li>
+<li><strong>Efficient stochastic depth</strong>：本文实现了随机深度的一个高效版本，它跳过了丢弃残差计算而不是掩盖结果，以近似丢弃率的比例节省内存和计算量。本文丢弃率<code>d=40%</code>，显著提高计算效率和内存使用率。该实现在批维度上随机重排B个样本，并对前$(1-d)\times B$个样本分块计算。</li>
+<li><strong>Fully-Sharded Data Parallel (FSDP)</strong>：使用AdamW优化器，对于ViT-g将使用16G内存。FSDP节省跨GPU的通信开销。</li>
+<li><strong>模型蒸馏(Model Distillation)</strong></li>
+</ul>
+<h2 id="5-消融研究ablation-studies">5. 消融研究(Ablation Studies)<a hidden class="anchor" aria-hidden="true" href="#5-消融研究ablation-studies">#</a></h2>
+<p>设置一系列消融研究来验证本文pipeline中不同组件：技术修改、预训练数据和模型蒸馏。</p>
+<h3 id="51-improved-training-recipe">5.1 Improved Training Recipe<a hidden class="anchor" aria-hidden="true" href="#51-improved-training-recipe">#</a></h3>
+<p>本文方法在iBOT基础上进行改进。本文通过在一个baseline iBOT模型中依次添加各个组件，训练了多个模型，结果如下图所示。几乎每个组件都能带来性能的提升，只有Layer Scale和Stochastic Depth在linear中降低了性能，但它们提高了训练的稳定性。</p>
+<div align=center><img src="recipe.png" style="zoom:80%;" /></div>
+<h3 id="52-pretraining-data-source">5.2 Pretraining Data Source<a hidden class="anchor" aria-hidden="true" href="#52-pretraining-data-source">#</a></h3>
+<p>预训练数据的质量直接影响到特征的质量，本实验对比LVD-142M，ImageNet-22k和未处理的原始数据。结果如下图所示。可见，在LVD-142M上预训练能够在ImageNet-1k上取得最好性能，同时在其他测试集也能取得较好的性能。于是可以得出LVD-142M数据集提供了不同类型的平衡的数据，能带来性能的提升。</p>
+<div align=center><img src="source.png" style="zoom:80%;" /></div>
+<h3 id="53-model-size-and-data">5.3 Model Size and Data<a hidden class="anchor" aria-hidden="true" href="#53-model-size-and-data">#</a></h3>
+<p>模型大小与数据量大小的重要性实验结果如下图所示。</p>
+<div align=center><img src="size.png" style="zoom:80%;" /></div>
+<h3 id="54-loss-components">5.4 Loss Components<a hidden class="anchor" aria-hidden="true" href="#54-loss-components">#</a></h3>
+<p>验证KoLeo Loss和masked image modeling(MIM)的影响，结果如下图所示：</p>
+<div align=center><img src="loss.png" style="zoom:80%;" /></div>
+<h3 id="55-impact-of-knowledge-distillation">5.5 Impact of Knowledge Distillation<a hidden class="anchor" aria-hidden="true" href="#55-impact-of-knowledge-distillation">#</a></h3>
+<p>验证模型蒸馏的有效性，比较ViT-L/14从头训练和从ViT-g/14蒸馏的性能，结果如下图所示。可见，蒸馏得到的模型性能更高，甚至在有的benchmark上超过了教师模型。</p>
+<div align=center><img src="distillation.png" style="zoom:80%;" /></div>
+<h3 id="56-impact-of-resolution">5.6 Impact of Resolution<a hidden class="anchor" aria-hidden="true" href="#56-impact-of-resolution">#</a></h3>
+<p>衡量在预训练过程中改变分辨率对图像级和patch级特征的影响，结果如下图所示。可见，在训练结尾使用高分辨率训练10k次迭代，在增加很少计算量的同时带来和高分辨率训练几乎一样好的性能。</p>
+<div align=center><img src="resolution.png" style="zoom:80%;" /></div>
+<h2 id="6-结果results">6. 结果(Results)<a hidden class="anchor" aria-hidden="true" href="#6-结果results">#</a></h2>
+<p><strong>Baseline</strong>. ImageNet-1k top-1 ACC. 在其他评估中报告SSL(自监督)模型中最好的四个，以及弱监督中最好的OpenCLIP-G模型。</p>
+<p>与开源的SOTA自监督模型比较：<a href="https://arxiv.org/abs/2111.06377">MAE</a>, <a href="https://arxiv.org/abs/2104.14294">DINO</a>, <a href="https://arxiv.org/abs/2202.08360">SEERv2</a>,  <a href="https://arxiv.org/abs/2204.07141">MSN</a>, <a href="https://arxiv.org/abs/2106.09785">EsViT</a>, <a href="https://arxiv.org/abs/2203.14415">Mugs</a>, <a href="https://arxiv.org/abs/2111.07832">iBOT</a>.</p>
+<p>弱监督模型：<a href="https://arxiv.org/abs/2103.00020">CLIP</a>, <a href="https://arxiv.org/abs/2212.07143">OpenCLIP</a>, <a href="https://arxiv.org/abs/2201.08371">SWAG</a>.</p>
+<h3 id="61-imagenet-classification">6.1 ImageNet Classification<a hidden class="anchor" aria-hidden="true" href="#61-imagenet-classification">#</a></h3>
+<p>冻结特征层，仅训练一个线性分类器。</p>
+<div align=center><img src="ImageNet1k.png" style="zoom:80%;" /></div>
+<ul>
+<li>
+<p><strong>能否微调编码器(Can we finetune the encoders)？</strong></p>
+<p>下图是微调后的实验结果，取得了明显的性能提升，因此微调是可选的策略。</p>
+<div align=center><img src="finetune.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>鲁棒性分析(Robustness analysis)</strong></p>
+<p>下图是泛化性(鲁棒性)的测试结果，相较于SSL模型，本文方法取得了明显更好的鲁棒性；相较于弱监督模型，仅在Im-R和Sketch上稍微落后。</p>
+<div align=center><img src="generalization.png" style="zoom:80%;" /></div>
+</li>
+</ul>
+<h3 id="62-additional-image-and-video-classification-benchmarks">6.2 Additional Image and Video classification Benchmarks<a hidden class="anchor" aria-hidden="true" href="#62-additional-image-and-video-classification-benchmarks">#</a></h3>
+<div align=center><img src="otherclassification.png" style="zoom:80%;" /></div>
+<div align=center><img src="benchmark12.png" style="zoom:80%;" /></div>
+<h3 id="63-instance-recognition">6.3 Instance Recognition<a hidden class="anchor" aria-hidden="true" href="#63-instance-recognition">#</a></h3>
+<div align=center><img src="instance.png" style="zoom:80%;" /></div>
+<h3 id="64-dense-recognition-tasks">6.4 Dense Recognition Tasks<a hidden class="anchor" aria-hidden="true" href="#64-dense-recognition-tasks">#</a></h3>
+<ul>
+<li>
+<p>语义分割(Semantic segmentation)</p>
+<div align=center><img src="semantic.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>深度估计(Depth estimation)</strong></p>
+<div align=center><img src="depth.png" style="zoom:80%;" /></div>
+</li>
+</ul>
+<h3 id="65-定性结果qualitative-results">6.5 定性结果(Qualitative Results)<a hidden class="anchor" aria-hidden="true" href="#65-定性结果qualitative-results">#</a></h3>
+<ul>
+<li>
+<p><strong>语义分割和深度估计(Semantic Segmentation and Depth Estimation)</strong></p>
+<div align=center><img src="qualitive.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>分布外的泛化性(Out-of-distribution generalization)</strong></p>
+<p>分布外数据的分割和深度估计例子如下图所示，展现了在不同特征域中良好的迁移性。</p>
+<div align=center><img src="out.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>PCA of patch features</strong></p>
+<div align=center><img src="pca.png" style="zoom:80%;" /></div>
+</li>
+<li>
+<p><strong>块匹配(Patch matching)</strong></p>
+<div align=center><img src="match.png" style="zoom:80%;" /></div>
+</li>
+</ul>
+<h2 id="7-fairness-and-bias-analysis">7. Fairness and Bias Analysis<a hidden class="anchor" aria-hidden="true" href="#7-fairness-and-bias-analysis">#</a></h2>
+<h3 id="71-geographical-fairness">7.1 Geographical Fairness<a hidden class="anchor" aria-hidden="true" href="#71-geographical-fairness">#</a></h3>
+<div align=center><img src="geographical.png" style="zoom:80%;" /></div>
+<h3 id="72-gender-skintones-and-age">7.2 Gender, Skintones and Age<a hidden class="anchor" aria-hidden="true" href="#72-gender-skintones-and-age">#</a></h3>
+<div align=center><img src="age.png" style="zoom:80%;" /></div>
+<h2 id="8-estimating-the-environmental-impact-of-training-our-models">8. Estimating the Environmental Impact of Training our Models<a hidden class="anchor" aria-hidden="true" href="#8-estimating-the-environmental-impact-of-training-our-models">#</a></h2>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/algo/offer3/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>剑指offer复习笔记(3)</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>自监督 on 烈烈风中、的博客</title>
+    <link>https://Achilles-10.github.io/tags/%E8%87%AA%E7%9B%91%E7%9D%A3/</link>
+    <description>Recent content in 自监督 on 烈烈风中、的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 06 May 2023 14:46:12 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E8%87%AA%E7%9B%91%E7%9D%A3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DINOv2: Learning Robust Visual Features without Supervision</title>
+      <link>https://Achilles-10.github.io/posts/paper/dinov2/</link>
+      <pubDate>Sat, 06 May 2023 14:46:12 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/dinov2/</guid>
+      <description>[paper] [code] 1. 引言 参考NLP在大规模预训练模型上的突破，在CV中提取通用的视觉特征，可以是用于分类任务的图像级别特征，也可以是用于分割任务的像素级别特征。利用自监督的方法，在不同源、足够多的数据上训练即可生成这样的特征。 本文工作探索了自监督学习是否在大规模数据上预训练有潜力学习通用的视觉</description>
+    </item>
+    
+  </channel>
+</rss>
