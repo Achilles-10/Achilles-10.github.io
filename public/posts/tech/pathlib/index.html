@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>使用pathlib优雅操作路径 | 烈烈风中、的博客</title>
+<meta name="keywords" content="学习笔记, python库">
+<meta name="description" content="结合glob，使用pathlib库操作路径">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/pathlib/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="使用pathlib优雅操作路径" />
+<meta property="og:description" content="结合glob，使用pathlib库操作路径" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/pathlib/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/pathlib/cover.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-17T12:07:49+08:00" />
+<meta property="article:modified_time" content="2023-05-17T12:07:49+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/pathlib/cover.jpg" />
+<meta name="twitter:title" content="使用pathlib优雅操作路径"/>
+<meta name="twitter:description" content="结合glob，使用pathlib库操作路径"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "👨🏻‍💻 技术",
+          "item": "https://Achilles-10.github.io/posts/tech/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "使用pathlib优雅操作路径",
+      "item": "https://Achilles-10.github.io/posts/tech/pathlib/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "使用pathlib优雅操作路径",
+  "name": "使用pathlib优雅操作路径",
+  "description": "结合glob，使用pathlib库操作路径",
+  "keywords": [
+    "学习笔记", "python库"
+  ],
+  "articleBody": "pathlib在功能和易用性上已经超越os库，比如以下这个获取上层目录和上上层目录的例子，pathlib的链式调用比os的嵌套调用更加灵活方便。\nos方法\nimport os # 获取上层目录 os.path.dirname(os.getcwd()) # 获取上上层目录 os.path.dirname(os.path.dirname(os.getcwd())) pathlib方法\nfrom pathlib import Path # 获取上层目录 Path.cwd().parent # 获取上上层目录 Path.cwd().parent.parent glob基础使用 基础语法，glob默认不匹配隐藏文件\n通配符 描述 示例 匹配 不匹配 * 匹配0个或多个字符，包含空串 glob* glob,glob123 glo ? 匹配1个字符 ?lob glob,flob lob [abc] 匹配括号内字符集合中的单个字符 [gf]lob glob,flob lob,hlob [a-z] 匹配括号内字符范围中的单个字符 [a-z]lob alob,zlob lob,1lob [^abc]或[!abc] 匹配不在括号内字符集合中的单个字符 [^cb]at aat at,cat [^a-z]或[!a-z] 匹配不在括号内字符范围中的单个字符 [^a-z]at 1at at,cat 在 bash 命令行中[!abc]需要转义成[\\!abc]\n扩展语法\n通配符 描述 示例 匹配 不匹配 {x,y,...} Brace Expansion，展开花括号内容，支持展开嵌套括号 a.{png,jp{e}g} a.png,a.jpg,a.jpeg ** globstar，匹配所有文件和任意层目录，若**后面紧接着/则只匹配目录，不含隐藏目录 src/** src/a.py,src/b/c.txt,src/b/ src/.hide/ ?(pattern-list) 匹配0次或1次给定模式 *(pattern-list) 匹配0次或多次给定的模式 a.*(txt|py) a., a.txt, a.txtpy a +(pattern-list) 匹配1次或多次给定的模式 @(pattern-list) 匹配给定模式 !(pattern-list) 匹配非给定的模式 pattern-list是一组以|为分隔符的模式集合\npathlib基础使用 Path为pathlib的主类，首先导入主类：\nfrom pathlib import Path 列出子目录：\n\u003e\u003e\u003e p=Path('./Research/') \u003e\u003e\u003e [x for x in p.iterdir() if x.is_dir()] [PosixPath('Research/Two_Stream'), PosixPath('Research/pytorch_wavelets'), PosixPath('Research/FDFL')] 列出当前目录树下所有.py文件\n\u003e\u003e\u003e p=Path('./DFDC/') \u003e\u003e\u003e list(p.glob('**/*.py')) [PosixPath('DFDC/processing/__init__.py'), PosixPath('DFDC/processing/crop_face.py'), PosixPath('DFDC/processing/make_dataset.py')] 在目录树中移动，用'/'进行路径拼接\n\u003e\u003e\u003e p=Path('.') \u003e\u003e\u003e q = p/'DFDC'/'processing' \u003e\u003e\u003e q PosixPath('DFDC/processing') 使用joinpath()。\n\u003e\u003e\u003e p=Path.cwd() \u003e\u003e\u003e p.joinpath('pathlib') PosixPath('/media/sda/zhy/pathlib') 按照分隔符将文件路径分割\n\u003e\u003e\u003e q.parts ('DFDC', 'processing') 查询路径属性\n\u003e\u003e\u003e q.exists() True \u003e\u003e\u003e q.is_dir() Trueq \u003e\u003e\u003e q.is_file() False 创建目录和文件\np = Path('./pathlib/') # parents默认为False，若父目录不存在抛出异常 # exist_ok默认为False，若目录已存在抛出异常 p.mkdir(parents=True, exist_ok=True) p = Path('./pathlib/test.txt') # touch创建文件，父目录必须存在否则抛出异常 p.touch(exist_ok=True) 获取文件/目录信息\n\u003e\u003e\u003e p = Path('DFDC/processing/__init__.py') # 获取文件/目录名 \u003e\u003e\u003e p.name '__init__.py' # 获取不包含后缀的文件名 \u003e\u003e\u003e p.stem '__init__' # 获取文件后缀名 \u003e\u003e\u003e p.suffix '.py' \u003e\u003e\u003e p = Path.cwd() # 获取上层目录路径 \u003e\u003e\u003e p.parent PosixPath('/media/sda') # 获取所有上层目录路径 \u003e\u003e\u003e [path for path in p.parents] [PosixPath('/media/sda'), PosixPath('/media'), PosixPath('/')] # 获取文件/目录属性 \u003e\u003e\u003e p.stat() os.stat_result(st_mode=16895, st_ino=171704321, st_dev=2048, st_nlink=16, st_uid=1018, st_gid=1019, st_size=4096, st_atime=1684207391, st_mtime=1684207367, st_ctime=1684207367) 重命名/移动文件\n重命名文件时，当新命名的文件重复时，会抛出异常。\n\u003e\u003e\u003e p = Path('pathlib/test.txt') # 重命名 \u003e\u003e\u003e new_name = p.with_name('test_new.txt') \u003e\u003e\u003e p.rename(new_name) PosixPath('pathlib/test_new.txt') # 修改后缀 \u003e\u003e\u003e new_suffix = new_name.with_suffix('.json') \u003e\u003e\u003e new_name.rename(new_suffix) PosixPath('pathlib/test_new.json') 移动文件，当新路径下文件已存在时，无法创建。\n\u003e\u003e\u003e p = Path('pathlib/test_new.json') \u003e\u003e\u003e p.rename('test.json') PosixPath('test.json') replace()与rename()用法基本相同，但是当新命名的文件重复时，replace()不会抛出异常而是直接覆盖旧文件。\n删除文件/目录\n删除文件，missing_ok=True设置文件不存在时不会抛出异常。\n\u003e\u003e\u003e p = Path('test.json') \u003e\u003e\u003e p.unlink(missing_ok=True) 删除目录，目录必须为空，否则抛出异常。\n\u003e\u003e\u003e p=Path('pathlib') \u003e\u003e\u003e p.rmdir() ",
+  "wordCount" : "1080",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/tech/pathlib/cover.jpg","datePublished": "2023-05-17T12:07:49+08:00",
+  "dateModified": "2023-05-17T12:07:49+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/tech/pathlib/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                使用pathlib优雅操作路径
+            </h1>
+            <div class="post-description">
+                结合glob，使用pathlib库操作路径
+            </div>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 5 月 17 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>1080字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>3分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/python%E5%BA%93/" style="color: var(--secondary)!important;">python库</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/pathlib/cover.jpg" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#glob%e5%9f%ba%e7%a1%80%e4%bd%bf%e7%94%a8" aria-label="glob基础使用">glob基础使用</a></li>
+                <li>
+                    <a href="#pathlib%e5%9f%ba%e7%a1%80%e4%bd%bf%e7%94%a8" aria-label="pathlib基础使用">pathlib基础使用</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p>pathlib在功能和易用性上已经超越os库，比如以下这个获取上层目录和上上层目录的例子，pathlib的链式调用比os的嵌套调用更加灵活方便。</p>
+<ul>
+<li>
+<p>os方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取上层目录</span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(os<span style="color:#f92672">.</span>getcwd())
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取上上层目录</span>
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>dirname(os<span style="color:#f92672">.</span>getcwd()))
+</span></span></code></pre></div></li>
+<li>
+<p>pathlib方法</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pathlib <span style="color:#f92672">import</span> Path
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取上层目录</span>
+</span></span><span style="display:flex;"><span>Path<span style="color:#f92672">.</span>cwd()<span style="color:#f92672">.</span>parent
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取上上层目录</span>
+</span></span><span style="display:flex;"><span>Path<span style="color:#f92672">.</span>cwd()<span style="color:#f92672">.</span>parent<span style="color:#f92672">.</span>parent
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="glob基础使用">glob基础使用<a hidden class="anchor" aria-hidden="true" href="#glob基础使用">#</a></h3>
+<p>基础语法，glob默认不匹配隐藏文件</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">通配符</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">示例</th>
+<th style="text-align:center">匹配</th>
+<th style="text-align:center">不匹配</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>*</code></td>
+<td style="text-align:center">匹配0个或多个字符，包含空串</td>
+<td style="text-align:center"><code>glob*</code></td>
+<td style="text-align:center"><code>glob</code>,<code>glob123</code></td>
+<td style="text-align:center"><code>glo</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>?</code></td>
+<td style="text-align:center">匹配1个字符</td>
+<td style="text-align:center"><code>?lob</code></td>
+<td style="text-align:center"><code>glob</code>,<code>flob</code></td>
+<td style="text-align:center"><code>lob</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>[abc]</code></td>
+<td style="text-align:center">匹配括号内字符集合中的单个字符</td>
+<td style="text-align:center"><code>[gf]lob</code></td>
+<td style="text-align:center"><code>glob</code>,<code>flob</code></td>
+<td style="text-align:center"><code>lob</code>,<code>hlob</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>[a-z]</code></td>
+<td style="text-align:center">匹配括号内字符范围中的单个字符</td>
+<td style="text-align:center"><code>[a-z]lob</code></td>
+<td style="text-align:center"><code>alob</code>,<code>zlob</code></td>
+<td style="text-align:center"><code>lob</code>,<code>1lob</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>[^abc]</code>或<code>[!abc]</code></td>
+<td style="text-align:center">匹配不在括号内字符集合中的单个字符</td>
+<td style="text-align:center"><code>[^cb]at</code></td>
+<td style="text-align:center"><code>aat</code></td>
+<td style="text-align:center"><code>at</code>,<code>cat</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>[^a-z]</code>或<code>[!a-z]</code></td>
+<td style="text-align:center">匹配不在括号内字符范围中的单个字符</td>
+<td style="text-align:center"><code>[^a-z]at</code></td>
+<td style="text-align:center"><code>1at</code></td>
+<td style="text-align:center"><code>at</code>,<code>cat</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>在 bash 命令行中<code>[!abc]</code>需要转义成<code>[\!abc]</code></p>
+</blockquote>
+<p>扩展语法</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">通配符</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">示例</th>
+<th style="text-align:center">匹配</th>
+<th style="text-align:center">不匹配</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>{x,y,...}</code></td>
+<td style="text-align:center">Brace Expansion，展开花括号内容，支持展开嵌套括号</td>
+<td style="text-align:center"><code>a.{png,jp{e}g}</code></td>
+<td style="text-align:center"><code>a.png</code>,<code>a.jpg</code>,<code>a.jpeg</code></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>**</code></td>
+<td style="text-align:center">globstar，匹配所有文件和任意层目录，若<code>**</code>后面紧接着<code>/</code>则只匹配目录，不含隐藏目录</td>
+<td style="text-align:center"><code>src/**</code></td>
+<td style="text-align:center"><code>src/a.py</code>,<code>src/b/c.txt</code>,<code>src/b/</code></td>
+<td style="text-align:center"><code>src/.hide/</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>?(pattern-list)</code></td>
+<td style="text-align:center">匹配0次或1次给定模式</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>*(pattern-list)</code></td>
+<td style="text-align:center">匹配0次或多次给定的模式</td>
+<td style="text-align:center"><code>a.*(txt|py)</code></td>
+<td style="text-align:center"><code>a.</code>, <code>a.txt</code>, <code>a.txtpy</code></td>
+<td style="text-align:center"><code>a</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>+(pattern-list)</code></td>
+<td style="text-align:center">匹配1次或多次给定的模式</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>@(pattern-list)</code></td>
+<td style="text-align:center">匹配给定模式</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>!(pattern-list)</code></td>
+<td style="text-align:center">匹配非给定的模式</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>pattern-list</code>是一组以<code>|</code>为分隔符的模式集合</p>
+</blockquote>
+<h3 id="pathlib基础使用">pathlib基础使用<a hidden class="anchor" aria-hidden="true" href="#pathlib基础使用">#</a></h3>
+<p>Path为pathlib的主类，首先导入主类：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pathlib <span style="color:#f92672">import</span> Path
+</span></span></code></pre></div><ul>
+<li>
+<p>列出子目录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">=</span>Path(<span style="color:#e6db74">&#39;./Research/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> [x <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> p<span style="color:#f92672">.</span>iterdir() <span style="color:#66d9ef">if</span> x<span style="color:#f92672">.</span>is_dir()]
+</span></span><span style="display:flex;"><span>[PosixPath(<span style="color:#e6db74">&#39;Research/Two_Stream&#39;</span>), PosixPath(<span style="color:#e6db74">&#39;Research/pytorch_wavelets&#39;</span>), PosixPath(<span style="color:#e6db74">&#39;Research/FDFL&#39;</span>)]
+</span></span></code></pre></div></li>
+<li>
+<p>列出当前目录树下所有<code>.py</code>文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">=</span>Path(<span style="color:#e6db74">&#39;./DFDC/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> list(p<span style="color:#f92672">.</span>glob(<span style="color:#e6db74">&#39;**/*.py&#39;</span>))
+</span></span><span style="display:flex;"><span>[PosixPath(<span style="color:#e6db74">&#39;DFDC/processing/__init__.py&#39;</span>), PosixPath(<span style="color:#e6db74">&#39;DFDC/processing/crop_face.py&#39;</span>), PosixPath(<span style="color:#e6db74">&#39;DFDC/processing/make_dataset.py&#39;</span>)]
+</span></span></code></pre></div></li>
+<li>
+<p>在目录树中移动，用<code>'/'</code>进行路径拼接</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">=</span>Path(<span style="color:#e6db74">&#39;.&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> q <span style="color:#f92672">=</span> p<span style="color:#f92672">/</span><span style="color:#e6db74">&#39;DFDC&#39;</span><span style="color:#f92672">/</span><span style="color:#e6db74">&#39;processing&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> q
+</span></span><span style="display:flex;"><span>PosixPath(<span style="color:#e6db74">&#39;DFDC/processing&#39;</span>)
+</span></span></code></pre></div><p>使用<code>joinpath()</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">=</span>Path<span style="color:#f92672">.</span>cwd()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>joinpath(<span style="color:#e6db74">&#39;pathlib&#39;</span>)
+</span></span><span style="display:flex;"><span>PosixPath(<span style="color:#e6db74">&#39;/media/sda/zhy/pathlib&#39;</span>)
+</span></span></code></pre></div><p>按照分隔符将文件路径分割</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> q<span style="color:#f92672">.</span>parts
+</span></span><span style="display:flex;"><span>(<span style="color:#e6db74">&#39;DFDC&#39;</span>, <span style="color:#e6db74">&#39;processing&#39;</span>)
+</span></span></code></pre></div></li>
+<li>
+<p>查询路径属性</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> q<span style="color:#f92672">.</span>exists()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> q<span style="color:#f92672">.</span>is_dir()
+</span></span><span style="display:flex;"><span>Trueq
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> q<span style="color:#f92672">.</span>is_file()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">False</span>
+</span></span></code></pre></div></li>
+<li>
+<p>创建目录和文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>p <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;./pathlib/&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># parents默认为False，若父目录不存在抛出异常</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># exist_ok默认为False，若目录已存在抛出异常</span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>mkdir(parents<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;./pathlib/test.txt&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># touch创建文件，父目录必须存在否则抛出异常</span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>touch(exist_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div></li>
+<li>
+<p>获取文件/目录信息</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;DFDC/processing/__init__.py&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取文件/目录名</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>name
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;__init__.py&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取不包含后缀的文件名</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>stem
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;__init__&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取文件后缀名</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>suffix
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;.py&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p <span style="color:#f92672">=</span> Path<span style="color:#f92672">.</span>cwd()
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取上层目录路径</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>parent
+</span></span><span style="display:flex;"><span>PosixPath(<span style="color:#e6db74">&#39;/media/sda&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取所有上层目录路径</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> [path <span style="color:#66d9ef">for</span> path <span style="color:#f92672">in</span> p<span style="color:#f92672">.</span>parents]
+</span></span><span style="display:flex;"><span>[PosixPath(<span style="color:#e6db74">&#39;/media/sda&#39;</span>), PosixPath(<span style="color:#e6db74">&#39;/media&#39;</span>), PosixPath(<span style="color:#e6db74">&#39;/&#39;</span>)]
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 获取文件/目录属性</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>stat()
+</span></span><span style="display:flex;"><span>os<span style="color:#f92672">.</span>stat_result(st_mode<span style="color:#f92672">=</span><span style="color:#ae81ff">16895</span>, st_ino<span style="color:#f92672">=</span><span style="color:#ae81ff">171704321</span>, st_dev<span style="color:#f92672">=</span><span style="color:#ae81ff">2048</span>, st_nlink<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span>, st_uid<span style="color:#f92672">=</span><span style="color:#ae81ff">1018</span>, st_gid<span style="color:#f92672">=</span><span style="color:#ae81ff">1019</span>, st_size<span style="color:#f92672">=</span><span style="color:#ae81ff">4096</span>, st_atime<span style="color:#f92672">=</span><span style="color:#ae81ff">1684207391</span>, st_mtime<span style="color:#f92672">=</span><span style="color:#ae81ff">1684207367</span>, st_ctime<span style="color:#f92672">=</span><span style="color:#ae81ff">1684207367</span>)
+</span></span></code></pre></div></li>
+<li>
+<p>重命名/移动文件</p>
+<p>重命名文件时，当新命名的文件重复时，会抛出异常。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;pathlib/test.txt&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 重命名</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> new_name <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>with_name(<span style="color:#e6db74">&#39;test_new.txt&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>rename(new_name)
+</span></span><span style="display:flex;"><span>PosixPath(<span style="color:#e6db74">&#39;pathlib/test_new.txt&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 修改后缀</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> new_suffix <span style="color:#f92672">=</span> new_name<span style="color:#f92672">.</span>with_suffix(<span style="color:#e6db74">&#39;.json&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> new_name<span style="color:#f92672">.</span>rename(new_suffix)
+</span></span><span style="display:flex;"><span>PosixPath(<span style="color:#e6db74">&#39;pathlib/test_new.json&#39;</span>)
+</span></span></code></pre></div><p>移动文件，当新路径下文件已存在时，无法创建。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;pathlib/test_new.json&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>rename(<span style="color:#e6db74">&#39;test.json&#39;</span>)
+</span></span><span style="display:flex;"><span>PosixPath(<span style="color:#e6db74">&#39;test.json&#39;</span>)
+</span></span></code></pre></div><p><code>replace()</code>与<code>rename()</code>用法基本相同，但是当新命名的文件重复时，<code>replace()</code>不会抛出异常而是直接覆盖旧文件。</p>
+</li>
+<li>
+<p>删除文件/目录</p>
+<p>删除文件，<code>missing_ok=True</code>设置文件不存在时不会抛出异常。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p <span style="color:#f92672">=</span> Path(<span style="color:#e6db74">&#39;test.json&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>unlink(missing_ok<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span></code></pre></div><p>删除目录，目录必须为空，否则抛出异常。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">=</span>Path(<span style="color:#e6db74">&#39;pathlib&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> p<span style="color:#f92672">.</span>rmdir()
+</span></span></code></pre></div></li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/paper/dinov2/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>DINOv2: Learning Robust Visual Features without Supervision</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>
