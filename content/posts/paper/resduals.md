@@ -7,7 +7,7 @@ author: ["Achilles"]
 # - 
 categories: # 没有分类界面可以不填写
 - 
-tags: ["论文阅读","双流网络"] # 标签
+tags: ["论文阅读","双流网络","人脸伪造检测"] # 标签
 description: "利用残差与双流网络实现伪造鉴别"
 weight:
 slug: ""

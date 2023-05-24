@@ -6,7 +6,25 @@
     <description>Recent content in 人脸伪造检测 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 26 Apr 2023 20:48:52 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 24 May 2023 16:03:30 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Focus by Prior: Deepfake Detection Based on Prior-Attention</title>
+      <link>https://Achilles-10.github.io/posts/paper/prior/</link>
+      <pubDate>Wed, 24 May 2023 16:03:30 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/prior/</guid>
+      <description>利用边缘和噪声信息生成先验注意力，层间和层内交互实现伪造检测</description>
+    </item>
+    
+    <item>
+      <title>Exposing Deepfake Face Forgeries with Guided Residuals</title>
+      <link>https://Achilles-10.github.io/posts/paper/resduals/</link>
+      <pubDate>Wed, 24 May 2023 15:47:15 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/resduals/</guid>
+      <description>利用残差与双流网络实现伪造鉴别</description>
+    </item>
+    
     <item>
       <title>Exploring Temporal Coherence for More General Video Face Forgery Detection</title>
       <link>https://Achilles-10.github.io/posts/paper/ftcn/</link>

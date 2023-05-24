@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Exposing Deepfake Face Forgeries with Guided Residuals | 烈烈风中、的博客</title>
-<meta name="keywords" content="论文阅读, 双流网络, 人脸伪造检测">
-<meta name="description" content="利用残差与双流网络实现伪造鉴别">
+<title>Focus by Prior: Deepfake Detection Based on Prior-Attention | 烈烈风中、的博客</title>
+<meta name="keywords" content="论文阅读, 注意力, 人脸伪造检测">
+<meta name="description" content="利用边缘和噪声信息生成先验注意力，层间和层内交互实现伪造检测">
 <meta name="author" content="Achilles">
-<link rel="canonical" href="https://Achilles-10.github.io/posts/paper/resduals/">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/paper/prior/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
         onload="hljs.initHighlightingOnLoad();"></script>
@@ -96,18 +96,18 @@ var _hmt = _hmt || [];
     });
 </script>
 
-<meta property="og:title" content="Exposing Deepfake Face Forgeries with Guided Residuals" />
-<meta property="og:description" content="利用残差与双流网络实现伪造鉴别" />
+<meta property="og:title" content="Focus by Prior: Deepfake Detection Based on Prior-Attention" />
+<meta property="og:description" content="利用边缘和噪声信息生成先验注意力，层间和层内交互实现伪造检测" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://Achilles-10.github.io/posts/paper/resduals/" />
-<meta property="og:image" content="https://Achilles-10.github.io/posts/paper/resduals/pipline.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-05-24T15:47:15+08:00" />
-<meta property="article:modified_time" content="2023-05-24T15:47:15+08:00" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/paper/prior/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/paper/prior/pipeline.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-05-24T16:03:30+08:00" />
+<meta property="article:modified_time" content="2023-05-24T16:03:30+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://Achilles-10.github.io/posts/paper/resduals/pipline.png" />
-<meta name="twitter:title" content="Exposing Deepfake Face Forgeries with Guided Residuals"/>
-<meta name="twitter:description" content="利用残差与双流网络实现伪造鉴别"/>
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/paper/prior/pipeline.png" />
+<meta name="twitter:title" content="Focus by Prior: Deepfake Detection Based on Prior-Attention"/>
+<meta name="twitter:description" content="利用边缘和噪声信息生成先验注意力，层间和层内交互实现伪造检测"/>
 
 
 <script type="application/ld+json">
@@ -132,8 +132,8 @@ var _hmt = _hmt || [];
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "Exposing Deepfake Face Forgeries with Guided Residuals",
-      "item": "https://Achilles-10.github.io/posts/paper/resduals/"
+      "name": "Focus by Prior: Deepfake Detection Based on Prior-Attention",
+      "item": "https://Achilles-10.github.io/posts/paper/prior/"
     }
   ]
 }
@@ -142,24 +142,24 @@ var _hmt = _hmt || [];
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Exposing Deepfake Face Forgeries with Guided Residuals",
-  "name": "Exposing Deepfake Face Forgeries with Guided Residuals",
-  "description": "利用残差与双流网络实现伪造鉴别",
+  "headline": "Focus by Prior: Deepfake Detection Based on Prior-Attention",
+  "name": "Focus by Prior: Deepfake Detection Based on Prior-Attention",
+  "description": "利用边缘和噪声信息生成先验注意力，层间和层内交互实现伪造检测",
   "keywords": [
-    "论文阅读", "双流网络", "人脸伪造检测"
+    "论文阅读", "注意力", "人脸伪造检测"
   ],
-  "articleBody": "[paper]\n1. Introduction 利用基于残差的特征能够突出细微的伪造痕迹并且抑制无关的图像内容。下图展示了从图像中提取伪造痕迹的理想流程，在原始图像中减去图像内容得到篡改痕迹。本文将通过这种方法提取的残差称为“引导残差”。\n残差特征能够提高对高质量图像的检测性能，但对低质量图像的提升帮助甚微，因为低质量图像存在的压缩和resize等操作会对伪造痕迹产生干扰，故还需要RGB的空域信息来提供更多的信息。本文主要贡献如下：\n提出了细粒度的伪造痕迹提取器MTE(Manipulation Trace Extractor)来提取引导残差，克服了基于预测残差可能存在的偏差问题； 设计了有效的注意力融合机制AFM(Attention Fusion Mechanism)来进行特征融合，自适应地分配双流网络的空间特征和特征权重。同时，还利用通道注意力模块来建立伪造痕迹之间的依赖关系。 提出了双流模型AdapGRnet(Adaptive Fusion Based Guided Residuals Network)，通过将MTE和AFM与Backbone结合，在现实场景下进行伪造检测。AdapGRnet能够学习空域和残差域特征，同时检测高质量和低质量的伪造图像。在四个数据集上达到了SOTA的准确率和鲁棒性。 2. Method 2.1 Overview 补充性分析：\n通常情况下，空域信息既包含有适用于伪造检测任务的伪造痕迹，也包含适用于分类和识别任务的图像内容信息。残差特征可以抑制图像内容信息，但同时也可能造成伪造痕迹的部分丢失，特别是当图像质量低时。\n因此，利用空域信息和残差特征的互补性来进行伪造检测。\n双流网络架构：\n通过双流相互增强的方式学习空域和残差域特征，下图为双流模型的框架图。首先用MTE提取RGB图像的引导残差，然后将RGB图像和引导残差输入到主干网络(ResNet-18移除全连接层)中进行特征学习。最后通过AFM融合双流学习到的空域和残差特征。\n2.2 Manipulation Trace Extractor 引导滤波器是一个边缘保留平滑算子，它保留图像内容并过滤到平坦区域的篡改痕迹。篡改痕迹可通过$R_{gr}=|p-q|$得到，其中$p$为输入图像，$q$为滤波器输出，如下图所示。\n下图展示了高质量人脸和低质量人脸通过高通滤波器和MTE得到的残差结果。第五行是用噪声分析对引导残差进一步放大。可以观察到，在高质量图像中，残差具有丰富的细节，并且不同篡改图像的残差之间存在明显差异。对于低质量图像，从第五行噪声分析中可以看到，在残差图像中存在白色块状纹理，难以区分。\n2.3 Attention Fusion Mechanism 利用注意力机制融合双流的特征，空域流特征适用于从低质量的图像中学习特征，残差流适用于从高质量的图像中学习特征，设计的AFM模块如下图所示。\n令得到的空域特征$f_{rgb}\\in\\mathbb{R}^{C\\times H\\times W}$，将其reshape得到$f_{rgb}\\in\\mathbb{R}^{C\\times N_p}$，其中$N_p=H\\times W$。经过矩阵乘法$f_{rgb}\\cdot f^T_{rgb}=M_{rgb}\\in\\mathbb{R}^{C\\times C}$，经过softmax得到注意力图$M_{rgb}$。同理得到残差域注意力图$M_{gr}$。再分别与reshape后的特征图相乘，得到新的特征图${f_{rgb},f_{gr}}$。\n根据交叉熵损失$L_1$和$L_2$的softmax输出来分配双流的权重$\\alpha$，$F_{attention}=\\alpha_1f_{rgb}+\\alpha_2f_{gr}$.\n3. Experiments 使用的数据集为Hybrid Fake Face (HFF)，后处理包括JPEG压缩(压缩率为60，JP60)和模糊操作(5x5的均值滤波，ME5)。\n3.1 消融实验 MTE与AFM模块消融实验\n不同残差提取方法消融实验\n特征融合模块的比较\n",
-  "wordCount" : "1477",
+  "articleBody": "[paper]\n1. Introduction 如下图所示，真实图像的边缘图保留了丰富的纹理信息，在伪造图像的边缘途中丢失了一些细节，此外，噪声图展示噪声在真实图像的面部特征和边界上均匀分布，在伪造图像中集中于边界。\n本文主要贡献如下：\n提出prior-attention机制，利用先验信息构建注意力图，引入边缘和噪声信息，有助于突出鉴别性特征； 基于prior-attention机制，设计了可嵌入的特征提取模块(Feature Abstraction Block, FAB)来促进层级间交互，以检测微小的伪造痕迹。 实验结果表面本文方法有很好的模块化和可解释性，以及出色的准确性。 2. Method 本文的框架如下图所示。基于Transformer的FAB模块被嵌入到骨干网络中，先验注意力模块替换Transformer中的多头注意力机制来增强纹理信息。\n2.1 先验注意力模块(Prior-Attention) 使用SRM滤波器提取噪声图，Canny边缘检测器提取边缘图，将这些先验信息来构建注意力图。记第l层CNN的特征图为$f_l\\in\\mathbb{R}^{H\\times W\\times C}$。将特征图分成N个patch，得到patch-level特征序列$S=[X_{cls},X_1,\\dots,X_N]\\in\\mathbb{R}^{(N+1)\\times D}$。模块细节见下图。由特征序列$S$得到$Q,K,V\\in\\mathbb{R}^{(N+1)\\times(D/h)}$矩阵，h为头数(number of heads)。\n应用先验信息时，仅将其添加到ClsToken上，对每个注意力头以相同的方式执行该操作。 $$ AttMap_{cls}=Att_{template}+Att_{cls} $$\n2.2 特征提取模块(Feature Abstraction Block, FAB) 随着网络的深入，特征通道增多，可能造成信息冗余，于是通过$1\\times1$卷积和Instance Normalization来实现层内特征压缩提取。然后，将前一层的特征转换成1D的ClsToken，实现层间特征提取。 $$ \\text{ClsToken}=Linear(Flatten(MaxPool(f_{l-1}))) $$\n$$ \\text{PatchTokens}=Reshape(IN(Conv_{1\\times1(f_l)})) $$\n$$ \\text{S}=Concat(\\text{ClsToken,PatchTokens}) $$\n2.3 特征融合与损失函数 考虑到感受野的多样性，各特征层的patch大小分别设置为4,2,1。为了使不同层的特征交互学习并且节省开销，FAB模块共享权重。最后对齐各层的ClsToken并相加，通过全连接层得到最终的预测概率。损失函数为交叉熵损失函数。\n3. 实验 3.1 实现 人脸分辨率为$320\\times 320$，不使用数据增强。使用FcaNet34和ResNet34作为骨干网络，将FAB模块插入到主干网络的后三个块中。\n3.2 性能比较 FF++上的测试结果：\nCeleb-DF上的泛化性结果\n3.3 消融实验 先验注意力模块\nFAB模块\n3.4 可视化 先验注意力图相较于MHSA提供了更具判别性的线索。\n",
+  "wordCount" : "1068",
   "inLanguage": "en",
-  "image":"https://Achilles-10.github.io/posts/paper/resduals/pipline.png","datePublished": "2023-05-24T15:47:15+08:00",
-  "dateModified": "2023-05-24T15:47:15+08:00",
+  "image":"https://Achilles-10.github.io/posts/paper/prior/pipeline.png","datePublished": "2023-05-24T16:03:30+08:00",
+  "dateModified": "2023-05-24T16:03:30+08:00",
   "author":[{
     "@type": "Person",
     "name": "Achilles"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://Achilles-10.github.io/posts/paper/resduals/"
+    "@id": "https://Achilles-10.github.io/posts/paper/prior/"
   },
   "publisher": {
     "@type": "Organization",
@@ -275,10 +275,10 @@ var _hmt = _hmt || [];
         <header class="post-header">
             <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/paper/">📄 论文</a></div>
             <h1 class="post-title">
-                Exposing Deepfake Face Forgeries with Guided Residuals
+                Focus by Prior: Deepfake Detection Based on Prior-Attention
             </h1>
             <div class="post-description">
-                利用残差与双流网络实现伪造鉴别
+                利用边缘和噪声信息生成先验注意力，层间和层内交互实现伪造检测
             </div>
             <div class="post-meta"><style>
     i[id*="post_meta_style"] {
@@ -310,7 +310,7 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>1477字
+        <span>1068字
             &nbsp;&nbsp;
         </span>
     </span>
@@ -331,7 +331,7 @@ var _hmt = _hmt || [];
         <span>
             <span class="post-tags-meta">
                 <a href="https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="color: var(--secondary)!important;">论文阅读</a>
-                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%8F%8C%E6%B5%81%E7%BD%91%E7%BB%9C/" style="color: var(--secondary)!important;">双流网络</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E6%B3%A8%E6%84%8F%E5%8A%9B/" style="color: var(--secondary)!important;">注意力</a>
                 &nbsp;<a href="https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E4%BC%AA%E9%80%A0%E6%A3%80%E6%B5%8B/" style="color: var(--secondary)!important;">人脸伪造检测</a>
             </span>
         </span>
@@ -386,7 +386,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/paper/resduals/pipline.png" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/paper/prior/pipeline.png" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -402,17 +402,23 @@ var _hmt = _hmt || [];
                     <a href="#2-method" aria-label="2. Method">2. Method</a><ul>
                         
                 <li>
-                    <a href="#21-overview" aria-label="2.1 Overview">2.1 Overview</a></li>
+                    <a href="#21-%e5%85%88%e9%aa%8c%e6%b3%a8%e6%84%8f%e5%8a%9b%e6%a8%a1%e5%9d%97prior-attention" aria-label="2.1 先验注意力模块(Prior-Attention)">2.1 先验注意力模块(Prior-Attention)</a></li>
                 <li>
-                    <a href="#22-manipulation-trace-extractor" aria-label="2.2 Manipulation Trace Extractor">2.2 Manipulation Trace Extractor</a></li>
+                    <a href="#22-%e7%89%b9%e5%be%81%e6%8f%90%e5%8f%96%e6%a8%a1%e5%9d%97feature-abstraction-block-fab" aria-label="2.2 特征提取模块(Feature Abstraction Block, FAB)">2.2 特征提取模块(Feature Abstraction Block, FAB)</a></li>
                 <li>
-                    <a href="#23-attention-fusion-mechanism" aria-label="2.3 Attention Fusion Mechanism">2.3 Attention Fusion Mechanism</a></li></ul>
+                    <a href="#23-%e7%89%b9%e5%be%81%e8%9e%8d%e5%90%88%e4%b8%8e%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" aria-label="2.3 特征融合与损失函数">2.3 特征融合与损失函数</a></li></ul>
                 </li>
                 <li>
-                    <a href="#3-experiments" aria-label="3. Experiments">3. Experiments</a><ul>
+                    <a href="#3-%e5%ae%9e%e9%aa%8c" aria-label="3. 实验">3. 实验</a><ul>
                         
                 <li>
-                    <a href="#31-%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c" aria-label="3.1 消融实验">3.1 消融实验</a>
+                    <a href="#31-%e5%ae%9e%e7%8e%b0" aria-label="3.1 实现">3.1 实现</a></li>
+                <li>
+                    <a href="#32-%e6%80%a7%e8%83%bd%e6%af%94%e8%be%83" aria-label="3.2 性能比较">3.2 性能比较</a></li>
+                <li>
+                    <a href="#33-%e6%b6%88%e8%9e%8d%e5%ae%9e%e9%aa%8c" aria-label="3.3 消融实验">3.3 消融实验</a></li>
+                <li>
+                    <a href="#34-%e5%8f%af%e8%a7%86%e5%8c%96" aria-label="3.4 可视化">3.4 可视化</a>
                 </li>
             </ul>
             </li>
@@ -479,57 +485,68 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><p><a href="https://ieeexplore.ieee.org/document/10017352">[paper]</a></p>
+        <div class="post-content"><p><a href="https://ieeexplore.ieee.org/document/9859897">[paper]</a></p>
 <h2 id="1-introduction">1. Introduction<a hidden class="anchor" aria-hidden="true" href="#1-introduction">#</a></h2>
-<p>利用基于残差的特征能够突出细微的伪造痕迹并且抑制无关的图像内容。下图展示了从图像中提取伪造痕迹的理想流程，在原始图像中减去图像内容得到篡改痕迹。本文将通过这种方法提取的残差称为“引导残差”。</p>
-<div align=center><img src="idea.png" style="zoom:90%;" /></div>
-<p>残差特征能够提高对高质量图像的检测性能，但对低质量图像的提升帮助甚微，因为低质量图像存在的压缩和resize等操作会对伪造痕迹产生干扰，故还需要RGB的空域信息来提供更多的信息。本文主要贡献如下：</p>
-<ul>
-<li>提出了细粒度的伪造痕迹提取器MTE(Manipulation Trace Extractor)来提取引导残差，克服了基于预测残差可能存在的偏差问题；</li>
-<li>设计了有效的注意力融合机制AFM(Attention Fusion Mechanism)来进行特征融合，自适应地分配双流网络的空间特征和特征权重。同时，还利用通道注意力模块来建立伪造痕迹之间的依赖关系。</li>
-<li>提出了双流模型AdapGRnet(Adaptive Fusion Based Guided Residuals Network)，通过将MTE和AFM与Backbone结合，在现实场景下进行伪造检测。AdapGRnet能够学习空域和残差域特征，同时检测高质量和低质量的伪造图像。在四个数据集上达到了SOTA的准确率和鲁棒性。</li>
-</ul>
+<p>如下图所示，真实图像的边缘图保留了丰富的纹理信息，在伪造图像的边缘途中丢失了一些细节，此外，噪声图展示噪声在真实图像的面部特征和边界上均匀分布，在伪造图像中集中于边界。</p>
+<div align=center><img src="discrepancies.png" style="zoom:90%;" /></div>
+<p>本文主要贡献如下：</p>
+<ol>
+<li>提出prior-attention机制，利用先验信息构建注意力图，引入边缘和噪声信息，有助于突出鉴别性特征；</li>
+<li>基于prior-attention机制，设计了可嵌入的特征提取模块(Feature Abstraction Block, FAB)来促进层级间交互，以检测微小的伪造痕迹。</li>
+<li>实验结果表面本文方法有很好的模块化和可解释性，以及出色的准确性。</li>
+</ol>
 <h2 id="2-method">2. Method<a hidden class="anchor" aria-hidden="true" href="#2-method">#</a></h2>
-<h3 id="21-overview">2.1 Overview<a hidden class="anchor" aria-hidden="true" href="#21-overview">#</a></h3>
+<p>本文的框架如下图所示。基于Transformer的FAB模块被嵌入到骨干网络中，先验注意力模块替换Transformer中的多头注意力机制来增强纹理信息。</p>
+<div align=center><img src="pipeline.png" style="zoom:90%;" /></div>
+<h3 id="21-先验注意力模块prior-attention">2.1 先验注意力模块(Prior-Attention)<a hidden class="anchor" aria-hidden="true" href="#21-先验注意力模块prior-attention">#</a></h3>
+<p>使用SRM滤波器提取噪声图，Canny边缘检测器提取边缘图，将这些先验信息来构建注意力图。记第l层CNN的特征图为$f_l\in\mathbb{R}^{H\times W\times C}$。将特征图分成N个patch，得到patch-level特征序列$S=[X_{cls},X_1,\dots,X_N]\in\mathbb{R}^{(N+1)\times D}$。模块细节见下图。由特征序列$S$得到$Q,K,V\in\mathbb{R}^{(N+1)\times(D/h)}$矩阵，h为头数(number of heads)。</p>
+<div align=center><img src="prior.png" style="zoom:90%;" /></div>
+<p>应用先验信息时，仅将其添加到<code>ClsToken</code>上，对每个注意力头以相同的方式执行该操作。
+$$
+AttMap_{cls}=Att_{template}+Att_{cls}
+$$</p>
+<h3 id="22-特征提取模块feature-abstraction-block-fab">2.2 特征提取模块(Feature Abstraction Block, FAB)<a hidden class="anchor" aria-hidden="true" href="#22-特征提取模块feature-abstraction-block-fab">#</a></h3>
+<div align=center><img src="fab.png" style="zoom:90%;" /></div>
+<p>随着网络的深入，特征通道增多，可能造成信息冗余，于是通过$1\times1$卷积和<code>Instance Normalization</code>来实现层内特征压缩提取。然后，将前一层的特征转换成1D的<code>ClsToken</code>，实现层间特征提取。
+$$
+\text{ClsToken}=Linear(Flatten(MaxPool(f_{l-1})))
+$$</p>
+<p>$$
+\text{PatchTokens}=Reshape(IN(Conv_{1\times1(f_l)}))
+$$</p>
+<p>$$
+\text{S}=Concat(\text{ClsToken,PatchTokens})
+$$</p>
+<h3 id="23-特征融合与损失函数">2.3 特征融合与损失函数<a hidden class="anchor" aria-hidden="true" href="#23-特征融合与损失函数">#</a></h3>
+<p>考虑到感受野的多样性，各特征层的patch大小分别设置为4,2,1。为了使不同层的特征交互学习并且节省开销，FAB模块共享权重。最后对齐各层的<code>ClsToken</code>并相加，通过全连接层得到最终的预测概率。损失函数为交叉熵损失函数。</p>
+<h2 id="3-实验">3. 实验<a hidden class="anchor" aria-hidden="true" href="#3-实验">#</a></h2>
+<h3 id="31-实现">3.1 实现<a hidden class="anchor" aria-hidden="true" href="#31-实现">#</a></h3>
+<p>人脸分辨率为$320\times 320$，不使用数据增强。使用FcaNet34和ResNet34作为骨干网络，将FAB模块插入到主干网络的后三个块中。</p>
+<h3 id="32-性能比较">3.2 性能比较<a hidden class="anchor" aria-hidden="true" href="#32-性能比较">#</a></h3>
 <ul>
 <li>
-<p><strong>补充性分析：</strong></p>
-<p>通常情况下，空域信息既包含有适用于伪造检测任务的伪造痕迹，也包含适用于分类和识别任务的图像内容信息。残差特征可以抑制图像内容信息，但同时也可能造成伪造痕迹的部分丢失，特别是当图像质量低时。</p>
-<p>因此，利用空域信息和残差特征的互补性来进行伪造检测。</p>
+<p>FF++上的测试结果：</p>
+<div align=center><img src="ff.png" style="zoom:90%;" /></div>
 </li>
 <li>
-<p><strong>双流网络架构：</strong></p>
-<p>通过双流相互增强的方式学习空域和残差域特征，下图为双流模型的框架图。首先用MTE提取RGB图像的引导残差，然后将RGB图像和引导残差输入到主干网络(ResNet-18移除全连接层)中进行特征学习。最后通过AFM融合双流学习到的空域和残差特征。</p>
-<div align=center><img src="pipline.png" style="zoom:90%;" /></div>
+<p>Celeb-DF上的泛化性结果</p>
+<div align=center><img src="celeb.png" style="zoom:90%;" /></div>
 </li>
 </ul>
-<h3 id="22-manipulation-trace-extractor">2.2 Manipulation Trace Extractor<a hidden class="anchor" aria-hidden="true" href="#22-manipulation-trace-extractor">#</a></h3>
-<p>引导滤波器是一个边缘保留平滑算子，它保留图像内容并过滤到平坦区域的篡改痕迹。篡改痕迹可通过$R_{gr}=|p-q|$得到，其中$p$为输入图像，$q$为滤波器输出，如下图所示。</p>
-<div align=center><img src="filter.png" style="zoom:90%;" /></div>
-<p>下图展示了高质量人脸和低质量人脸通过高通滤波器和MTE得到的残差结果。第五行是用噪声分析对引导残差进一步放大。可以观察到，在高质量图像中，残差具有丰富的细节，并且不同篡改图像的残差之间存在明显差异。对于低质量图像，从第五行噪声分析中可以看到，在残差图像中存在白色块状纹理，难以区分。</p>
-<div align=center><img src="res.png" style="zoom:90%;" /></div>
-<h3 id="23-attention-fusion-mechanism">2.3 Attention Fusion Mechanism<a hidden class="anchor" aria-hidden="true" href="#23-attention-fusion-mechanism">#</a></h3>
-<p>利用注意力机制融合双流的特征，空域流特征适用于从低质量的图像中学习特征，残差流适用于从高质量的图像中学习特征，设计的AFM模块如下图所示。</p>
-<div align=center><img src="afm.png" style="zoom:90%;" /></div>
-<p>令得到的空域特征$f_{rgb}\in\mathbb{R}^{C\times H\times W}$，将其<code>reshape</code>得到$f_{rgb}\in\mathbb{R}^{C\times N_p}$，其中$N_p=H\times W$。经过矩阵乘法$f_{rgb}\cdot f^T_{rgb}=M_{rgb}\in\mathbb{R}^{C\times C}$，经过<code>softmax</code>得到注意力图$M_{rgb}$。同理得到残差域注意力图$M_{gr}$。再分别与<code>reshape</code>后的特征图相乘，得到新的特征图${f_{rgb},f_{gr}}$。</p>
-<p>根据交叉熵损失$L_1$和$L_2$的<code>softmax</code>输出来分配双流的权重$\alpha$，$F_{attention}=\alpha_1f_{rgb}+\alpha_2f_{gr}$.</p>
-<h2 id="3-experiments">3. Experiments<a hidden class="anchor" aria-hidden="true" href="#3-experiments">#</a></h2>
-<p>使用的数据集为<a href="https://arxiv.org/abs/2005.04945">Hybrid Fake Face (HFF)</a>，后处理包括JPEG压缩(压缩率为60，JP60)和模糊操作(5x5的均值滤波，ME5)。</p>
-<h3 id="31-消融实验">3.1 消融实验<a hidden class="anchor" aria-hidden="true" href="#31-消融实验">#</a></h3>
+<h3 id="33-消融实验">3.3 消融实验<a hidden class="anchor" aria-hidden="true" href="#33-消融实验">#</a></h3>
 <ul>
 <li>
-<p>MTE与AFM模块消融实验</p>
-<div align=center><img src="ablation.png" style="zoom:90%;" /></div>
+<p>先验注意力模块</p>
+<div align=center><img src="ablationp.png" style="zoom:90%;" /></div>
 </li>
 <li>
-<p>不同残差提取方法消融实验</p>
-<div align=center><img src="MTE.png" style="zoom:90%;" /></div>
-</li>
-<li>
-<p>特征融合模块的比较</p>
-<div align=center><img src="fusion.png" style="zoom:90%;" /></div>
+<p>FAB模块</p>
+<div align=center><img src="ablationf.png" style="zoom:90%;" /></div>
 </li>
 </ul>
+<h3 id="34-可视化">3.4 可视化<a hidden class="anchor" aria-hidden="true" href="#34-可视化">#</a></h3>
+<div align=center><img src="vis.png" style="zoom:90%;" /></div>
+<p>先验注意力图相较于MHSA提供了更具判别性的线索。</p>
 
 
         </div>
@@ -539,15 +556,10 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://Achilles-10.github.io/posts/paper/prior/">
-    <span class="title">« 上一页</span>
-    <br>
-    <span>Focus by Prior: Deepfake Detection Based on Prior-Attention</span>
-  </a>
-  <a class="next" href="https://Achilles-10.github.io/posts/tech/matrix/">
+  <a class="next" href="https://Achilles-10.github.io/posts/paper/resduals/">
     <span class="title">下一页 »</span>
     <br>
-    <span>einsum与einops</span>
+    <span>Exposing Deepfake Face Forgeries with Guided Residuals</span>
   </a>
 </nav>
 
