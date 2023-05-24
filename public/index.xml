@@ -6,7 +6,16 @@
     <description>Recent content on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 19 May 2023 22:46:03 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 24 May 2023 15:47:15 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exposing Deepfake Face Forgeries with Guided Residuals</title>
+      <link>https://Achilles-10.github.io/posts/paper/resduals/</link>
+      <pubDate>Wed, 24 May 2023 15:47:15 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/resduals/</guid>
+      <description>利用残差与双流网络实现伪造鉴别</description>
+    </item>
+    
     <item>
       <title>einsum与einops</title>
       <link>https://Achilles-10.github.io/posts/tech/matrix/</link>

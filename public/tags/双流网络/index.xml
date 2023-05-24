@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>双流网络 on 烈烈风中、的博客</title>
+    <link>https://Achilles-10.github.io/tags/%E5%8F%8C%E6%B5%81%E7%BD%91%E7%BB%9C/</link>
+    <description>Recent content in 双流网络 on 烈烈风中、的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 24 May 2023 15:47:15 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%8F%8C%E6%B5%81%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exposing Deepfake Face Forgeries with Guided Residuals</title>
+      <link>https://Achilles-10.github.io/posts/paper/resduals/</link>
+      <pubDate>Wed, 24 May 2023 15:47:15 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/resduals/</guid>
+      <description>利用残差与双流网络实现伪造鉴别</description>
+    </item>
+    
+  </channel>
+</rss>
