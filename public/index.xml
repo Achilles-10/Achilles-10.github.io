@@ -6,7 +6,16 @@
     <description>Recent content on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 24 May 2023 16:03:30 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 29 May 2023 21:36:45 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OpenCV-Python学习笔记(5)：形态学变换与图像梯度</title>
+      <link>https://Achilles-10.github.io/posts/tech/opencv5/</link>
+      <pubDate>Mon, 29 May 2023 21:36:45 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/opencv5/</guid>
+      <description>形态学转换 形态变换是基于图像形状的简单操作，两种基本形态学算子是侵蚀和膨胀，也包括变体形式开运算和闭运算等。 侵蚀(Erosion) 侵蚀前景物体的边界，内核在2D卷积时，只有当内核下所有像素都为1时才为1，否则被侵蚀变成0。根据内核大小，边界附近的像素都会被丢弃，因此能减小前景对象</description>
+    </item>
+    
     <item>
       <title>Focus by Prior: Deepfake Detection Based on Prior-Attention</title>
       <link>https://Achilles-10.github.io/posts/paper/prior/</link>
