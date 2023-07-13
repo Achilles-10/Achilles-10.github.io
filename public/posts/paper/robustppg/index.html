@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>RobustPPG: camera-based robust heart rate estimation using motion cancellation | 烈烈风中、的博客</title>
+<meta name="keywords" content="论文阅读, 健康算法">
+<meta name="description" content="基于摄像头的rPPG信号提取和心率估计">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/paper/robustppg/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="RobustPPG: camera-based robust heart rate estimation using motion cancellation" />
+<meta property="og:description" content="基于摄像头的rPPG信号提取和心率估计" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/paper/robustppg/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/paper/robustppg/cover.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-13T14:17:15+08:00" />
+<meta property="article:modified_time" content="2023-07-13T14:17:15+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/paper/robustppg/cover.png" />
+<meta name="twitter:title" content="RobustPPG: camera-based robust heart rate estimation using motion cancellation"/>
+<meta name="twitter:description" content="基于摄像头的rPPG信号提取和心率估计"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "📄 论文",
+          "item": "https://Achilles-10.github.io/posts/paper/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "RobustPPG: camera-based robust heart rate estimation using motion cancellation",
+      "item": "https://Achilles-10.github.io/posts/paper/robustppg/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "RobustPPG: camera-based robust heart rate estimation using motion cancellation",
+  "name": "RobustPPG: camera-based robust heart rate estimation using motion cancellation",
+  "description": "基于摄像头的rPPG信号提取和心率估计",
+  "keywords": [
+    "论文阅读", "健康算法"
+  ],
+  "articleBody": "[paper] [code]\n摘要 显式建模生成由人脸运动产生的运动失真；使用逆渲染从视频帧中获取人脸和环境光照的3D形状和反照率然后渲染每一帧人脸。利用生成的运动扰动对运动诱导的测量值进行滤波。信号质量提高2dB；激烈运动场景心率估计RMSE提高30%。\n1. Introduction 来自相机的rPPG信号具有极低的信号强度，并且受到传感器噪声和运动伪影的影响。目前方法大多无法处理剧烈运动产生的运动伪影，仅限于实验室环境使用。\n我们使用双向LSTM生成运动伪影来过滤运动诱导的rPPG信号。\n如下图所示：(a)输入参考视频帧; (b)基于估计的3D形状和光照渲染人脸; (c)对参考帧注册连续帧; (d)从(a)中测量人脸上一个跟踪点的像素强度变化; (e)运动信号，使用生成的运动信号抵消运动扰动，从而在(f)中产生干净的信号，红线表示实际心率。\n为了生成运动扰动，需要知道人脸几何形状和光照；人脸几何形状可以通过深度估计相机来获得；光照信息需要在相同环境下进行预校准。在实际场景中这几乎是不可行的。\n通过使用3D FaceMesh模型来获得人脸的三维几何结构，该模型给出了人脸在每个时刻的近似几何结构。其次，基于一个近似的三维人脸几何图形，使用序列帧来估计场景光照。\n主要贡献如下：\n开发了一个框架，使用通过反向渲染来估计的3D人脸模型和场景光照，显式地建模基于相机的rPPG信号中的运动扰动。我们使用生成的运动信号，通过双向LSTM过滤rPPG信号中的运动扰动，得到干净的信号。\n实验表明该方法在提取的rPPG信号质量和估计的心率精度方面优于SOTA。RobustPPG在复杂运动场景下的信号质量提高了2dB以上，在剧烈运动场景下的心率估计比次优方法提高了33%。\n使用一个扩展的光度立体装置来验证pipeline。FaceMesh生成的表面法线与光度立体法生成的表面法线GT平均偏离13°。表明即使采用近似的人脸几何估计，使用FaceMesh估计的运动信号与GT运动信号的归一化均方根误差也小于10%。在rPPG信号提取方面，FaceMesh生成的3D人脸几何图形获得了近乎最优的性能。\n2. 背景和挑战 主要目标是开发一种鲁棒的算法来从视频中皮肤像素强度波动中恢复rPPG信号，然后从rPPG信号中估计心率。\n以下原因导致获得运动扰动信息是困难的：\n运动扰动依赖于面部局部方向：如上图a)，即使分别跟踪人脸的不同区域，运动扰动也不同\n运动扰动依赖于光照环境：如上图b)，对于人脸上的同一点的相同运动，不同光照方向下的强度变化也不同\n3. 方法 在这项工作中，利用逆渲染 (Inverse Rendering) 来显式地从视频中生成运动扰动。\n如图，首先用3D人脸跟踪器FaceMesh获取每帧人脸的3D形状，然后估计光照方向，并在每个三角形局部区域生成精确的运动扰动。最后在双向LSTM中同时利用愚弄当心好和损耗的原生像素强度波动来获得干净的rPPG信号。\n3.1 运动信号模型 根据二色反射模型 (Dichromatic Reflection Model, DRM)，人脸任意3D位置r在t时刻的RGB像素强度可以描述为漫反射和镜面反射分量之和：\n$$ \\mathrm{i}(\\mathrm{r},t)=\\mathrm{i}_{\\text{diffuse}}+\\mathrm{i}_{\\text{specular}} $$\n$\\mathrm{i}_{\\text{diffuse}}$ 和 $\\mathrm{i}_{\\text{specular}}$均$\\in\\mathbb{R}^{3\\times1}$。\n如下图，我们做出以下假设：\n光源为远离人脸的点光源，且与相机的位置保持不变。因此在所有位置上均为平行光，且光源强度保持恒定\n人脸具有Lambertian反射，在Lambertian假设下，所有点源可以建模为一个点源\n在这个假设下有：\n$$ \\mathbf{i}(\\mathbf{r},t)=\\mathbf{c}*\\mathbf{n}(\\mathbf{r},t)\\cdot \\mathbf{l}+\\mathbf{e}*p(t)\\odot(\\mathbf{c}*\\mathbf{n}(\\mathbf{r},t)\\cdot \\mathbf{l})\\tag{1} $$\n3.2 生成运动信号 要从上述公式中提取搏动的血容量信号$p(t)$，需要生成运动扰动。需要三个参数：表面法线$\\mathbf{n(r},t)$；有效光源方向$\\mathbf{I}$；随时间保持不变的平均肤色$\\mathbf{c}$\n3.2.1 3D 人脸建模 使用FaceMesh在视频的每一帧进行人脸跟踪和拟合。\n首先在每一帧中检测并跟踪人脸，然后检测每一帧的人脸特征点；\n然后利用3DMM (3D Morphable Models) 进行人脸拟合，生成3D人脸几何形状和纹理，生成稠密的三角形网络，如下图，计算每个三角形像素强度的平均值；\n因此，对于每一个视频，有表面法向量$\\mathbf{N}\\in\\mathbb{R}^{K\\times T\\times 3}$，K是每一帧中的三角形数，T是帧数，3表示xyz三个空间分量。强度$\\mathbf{I}\\in\\mathbb{R}^{K\\times T\\times 3}$，3表示RGB通道像素强度。\n3.2.2 光照估计 对于一序列帧，剔除高光、嘴唇和头发区域，使用面上所有三角网络的测量值估计光源方向。上面的公式(1)中忽略rPPG部分，有：\n$$ \\mathbf{I}=\\mathbf{N}*\\mathbf{l}*\\mathbf{c}^\\intercal $$\n其中$\\mathbf{I}\\in\\mathbb{R}^{K\\times T_w\\times 3}$是像素强度，$\\mathbf{N}\\in\\mathbb{R}^{K\\times T_w\\times 3}$为表面法线方向，$T_w$为帧数。需要估计有效光源方向$\\mathbf{l}\\in\\mathbb{R}^{3\\times1}$和评价肤色（假设不同位置肤色相同）$\\mathbf{c}\\in\\mathbb{R}^{3\\times 1}$\n3.2.3 生成信号矩阵 如下图所示，在估计有效光照方向$\\mathbf{\\widehat{I}}$和平均肤色$\\mathbf{\\widehat{c}}$后，生成每个三角区域$\\mathbf{r}$的运动信号$\\mathbf{m(r},t)$：\n$$ \\mathbf{m(r},t)=\\mathbf{\\widehat{c}}*\\mathbf{n(r},t)\\cdot\\mathbf{\\widehat{I}}=(\\mathbf{n(r},t)^\\intercal*\\mathbf{\\widehat{I}}*\\mathbf{\\widehat{c}}^\\intercal)^\\intercal $$\n因此，对于每个三角区域，能够得到六个信号：RGB像素强度$(i_{r}(t),i_{g}(t),i_{b}(t))$和RGB运动信号$(m_r(t),m_g(t),m_b(t))$，重写公式(1)得到时序运动扰动$m$的函数：\n$$ \\mathbf{i}(\\mathbf{r},t)=\\mathbf{m}(\\mathbf{r},t)+e*p(t)\\odot\\mathbf{m}(\\mathbf{r},t)\\tag{2} $$\n其中$\\mathbf{i}(\\mathbf{r},t)$是有干扰的rPPG信号，$\\mathbf{m}(\\mathbf{r},t)$是运动扰动信号$p(t)$是干净的rPPG信号。使用生成的运动信号,构造信号特征矩阵\n$$ S_r=[i_{r}(t),i_{g}(t),i_{b}(t),m_r(t),m_g(t),m_b(t)]^\\intercal\\in\\mathbb{R}^{6\\times t} $$\n3.3 rPPG信号的运动抵消 将$S_r$输入Bi-LSTM，接触的脉冲器波形作为标签进行训练。\n对于该架构，使用包含30隐藏单元的3层的Bi-LSTM网络。将信号划分为4秒的窗口，重叠部分为2秒，作为输入，损失函数为MSE。\n4 实验 4.1 FaceMesh 验证 FaceMesh 面部跟踪器决定了光照估计的准确率和运动信号生成的质量。\n人脸几何形状的准确性\n光照方向的误差\n运动信号的质量\n不准确的运动信号生成对rPPG信号的影响\n4.1.1 光度立体设置 使用光度立体来获取运动中的真实3D人脸几何形状。\n4.2 3D 面部几何形状估计 如上图。在鼻子区域的角度误差最大；平均角误差（除去眼睛鼻子和嘴巴区域）在人脸模型和真人上分别为$13.8^\\circ, 18.37^\\circ$\n在上图的下半部分，展示了旋转过程中人脸模型前额上一个三角形和说话场景下真人的角误差。\n4.3 光照估计准确率 用FaceMesh得到的三维几何结构来获得光照矩阵的估计值$\\mathbf{\\widehat{U}}$。在四个人体模型上平均误差为$4.56^\\circ$。\n4.4 运动信号生成 下图展示了一个由光度立体和FaceMesh生成的0运动信号和来自单个三角形的实际像素强度的例子。第三行滤波后的残余信号不包含强信号，说明成功去除了运动信号。\n然后用带通滤波器$([0.5-5]Hz)$对运动信号滤波（人体心率属于这一频率范围）。计算两个指标：1）归一化方根误差(NRMSE)；2）人体模型视频中估计的运动信号和实际像素强度之间的归一化互相关(normalized cross-correlation, NCC)。如下表：\n4.5 rPPG信号估计 使用光度立体生成的运动信号在估计rPPG信号的平均信噪比方面，与FaceMesh相比，没有显著提高（0.15dB,p\u003e0.005）。因此，使用FaceMesh生成的运动信号在rPPG信号估计方面达到了接近最优的性能。\n5 PPG信号估计 5.1 数据集 PURE dataset\nPURE数据集包含10名被试在6种运动条件下同步生理数据的人脸视频，包括头部转动和说话。视频时长约为1 min，真值PPG波形由接触式脉搏血氧监测仪提供。\n为了验证在剧烈运动场景下的性能，创建了一个单独的数据集RICE-motion，包括12名受试者的72段视频(9男3女)，包含快速的头部旋转动作和自然表情说话场景。\n5.2 训练和验证运动消除网络 将信号特征矩阵$S_r$作为Bi-LSTM的输入，模型学习像素强度变化和运动扰动信号与PPG信号关联的函数。由于真实数据集较小，通过在rPPG信号中生成各种运动扰动来生成一个合成数据集用于训练。\n合成数据集：使用公式(2)来合成信号矩阵。使用参数化模型来生产干净的PPG信号$p(t)$，心率从30bpm到240bpm均匀分布中随机选取，生成一个30s的干净PPG信号。使用随机布朗噪声生成器（random Brownian noise generator）来生产运动信号$\\mathbf{m}(t)$。最后，在像素强度中添加随即白噪声来模拟建模误差和相机传感器误差。参数$\\mathbf{e}_{ppg}=[0.18,0.78,0.60]$保持恒定。生成了400个运动信号$\\mathbf{m}(t)$，与合成的RGB信号强度$\\mathbf{i}(t)$一起合成信号矩阵$S_r$。\n对信号进行标准化（减均值除标准差），然后用带通滤波器$([0.5~5])Hz$进行滤波。\n将模型预测的rPPG信号从面部所有三角形位置进行空间平均，得到整体rPPG信号。\n5.3 性能比较 计算不同方法提取的rPPG信号的信噪比来评估PPG信号的质量。\n基于提取的rPPG信号计算心率，使用5秒和1秒的短重叠窗口来计算瞬时心率，然后计算心率与真值的RMSE。\n5.4 结果和讨论 上图为两个数据集中原始的rPPG信号和生成的运动信号。\n下表报告了PURE数据集里所有受试者六种运动的平均SNR值。对于静态或平稳简单的运动，所有方法SNR相对一致；在说话等复杂的面部动作中，所有方法的SNR都会下降。其次，RobustPPG在所有运动场景下的表现优于其他方法且在会话场景下的优势最大。\n展示下图方法估计的血容量信号相较于PURE和RICE-motion数据集的真值频谱图。可以观察到，RobustPPG方法估计的心率信号比其他方法更干净，且上表表明RobustPPG能够提供给更可靠的心率变异性（heart rate variability, HRV）和平均心率测量。\n下表为在更具挑战性的RICE-motion数据集上的SNR值和心率的RMSE值。\n此外，还通过测试在室内和室外手机视频上评估RobustPPG方法，如下图所示。RobustPPG估计的频谱图在预期心率频带内有较强的信号成分和更少的扰动，且有着更高的SNR，展现了在不同光照条件下更强的鲁棒性。\n此外，下表展示了有无胡须和不同肤色的测试结果。\nSNR(dB) RMSE(bpm) 有胡须 4.75 2.31 无胡须 5.16 1.92 白色皮肤 5.89 2.33 橄榄色皮肤 4.96 2.94 在训练时使用手指的PPG信号作为标签，但相对于面部PPG信号，手指PPG信号1）具有更多的特征和更高的谐波；2）并且由于脉冲传输产生相位延迟。通过对指脉波形进行低通滤波解决第一个问题；相位延迟问题较难解决。\nRobustPPG有4个部分：1）人脸跟踪；2）表面法线、像素强度波动提取和光照估计；3）运动信号生成；使用Bi-LSTM网络提取每个三角网格处的rPPG信号。计算瓶颈在从每一帧图像中提取每个三角网格处的像素强度。\n6 总结和展望 我们提出了一种新的算法RobustPPG用于基于摄像头的rPPG信号提取和心率估计。我们证明了像FaceMesh这样的3D人脸跟踪器可以在像素强度变化的情况下产生精确的运动失真。此外，使用Bi-LSTM网络进行信号滤波，我们在rPPG信号提取中表现出比现有方法更好的准确性。我们希望这项工作将大大推动运动鲁棒性的极限，以实现可靠的心率估计，并能将其应用到现实生活中。\n在本工作中，我们仅对Lambertian建模引起的运动畸变进行建模。可以考虑镜面成分，使建模更加准确。其次，我们在工作中只考虑了远距离照明的假设。近光场景要求建模的复杂性可以被探索以更好地估计运动信号。第三，我们还考虑了相机固定的情况。摄像头的移动会造成rPPG信号中额外的信号失真，这可能会影响手持电话场景下心率估计的准确性。这些都是值得探索的有趣途径，或许可以作为未来工作的令人兴奋的方向。\n",
+  "wordCount" : "4938",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/paper/robustppg/cover.png","datePublished": "2023-07-13T14:17:15+08:00",
+  "dateModified": "2023-07-13T14:17:15+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/paper/robustppg/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/paper/">📄 论文</a></div>
+            <h1 class="post-title">
+                RobustPPG: camera-based robust heart rate estimation using motion cancellation
+            </h1>
+            <div class="post-description">
+                基于摄像头的rPPG信号提取和心率估计
+            </div>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 7 月 13 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>4938字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>10分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="color: var(--secondary)!important;">论文阅读</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%81%A5%E5%BA%B7%E7%AE%97%E6%B3%95/" style="color: var(--secondary)!important;">健康算法</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/paper/robustppg/cover.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%91%98%e8%a6%81" aria-label="摘要">摘要</a></li>
+                <li>
+                    <a href="#1-introduction" aria-label="1. Introduction">1. Introduction</a></li>
+                <li>
+                    <a href="#2-%e8%83%8c%e6%99%af%e5%92%8c%e6%8c%91%e6%88%98" aria-label="2. 背景和挑战">2. 背景和挑战</a></li>
+                <li>
+                    <a href="#3-%e6%96%b9%e6%b3%95" aria-label="3. 方法">3. 方法</a><ul>
+                        
+                <li>
+                    <a href="#31-%e8%bf%90%e5%8a%a8%e4%bf%a1%e5%8f%b7%e6%a8%a1%e5%9e%8b" aria-label="3.1 运动信号模型">3.1 运动信号模型</a></li>
+                <li>
+                    <a href="#32-%e7%94%9f%e6%88%90%e8%bf%90%e5%8a%a8%e4%bf%a1%e5%8f%b7" aria-label="3.2 生成运动信号">3.2 生成运动信号</a><ul>
+                        
+                <li>
+                    <a href="#321-3d-%e4%ba%ba%e8%84%b8%e5%bb%ba%e6%a8%a1" aria-label="3.2.1 3D 人脸建模">3.2.1 3D 人脸建模</a></li>
+                <li>
+                    <a href="#322-%e5%85%89%e7%85%a7%e4%bc%b0%e8%ae%a1" aria-label="3.2.2 光照估计">3.2.2 光照估计</a></li>
+                <li>
+                    <a href="#323-%e7%94%9f%e6%88%90%e4%bf%a1%e5%8f%b7%e7%9f%a9%e9%98%b5" aria-label="3.2.3 生成信号矩阵">3.2.3 生成信号矩阵</a></li></ul>
+                </li>
+                <li>
+                    <a href="#33-rppg%e4%bf%a1%e5%8f%b7%e7%9a%84%e8%bf%90%e5%8a%a8%e6%8a%b5%e6%b6%88" aria-label="3.3 rPPG信号的运动抵消">3.3 rPPG信号的运动抵消</a></li></ul>
+                </li>
+                <li>
+                    <a href="#4-%e5%ae%9e%e9%aa%8c" aria-label="4 实验">4 实验</a></li>
+                <li>
+                    <a href="#41-facemesh-%e9%aa%8c%e8%af%81" aria-label="4.1 FaceMesh 验证">4.1 FaceMesh 验证</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#411-%e5%85%89%e5%ba%a6%e7%ab%8b%e4%bd%93%e8%ae%be%e7%bd%ae" aria-label="4.1.1 光度立体设置">4.1.1 光度立体设置</a></li></ul>
+                    
+                <li>
+                    <a href="#42-3d-%e9%9d%a2%e9%83%a8%e5%87%a0%e4%bd%95%e5%bd%a2%e7%8a%b6%e4%bc%b0%e8%ae%a1" aria-label="4.2 3D 面部几何形状估计">4.2 3D 面部几何形状估计</a></li>
+                <li>
+                    <a href="#43-%e5%85%89%e7%85%a7%e4%bc%b0%e8%ae%a1%e5%87%86%e7%a1%ae%e7%8e%87" aria-label="4.3 光照估计准确率">4.3 光照估计准确率</a></li>
+                <li>
+                    <a href="#44-%e8%bf%90%e5%8a%a8%e4%bf%a1%e5%8f%b7%e7%94%9f%e6%88%90" aria-label="4.4 运动信号生成">4.4 运动信号生成</a></li>
+                <li>
+                    <a href="#45-rppg%e4%bf%a1%e5%8f%b7%e4%bc%b0%e8%ae%a1" aria-label="4.5 rPPG信号估计">4.5 rPPG信号估计</a></li></ul>
+                </li>
+                <li>
+                    <a href="#5-ppg%e4%bf%a1%e5%8f%b7%e4%bc%b0%e8%ae%a1" aria-label="5 PPG信号估计">5 PPG信号估计</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#51-%e6%95%b0%e6%8d%ae%e9%9b%86" aria-label="5.1 数据集">5.1 数据集</a></li>
+                <li>
+                    <a href="#52-%e8%ae%ad%e7%bb%83%e5%92%8c%e9%aa%8c%e8%af%81%e8%bf%90%e5%8a%a8%e6%b6%88%e9%99%a4%e7%bd%91%e7%bb%9c" aria-label="5.2 训练和验证运动消除网络">5.2 训练和验证运动消除网络</a></li>
+                <li>
+                    <a href="#53-%e6%80%a7%e8%83%bd%e6%af%94%e8%be%83" aria-label="5.3 性能比较">5.3 性能比较</a></li>
+                <li>
+                    <a href="#54-%e7%bb%93%e6%9e%9c%e5%92%8c%e8%ae%a8%e8%ae%ba" aria-label="5.4 结果和讨论">5.4 结果和讨论</a></li></ul>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#6-%e6%80%bb%e7%bb%93%e5%92%8c%e5%b1%95%e6%9c%9b" aria-label="6 总结和展望">6 总结和展望</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p><a href="https://opg.optica.org/boe/fulltext.cfm?uri=boe-13-10-5447&amp;id=506983">[paper]</a> <a href="https://github.com/akashmaity/RobustPPG">[code]</a></p>
+<h2 id="摘要">摘要<a hidden class="anchor" aria-hidden="true" href="#摘要">#</a></h2>
+<p>显式建模生成由人脸运动产生的运动失真；使用逆渲染从视频帧中获取人脸和环境光照的3D形状和反照率然后渲染每一帧人脸。利用生成的运动扰动对运动诱导的测量值进行滤波。信号质量提高2dB；激烈运动场景心率估计RMSE提高30%。</p>
+<h2 id="1-introduction">1. Introduction<a hidden class="anchor" aria-hidden="true" href="#1-introduction">#</a></h2>
+<p>来自相机的rPPG信号具有极低的信号强度，并且受到传感器噪声和运动伪影的影响。目前方法大多无法处理剧烈运动产生的运动伪影，仅限于实验室环境使用。</p>
+<p>我们使用双向LSTM生成运动伪影来过滤运动诱导的rPPG信号。</p>
+<p>如下图所示：(a)输入参考视频帧; (b)基于估计的3D形状和光照渲染人脸; (c)对参考帧注册连续帧; (d)从(a)中测量人脸上一个跟踪点的像素强度变化; (e)运动信号，使用生成的运动信号抵消运动扰动，从而在(f)中产生干净的信号，红线表示实际心率。</p>
+<div align=center><img src="example.png" style="zoom:80%;" /></div>
+<p>为了生成运动扰动，需要知道人脸几何形状和光照；人脸几何形状可以通过深度估计相机来获得；光照信息需要在相同环境下进行预校准。在实际场景中这几乎是不可行的。</p>
+<p>通过使用3D FaceMesh模型来获得人脸的三维几何结构，该模型给出了人脸在每个时刻的近似几何结构。其次，基于一个近似的三维人脸几何图形，使用序列帧来估计场景光照。</p>
+<p>主要贡献如下：</p>
+<ol>
+<li>
+<p>开发了一个框架，使用通过反向渲染来估计的3D人脸模型和场景光照，显式地建模基于相机的rPPG信号中的运动扰动。我们使用生成的运动信号，通过双向LSTM过滤rPPG信号中的运动扰动，得到干净的信号。</p>
+</li>
+<li>
+<p>实验表明该方法在提取的rPPG信号质量和估计的心率精度方面优于SOTA。RobustPPG在复杂运动场景下的信号质量提高了2dB以上，在剧烈运动场景下的心率估计比次优方法提高了33%。</p>
+</li>
+<li>
+<p>使用一个扩展的光度立体装置来验证pipeline。FaceMesh生成的表面法线与光度立体法生成的表面法线GT平均偏离13°。表明即使采用近似的人脸几何估计，使用FaceMesh估计的运动信号与GT运动信号的归一化均方根误差也小于10%。在rPPG信号提取方面，FaceMesh生成的3D人脸几何图形获得了近乎最优的性能。</p>
+</li>
+</ol>
+<h2 id="2-背景和挑战">2. 背景和挑战<a hidden class="anchor" aria-hidden="true" href="#2-背景和挑战">#</a></h2>
+<p>主要目标是开发一种鲁棒的算法来从视频中皮肤像素强度波动中恢复rPPG信号，然后从rPPG信号中估计心率。</p>
+<div align=center><img src="geolight.png" style="zoom:80%;" /></div>
+<p>以下原因导致获得运动扰动信息是困难的：</p>
+<ol>
+<li>
+<p>运动扰动依赖于面部局部方向：如上图a)，即使分别跟踪人脸的不同区域，运动扰动也不同</p>
+</li>
+<li>
+<p>运动扰动依赖于光照环境：如上图b)，对于人脸上的同一点的相同运动，不同光照方向下的强度变化也不同</p>
+</li>
+</ol>
+<h2 id="3-方法">3. 方法<a hidden class="anchor" aria-hidden="true" href="#3-方法">#</a></h2>
+<p>在这项工作中，利用<strong>逆渲染 (Inverse Rendering)</strong> 来显式地从视频中生成运动扰动。</p>
+<div align=center><img src="pipeline.png" style="zoom:80%;" /></div>
+<p>如图，首先用3D人脸跟踪器FaceMesh获取每帧人脸的3D形状，然后估计光照方向，并在每个三角形局部区域生成精确的运动扰动。最后在双向LSTM中同时利用愚弄当心好和损耗的原生像素强度波动来获得干净的rPPG信号。</p>
+<h3 id="31-运动信号模型">3.1 运动信号模型<a hidden class="anchor" aria-hidden="true" href="#31-运动信号模型">#</a></h3>
+<p>根据二色反射模型 (Dichromatic Reflection Model, DRM)，人脸任意3D位置<strong>r</strong>在<strong>t</strong>时刻的RGB像素强度可以描述为漫反射和镜面反射分量之和：</p>
+<p>$$
+\mathrm{i}(\mathrm{r},t)=\mathrm{i}_{\text{diffuse}}+\mathrm{i}_{\text{specular}}
+$$</p>
+<p>$\mathrm{i}_{\text{diffuse}}$ 和 $\mathrm{i}_{\text{specular}}$均$\in\mathbb{R}^{3\times1}$。</p>
+<p>如下图，我们做出以下假设：</p>
+<ol>
+<li>
+<p>光源为远离人脸的点光源，且与相机的位置保持不变。因此在所有位置上均为平行光，且光源强度保持恒定</p>
+</li>
+<li>
+<p>人脸具有Lambertian反射，在Lambertian假设下，所有点源可以建模为一个点源</p>
+</li>
+</ol>
+<div align=center><img src="reflectance.png" style="zoom:80%;" /></div>
+<p>在这个假设下有：</p>
+<p>$$
+\mathbf{i}(\mathbf{r},t)=\mathbf{c}*\mathbf{n}(\mathbf{r},t)\cdot \mathbf{l}+\mathbf{e}*p(t)\odot(\mathbf{c}*\mathbf{n}(\mathbf{r},t)\cdot \mathbf{l})\tag{1}
+$$</p>
+<h3 id="32-生成运动信号">3.2 生成运动信号<a hidden class="anchor" aria-hidden="true" href="#32-生成运动信号">#</a></h3>
+<p>要从上述公式中提取搏动的血容量信号$p(t)$，需要生成运动扰动。需要三个参数：表面法线$\mathbf{n(r},t)$；有效光源方向$\mathbf{I}$；随时间保持不变的平均肤色$\mathbf{c}$</p>
+<h4 id="321-3d-人脸建模">3.2.1 3D 人脸建模<a hidden class="anchor" aria-hidden="true" href="#321-3d-人脸建模">#</a></h4>
+<p>使用FaceMesh在视频的每一帧进行人脸跟踪和拟合。</p>
+<p>首先在每一帧中检测并跟踪人脸，然后检测每一帧的人脸特征点；</p>
+<p>然后利用3DMM (3D Morphable Models) 进行人脸拟合，生成3D人脸几何形状和纹理，生成稠密的三角形网络，如下图，计算每个三角形像素强度的平均值；</p>
+<p>因此，对于每一个视频，有表面法向量$\mathbf{N}\in\mathbb{R}^{K\times T\times 3}$，K是每一帧中的三角形数，T是帧数，3表示xyz三个空间分量。强度$\mathbf{I}\in\mathbb{R}^{K\times T\times 3}$，3表示RGB通道像素强度。</p>
+<div align=center><img src="model.png" style="zoom:80%;" /></div>
+<h4 id="322-光照估计">3.2.2 光照估计<a hidden class="anchor" aria-hidden="true" href="#322-光照估计">#</a></h4>
+<p>对于一序列帧，剔除高光、嘴唇和头发区域，使用面上所有三角网络的测量值估计光源方向。上面的公式(1)中忽略rPPG部分，有：</p>
+<p>$$
+\mathbf{I}=\mathbf{N}*\mathbf{l}*\mathbf{c}^\intercal
+$$</p>
+<p>其中$\mathbf{I}\in\mathbb{R}^{K\times T_w\times 3}$是像素强度，$\mathbf{N}\in\mathbb{R}^{K\times T_w\times 3}$为表面法线方向，$T_w$为帧数。需要估计有效光源方向$\mathbf{l}\in\mathbb{R}^{3\times1}$和评价肤色（假设不同位置肤色相同）$\mathbf{c}\in\mathbb{R}^{3\times 1}$</p>
+<h4 id="323-生成信号矩阵">3.2.3 生成信号矩阵<a hidden class="anchor" aria-hidden="true" href="#323-生成信号矩阵">#</a></h4>
+<p>如下图所示，在估计有效光照方向$\mathbf{\widehat{I}}$和平均肤色$\mathbf{\widehat{c}}$后，生成每个三角区域$\mathbf{r}$的运动信号$\mathbf{m(r},t)$：</p>
+<p>$$
+\mathbf{m(r},t)=\mathbf{\widehat{c}}*\mathbf{n(r},t)\cdot\mathbf{\widehat{I}}=(\mathbf{n(r},t)^\intercal*\mathbf{\widehat{I}}*\mathbf{\widehat{c}}^\intercal)^\intercal
+$$</p>
+<div align=center><img src="motion.png" style="zoom:80%;" /></div>
+<p>因此，对于每个三角区域，能够得到六个信号：RGB像素强度$(i_{r}(t),i_{g}(t),i_{b}(t))$和RGB运动信号$(m_r(t),m_g(t),m_b(t))$，重写公式(1)得到时序运动扰动$m$的函数：</p>
+<p>$$
+\mathbf{i}(\mathbf{r},t)=\mathbf{m}(\mathbf{r},t)+e*p(t)\odot\mathbf{m}(\mathbf{r},t)\tag{2}
+$$</p>
+<p>其中$\mathbf{i}(\mathbf{r},t)$是有干扰的rPPG信号，$\mathbf{m}(\mathbf{r},t)$是运动扰动信号$p(t)$是干净的rPPG信号。使用生成的运动信号,构造信号特征矩阵</p>
+<p>$$
+S_r=[i_{r}(t),i_{g}(t),i_{b}(t),m_r(t),m_g(t),m_b(t)]^\intercal\in\mathbb{R}^{6\times t}
+$$</p>
+<h3 id="33-rppg信号的运动抵消">3.3 rPPG信号的运动抵消<a hidden class="anchor" aria-hidden="true" href="#33-rppg信号的运动抵消">#</a></h3>
+<p>将$S_r$输入Bi-LSTM，接触的脉冲器波形作为标签进行训练。</p>
+<p>对于该架构，使用包含30隐藏单元的3层的Bi-LSTM网络。将信号划分为4秒的窗口，重叠部分为2秒，作为输入，损失函数为MSE。</p>
+<h2 id="4-实验">4 实验<a hidden class="anchor" aria-hidden="true" href="#4-实验">#</a></h2>
+<h2 id="41-facemesh-验证">4.1 FaceMesh 验证<a hidden class="anchor" aria-hidden="true" href="#41-facemesh-验证">#</a></h2>
+<p>FaceMesh 面部跟踪器决定了光照估计的准确率和运动信号生成的质量。</p>
+<ol>
+<li>
+<p>人脸几何形状的准确性</p>
+</li>
+<li>
+<p>光照方向的误差</p>
+</li>
+<li>
+<p>运动信号的质量</p>
+</li>
+<li>
+<p>不准确的运动信号生成对rPPG信号的影响</p>
+</li>
+</ol>
+<h4 id="411-光度立体设置">4.1.1 光度立体设置<a hidden class="anchor" aria-hidden="true" href="#411-光度立体设置">#</a></h4>
+<p>使用光度立体来获取运动中的真实3D人脸几何形状。</p>
+<h3 id="42-3d-面部几何形状估计">4.2 3D 面部几何形状估计<a hidden class="anchor" aria-hidden="true" href="#42-3d-面部几何形状估计">#</a></h3>
+<div align=center><img src="facemesh.png" style="zoom:80%;" /></div>
+<p>如上图。在鼻子区域的角度误差最大；平均角误差（除去眼睛鼻子和嘴巴区域）在人脸模型和真人上分别为$13.8^\circ, 18.37^\circ$</p>
+<p>在上图的下半部分，展示了旋转过程中人脸模型前额上一个三角形和说话场景下真人的角误差。</p>
+<h3 id="43-光照估计准确率">4.3 光照估计准确率<a hidden class="anchor" aria-hidden="true" href="#43-光照估计准确率">#</a></h3>
+<p>用FaceMesh得到的三维几何结构来获得光照矩阵的估计值$\mathbf{\widehat{U}}$。在四个人体模型上平均误差为$4.56^\circ$。</p>
+<h3 id="44-运动信号生成">4.4 运动信号生成<a hidden class="anchor" aria-hidden="true" href="#44-运动信号生成">#</a></h3>
+<p>下图展示了一个由光度立体和FaceMesh生成的0运动信号和来自单个三角形的实际像素强度的例子。第三行滤波后的残余信号不包含强信号，说明成功去除了运动信号。</p>
+<div align=center><img src="signal.png" style="zoom:80%;" /></div>
+<p>然后用带通滤波器$([0.5-5]Hz)$对运动信号滤波（人体心率属于这一频率范围）。计算两个指标：1）归一化方根误差(NRMSE)；2）人体模型视频中估计的运动信号和实际像素强度之间的归一化互相关(normalized cross-correlation, NCC)。如下表：</p>
+<div align=center><img src="table1.png" style="zoom:80%;" /></div>
+<h3 id="45-rppg信号估计">4.5 rPPG信号估计<a hidden class="anchor" aria-hidden="true" href="#45-rppg信号估计">#</a></h3>
+<p>使用光度立体生成的运动信号在估计rPPG信号的平均信噪比方面，与FaceMesh相比，没有显著提高（0.15dB,p&gt;0.005）。因此，使用FaceMesh生成的运动信号在rPPG信号估计方面达到了接近最优的性能。</p>
+<h2 id="5-ppg信号估计">5 PPG信号估计<a hidden class="anchor" aria-hidden="true" href="#5-ppg信号估计">#</a></h2>
+<h4 id="51-数据集">5.1 数据集<a hidden class="anchor" aria-hidden="true" href="#51-数据集">#</a></h4>
+<p><a href="https://www.tu-ilmenau.de/neurob/data-sets-code/pulse-rate-detection-dataset-pure">PURE dataset</a></p>
+<p>PURE数据集包含10名被试在6种运动条件下同步生理数据的人脸视频，包括头部转动和说话。视频时长约为1 min，真值PPG波形由接触式脉搏血氧监测仪提供。</p>
+<p>为了验证在剧烈运动场景下的性能，创建了一个单独的数据集<a href="https://github.com/akashmaity/RobustPPG">RICE-motion</a>，包括12名受试者的72段视频(9男3女)，包含快速的头部旋转动作和自然表情说话场景。</p>
+<h4 id="52-训练和验证运动消除网络">5.2 训练和验证运动消除网络<a hidden class="anchor" aria-hidden="true" href="#52-训练和验证运动消除网络">#</a></h4>
+<p>将信号特征矩阵$S_r$作为Bi-LSTM的输入，模型学习像素强度变化和运动扰动信号与PPG信号关联的函数。由于真实数据集较小，通过在rPPG信号中生成各种运动扰动来生成一个合成数据集用于训练。</p>
+<p><strong>合成数据集</strong>：使用公式(2)来合成信号矩阵。使用参数化模型来生产干净的PPG信号$p(t)$，心率从30bpm到240bpm均匀分布中随机选取，生成一个30s的干净PPG信号。使用随机布朗噪声生成器（random Brownian noise generator）来生产运动信号$\mathbf{m}(t)$。最后，在像素强度中添加随即白噪声来模拟建模误差和相机传感器误差。参数$\mathbf{e}_{ppg}=[0.18,0.78,0.60]$保持恒定。生成了400个运动信号$\mathbf{m}(t)$，与合成的RGB信号强度$\mathbf{i}(t)$一起合成信号矩阵$S_r$。</p>
+<p>对信号进行标准化（减均值除标准差），然后用带通滤波器$([0.5~5])Hz$进行滤波。</p>
+<p>将模型预测的rPPG信号从面部所有三角形位置进行空间平均，得到整体rPPG信号。</p>
+<h4 id="53-性能比较">5.3 性能比较<a hidden class="anchor" aria-hidden="true" href="#53-性能比较">#</a></h4>
+<p>计算不同方法提取的rPPG信号的信噪比来评估PPG信号的质量。</p>
+<p>基于提取的rPPG信号计算心率，使用5秒和1秒的短重叠窗口来计算瞬时心率，然后计算心率与真值的RMSE。</p>
+<h4 id="54-结果和讨论">5.4 结果和讨论<a hidden class="anchor" aria-hidden="true" href="#54-结果和讨论">#</a></h4>
+<div align=center><img src="purerice.png" style="zoom:80%;" /></div>
+<p>上图为两个数据集中原始的rPPG信号和生成的运动信号。</p>
+<p>下表报告了PURE数据集里所有受试者六种运动的平均SNR值。对于静态或平稳简单的运动，所有方法SNR相对一致；在说话等复杂的面部动作中，所有方法的SNR都会下降。其次，RobustPPG在所有运动场景下的表现优于其他方法且在会话场景下的优势最大。</p>
+<div align=center><img src="table2.png" style="zoom:80%;" /></div>
+<p>展示下图方法估计的血容量信号相较于PURE和RICE-motion数据集的真值频谱图。可以观察到，RobustPPG方法估计的心率信号比其他方法更干净，且上表表明RobustPPG能够提供给更可靠的心率变异性（heart rate variability, HRV）和平均心率测量。</p>
+<div align=center><img src="spectrum.png" style="zoom:80%;" /></div>
+<p>下表为在更具挑战性的RICE-motion数据集上的SNR值和心率的RMSE值。</p>
+<div align=center><img src="table3.png" style="zoom:80%;" /></div>
+<p>此外，还通过测试在室内和室外手机视频上评估RobustPPG方法，如下图所示。RobustPPG估计的频谱图在预期心率频带内有较强的信号成分和更少的扰动，且有着更高的SNR，展现了在不同光照条件下更强的鲁棒性。</p>
+<div align=center><img src="door.png" style="zoom:80%;" /></div>
+<p>此外，下表展示了有无胡须和不同肤色的测试结果。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">SNR(dB)</th>
+<th style="text-align:center">RMSE(bpm)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">有胡须</td>
+<td style="text-align:center">4.75</td>
+<td style="text-align:center">2.31</td>
+</tr>
+<tr>
+<td style="text-align:center">无胡须</td>
+<td style="text-align:center"><strong>5.16</strong></td>
+<td style="text-align:center"><strong>1.92</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">白色皮肤</td>
+<td style="text-align:center"><strong>5.89</strong></td>
+<td style="text-align:center"><strong>2.33</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">橄榄色皮肤</td>
+<td style="text-align:center">4.96</td>
+<td style="text-align:center">2.94</td>
+</tr>
+</tbody>
+</table>
+<p>在训练时使用手指的PPG信号作为标签，但相对于面部PPG信号，手指PPG信号1）具有更多的特征和更高的谐波；2）并且由于脉冲传输产生相位延迟。通过对指脉波形进行低通滤波解决第一个问题；相位延迟问题较难解决。</p>
+<p>RobustPPG有4个部分：1）人脸跟踪；2）表面法线、像素强度波动提取和光照估计；3）运动信号生成；使用Bi-LSTM网络提取每个三角网格处的rPPG信号。计算瓶颈在从每一帧图像中提取每个三角网格处的像素强度。</p>
+<h2 id="6-总结和展望">6 总结和展望<a hidden class="anchor" aria-hidden="true" href="#6-总结和展望">#</a></h2>
+<p>我们提出了一种新的算法RobustPPG用于基于摄像头的rPPG信号提取和心率估计。我们证明了像FaceMesh这样的3D人脸跟踪器可以在像素强度变化的情况下产生精确的运动失真。此外，使用Bi-LSTM网络进行信号滤波，我们在rPPG信号提取中表现出比现有方法更好的准确性。我们希望这项工作将大大推动运动鲁棒性的极限，以实现可靠的心率估计，并能将其应用到现实生活中。</p>
+<p>在本工作中，我们仅对Lambertian建模引起的运动畸变进行建模。可以考虑镜面成分，使建模更加准确。其次，我们在工作中只考虑了远距离照明的假设。近光场景要求建模的复杂性可以被探索以更好地估计运动信号。第三，我们还考虑了相机固定的情况。摄像头的移动会造成rPPG信号中额外的信号失真，这可能会影响手持电话场景下心率估计的准确性。这些都是值得探索的有趣途径，或许可以作为未来工作的令人兴奋的方向。</p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/opencv5/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>OpenCV-Python学习笔记(5)：形态学变换与图像梯度</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>

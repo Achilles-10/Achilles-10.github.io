@@ -5,8 +5,17 @@
     <link>https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</link>
     <description>Recent content in 论文阅读 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Wed, 24 May 2023 16:03:30 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Thu, 13 Jul 2023 14:17:15 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RobustPPG: camera-based robust heart rate estimation using motion cancellation</title>
+      <link>https://Achilles-10.github.io/posts/paper/robustppg/</link>
+      <pubDate>Thu, 13 Jul 2023 14:17:15 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/robustppg/</guid>
+      <description>基于摄像头的rPPG信号提取和心率估计</description>
+    </item>
+    
     <item>
       <title>Focus by Prior: Deepfake Detection Based on Prior-Attention</title>
       <link>https://Achilles-10.github.io/posts/paper/prior/</link>

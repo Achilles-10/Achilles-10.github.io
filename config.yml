@@ -33,24 +33,26 @@ languages:
   en:
     languageName: "English"
     weight: 1
-    profileMode:
-      enabled: true
-      title: 【垒山不止就是幸福】
-      subtitle: 记录点滴💧，保持热情🔥
-      # subtitle: "🧨学而时习之，不亦说乎？有朋自远方来，不亦乐乎？<br/>👇联系方式"
-      imageUrl: "img/giphy.gif"
-      imageTitle:
-      imageWidth: 144
-      imageHeight: 144
-      buttons:
-        - name: 📄 论文
-          url: posts/paper
-        - name: 👨🏻‍💻 技术
-          url: posts/tech
-        - name: 📕 算法
-          url: posts/algo
-        - name: 🎲 其他
-          url: posts/other
+    params:
+    # profileMode:
+      profileMode:
+        enabled: true
+        title: 【垒山不止就是幸福】
+        subtitle: 记录点滴💧，保持热情🔥
+        # subtitle: "🧨学而时习之，不亦说乎？有朋自远方来，不亦乐乎？<br/>👇联系方式"
+        imageUrl: "img/giphy.gif"
+        imageTitle:
+        imageWidth: 144
+        imageHeight: 144
+        buttons:
+          - name: 📄 论文
+            url: posts/paper
+          - name: 👨🏻‍💻 技术
+            url: posts/tech
+          - name: 📕 算法
+            url: posts/algo
+          - name: 🎲 其他
+            url: posts/other
     menu:
       main:
         - identifier: home
