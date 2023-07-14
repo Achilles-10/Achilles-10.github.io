@@ -6,7 +6,16 @@
     <description>Recent content in 学习笔记 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 29 May 2023 21:36:45 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 13 Jul 2023 14:47:54 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PPG信号测心率原理与常见信号评价指标</title>
+      <link>https://Achilles-10.github.io/posts/tech/ppgsignal/</link>
+      <pubDate>Thu, 13 Jul 2023 14:47:54 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/ppgsignal/</guid>
+      <description>1. PPG测量心率 PPG(photoplethysmographic,光电容积脉搏波描记法) 以LED光源和探测器为基础,测量经过人体血管和组织反射、吸收后的衰减光,记录血管的搏动状态并测量脉搏波。 1.1 原理 当LED光射向皮肤，透过皮肤组织反射回的光被光敏传感器接受并转换成电信号再经过A</description>
+    </item>
+    
     <item>
       <title>OpenCV-Python学习笔记(5)：形态学变换与图像梯度</title>
       <link>https://Achilles-10.github.io/posts/tech/opencv5/</link>
