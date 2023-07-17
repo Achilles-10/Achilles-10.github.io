@@ -6,7 +6,16 @@
     <description>Recent content on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 13 Jul 2023 14:47:54 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 17 Jul 2023 14:39:59 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation</title>
+      <link>https://Achilles-10.github.io/posts/paper/rhythm/</link>
+      <pubDate>Mon, 17 Jul 2023 14:39:59 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/paper/rhythm/</guid>
+      <description>[paper] [code] 1. 引言 现有基于视频的HR估计方法分为两大类：1. 基于rPPG的方法；2. 基于心冲击信号（BCG）的方法。rPPG信号容易受到头部运动和环境条件（光照）的影响。 构建了一个包含107名受试者的2378人脸视频和752个近红外人脸视频的数据集VIPL-HR，由三种不同设备拍摄（RG</description>
+    </item>
+    
     <item>
       <title>PPG信号测心率原理与常见信号评价指标</title>
       <link>https://Achilles-10.github.io/posts/tech/ppgsignal/</link>

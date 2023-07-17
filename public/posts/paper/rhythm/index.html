@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>PPG信号测心率原理与常见信号评价指标 | 烈烈风中、的博客</title>
-<meta name="keywords" content="学习笔记, 评价指标">
-<meta name="description" content="1. PPG测量心率 PPG(photoplethysmographic,光电容积脉搏波描记法) 以LED光源和探测器为基础,测量经过人体血管和组织反射、吸收后的衰减光,记录血管的搏动状态并测量脉搏波。 1.1 原理 当LED光射向皮肤，透过皮肤组织反射回的光被光敏传感器接受并转换成电信号再经过A">
+<title>RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation | 烈烈风中、的博客</title>
+<meta name="keywords" content="论文阅读, 健康算法">
+<meta name="description" content="[paper] [code] 1. 引言 现有基于视频的HR估计方法分为两大类：1. 基于rPPG的方法；2. 基于心冲击信号（BCG）的方法。rPPG信号容易受到头部运动和环境条件（光照）的影响。 构建了一个包含107名受试者的2378人脸视频和752个近红外人脸视频的数据集VIPL-HR，由三种不同设备拍摄（RG">
 <meta name="author" content="Achilles">
-<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/ppgsignal/">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/paper/rhythm/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
         onload="hljs.initHighlightingOnLoad();"></script>
@@ -96,18 +96,18 @@ var _hmt = _hmt || [];
     });
 </script>
 
-<meta property="og:title" content="PPG信号测心率原理与常见信号评价指标" />
-<meta property="og:description" content="1. PPG测量心率 PPG(photoplethysmographic,光电容积脉搏波描记法) 以LED光源和探测器为基础,测量经过人体血管和组织反射、吸收后的衰减光,记录血管的搏动状态并测量脉搏波。 1.1 原理 当LED光射向皮肤，透过皮肤组织反射回的光被光敏传感器接受并转换成电信号再经过A" />
+<meta property="og:title" content="RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation" />
+<meta property="og:description" content="[paper] [code] 1. 引言 现有基于视频的HR估计方法分为两大类：1. 基于rPPG的方法；2. 基于心冲击信号（BCG）的方法。rPPG信号容易受到头部运动和环境条件（光照）的影响。 构建了一个包含107名受试者的2378人脸视频和752个近红外人脸视频的数据集VIPL-HR，由三种不同设备拍摄（RG" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/ppgsignal/" />
-<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/ppgsignal/cover.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-07-13T14:47:54+08:00" />
-<meta property="article:modified_time" content="2023-07-13T14:47:54+08:00" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/paper/rhythm/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/paper/rhythm/RhythmNet.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-17T14:39:59+08:00" />
+<meta property="article:modified_time" content="2023-07-17T14:39:59+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/ppgsignal/cover.png" />
-<meta name="twitter:title" content="PPG信号测心率原理与常见信号评价指标"/>
-<meta name="twitter:description" content="1. PPG测量心率 PPG(photoplethysmographic,光电容积脉搏波描记法) 以LED光源和探测器为基础,测量经过人体血管和组织反射、吸收后的衰减光,记录血管的搏动状态并测量脉搏波。 1.1 原理 当LED光射向皮肤，透过皮肤组织反射回的光被光敏传感器接受并转换成电信号再经过A"/>
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/paper/rhythm/RhythmNet.png" />
+<meta name="twitter:title" content="RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation"/>
+<meta name="twitter:description" content="[paper] [code] 1. 引言 现有基于视频的HR估计方法分为两大类：1. 基于rPPG的方法；2. 基于心冲击信号（BCG）的方法。rPPG信号容易受到头部运动和环境条件（光照）的影响。 构建了一个包含107名受试者的2378人脸视频和752个近红外人脸视频的数据集VIPL-HR，由三种不同设备拍摄（RG"/>
 
 
 <script type="application/ld+json">
@@ -126,14 +126,14 @@ var _hmt = _hmt || [];
         {
           "@type": "ListItem",
           "position":  3 ,
-          "name": "👨🏻‍💻 技术",
-          "item": "https://Achilles-10.github.io/posts/tech/"
+          "name": "📄 论文",
+          "item": "https://Achilles-10.github.io/posts/paper/"
         }, 
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "PPG信号测心率原理与常见信号评价指标",
-      "item": "https://Achilles-10.github.io/posts/tech/ppgsignal/"
+      "name": "RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation",
+      "item": "https://Achilles-10.github.io/posts/paper/rhythm/"
     }
   ]
 }
@@ -142,24 +142,24 @@ var _hmt = _hmt || [];
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "PPG信号测心率原理与常见信号评价指标",
-  "name": "PPG信号测心率原理与常见信号评价指标",
-  "description": "1. PPG测量心率 PPG(photoplethysmographic,光电容积脉搏波描记法) 以LED光源和探测器为基础,测量经过人体血管和组织反射、吸收后的衰减光,记录血管的搏动状态并测量脉搏波。 1.1 原理 当LED光射向皮肤，透过皮肤组织反射回的光被光敏传感器接受并转换成电信号再经过A",
+  "headline": "RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation",
+  "name": "RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation",
+  "description": "[paper] [code] 1. 引言 现有基于视频的HR估计方法分为两大类：1. 基于rPPG的方法；2. 基于心冲击信号（BCG）的方法。rPPG信号容易受到头部运动和环境条件（光照）的影响。 构建了一个包含107名受试者的2378人脸视频和752个近红外人脸视频的数据集VIPL-HR，由三种不同设备拍摄（RG",
   "keywords": [
-    "学习笔记", "评价指标"
+    "论文阅读", "健康算法"
   ],
-  "articleBody": "1. PPG测量心率 PPG(photoplethysmographic,光电容积脉搏波描记法) 以LED光源和探测器为基础,测量经过人体血管和组织反射、吸收后的衰减光,记录血管的搏动状态并测量脉搏波。\n1.1 原理 当LED光射向皮肤，透过皮肤组织反射回的光被光敏传感器接受并转换成电信号再经过AD转换成数字信号。像肌肉、骨骼、静脉等等对光的吸收是基本不变的（前提是测量部位没有大幅度的运动），但是血液不同，由于动脉里有血液的流动，那么对光的吸收自然也有所变化。我们把光转换成电信号时，正是由于动脉对光的吸收有变化，其他组织对光的吸收基本不变，得到的信号就可以分为直流交流AC信号和DC信号。提取其中的AC信号，就能反应出血液流动的特点。\n传感器选择绿光原因：\n皮肤的黑色素会吸收大量波长较短的波 皮肤上的水份也会吸收大量的UV和IR部分的光 进入皮肤组织的绿光(500nm)– 黄光(600nm)大部分会被红细胞吸收 红光和接近IR的光相比其他波长的光更容易穿过皮肤组织 血液要比其他组织吸收更多的光 相比红光，绿（绿-黄）光能被氧合血红蛋白和脱氧血红蛋白吸收 1.2 对PPG信号的处理方法 时域分析\n对原始PPG信号进行滤波处理，得到一定时间内的波峰个数，即可算出心率值。\n",
-  "wordCount" : "523",
+  "articleBody": "[paper] [code]\n1. 引言 现有基于视频的HR估计方法分为两大类：1. 基于rPPG的方法；2. 基于心冲击信号（BCG）的方法。rPPG信号容易受到头部运动和环境条件（光照）的影响。\n构建了一个包含107名受试者的2378人脸视频和752个近红外人脸视频的数据集VIPL-HR，由三种不同设备拍摄（RGB-D相机，智能手机和网络摄像头）9种不同情况下的视频，涵盖面部姿势和光照变化等。\n主要贡献：\n回顾远程HR估计工作，分析该问题仍面临的挑战；\n考虑相邻HR测量之间的相关性，利用GRU进行建模，实现鲁棒的HR估计；\n对多个数据集进行评估，实验结果超过SOTA.\n2. VIPL-HR DATABASE 2.1 设备设置与数据收集 考虑不同光照条件，受试者姿态，不同摄像头的距离，不同拍摄设备\n2.2 人脸视频压缩 MJPG压缩至2/3分辨率。\n2.3 数据集统计信息 3. 方法 首先执行检测和面部标志检测来定位ROI，从中计算时空图来作为HR信号的low-level表示。最后设计了一个CNN-RNN模型来学习。\n3.1 人脸检测、landmark检测和分割 SeetaFace检测人脸和定位81个标志点，以获得准确一致的ROI面部区域。\n3.2 用时空图表示HR信号 通过landmark跨帧对齐人脸然后将其转换为YUV颜色空间，将人脸划分为n个ROI区域，计算每个区域每个颜色通道的均值$[Y_1,U_1,V_1,Y_2,U_2,V_2,\\dots,Y_n,U_n,V_n]$，这样得到了$n*c$序列的空间图，然后得到$T\\times n\\times c$的时空图。\n对每个时间信号应用最小-最大归一化，并将时间序列的值缩放为[0,255]。\n颜色空间的选择对HR信号非常重要，经过测试选择YUV色彩空间。\n考虑由于运动导致的部分帧数缺失的情况，沿时间维度随机屏蔽一小部分时空图来模拟确实数据的情况，并视作一种数据增强方式来增强RhythmNet的鲁棒性。\n3.3 对HR信号的时序建模 对于每个人脸视频，使用包含w帧的固定滑动窗口(0.5s步长移动)将其分为单独视频片段$[v_1,v_2,\\dots,v_t]$，使用ResNet-18作为backbone，L1损失衡量预测HR值与心率值的差异。\n我们进一步考虑相邻视频段的关系，利用GRU进行时序关系建模。将CNN输出的特征输入到GRU，将GRU的输出输入到全连接层回归各个视频段的HR值，将每个视频段预测的HR值的均值作为最终的HR结果。\n此外，由于同一视频的连续视频块心率变化不大，引入Smooth函数来约束单一视频块的预测值：\n$$ \\mathcal{L}_{\\text{smooth}}=\\frac{1}{T}\\sum_{i}^{T}{|hr_t-hr_{mean}|} $$\n总损失函数($\\lambda=100$)为：\n$$ \\mathcal{L}=\\mathcal{L_{l1}}+\\lambda\\mathcal{L}_{\\text{smooth}} $$\n4. 实验 4.1 数据集与实验设定 选取300帧来计算时空图，5*5的ROI区域。用6个连续的hr值计算$L_\\text{smooth}$。\n4.2 数据集内测试 RGB视频上的测试：\n近红外视频上的测试\n4.3 跨数据集测试 在VIPL-HR数据集上训练，在MAHNOB-HCI和MMSE-HR数据集上训练。\n4.4 关键模块分析 时空图\n颜色空间选择\n时序建模\n见RGB视频测试部分。\n4.5 鲁棒性分析 视频压缩\n光照变化\n昏暗环境下误差变大，且暗光条件下，在NIR视频上训练的模型误差更小。\n头部运动\n",
+  "wordCount" : "1269",
   "inLanguage": "en",
-  "image":"https://Achilles-10.github.io/posts/tech/ppgsignal/cover.png","datePublished": "2023-07-13T14:47:54+08:00",
-  "dateModified": "2023-07-13T14:47:54+08:00",
+  "image":"https://Achilles-10.github.io/posts/paper/rhythm/RhythmNet.png","datePublished": "2023-07-17T14:39:59+08:00",
+  "dateModified": "2023-07-17T14:39:59+08:00",
   "author":[{
     "@type": "Person",
     "name": "Achilles"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://Achilles-10.github.io/posts/tech/ppgsignal/"
+    "@id": "https://Achilles-10.github.io/posts/paper/rhythm/"
   },
   "publisher": {
     "@type": "Organization",
@@ -273,9 +273,9 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/paper/">📄 论文</a></div>
             <h1 class="post-title">
-                PPG信号测心率原理与常见信号评价指标
+                RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation
             </h1>
             <div class="post-meta"><style>
     i[id*="post_meta_style"] {
@@ -294,7 +294,7 @@ var _hmt = _hmt || [];
 <span class="parent-post-meta">
     <span id="post_meta_style_1">
         <span class="fa fa-calendar-check-o"></span>
-        <span>2023 年 7 月 13 日
+        <span>2023 年 7 月 17 日
             &nbsp;&nbsp;
         </span>
     </span>
@@ -307,13 +307,13 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>523字
+        <span>1269字
             &nbsp;&nbsp;
         </span>
     </span>
     <span id="post_meta_style_4">
         <span class="fa fa-clock-o"></span>
-        <span>2分钟
+        <span>3分钟
             &nbsp;&nbsp;
         </span>
     </span>
@@ -327,8 +327,8 @@ var _hmt = _hmt || [];
         <span class="fa fa-tags" style="opacity: 0.8"></span>
         <span>
             <span class="post-tags-meta">
-                <a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
-                &nbsp;<a href="https://Achilles-10.github.io/tags/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87/" style="color: var(--secondary)!important;">评价指标</a>
+                <a href="https://Achilles-10.github.io/tags/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" style="color: var(--secondary)!important;">论文阅读</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%81%A5%E5%BA%B7%E7%AE%97%E6%B3%95/" style="color: var(--secondary)!important;">健康算法</a>
             </span>
         </span>
     </span>
@@ -382,7 +382,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/ppgsignal/cover.png" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/paper/rhythm/RhythmNet.png" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -393,40 +393,43 @@ var _hmt = _hmt || [];
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#1-ppg%e6%b5%8b%e9%87%8f%e5%bf%83%e7%8e%87" aria-label="1. PPG测量心率">1. PPG测量心率</a><ul>
+                    <a href="#1-%e5%bc%95%e8%a8%80" aria-label="1. 引言">1. 引言</a></li>
+                <li>
+                    <a href="#2-vipl-hr-database" aria-label="2. VIPL-HR DATABASE">2. VIPL-HR DATABASE</a><ul>
                         
                 <li>
-                    <a href="#11-%e5%8e%9f%e7%90%86" aria-label="1.1 原理">1.1 原理</a></li>
+                    <a href="#21-%e8%ae%be%e5%a4%87%e8%ae%be%e7%bd%ae%e4%b8%8e%e6%95%b0%e6%8d%ae%e6%94%b6%e9%9b%86" aria-label="2.1 设备设置与数据收集">2.1 设备设置与数据收集</a></li>
                 <li>
-                    <a href="#12-%e5%af%b9ppg%e4%bf%a1%e5%8f%b7%e7%9a%84%e5%a4%84%e7%90%86%e6%96%b9%e6%b3%95" aria-label="1.2 对PPG信号的处理方法">1.2 对PPG信号的处理方法</a></li>
+                    <a href="#22-%e4%ba%ba%e8%84%b8%e8%a7%86%e9%a2%91%e5%8e%8b%e7%bc%a9" aria-label="2.2 人脸视频压缩">2.2 人脸视频压缩</a></li>
                 <li>
-                    <a href="#13-pytorch-%e5%ae%9e%e7%8e%b0" aria-label="1.3 PyTorch 实现">1.3 PyTorch 实现</a></li></ul>
+                    <a href="#23-%e6%95%b0%e6%8d%ae%e9%9b%86%e7%bb%9f%e8%ae%a1%e4%bf%a1%e6%81%af" aria-label="2.3 数据集统计信息">2.3 数据集统计信息</a></li></ul>
                 </li>
                 <li>
-                    <a href="#2-%e5%b8%b8%e8%a7%81%e4%bf%a1%e5%8f%b7%e8%af%84%e4%bb%b7%e6%8c%87%e6%a0%87" aria-label="2. 常见信号评价指标">2. 常见信号评价指标</a><ul>
+                    <a href="#3-%e6%96%b9%e6%b3%95" aria-label="3. 方法">3. 方法</a><ul>
                         
                 <li>
-                    <a href="#21-%e4%bf%a1%e5%99%aa%e6%af%94-snr" aria-label="2.1 信噪比 SNR">2.1 信噪比 SNR</a><ul>
-                        
+                    <a href="#31-%e4%ba%ba%e8%84%b8%e6%a3%80%e6%b5%8blandmark%e6%a3%80%e6%b5%8b%e5%92%8c%e5%88%86%e5%89%b2" aria-label="3.1 人脸检测、landmark检测和分割">3.1 人脸检测、landmark检测和分割</a></li>
                 <li>
-                    <a href="#211-%e4%bb%80%e4%b9%88%e6%98%af%e4%bf%a1%e5%99%aa%e6%af%94" aria-label="2.1.1 什么是信噪比">2.1.1 什么是信噪比</a></li>
+                    <a href="#32-%e7%94%a8%e6%97%b6%e7%a9%ba%e5%9b%be%e8%a1%a8%e7%a4%bahr%e4%bf%a1%e5%8f%b7" aria-label="3.2 用时空图表示HR信号">3.2 用时空图表示HR信号</a></li>
                 <li>
-                    <a href="#212-%e4%bf%a1%e5%99%aa%e6%af%94%e8%ae%a1%e7%ae%97" aria-label="2.1.2 信噪比计算">2.1.2 信噪比计算</a></li></ul>
+                    <a href="#33-%e5%af%b9hr%e4%bf%a1%e5%8f%b7%e7%9a%84%e6%97%b6%e5%ba%8f%e5%bb%ba%e6%a8%a1" aria-label="3.3 对HR信号的时序建模">3.3 对HR信号的时序建模</a></li></ul>
                 </li>
                 <li>
-                    <a href="#22-%e5%b3%b0%e5%80%bc%e4%bf%a1%e5%99%aa%e6%af%94-psnr" aria-label="2.2 峰值信噪比 PSNR">2.2 峰值信噪比 PSNR</a></li>
-                <li>
-                    <a href="#23-%e7%9a%ae%e5%b0%94%e9%80%8a%e7%ba%bf%e6%80%a7%e7%9b%b8%e5%85%b3%e7%b3%bb%e6%95%b0-plcc" aria-label="2.3 皮尔逊线性相关系数 PLCC">2.3 皮尔逊线性相关系数 PLCC</a></li>
-                <li>
-                    <a href="#24-%e5%b3%b0%e5%ba%a6%e5%92%8c%e5%81%8f%e5%ba%a6" aria-label="2.4 峰度和偏度">2.4 峰度和偏度</a><ul>
+                    <a href="#4-%e5%ae%9e%e9%aa%8c" aria-label="4. 实验">4. 实验</a><ul>
                         
                 <li>
-                    <a href="#241-%e5%b3%b0%e5%ba%a6" aria-label="2.4.1 峰度">2.4.1 峰度</a></li>
+                    <a href="#41-%e6%95%b0%e6%8d%ae%e9%9b%86%e4%b8%8e%e5%ae%9e%e9%aa%8c%e8%ae%be%e5%ae%9a" aria-label="4.1 数据集与实验设定">4.1 数据集与实验设定</a></li>
                 <li>
-                    <a href="#242-%e5%81%8f%e5%ba%a6" aria-label="2.4.2 偏度">2.4.2 偏度</a>
+                    <a href="#42-%e6%95%b0%e6%8d%ae%e9%9b%86%e5%86%85%e6%b5%8b%e8%af%95" aria-label="4.2 数据集内测试">4.2 数据集内测试</a></li>
+                <li>
+                    <a href="#43-%e8%b7%a8%e6%95%b0%e6%8d%ae%e9%9b%86%e6%b5%8b%e8%af%95" aria-label="4.3 跨数据集测试">4.3 跨数据集测试</a></li></ul>
                 </li>
-            </ul>
-            </li>
+                <li>
+                    <a href="#44-%e5%85%b3%e9%94%ae%e6%a8%a1%e5%9d%97%e5%88%86%e6%9e%90" aria-label="4.4 关键模块分析">4.4 关键模块分析</a><ul>
+                        
+                <li>
+                    <a href="#45-%e9%b2%81%e6%a3%92%e6%80%a7%e5%88%86%e6%9e%90" aria-label="4.5 鲁棒性分析">4.5 鲁棒性分析</a>
+                </li>
             </ul>
             </li>
             </ul>
@@ -492,99 +495,98 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h2 id="1-ppg测量心率">1. PPG测量心率<a hidden class="anchor" aria-hidden="true" href="#1-ppg测量心率">#</a></h2>
-<p><strong>PPG(photoplethysmographic,光电容积脉搏波描记法)</strong> 以LED光源和探测器为基础,测量经过人体血管和组织反射、吸收后的衰减光,记录血管的搏动状态并测量脉搏波。</p>
-<h3 id="11-原理">1.1 原理<a hidden class="anchor" aria-hidden="true" href="#11-原理">#</a></h3>
-<p>当LED光射向皮肤，透过皮肤组织反射回的光被光敏传感器接受并转换成电信号再经过AD转换成数字信号。像肌肉、骨骼、静脉等等对光的吸收是基本不变的（前提是测量部位没有大幅度的运动），但是血液不同，由于动脉里有血液的流动，那么对光的吸收自然也有所变化。我们把光转换成电信号时，正是由于动脉对光的吸收有变化，其他组织对光的吸收基本不变，得到的信号就可以分为直流交流AC信号和DC信号。提取其中的AC信号，就能反应出血液流动的特点。</p>
-<p><strong>传感器选择绿光原因</strong>：</p>
-<ul>
-<li>皮肤的黑色素会吸收大量波长较短的波</li>
-<li>皮肤上的水份也会吸收大量的UV和IR部分的光</li>
-<li>进入皮肤组织的绿光(500nm)&ndash; 黄光(600nm)大部分会被红细胞吸收</li>
-<li>红光和接近IR的光相比其他波长的光更容易穿过皮肤组织</li>
-<li>血液要比其他组织吸收更多的光</li>
-<li>相比红光，绿（绿-黄）光能被氧合血红蛋白和脱氧血红蛋白吸收</li>
-</ul>
-<h3 id="12-对ppg信号的处理方法">1.2 对PPG信号的处理方法<a hidden class="anchor" aria-hidden="true" href="#12-对ppg信号的处理方法">#</a></h3>
+        <div class="post-content"><p><a href="https://arxiv.org/abs/1910.11515">[paper]</a> <a href="https://github.com/AnweshCR7/RhythmNet/tree/main">[code]</a></p>
+<h2 id="1-引言">1. 引言<a hidden class="anchor" aria-hidden="true" href="#1-引言">#</a></h2>
+<p>现有基于视频的HR估计方法分为两大类：1. 基于rPPG的方法；2. 基于心冲击信号（BCG）的方法。rPPG信号容易受到头部运动和环境条件（光照）的影响。</p>
+<p>构建了一个包含107名受试者的2378人脸视频和752个近红外人脸视频的数据集VIPL-HR，由三种不同设备拍摄（RGB-D相机，智能手机和网络摄像头）9种不同情况下的视频，涵盖面部姿势和光照变化等。</p>
+<p><strong>主要贡献：</strong></p>
 <ol>
 <li>
-<p><strong>时域分析</strong></p>
-<p>对原始PPG信号进行滤波处理，得到一定时间内的波峰个数，即可算出心率值。</p>
-<div align=center><img src="time.jpg""/></div>
+<p>回顾远程HR估计工作，分析该问题仍面临的挑战；</p>
 </li>
 <li>
-<p><strong>频域分析</strong></p>
-<p>对PPG信号进行FFT变换，下图中可以看到，0Hz的信号很强，这是骨骼、肌肉等组织的DC信号，在1Hz附近有个相对比较突出的信号就是血液流动转变的AC信号。假设得到的频率f=1.2Hz，则心率HR=f*60=72。</p>
-<div align=center><img src="fft.jpg" style="zoom:90%"/></div>
+<p>考虑相邻HR测量之间的相关性，利用GRU进行建模，实现鲁棒的HR估计；</p>
+</li>
+<li>
+<p>对多个数据集进行评估，实验结果超过SOTA.</p>
 </li>
 </ol>
-<h3 id="13-pytorch-实现">1.3 PyTorch 实现<a hidden class="anchor" aria-hidden="true" href="#13-pytorch-实现">#</a></h3>
-<p>已知PPG信号与采样频率（实习项目里帧率为30），bpm计算代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>FFT_N<span style="color:#f92672">=</span><span style="color:#ae81ff">1024</span>
-</span></span><span style="display:flex;"><span>LOW<span style="color:#f92672">=</span><span style="color:#ae81ff">42</span> <span style="color:#75715e"># hr_low</span>
-</span></span><span style="display:flex;"><span>HIGH<span style="color:#f92672">=</span><span style="color:#ae81ff">180</span> <span style="color:#75715e">#hr_high</span>
-</span></span><span style="display:flex;"><span>DF <span style="color:#f92672">=</span> <span style="color:#ae81ff">30.0</span><span style="color:#f92672">/</span>FFT_N<span style="color:#f92672">*</span><span style="color:#ae81ff">60.0</span> <span style="color:#75715e"># 30fps</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_bpm</span>(x):
-</span></span><span style="display:flex;"><span>    l,h<span style="color:#f92672">=</span>int(LOW<span style="color:#f92672">/</span>DF<span style="color:#f92672">+</span><span style="color:#ae81ff">0.5</span>),int(HIGH<span style="color:#f92672">/</span>DF)
-</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>abs(torch<span style="color:#f92672">.</span>fft<span style="color:#f92672">.</span>fft(x, FFT_N))
-</span></span><span style="display:flex;"><span>    y_ <span style="color:#f92672">=</span> y[l:h]
-</span></span><span style="display:flex;"><span>    bpm <span style="color:#f92672">=</span> (torch<span style="color:#f92672">.</span>argmax(y_) <span style="color:#f92672">+</span> l)<span style="color:#f92672">*</span>DF
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> bpm
-</span></span></code></pre></div><h2 id="2-常见信号评价指标">2. 常见信号评价指标<a hidden class="anchor" aria-hidden="true" href="#2-常见信号评价指标">#</a></h2>
-<h3 id="21-信噪比-snr">2.1 信噪比 SNR<a hidden class="anchor" aria-hidden="true" href="#21-信噪比-snr">#</a></h3>
-<h4 id="211-什么是信噪比">2.1.1 什么是信噪比<a hidden class="anchor" aria-hidden="true" href="#211-什么是信噪比">#</a></h4>
-<p>信噪比 SNR(Signal-to-noise Ration)，指系统中信号与噪声的比值。图像信噪比是指视频信号与噪波信号大小的比值，信噪比越大，图像画面越干净；信噪比小，画面上噪声干扰大，影响图像画面质量。</p>
-<h4 id="212-信噪比计算">2.1.2 信噪比计算<a hidden class="anchor" aria-hidden="true" href="#212-信噪比计算">#</a></h4>
-<p>信噪比SNR常用分贝dB表示，其表达式如下：</p>
+<h2 id="2-vipl-hr-database">2. VIPL-HR DATABASE<a hidden class="anchor" aria-hidden="true" href="#2-vipl-hr-database">#</a></h2>
+<h3 id="21-设备设置与数据收集">2.1 设备设置与数据收集<a hidden class="anchor" aria-hidden="true" href="#21-设备设置与数据收集">#</a></h3>
+<div align=center><img src="dataset.png" style="zoom:50%;" /></div>
+<p>考虑不同光照条件，受试者姿态，不同摄像头的距离，不同拍摄设备</p>
+<h3 id="22-人脸视频压缩">2.2 人脸视频压缩<a hidden class="anchor" aria-hidden="true" href="#22-人脸视频压缩">#</a></h3>
+<p>MJPG压缩至2/3分辨率。</p>
+<h3 id="23-数据集统计信息">2.3 数据集统计信息<a hidden class="anchor" aria-hidden="true" href="#23-数据集统计信息">#</a></h3>
+<h2 id="3-方法">3. 方法<a hidden class="anchor" aria-hidden="true" href="#3-方法">#</a></h2>
+<p>首先执行检测和面部标志检测来定位ROI，从中计算时空图来作为HR信号的low-level表示。最后设计了一个CNN-RNN模型来学习。</p>
+<div align=center><img src="RhythmNet.png" style="zoom:90%;" /></div>
+<h3 id="31-人脸检测landmark检测和分割">3.1 人脸检测、landmark检测和分割<a hidden class="anchor" aria-hidden="true" href="#31-人脸检测landmark检测和分割">#</a></h3>
+<p>SeetaFace检测人脸和定位81个标志点，以获得准确一致的ROI面部区域。</p>
+<h3 id="32-用时空图表示hr信号">3.2 用时空图表示HR信号<a hidden class="anchor" aria-hidden="true" href="#32-用时空图表示hr信号">#</a></h3>
+<div align=center><img src="tsm.png" style="zoom:90%;" /></div>
+<p>通过landmark跨帧对齐人脸然后将其转换为YUV颜色空间，将人脸划分为n个ROI区域，计算每个区域每个颜色通道的均值$[Y_1,U_1,V_1,Y_2,U_2,V_2,\dots,Y_n,U_n,V_n]$，这样得到了$n*c$序列的空间图，然后得到$T\times n\times c$的时空图。</p>
+<p>对每个时间信号应用最小-最大归一化，并将时间序列的值缩放为[0,255]。</p>
+<p>颜色空间的选择对HR信号非常重要，经过测试选择YUV色彩空间。</p>
+<p>考虑由于运动导致的部分帧数缺失的情况，沿时间维度随机屏蔽一小部分时空图来模拟确实数据的情况，并视作一种数据增强方式来增强RhythmNet的鲁棒性。</p>
+<h3 id="33-对hr信号的时序建模">3.3 对HR信号的时序建模<a hidden class="anchor" aria-hidden="true" href="#33-对hr信号的时序建模">#</a></h3>
+<p>对于每个人脸视频，使用包含w帧的固定滑动窗口(0.5s步长移动)将其分为单独视频片段$[v_1,v_2,\dots,v_t]$，使用ResNet-18作为backbone，L1损失衡量预测HR值与心率值的差异。</p>
+<p>我们进一步考虑相邻视频段的关系，利用GRU进行时序关系建模。将CNN输出的特征输入到GRU，将GRU的输出输入到全连接层回归各个视频段的HR值，将每个视频段预测的HR值的均值作为最终的HR结果。</p>
+<p>此外，由于同一视频的连续视频块心率变化不大，引入Smooth函数来约束单一视频块的预测值：</p>
 <p>$$
-SNR=10\cdot\log\frac{P_S}{P_N}
+\mathcal{L}_{\text{smooth}}=\frac{1}{T}\sum_{i}^{T}{|hr_t-hr_{mean}|}
 $$</p>
-<p>其中：</p>
-<ul>
+<p>总损失函数($\lambda=100$)为：</p>
+<p>$$
+\mathcal{L}=\mathcal{L_{l1}}+\lambda\mathcal{L}_{\text{smooth}}
+$$</p>
+<h2 id="4-实验">4. 实验<a hidden class="anchor" aria-hidden="true" href="#4-实验">#</a></h2>
+<h3 id="41-数据集与实验设定">4.1 数据集与实验设定<a hidden class="anchor" aria-hidden="true" href="#41-数据集与实验设定">#</a></h3>
+<p>选取300帧来计算时空图，5*5的ROI区域。用6个连续的hr值计算$L_\text{smooth}$。</p>
+<h3 id="42-数据集内测试">4.2 数据集内测试<a hidden class="anchor" aria-hidden="true" href="#42-数据集内测试">#</a></h3>
+<ol>
 <li>
-<p>$P_S$：信号的有效功率</p>
+<p>RGB视频上的测试：</p>
+<div align=center><img src="test1.png" style="zoom:90%;" /></div>
 </li>
 <li>
-<p>$P_N$：噪声的有效功率</p>
+<p>近红外视频上的测试</p>
+<div align=center><img src="test2.png" style="zoom:90%;" /></div>
 </li>
-</ul>
-<p>在图像中，用信号与噪声的方差之比来近似估计SNR：</p>
-<p>$$
-SNR=10\cdot\log\frac{\sum_{i}\sum_{j}{g(i,j)^2}}{\sum_{i}\sum_{j}{[g(i,j)-f(i,j)]^2}}
-$$</p>
-<p>其中$g(i,j),f(i,j)$分别是原始图像和去噪后的图像在$(i,j)$处的灰度值。</p>
-<h3 id="22-峰值信噪比-psnr">2.2 峰值信噪比 PSNR<a hidden class="anchor" aria-hidden="true" href="#22-峰值信噪比-psnr">#</a></h3>
-<p>峰值信噪比经常用作图像压缩等领域中信号重建质量的测量方法，它常简单地通过均方差（<strong>MSE</strong>）进行定义，两个单色图像I和K的计算公式如下：</p>
-<p>$$
-MSE=\frac{1}{mn}\sum_{i}\sum_{j}||I(i,j)-K(i,j)||^2\
-PSNR=10\cdot\log_{10}(\frac{MAX^2_I}{MSE}=20\cdot\log_{10}(\frac{MAX_I}{\sqrt{MSE}})
-$$</p>
-<p>其中，MAX_I是表示图像点颜色的最大数值，如果每个采样点用 8 位表示，那么等于255。</p>
-<h3 id="23-皮尔逊线性相关系数-plcc">2.3 皮尔逊线性相关系数 PLCC<a hidden class="anchor" aria-hidden="true" href="#23-皮尔逊线性相关系数-plcc">#</a></h3>
-<p>皮尔逊线性相关系数 PLCC(Pearson linear correlation coefficient) 描述了主观评分和算法评分之间的线性相关性，值越大越好，取值区间为$[-1,1]$</p>
-<p>$$
-\rho_{X,Y}=\frac{\sigma_{XY}}{\sigma_{X}\sigma_{Y}}\
-\sigma_{XY}=E(XY)-E(X)E(Y)
-$$</p>
-<p>通常用<code>1-plcc</code>或者<code>1-abs(plcc)</code>作为损失函数，其pytorch实现如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
-</span></span><span style="display:flex;"><span>plcc <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>cosine_similarity(preds <span style="color:#f92672">-</span> preds<span style="color:#f92672">.</span>mean(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>), labels <span style="color:#f92672">-</span> labels<span style="color:#f92672">.</span>mean(dim<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, keepdim<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>))
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>plcc)<span style="color:#f92672">.</span>mean()
-</span></span></code></pre></div><h3 id="24-峰度和偏度">2.4 峰度和偏度<a hidden class="anchor" aria-hidden="true" href="#24-峰度和偏度">#</a></h3>
-<h4 id="241-峰度">2.4.1 峰度<a hidden class="anchor" aria-hidden="true" href="#241-峰度">#</a></h4>
-<p>峰度(peakedness; Kurtosis)又称峰态系数。表征概率密度分布曲线在平均值处峰值高低的特征数，直观上峰度反映了峰部的尖度。其计算方法为随机变量的四阶中心矩与方差平方的比值：</p>
-<p>$$
-Kurt(X)=E[(\frac{X-\mu}{\sigma})^4]=\frac{E[(X-\mu)^4]}{(E[(X-\mu)^2])^2}
-$$</p>
-<p>峰度取值范围为$[1,+\infty)$，直观上峰度<strong>值越大</strong>，概率分布图<strong>越高尖</strong>，<strong>正态分布(=3)</strong> ，<strong>厚尾(&gt;3)</strong> 和 <strong>瘦尾(&lt;3)</strong>。</p>
-<h4 id="242-偏度">2.4.2 偏度<a hidden class="anchor" aria-hidden="true" href="#242-偏度">#</a></h4>
-<p>偏度(Skewness)用来度量随机变量概率分布的不对称性。</p>
-<p>$$
-S=E[(\frac{X-\mu}{\sigma})^3]
-$$</p>
-<p>偏度取值范围为$(-\infty,+\infty)$，当偏度&lt;0时，概率分布图左偏；=0时，概率分布图相对均匀的分布在均值两侧，但不一定对称分布；&gt;0时，概率分布图右偏。</p>
-<div align=center><img src="skewness.png" style="zoom:90%"/></div>
+</ol>
+<h3 id="43-跨数据集测试">4.3 跨数据集测试<a hidden class="anchor" aria-hidden="true" href="#43-跨数据集测试">#</a></h3>
+<p>在VIPL-HR数据集上训练，在MAHNOB-HCI和MMSE-HR数据集上训练。</p>
+<div align=center><img src="test3.png" style="zoom:90%;" /></div>
+<h2 id="44-关键模块分析">4.4 关键模块分析<a hidden class="anchor" aria-hidden="true" href="#44-关键模块分析">#</a></h2>
+<ol>
+<li>
+<p>时空图</p>
+</li>
+<li>
+<p>颜色空间选择</p>
+<div align=center><img src="colorspace.png" style="zoom:90%;" /></div>
+</li>
+<li>
+<p>时序建模</p>
+<p>见RGB视频测试部分。</p>
+</li>
+</ol>
+<h3 id="45-鲁棒性分析">4.5 鲁棒性分析<a hidden class="anchor" aria-hidden="true" href="#45-鲁棒性分析">#</a></h3>
+<ol>
+<li>
+<p>视频压缩</p>
+<div align=center><img src="compress.png" style="zoom:90%;" /></div>
+</li>
+<li>
+<p>光照变化</p>
+<p>昏暗环境下误差变大，且暗光条件下，在NIR视频上训练的模型误差更小。</p>
+</li>
+<li>
+<p>头部运动</p>
+<div align=center><img src="light.png" style="zoom:90%;" /></div>
+<div align=center><img src="nir.png" style="zoom:90%;" /></div>
+</li>
+</ol>
 
 
         </div>
@@ -594,15 +596,10 @@ $$</p>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://Achilles-10.github.io/posts/paper/rhythm/">
-    <span class="title">« 上一页</span>
-    <br>
-    <span>RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation</span>
-  </a>
-  <a class="next" href="https://Achilles-10.github.io/posts/paper/robustppg/">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/ppgsignal/">
     <span class="title">下一页 »</span>
     <br>
-    <span>RobustPPG: camera-based robust heart rate estimation using motion cancellation</span>
+    <span>PPG信号测心率原理与常见信号评价指标</span>
   </a>
 </nav>
 
