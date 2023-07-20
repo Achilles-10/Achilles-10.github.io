@@ -319,30 +319,28 @@ $$
 
   ```python
   class Solution:
-      def exist(self, board: List[List[str]], word: str) -> bool:
-          m,n=len(board),len(board[0])
-          vis=set()
-          directions=[(1,0),(-1,0),(0,1),(0,-1)]
-          def backtracking(i,j,idx):
-              if board[i][j]!=word[idx]:
-                  return False
-              if idx==len(word)-1:
-                  return True
-              vis.add((i,j))
-              flag=False
-              for di,dj in directions:
-                  ii,jj=i+di,j+dj
-                  if 0<=ii<m and 0<=jj<n and (ii,jj) not in vis:
-                      if backtracking(ii,jj,idx+1):
-                          flag=True
-                          break
-              vis.remove((i,j))
-              return flag
-          for i in range(m):
-              for j in range(n):
-                  if backtracking(i,j,0):
-                      return True
-          return False
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        m,n=len(board),len(board[0])
+        vis=set()
+        directions=[(1,0),(-1,0),(0,1),(0,-1)]
+        def backtracking(i,j,idx):
+            if board[i][j]!=word[idx]:
+                return False
+            if idx==len(word)-1:
+                return True
+            vis.add((i,j))
+            for di,dj in directions:
+                ii,jj=i+di,j+dj
+                if 0<=ii<m and 0<=jj<n and (ii,jj) not in vis:
+                    if backtracking(ii,jj,idx+1):
+                        return True
+            vis.remove((i,j))
+            return False
+        for i in range(m):
+            for j in range(n):
+                if backtracking(i,j,0):
+                    return True
+        return False
   ```
 
 ## 10. [剑指 Offer 14- I. 剪绳子(中等)](https://leetcode.cn/problems/jian-sheng-zi-lcof/)
