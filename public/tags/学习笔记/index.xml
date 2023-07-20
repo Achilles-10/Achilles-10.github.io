@@ -6,7 +6,16 @@
     <description>Recent content in 学习笔记 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 13 Jul 2023 14:47:54 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 20 Jul 2023 20:40:16 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>人脸检测器：MTCNN与RetinaFace</title>
+      <link>https://Achilles-10.github.io/posts/tech/face/</link>
+      <pubDate>Thu, 20 Jul 2023 20:40:16 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/face/</guid>
+      <description>MTCNN与RetinaFace的原理和应用场景</description>
+    </item>
+    
     <item>
       <title>PPG信号测心率原理与常见信号评价指标</title>
       <link>https://Achilles-10.github.io/posts/tech/ppgsignal/</link>

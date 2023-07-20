@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>人脸检测器：MTCNN与RetinaFace | 烈烈风中、的博客</title>
+<meta name="keywords" content="学习笔记, 人脸检测">
+<meta name="description" content="MTCNN与RetinaFace的原理和应用场景">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/face/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="人脸检测器：MTCNN与RetinaFace" />
+<meta property="og:description" content="MTCNN与RetinaFace的原理和应用场景" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/face/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/face/cover.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-20T20:40:16+08:00" />
+<meta property="article:modified_time" content="2023-07-20T20:40:16+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/face/cover.png" />
+<meta name="twitter:title" content="人脸检测器：MTCNN与RetinaFace"/>
+<meta name="twitter:description" content="MTCNN与RetinaFace的原理和应用场景"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "👨🏻‍💻 技术",
+          "item": "https://Achilles-10.github.io/posts/tech/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "人脸检测器：MTCNN与RetinaFace",
+      "item": "https://Achilles-10.github.io/posts/tech/face/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "人脸检测器：MTCNN与RetinaFace",
+  "name": "人脸检测器：MTCNN与RetinaFace",
+  "description": "MTCNN与RetinaFace的原理和应用场景",
+  "keywords": [
+    "学习笔记", "人脸检测"
+  ],
+  "articleBody": "比赛应用场景 MTCNN 的速度更快，优先使用 MTCNN 进行检测，对于采帧数量不够的视频再使用准确率和鲁棒性更强的 RetinaFace 检测，若仍然不够，则对成功识别的帧进行过采样。\nRetinaFace由于 FPN 结构的存在，对于小尺寸和大尺寸的人脸检测准确率更高。\nMTCNN( Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks) [paper] [code]\n引言 多任务卷积神经网络（Multi-task convolutional neural network，MTCNN），将人脸检测和人脸关键点检测集成在一个模型中实现。\n如上图所示，MTCNN 总体可分为 P-Net、R-Net 和 O-Net 三层网络。该模型采用候选框+分类器的思想，同时兼顾速度与精度，实现高效的人脸检测。\n滑动窗口 MTCNN中使用了滑动窗口的思想，利用卷积核的滑动方式，对图像进行多次提取。在MTCNN中，滑动窗口是一个Kernel_size=12，Stride=1的卷积核。但在面对被检测物体大小远大于或远小于卷积核大小时，需要用到图像金字塔，在指定缩放比例（论文中为0.7）以及最小图片尺寸后，将原图设置为图像金字塔底层，然后逐层缩放，在图像金字塔的每一层都用滑动窗口扫描，这样就能对各个位置、各个尺寸的物体进行识别。\nMTCNN网络结构 MTCNN 的三层网络结构分别是快速生成候选窗口的 P-Net、进行高精度候选窗口过滤选择的 R-Net 和生成最终边界框与人脸关键点的 O-Net。利用低复杂度的模型快速生成候选框，再利用高复杂度的模型对候选框进行筛选，以此实现速度与精度的共同提升。\n候选网络（Proposal Network, P-Net） 如上图（“MP 表示 max pooling”，图中应为 1$2\\times2$），P-Net 输入为$(12\\times 12\\times 3)$的特征图，经过卷积网络得到$(1\\times1\\times32)$的特征图，然后通过3个$(1\\times1)$卷积得到人脸分类、回归候选框（bounding box 的四个坐标偏移量）和人脸特征点坐标（5 个特征点的 x,y 坐标）。\n原图经过图像金字塔处理后，逐层输入到 P-Net 中，获取候选框后还原至原图大小，进行边框回归（bounding box regression），并利用NMS进行窗口过滤，得到 P-Net 的最终输出。\n精炼网络（Refinement Network, R-Net） R-Net 对候选框进行精筛。R-Net 的输入尺寸为$(24\\times24\\times3)$，经过卷积及最大池化后将特征图形状变为 $(3\\times3\\times64)$，经过flatten和全连接层后得到长度为 128 的向量，再用三个全连接层分别输出人脸分类、边框和特征点信息。\n输出网络（Output Network, O-Net） O-Net 输入为$(48\\times48\\times3)$，数据处理流程和 R-Net 一样， R-Net 和 O-Net 都起到一个对 P-Net 的输出结构进行精筛的作用。\n损失函数 MTCNN 的损失函数为： $$ \\mathcal{L}_{MTCNN}=\\alpha\\mathcal{L}^{det}+\\beta\\mathcal{L}^{box}+\\gamma\\mathcal{L}^{landmark} $$\n其中 $\\mathcal{L}^{det}$ 为人脸分类损失，使用交叉熵损失函数：\n$$ \\mathcal{L}_i^{det}=-\\sum_{i}^{N}{(y_i\\cdot\\log(\\hat{y}_i)+(1-y_i)\\cdot\\log(1-\\hat{y}_i))} $$\n$\\mathcal{L}^{box}$ 计算欧氏距离作为边框回归损失函数： $$ \\mathcal{L}_i^{box}=||\\hat{y}_i^{box}-y_i^{box}||_2^2 $$\n$\\mathcal{L}^{landmark}$ 为人脸特征点坐标损失，使用欧氏距离 $$ \\mathcal{L}_i^{landmark}=||\\hat{y}_i^{landmark}-y_i^{landmark}||^2_2 $$ 在 P、R、O 网络中，三个损失函数的超参数取值有所不同：\nP-Net: $\\alpha:\\beta:\\gamma=1:0.5:0.5$ R-Net: $\\alpha:\\beta:\\gamma=1:0.5:0.5$ O-Net: $\\alpha:\\beta:\\gamma=1:0.5:1$ Hard Sample mining 在训练时，对分类损失进行 Hard Sample mining。在一个batch里，取分类损失最大的前 70% 进行反向传播。不对回归做难样本挖掘是因为回归问题即使是微小的修正都是有用的，但二分类则不然。\n样本选择与训练 在 MTCNN中 的 P、R、O 网络都要同时预测是否为人脸和预测人脸框，在训练时使用以下4类数据样本进行训练：\nNegatives: 与 GT $\\text{IoU} \u003c 0.3$; Positives: $\\text{IoU}\u003e0.65$; Part Faces: $0.4\u003c\\text{IoU}\u003c0.65$; Landmark Faces: 带有5个特征点标签的图片 这4类数据的数据量比例大概为3:1:1:2，不同类型的数据将用于训练不同的分类或回归网络：\n人脸分类：Negatives + Positives; 正样本和负样本易区分，容易使模型收敛； 人脸边框回归：Positive + Part Faces; 负样本中几乎没有人脸，无法训练人脸框； 人脸特征点：Landmark Faces. 在生成训练数据的时候，先从原始数据集的真实人脸框周围随机生成切片（crop patches），根据其与 GT 的 IoU，切图并划分正样本（Positives）、负样本（Negatives）、部分样本（Part Faces）三类数据集，并结合原始数据集中的 GT 和人脸特征点（Landmark Faces）进行切图，获取 Landmark Faces 类数据。而后将所有数据的尺寸修改到 P、R、O 三个网络的输入尺寸。\n在训练过程中应该优先训练 P-Net，再训练 R-Net 和 O-Net 时，可直接使用 P-Net 的预测结果与 GT 人脸框做 IoU，来生成 Positives、 Negatives、 Part Faces 三类数据，这样更符合模型的真实预测情景，有助于提高模型在实际应用场景中的精度。\nPytorch 实现 P-Net import torch import torch.nn as nn import torch.nn.functional as F class PNet(nn.Module): def __init__(self): super(PNet, self).__init__() self.conv_layer = nn.Sequential( nn.Conv2d(3, 10, kernel_size=3, stride=1), # padding='valid' 不填充 nn.PReLU(), nn.MaxPool2d(kernel_size=2, stride=2), # padding='same' 填充 nn.Conv2d(10, 16, kernel_size=3, stride=1), # padding='valid' nn.PReLU(), nn.Conv2d(16, 32, kernel_size=3, stride=1), # padding='valid' nn.PReLU() ) self.conv4_1 = nn.Conv2d(32, 1, kernel_size=1, stride=1) self.conv4_2 = nn.Conv2d(32, 4, kernel_size=1, stride=1) self.conv4_3 = nn.Conv2d(32, 10, kernel_size=1, stride=1) def forward(self, x): x = self.conv_layer(x) cond = F.sigmoid(self.conv4_1(x)) box_offset = self.conv4_2(x) land_offset = self.conv4_3(x) return cond, box_offset, land_offset R-Net import torch import torch.nn as nn import torch.nn.functional as F class RNet(nn.Module): def __init__(self): super(RNet, self).__init__() self.conv_layer = nn.Sequential( nn.Conv2d(3, 28, kernel_size=3, stride=1), nn.PReLU(), nn.MaxPool2d(kernel_size=3, stride=2, padding=1), nn.Conv2d(28, 48, kernel_size=3, stride=1), nn.PReLU(), nn.MaxPool2d(kernel_size=3, stride=2), nn.Conv2d(48, 64, kernel_size=2, stride=1), nn.PReLU() ) self.line1 = nn.Sequential( nn.Linear(64 * 3 * 3, 128), nn.PReLU() ) self.line2_1 = nn.Linear(128, 1) self.line2_2 = nn.Linear(128, 4) self.line2_3 = nn.Linear(128, 10) def forward(self, x): x = self.conv_layer(x) x = x.view(x.size(0), -1) x = self.line1(x) label = F.sigmoid(self.line2_1(x)) box_offset = self.line2_2(x) land_offset = self.line2_3(x) return label, box_offset, land_offset O-Net import torch import torch.nn as nn import torch.nn.functional as F class ONet(nn.Module): def __init__(self): super(ONet, self).__init__() self.conv_layer = nn.Sequential( nn.Conv2d(3, 32, kernel_size=3, stride=1), nn.PReLU(), nn.MaxPool2d(kernel_size=2, stride=2, padding=1), nn.Conv2d(32, 64, kernel_size=3, stride=1), nn.PReLU(), nn.MaxPool2d(kernel_size=3, stride=2), nn.Conv2d(64, 64, kernel_size=3, stride=1), nn.PReLU(), nn.MaxPool2d(kernel_size=2, stride=2), nn.Conv2d(64, 128, kernel_size=2, stride=1), nn.PReLU() ) self.line1 = nn.Sequential( nn.Linear(128 * 3 * 3, 256), nn.PReLU() ) self.line2_1 = nn.Linear(256, 1) self.line2_2 = nn.Linear(256, 4) self.line2_3 = nn.Linear(256, 10) def forward(self, x): x = self.pre_layer(x) x = x.view(x.size(0), -1) x = self.conv5(x) x = self.prelu5(x) label = F.sigmoid(self.line2_1(x)) box_offset = self.line2_2(x) land_offset = self.line2_3(x) return label, box_offset, land_offset RetinaFace: Single-shot Multi-level Face Localisation in the Wild [paper] [code]\n主要贡献 在 WIDER FACE 上添加 landmark 标注，在 hard face 上检测显著改善； 在已有的监督分支上添加 mesh decoder 分支，预测像素级 3D 人脸信息； 在 WIDER FACE 的 hard 级别的测试集中，RetinaFace 超出 SOTA 1.1%； 在 IJB-C 测试集中，RetinaFace 使 Arcface 人脸识别中的结果得到提升 采用轻量级的 backbone，RetinaFace 能在单CPU上实时运行 VGA 分辨率（320*240）的图像 Multi-task Loss $$ \\begin{align*} \\mathcal{L}\u0026=\\mathcal{L}_{cls}(p_i,p_i^*)+\\lambda_1p_i^*\\mathcal{L}_{box}(t_i,t_i^*)\\\\ \u0026+\\lambda_2p_i^*\\mathcal{L}_{pts}(l_i,l_i^*)+\\lambda_3p_i^*\\mathcal{L}_{mesh}(v_i,v_i^*) \\end{align*} $$\n$\\mathcal{L}_{cls}$ 为分类损失，$\\mathcal{L}_{box}$ 表示 bbox 回归损失，$\\mathcal{L}_{pts}$ 表示面部标志点回归损失，$\\mathcal{L}_{mesh}$ 为三维重建损失。\n特征金字塔（Feature Pyramid Networks，FPN） 为了能检测出图像中不同尺寸大小的目标，有以下几种图像算法：\n特征图像金字塔（Featurized image pyramid）：\n生成不同尺寸的图片，每张图片生成各自尺寸的特征图，分别进行预测，最后统计所有尺寸的预测结果。\n单一特征图（Single feature map）\n使用深度神级网络的某一层 feature map 进行预测。靠近网络输入层的特征图包含粗略位置信息，使得目标 bbox 位置不准确；靠近最后一层的特征图会忽略微小物体信息。\n金字塔特征层（Pyramidal feature hierarchy）\n使用不同层次的金字塔层feature map进行预测。\n特征金字塔网络（Feature Pyramid Network）\n对深层特征进行上采样，再与对应层特征进行融合，得到高分辨率、强语义的特征，加强了对特征的提取。\n核心思想：把深层语义传递回浅层，补充浅层的语义信息，从而特到高分辨率和强语义的特征，有利于小目标的检测。\n特征融合 特征融合的流程是，深层特征图经过上采样，浅层特征图经过$1\\times1$卷积对齐通道，两者相加。\n",
+  "wordCount" : "2823",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/tech/face/cover.png","datePublished": "2023-07-20T20:40:16+08:00",
+  "dateModified": "2023-07-20T20:40:16+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/tech/face/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                人脸检测器：MTCNN与RetinaFace
+            </h1>
+            <div class="post-description">
+                MTCNN与RetinaFace的原理和应用场景
+            </div>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 7 月 20 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2823字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>6分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/" style="color: var(--secondary)!important;">人脸检测</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/face/cover.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%af%94%e8%b5%9b%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="比赛应用场景">比赛应用场景</a></li>
+                <li>
+                    <a href="#mtcnn-joint-face-detection-and-alignment-using-multi-task-cascaded-convolutional-networks" aria-label="MTCNN( Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks)">MTCNN( Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks)</a><ul>
+                        
+                <li>
+                    <a href="#%e5%bc%95%e8%a8%80" aria-label="引言">引言</a></li>
+                <li>
+                    <a href="#%e6%bb%91%e5%8a%a8%e7%aa%97%e5%8f%a3" aria-label="滑动窗口">滑动窗口</a></li>
+                <li>
+                    <a href="#mtcnn%e7%bd%91%e7%bb%9c%e7%bb%93%e6%9e%84" aria-label="MTCNN网络结构">MTCNN网络结构</a><ul>
+                        
+                <li>
+                    <a href="#%e5%80%99%e9%80%89%e7%bd%91%e7%bb%9cproposal-network-p-net" aria-label="候选网络（Proposal Network, P-Net）">候选网络（Proposal Network, P-Net）</a></li>
+                <li>
+                    <a href="#%e7%b2%be%e7%82%bc%e7%bd%91%e7%bb%9crefinement-network-r-net" aria-label="精炼网络（Refinement Network, R-Net）">精炼网络（Refinement Network, R-Net）</a></li>
+                <li>
+                    <a href="#%e8%be%93%e5%87%ba%e7%bd%91%e7%bb%9coutput-network-o-net" aria-label="输出网络（Output Network, O-Net）">输出网络（Output Network, O-Net）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" aria-label="损失函数">损失函数</a><ul>
+                        
+                <li>
+                    <a href="#hard-sample-mining" aria-label="Hard Sample mining">Hard Sample mining</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%a0%b7%e6%9c%ac%e9%80%89%e6%8b%a9%e4%b8%8e%e8%ae%ad%e7%bb%83" aria-label="样本选择与训练">样本选择与训练</a></li>
+                <li>
+                    <a href="#pytorch-%e5%ae%9e%e7%8e%b0" aria-label="Pytorch 实现">Pytorch 实现</a><ul>
+                        
+                <li>
+                    <a href="#p-net" aria-label="P-Net">P-Net</a></li>
+                <li>
+                    <a href="#r-net" aria-label="R-Net">R-Net</a></li>
+                <li>
+                    <a href="#o-net" aria-label="O-Net">O-Net</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#retinaface-single-shot-multi-level-face-localisation-in-the-wild" aria-label="RetinaFace: Single-shot Multi-level Face Localisation in the Wild">RetinaFace: Single-shot Multi-level Face Localisation in the Wild</a><ul>
+                        
+                <li>
+                    <a href="#%e4%b8%bb%e8%a6%81%e8%b4%a1%e7%8c%ae" aria-label="主要贡献">主要贡献</a></li>
+                <li>
+                    <a href="#multi-task-loss" aria-label="Multi-task Loss">Multi-task Loss</a></li>
+                <li>
+                    <a href="#%e7%89%b9%e5%be%81%e9%87%91%e5%ad%97%e5%a1%94feature-pyramid-networksfpn" aria-label="特征金字塔（Feature Pyramid Networks，FPN）">特征金字塔（Feature Pyramid Networks，FPN）</a></li>
+                <li>
+                    <a href="#%e7%89%b9%e5%be%81%e8%9e%8d%e5%90%88" aria-label="特征融合">特征融合</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="比赛应用场景">比赛应用场景<a hidden class="anchor" aria-hidden="true" href="#比赛应用场景">#</a></h2>
+<p>MTCNN 的速度更快，优先使用 MTCNN 进行检测，对于采帧数量不够的视频再使用准确率和鲁棒性更强的 RetinaFace 检测，若仍然不够，则对成功识别的帧进行过采样。</p>
+<p>RetinaFace由于 <strong>FPN 结构</strong>的存在，对于<strong>小尺寸</strong>和大尺寸的人脸检测准确率更高。</p>
+<h2 id="mtcnn-joint-face-detection-and-alignment-using-multi-task-cascaded-convolutional-networks">MTCNN( Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks)<a hidden class="anchor" aria-hidden="true" href="#mtcnn-joint-face-detection-and-alignment-using-multi-task-cascaded-convolutional-networks">#</a></h2>
+<p><a href="https://arxiv.org/abs/1604.02878">[paper]</a> <a href="https://github.com/ipazc/mtcnn">[code]</a></p>
+<h3 id="引言">引言<a hidden class="anchor" aria-hidden="true" href="#引言">#</a></h3>
+<p>多任务卷积神经网络（Multi-task convolutional neural network，MTCNN），将人脸检测和人脸关键点检测集成在一个模型中实现。</p>
+<div align=center><img src="mtcnn.png" style="zoom:60%"/></div>
+<p>如上图所示，MTCNN 总体可分为 P-Net、R-Net 和 O-Net 三层网络。该模型采用候选框+分类器的思想，同时兼顾速度与精度，实现高效的人脸检测。</p>
+<h3 id="滑动窗口">滑动窗口<a hidden class="anchor" aria-hidden="true" href="#滑动窗口">#</a></h3>
+<p>MTCNN中使用了滑动窗口的思想，利用卷积核的滑动方式，对图像进行多次提取。在MTCNN中，滑动窗口是一个<code>Kernel_size=12，Stride=1</code>的卷积核。但在面对被检测物体大小远大于或远小于卷积核大小时，需要用到<code>图像金字塔</code>，在指定缩放比例（论文中为0.7）以及最小图片尺寸后，将原图设置为图像金字塔底层，然后逐层缩放，在图像金字塔的每一层都用滑动窗口扫描，这样就能对各个位置、各个尺寸的物体进行识别。</p>
+<h3 id="mtcnn网络结构">MTCNN网络结构<a hidden class="anchor" aria-hidden="true" href="#mtcnn网络结构">#</a></h3>
+<p>MTCNN 的三层网络结构分别是快速生成候选窗口的 P-Net、进行高精度候选窗口过滤选择的 R-Net 和生成最终边界框与人脸关键点的 O-Net。利用低复杂度的模型快速生成候选框，再利用高复杂度的模型对候选框进行筛选，以此实现速度与精度的共同提升。</p>
+<h4 id="候选网络proposal-network-p-net">候选网络（Proposal Network, P-Net）<a hidden class="anchor" aria-hidden="true" href="#候选网络proposal-network-p-net">#</a></h4>
+<div align=center><img src="pnet.png" style="zoom:40%"/></div>
+<p>如上图（&ldquo;MP 表示 max pooling&rdquo;，图中应为 1$2\times2$），P-Net 输入为$(12\times 12\times 3)$的特征图，经过卷积网络得到$(1\times1\times32)$的特征图，然后通过3个$(1\times1)$卷积得到人脸分类、回归候选框（bounding box 的四个坐标偏移量）和人脸特征点坐标（5 个特征点的 x,y 坐标）。</p>
+<p>原图经过图像金字塔处理后，逐层输入到 P-Net 中，获取候选框后还原至原图大小，进行边框回归（bounding box regression），并利用NMS进行窗口过滤，得到 P-Net 的最终输出。</p>
+<h4 id="精炼网络refinement-network-r-net">精炼网络（Refinement Network, R-Net）<a hidden class="anchor" aria-hidden="true" href="#精炼网络refinement-network-r-net">#</a></h4>
+<div align=center><img src="rnet.png" style="zoom:55%"/></div>
+<p>R-Net 对候选框进行精筛。R-Net 的输入尺寸为$(24\times24\times3)$，经过卷积及最大池化后将特征图形状变为 $(3\times3\times64)$，经过flatten和全连接层后得到长度为 128 的向量，再用三个全连接层分别输出人脸分类、边框和特征点信息。</p>
+<h4 id="输出网络output-network-o-net">输出网络（Output Network, O-Net）<a hidden class="anchor" aria-hidden="true" href="#输出网络output-network-o-net">#</a></h4>
+<div align=center><img src="onet.png" style="zoom:50%"/></div>
+<p>O-Net 输入为$(48\times48\times3)$，数据处理流程和 R-Net 一样， R-Net 和 O-Net 都起到一个对 P-Net 的输出结构进行精筛的作用。</p>
+<h3 id="损失函数">损失函数<a hidden class="anchor" aria-hidden="true" href="#损失函数">#</a></h3>
+<p>MTCNN 的损失函数为：
+$$
+\mathcal{L}_{MTCNN}=\alpha\mathcal{L}^{det}+\beta\mathcal{L}^{box}+\gamma\mathcal{L}^{landmark}
+$$</p>
+<p>其中 $\mathcal{L}^{det}$ 为人脸分类损失，使用交叉熵损失函数：</p>
+<p>$$
+\mathcal{L}_i^{det}=-\sum_{i}^{N}{(y_i\cdot\log(\hat{y}_i)+(1-y_i)\cdot\log(1-\hat{y}_i))}
+$$</p>
+<p>$\mathcal{L}^{box}$ 计算欧氏距离作为边框回归损失函数：
+$$
+\mathcal{L}_i^{box}=||\hat{y}_i^{box}-y_i^{box}||_2^2
+$$</p>
+<p>$\mathcal{L}^{landmark}$ 为人脸特征点坐标损失，使用欧氏距离
+$$
+\mathcal{L}_i^{landmark}=||\hat{y}_i^{landmark}-y_i^{landmark}||^2_2
+$$
+在 P、R、O 网络中，三个损失函数的超参数取值有所不同：</p>
+<ul>
+<li>P-Net: $\alpha:\beta:\gamma=1:0.5:0.5$</li>
+<li>R-Net: $\alpha:\beta:\gamma=1:0.5:0.5$</li>
+<li>O-Net: $\alpha:\beta:\gamma=1:0.5:1$</li>
+</ul>
+<h4 id="hard-sample-mining">Hard Sample mining<a hidden class="anchor" aria-hidden="true" href="#hard-sample-mining">#</a></h4>
+<p>在训练时，对分类损失进行 <strong>Hard Sample mining</strong>。在一个batch里，取分类损失最大的前 70% 进行反向传播。不对回归做难样本挖掘是因为回归问题即使是微小的修正都是有用的，但二分类则不然。</p>
+<h3 id="样本选择与训练">样本选择与训练<a hidden class="anchor" aria-hidden="true" href="#样本选择与训练">#</a></h3>
+<p>在 MTCNN中 的 P、R、O 网络都要同时预测是否为人脸和预测人脸框，在训练时使用以下4类数据样本进行训练：</p>
+<ol>
+<li>Negatives: 与 GT $\text{IoU} &lt; 0.3$;</li>
+<li>Positives: $\text{IoU}&gt;0.65$;</li>
+<li>Part Faces: $0.4&lt;\text{IoU}&lt;0.65$;</li>
+<li>Landmark Faces: 带有5个特征点标签的图片</li>
+</ol>
+<p>这4类数据的数据量比例大概为3:1:1:2，不同类型的数据将用于训练不同的分类或回归网络：</p>
+<ol>
+<li>人脸分类：Negatives + Positives; 正样本和负样本易区分，容易使模型收敛；</li>
+<li>人脸边框回归：Positive + Part Faces; 负样本中几乎没有人脸，无法训练人脸框；</li>
+<li>人脸特征点：Landmark Faces.</li>
+</ol>
+<p>在生成训练数据的时候，先从原始数据集的真实人脸框周围随机生成切片（crop patches），根据其与 GT 的 IoU，切图并划分正样本（Positives）、负样本（Negatives）、部分样本（Part Faces）三类数据集，并结合原始数据集中的 GT 和人脸特征点（Landmark Faces）进行切图，获取 Landmark Faces 类数据。而后将所有数据的尺寸修改到 P、R、O 三个网络的输入尺寸。</p>
+<p>在训练过程中应该优先训练 P-Net，再训练 R-Net 和 O-Net 时，可直接使用 P-Net 的预测结果与 GT 人脸框做 IoU，来生成 Positives、 Negatives、 Part Faces 三类数据，这样更符合模型的真实预测情景，有助于提高模型在实际应用场景中的精度。</p>
+<h3 id="pytorch-实现">Pytorch 实现<a hidden class="anchor" aria-hidden="true" href="#pytorch-实现">#</a></h3>
+<h4 id="p-net">P-Net<a hidden class="anchor" aria-hidden="true" href="#p-net">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PNet</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(PNet, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv_layer <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">10</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># padding=&#39;valid&#39; 不填充</span>
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU(),  
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>), <span style="color:#75715e"># padding=&#39;same&#39; 填充</span>
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">16</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># padding=&#39;valid&#39;</span>
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU(),  
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">32</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), <span style="color:#75715e"># padding=&#39;valid&#39;</span>
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU()  
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv4_1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">1</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv4_2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">4</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv4_3 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">10</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_layer(x)
+</span></span><span style="display:flex;"><span>        cond <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>sigmoid(self<span style="color:#f92672">.</span>conv4_1(x))
+</span></span><span style="display:flex;"><span>        box_offset <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv4_2(x)
+</span></span><span style="display:flex;"><span>        land_offset <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv4_3(x)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> cond, box_offset, land_offset
+</span></span></code></pre></div><h4 id="r-net">R-Net<a hidden class="anchor" aria-hidden="true" href="#r-net">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RNet</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(RNet, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv_layer <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">28</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU(), 
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">28</span>, <span style="color:#ae81ff">48</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU(),  
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">48</span>, <span style="color:#ae81ff">64</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU()  
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>line1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">64</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">128</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU()
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>line2_1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>line2_2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>line2_3 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span>, <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv_layer(x)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(x<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>), <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>line1(x)
+</span></span><span style="display:flex;"><span>        label <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>sigmoid(self<span style="color:#f92672">.</span>line2_1(x))
+</span></span><span style="display:flex;"><span>        box_offset <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>line2_2(x)
+</span></span><span style="display:flex;"><span>        land_offset <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>line2_3(x)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> label, box_offset, land_offset
+</span></span></code></pre></div><h4 id="o-net">O-Net<a hidden class="anchor" aria-hidden="true" href="#o-net">#</a></h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn <span style="color:#66d9ef">as</span> nn
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch.nn.functional <span style="color:#66d9ef">as</span> F
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ONet</span>(nn<span style="color:#f92672">.</span>Module):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        super(ONet, self)<span style="color:#f92672">.</span>__init__()
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>conv_layer <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">32</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU(),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>), 
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">32</span>, <span style="color:#ae81ff">64</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU(), 
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">64</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU(),  
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>MaxPool2d(kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Conv2d(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">128</span>, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU()  
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>line1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Sequential(
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">128</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">256</span>),
+</span></span><span style="display:flex;"><span>            nn<span style="color:#f92672">.</span>PReLU() 
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>line2_1 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>line2_2 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>line2_3 <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>Linear(<span style="color:#ae81ff">256</span>, <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>pre_layer(x)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> x<span style="color:#f92672">.</span>view(x<span style="color:#f92672">.</span>size(<span style="color:#ae81ff">0</span>), <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>conv5(x)
+</span></span><span style="display:flex;"><span>        x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>prelu5(x)
+</span></span><span style="display:flex;"><span>        label <span style="color:#f92672">=</span> F<span style="color:#f92672">.</span>sigmoid(self<span style="color:#f92672">.</span>line2_1(x))
+</span></span><span style="display:flex;"><span>        box_offset <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>line2_2(x)
+</span></span><span style="display:flex;"><span>        land_offset <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>line2_3(x)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> label, box_offset, land_offset
+</span></span></code></pre></div><h2 id="retinaface-single-shot-multi-level-face-localisation-in-the-wild">RetinaFace: Single-shot Multi-level Face Localisation in the Wild<a hidden class="anchor" aria-hidden="true" href="#retinaface-single-shot-multi-level-face-localisation-in-the-wild">#</a></h2>
+<p><a href="https://arxiv.org/abs/1905.00641">[paper]</a> <a href="https://github.com/deepinsight/insightface/tree/master/detection/retinaface">[code]</a></p>
+<h3 id="主要贡献">主要贡献<a hidden class="anchor" aria-hidden="true" href="#主要贡献">#</a></h3>
+<ol>
+<li>在 WIDER FACE 上添加 landmark 标注，在 hard face 上检测显著改善；</li>
+<li>在已有的监督分支上添加 mesh decoder 分支，预测像素级 3D 人脸信息；</li>
+<li>在 WIDER FACE 的 hard 级别的测试集中，RetinaFace 超出 SOTA 1.1%；</li>
+<li>在 IJB-C 测试集中，RetinaFace 使 Arcface 人脸识别中的结果得到提升</li>
+<li>采用轻量级的 backbone，RetinaFace 能在单CPU上实时运行 VGA 分辨率（320*240）的图像</li>
+</ol>
+<div align=center><img src="retina.png" style="zoom:50%"/></div>
+<h3 id="multi-task-loss">Multi-task Loss<a hidden class="anchor" aria-hidden="true" href="#multi-task-loss">#</a></h3>
+<p>$$
+\begin{align*}
+\mathcal{L}&amp;=\mathcal{L}_{cls}(p_i,p_i^*)+\lambda_1p_i^*\mathcal{L}_{box}(t_i,t_i^*)\\
+&amp;+\lambda_2p_i^*\mathcal{L}_{pts}(l_i,l_i^*)+\lambda_3p_i^*\mathcal{L}_{mesh}(v_i,v_i^*)
+\end{align*}
+$$</p>
+<p>$\mathcal{L}_{cls}$ 为分类损失，$\mathcal{L}_{box}$ 表示 bbox 回归损失，$\mathcal{L}_{pts}$ 表示面部标志点回归损失，$\mathcal{L}_{mesh}$ 为三维重建损失。</p>
+<h3 id="特征金字塔feature-pyramid-networksfpn">特征金字塔（Feature Pyramid Networks，FPN）<a hidden class="anchor" aria-hidden="true" href="#特征金字塔feature-pyramid-networksfpn">#</a></h3>
+<p>为了能检测出图像中不同尺寸大小的目标，有以下几种图像算法：</p>
+<ol>
+<li>
+<p>特征图像金字塔（Featurized image pyramid）：</p>
+<p>生成不同尺寸的图片，每张图片生成各自尺寸的特征图，分别进行预测，最后统计所有尺寸的预测结果。</p>
+<div align=center><img src="fip.png" style="zoom:50%"/></div>
+</li>
+<li>
+<p>单一特征图（Single feature map）</p>
+<p>使用深度神级网络的某一层 feature map 进行预测。靠近网络输入层的特征图包含粗略位置信息，使得目标 bbox 位置不准确；靠近最后一层的特征图会忽略微小物体信息。</p>
+<div align=center><img src="sfm.png" style="zoom:70%"/></div>
+</li>
+<li>
+<p>金字塔特征层（Pyramidal feature hierarchy）</p>
+<p>使用不同层次的金字塔层feature map进行预测。</p>
+<div align=center><img src="pfh.png" style="zoom:70%"/></div>
+</li>
+<li>
+<p>特征金字塔网络（Feature Pyramid Network）</p>
+<p>对深层特征进行上采样，再与对应层特征进行融合，得到高分辨率、强语义的特征，加强了对特征的提取。</p>
+<div align=center><img src="fpn.png" style="zoom:55%"/></div>
+<p>核心思想：把深层语义传递回浅层，补充浅层的语义信息，从而特到高分辨率和强语义的特征，有利于小目标的检测。</p>
+</li>
+</ol>
+<h3 id="特征融合">特征融合<a hidden class="anchor" aria-hidden="true" href="#特征融合">#</a></h3>
+<div align=center><img src="fusion.png" style="zoom:50%"/></div>
+<p>特征融合的流程是，深层特征图经过上采样，浅层特征图经过$1\times1$卷积对齐通道，两者相加。</p>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/paper/rhythm/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>RhythmNet: End-to-end Heart Rate Estimation from Face via Spatial-temporal Representation</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>

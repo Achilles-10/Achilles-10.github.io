@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>人脸检测 on 烈烈风中、的博客</title>
+    <link>https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/</link>
+    <description>Recent content in 人脸检测 on 烈烈风中、的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 20 Jul 2023 20:40:16 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>人脸检测器：MTCNN与RetinaFace</title>
+      <link>https://Achilles-10.github.io/posts/tech/face/</link>
+      <pubDate>Thu, 20 Jul 2023 20:40:16 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/face/</guid>
+      <description>MTCNN与RetinaFace的原理和应用场景</description>
+    </item>
+    
+  </channel>
+</rss>
