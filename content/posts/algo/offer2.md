@@ -8,7 +8,7 @@ author: ["Achilles"]
 categories: # 没有分类界面可以不填写
 - 
 tags: ["算法题","学习笔记"] # 标签
-description: "leetcode 剑指offer 26~47题提示清单"
+description: "leetcode 剑指offer 26~45题提示清单"
 weight:
 slug: ""
 draft: false # 是否为草稿
@@ -449,7 +449,7 @@ cover:
   <div align=center><img src="44_1.png" /></div>
   
   1. 确定n所在的数字的位数digit：循环执行n减去一位数，两位数。。。的数位量count，直到`n<=count`；
-  2. 确定n所在的数字num：`num=start+(n-1)//2`；
+  2. 确定n所在的数字num：`num=start+(n-1)//digit`；
   3. 确定n是num种的哪一数位，返回结果：`srt(num)[(n-1)%digit]`
   
   ```python
@@ -570,53 +570,3 @@ cover:
               if v: return k
           return ' '
   ```
-
-## 46. [剑指 Offer 51. 数组中的逆序对(困难)](https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
-
-<div align=center><img src="51.png" /></div>
-
-* **归并排序**：在归并排序的合并阶段，每当遇到`左子数组当前元素>右子数组当前元素`，意味着`左子数组当前元素至末尾元素`与`右子树组当前元素`构成了若干`逆序对`
-
-  <div align=center><img src="51_1.png" /></div>
-
-  ```python
-  class Solution:
-      def reversePairs(self, nums: List[int]) -> int:
-          def merge(l,r):
-              if l>=r: return 0
-              m=l+(r-l)//2
-              res = merge(l,m)+merge(m+1,r)
-              tmp[l:r+1]=nums[l:r+1]
-              i,j=l,m+1
-              for k in range(l,r+1):
-                  if i==m+1:
-                      nums[k]=tmp[j]
-                      j+=1
-                  elif j==r+1 or tmp[i]<=tmp[j]:
-                      nums[k]=tmp[i]
-                      i+=1
-                  else:
-                      nums[k]=tmp[j]
-                      res+= m-i+1
-                      j+=1
-              return res
-          tmp=[0]*len(nums)
-          return merge(0,len(nums)-1)
-  ```
-
-## 47. [剑指 Offer 52. 两个链表的第一个公共节点(简单)](https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/)
-
-<div align=center><img src="52.png" /></div>
-
-* **双指针**：当指针为空时，转移到另一个链表表头；当两个指针相遇时，即为第一个公共节点
-
-  ```python
-  class Solution:
-      def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
-          pA,pB=headA,headB
-          while pA!=pB:
-              pA=pA.next if pA else headB
-              pB=pB.next if pB else headA
-          return pA
-  ```
-

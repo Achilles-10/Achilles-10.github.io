@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>剑指offer复习笔记(3) | 烈烈风中、的博客</title>
 <meta name="keywords" content="算法题, 学习笔记">
-<meta name="description" content="leetcode 剑指offer 48~72题提示清单">
+<meta name="description" content="leetcode 剑指offer 46~70题提示清单">
 <meta name="author" content="Achilles">
 <link rel="canonical" href="https://Achilles-10.github.io/posts/algo/offer3/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
@@ -97,7 +97,7 @@ var _hmt = _hmt || [];
 </script>
 
 <meta property="og:title" content="剑指offer复习笔记(3)" />
-<meta property="og:description" content="leetcode 剑指offer 48~72题提示清单" />
+<meta property="og:description" content="leetcode 剑指offer 46~70题提示清单" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://Achilles-10.github.io/posts/algo/offer3/" />
 <meta property="og:image" content="https://Achilles-10.github.io/posts/algo/offer1/cover.jpg" /><meta property="article:section" content="posts" />
@@ -107,7 +107,7 @@ var _hmt = _hmt || [];
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://Achilles-10.github.io/posts/algo/offer1/cover.jpg" />
 <meta name="twitter:title" content="剑指offer复习笔记(3)"/>
-<meta name="twitter:description" content="leetcode 剑指offer 48~72题提示清单"/>
+<meta name="twitter:description" content="leetcode 剑指offer 46~70题提示清单"/>
 
 
 <script type="application/ld+json">
@@ -144,11 +144,11 @@ var _hmt = _hmt || [];
   "@type": "BlogPosting",
   "headline": "剑指offer复习笔记(3)",
   "name": "剑指offer复习笔记(3)",
-  "description": "leetcode 剑指offer 48~72题提示清单",
+  "description": "leetcode 剑指offer 46~70题提示清单",
   "keywords": [
     "算法题", "学习笔记"
   ],
-  "articleBody": "48. 剑指 Offer 51. 数组中的逆序对(困难) 归并排序：\n归并排序的合并阶段，每当遇到左子数组元素\u003e右子数组元素时，表示左子数组当前元素到末尾元素与右子数组当前元素构成若干逆序对。\n在归并时用一个tmp辅助数组来暂存nums[i:j]内的元素。\nclass Solution: def reversePairs(self, nums: List[int]) -\u003e int: def merge(l,r): if l\u003e=r: return 0 m=l+(r-l)//2 res = merge(l,m)+merge(m+1,r) tmp[l:r+1]=nums[l:r+1] i,j=l,m+1 for k in range(l,r+1): if i==m+1: nums[k]=tmp[j] j+=1 elif j==r+1 or tmp[i]\u003c=tmp[j]: nums[k]=tmp[i] i+=1 else: nums[k]=tmp[j] res+= m-i+1 j+=1 return res tmp=[0]*len(nums) return merge(0,len(nums)-1) 49. 剑指 Offer 52. 两个链表的第一个公共节点(简单) 双指针：当指针遍历到链表末尾时，转移到另一链表表头，直到p1=p2。\nclass Solution: def getIntersectionNode(self, headA: ListNode, headB: ListNode) -\u003e ListNode: A, B = headA, headB while A != B: A = A.next if A else headB B = B.next if B else headA return A 50. 剑指 Offer 53 - I. 在排序数组中查找数字 I(简单) 二分法：\n分别找到目标数字左边和右边的第一个元素索引left和right，答案为right-left-1。\nhelper函数旨在查找数字tar在nums中的插入位置，若存在值相同的元素，则插入右边。\nclass Solution: def search(self, nums: [int], target: int) -\u003e int: def helper(tar): i, j = 0, len(nums) - 1 while i \u003c= j: m = (i + j) // 2 if nums[m] \u003c= tar: i = m + 1 else: j = m - 1 return i return helper(target) - helper(target - 1) 51. 剑指 Offer 53 - II. 0～n-1中缺失的数字(简单) 二分查找：\n数组可以划分为左子数组：nums[i]=i和右子数组：nums[i]!=i。缺失数字等于右子数组的首位元素索引。\nclass Solution: def missingNumber(self, nums: List[int]) -\u003e int: i, j = 0, len(nums) - 1 while i \u003c= j: m = (i + j) // 2 if nums[m] == m: i = m + 1 else: j = m - 1 return i 52. 剑指 Offer 54. 二叉搜索树的第k大节点(简单) 中序遍历：\n二叉搜索树的中序遍历的倒序为递减序列。\nclass Solution: def kthLargest(self, root: TreeNode, k: int) -\u003e int: def dfs(root): if not root: return dfs(root.right) if self.k == 0: return self.k -= 1 if self.k == 0: self.res = root.val dfs(root.left) self.k = k dfs(root) return self.res 53. 剑指 Offer 55 - I. 二叉树的深度(简单) 层序遍历：\n每遍历一层深度+1\nclass Solution: def maxDepth(self, root: TreeNode) -\u003e int: if not root: return 0 queue, res = [root], 0 while queue: tmp = [] for node in queue: if node.left: tmp.append(node.left) if node.right: tmp.append(node.right) queue = tmp res += 1 return res DFS：\n树的深度=max(左深度，右深度)+1\nclass Solution: def maxDepth(self, root: TreeNode) -\u003e int: if not root: return 0 return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1 54. 剑指 Offer 55 - II. 平衡二叉树(简单) 树的深度=max(左深度，右深度)+1\n后序遍历+剪枝（自底向上）：当某子树不是平衡树时直接剪枝\nclass Solution: def isBalanced(self, root: TreeNode) -\u003e bool: def recur(root): if not root: return 0 left = recur(root.left) if left == -1: return -1 right = recur(root.right) if right == -1: return -1 return max(left, right) + 1 if abs(left - right) \u003c= 1 else -1 return recur(root) != -1 先序遍历+判断深度（自顶向下）：当所有子树都是平衡树则是平衡树，产生很多重复计算\nclass Solution: def isBalanced(self, root: TreeNode) -\u003e bool: if not root: return True return abs(self.depth(root.left) - self.depth(root.right)) \u003c= 1 and \\ self.isBalanced(root.left) and self.isBalanced(root.right) def depth(self, root): if not root: return 0 return max(self.depth(root.left), self.depth(root.right)) + 1 55. 剑指 Offer 56 - I. 数组中数字出现的次数(中等) 分组异或：\n对所有数字进行一次异或，得到两个出现一次的数字的异或值。\n在异或结果中找到任意为1的位。\n根据这一位对所有的数字进行分组。在每个组内进行异或操作，得到两个数字。\nclass Solution: def singleNumbers(self, nums: List[int]) -\u003e List[int]: x,y,n,m=0,0,0,1 for num in nums: n^=num while n\u0026m==0: m\u003c\u003c=1 for num in nums: if num\u0026m: x^=num else: y^=num return x,y 56. 剑指 Offer 56 - II. 数组中数字出现的次数 II(中等) 遍历统计：\nclass Solution: def singleNumber(self, nums: List[int]) -\u003e int: counts = [0] * 32 for num in nums: for j in range(32): counts[j] += num \u0026 1 num \u003e\u003e= 1 res, m = 0, 3 for i in range(32): res \u003c\u003c= 1 res |= counts[31 - i] % m return res if counts[31] % m == 0 else ~(res ^ 0xffffffff) 有限状态自动机：\n考虑数字的二进制形式，对于出现三次的数字，各二进制位出现的次数都是3的倍数。统计所有数字的各二进制位中1的出现次数，并对3求余，结果则为只出现一次的数字。\n计算one的方法：one = one^n \u0026 ~two\n利用计算后的one计算two：two = two^n \u0026 ~one\nclass Solution: def singleNumber(self, nums: List[int]) -\u003e int: ones, twos = 0, 0 for num in nums: ones = ones ^ num \u0026 ~twos twos = twos ^ num \u0026 ~ones return ones 57. 剑指 Offer 57. 和为s的两个数字(简单) 双指针：\nclass Solution: def twoSum(self, nums: List[int], target: int) -\u003e List[int]: i, j = 0, len(nums) - 1 while i \u003c j: s = nums[i] + nums[j] if s \u003e target: j -= 1 elif s \u003c target: i += 1 else: return nums[i], nums[j] return [] 58. 剑指 Offer 57 - II. 和为s的连续正数序列(简单) ",
+  "articleBody": "46. 剑指 Offer 51. 数组中的逆序对(困难) 归并排序：\n归并排序的合并阶段，每当遇到左子数组元素\u003e右子数组元素时，表示左子数组当前元素到末尾元素与右子数组当前元素构成若干逆序对。\n在归并时用一个tmp辅助数组来暂存nums[i:j]内的元素。\nclass Solution: def reversePairs(self, nums: List[int]) -\u003e int: def merge(l,r): if l\u003e=r: return 0 m=l+(r-l)//2 res = merge(l,m)+merge(m+1,r) tmp[l:r+1]=nums[l:r+1] i,j=l,m+1 for k in range(l,r+1): if i==m+1: nums[k]=tmp[j] j+=1 elif j==r+1 or tmp[i]\u003c=tmp[j]: nums[k]=tmp[i] i+=1 else: nums[k]=tmp[j] res+= m-i+1 j+=1 return res tmp=[0]*len(nums) return merge(0,len(nums)-1) 47. 剑指 Offer 52. 两个链表的第一个公共节点(简单) 双指针：当指针遍历到链表末尾时，转移到另一链表表头，直到p1=p2。\nclass Solution: def getIntersectionNode(self, headA: ListNode, headB: ListNode) -\u003e ListNode: A, B = headA, headB while A != B: A = A.next if A else headB B = B.next if B else headA return A 48. 剑指 Offer 53 - I. 在排序数组中查找数字 I(简单) 二分法：\n分别找到目标数字左边和右边的第一个元素索引left和right，答案为right-left-1。\nhelper函数旨在查找数字tar在nums中的插入位置，若存在值相同的元素，则插入右边。\nclass Solution: def search(self, nums: [int], target: int) -\u003e int: def helper(tar): i, j = 0, len(nums) - 1 while i \u003c= j: m = (i + j) // 2 if nums[m] \u003c= tar: i = m + 1 else: j = m - 1 return i return helper(target) - helper(target - 1) 49. 剑指 Offer 53 - II. 0～n-1中缺失的数字(简单) 二分查找：\n数组可以划分为左子数组：nums[i]=i和右子数组：nums[i]!=i。缺失数字等于右子数组的首位元素索引。\nclass Solution: def missingNumber(self, nums: List[int]) -\u003e int: i, j = 0, len(nums) - 1 while i \u003c= j: m = (i + j) // 2 if nums[m] == m: i = m + 1 else: j = m - 1 return i 50. 剑指 Offer 54. 二叉搜索树的第k大节点(简单) 中序遍历：\n二叉搜索树的中序遍历的倒序为递减序列。\nclass Solution: def kthLargest(self, root: TreeNode, k: int) -\u003e int: def dfs(root): if not root: return dfs(root.right) if self.k == 0: return self.k -= 1 if self.k == 0: self.res = root.val dfs(root.left) self.k = k dfs(root) return self.res 51. 剑指 Offer 55 - I. 二叉树的深度(简单) 层序遍历：\n每遍历一层深度+1\nclass Solution: def maxDepth(self, root: TreeNode) -\u003e int: if not root: return 0 queue, res = [root], 0 while queue: tmp = [] for node in queue: if node.left: tmp.append(node.left) if node.right: tmp.append(node.right) queue = tmp res += 1 return res DFS：\n树的深度=max(左深度，右深度)+1\nclass Solution: def maxDepth(self, root: TreeNode) -\u003e int: if not root: return 0 return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1 52. 剑指 Offer 55 - II. 平衡二叉树(简单) 树的深度=max(左深度，右深度)+1\n后序遍历+剪枝（自底向上）：当某子树不是平衡树时直接剪枝\nclass Solution: def isBalanced(self, root: TreeNode) -\u003e bool: def recur(root): if not root: return 0 left = recur(root.left) if left == -1: return -1 right = recur(root.right) if right == -1: return -1 return max(left, right) + 1 if abs(left - right) \u003c= 1 else -1 return recur(root) != -1 先序遍历+判断深度（自顶向下）：当所有子树都是平衡树则是平衡树，产生很多重复计算\nclass Solution: def isBalanced(self, root: TreeNode) -\u003e bool: if not root: return True return abs(self.depth(root.left) - self.depth(root.right)) \u003c= 1 and \\ self.isBalanced(root.left) and self.isBalanced(root.right) def depth(self, root): if not root: return 0 return max(self.depth(root.left), self.depth(root.right)) + 1 53. 剑指 Offer 56 - I. 数组中数字出现的次数(中等) 分组异或：\n对所有数字进行一次异或，得到两个出现一次的数字的异或值。\n在异或结果中找到任意为1的位。\n根据这一位对所有的数字进行分组。在每个组内进行异或操作，得到两个数字。\nclass Solution: def singleNumbers(self, nums: List[int]) -\u003e List[int]: x,y,n,m=0,0,0,1 for num in nums: n^=num while n\u0026m==0: m\u003c\u003c=1 for num in nums: if num\u0026m: x^=num else: y^=num return x,y 54. 剑指 Offer 56 - II. 数组中数字出现的次数 II(中等) 遍历统计：\nclass Solution: def singleNumber(self, nums: List[int]) -\u003e int: counts = [0] * 32 for num in nums: for j in range(32): counts[j] += num \u0026 1 num \u003e\u003e= 1 res, m = 0, 3 for i in range(32): res \u003c\u003c= 1 res |= counts[31 - i] % m return res if counts[31] % m == 0 else ~(res ^ 0xffffffff) 有限状态自动机：\n考虑数字的二进制形式，对于出现三次的数字，各二进制位出现的次数都是3的倍数。统计所有数字的各二进制位中1的出现次数，并对3求余，结果则为只出现一次的数字。\n计算one的方法：one = one^n \u0026 ~two\n利用计算后的one计算two：two = two^n \u0026 ~one\nclass Solution: def singleNumber(self, nums: List[int]) -\u003e int: ones, twos = 0, 0 for num in nums: ones = ones ^ num \u0026 ~twos twos = twos ^ num \u0026 ~ones return ones 55. 剑指 Offer 57. 和为s的两个数字(简单) 双指针：\nclass Solution: def twoSum(self, nums: List[int], target: int) -\u003e List[int]: i, j = 0, len(nums) - 1 while i \u003c j: s = nums[i] + nums[j] if s \u003e target: j -= 1 elif s \u003c target: i += 1 else: return nums[i], nums[j] return [] 56. 剑指 Offer 57 - II. 和为s的连续正数序列(简单) ",
   "wordCount" : "1398",
   "inLanguage": "en",
   "image":"https://Achilles-10.github.io/posts/algo/offer1/cover.jpg","datePublished": "2023-05-02T09:29:43+08:00",
@@ -278,7 +278,7 @@ var _hmt = _hmt || [];
                 剑指offer复习笔记(3)
             </h1>
             <div class="post-description">
-                leetcode 剑指offer 48~72题提示清单
+                leetcode 剑指offer 46~70题提示清单
             </div>
             <div class="post-meta"><style>
     i[id*="post_meta_style"] {
@@ -396,55 +396,55 @@ var _hmt = _hmt || [];
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#48-%e5%89%91%e6%8c%87-offer-51-%e6%95%b0%e7%bb%84%e4%b8%ad%e7%9a%84%e9%80%86%e5%ba%8f%e5%af%b9%e5%9b%b0%e9%9a%behttpsleetcodecnproblemsshu-zu-zhong-de-ni-xu-dui-lcof" aria-label="48. 剑指 Offer 51. 数组中的逆序对(困难)">48. <a href="https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/">剑指 Offer 51. 数组中的逆序对(困难)</a></a></li>
+                    <a href="#46-%e5%89%91%e6%8c%87-offer-51-%e6%95%b0%e7%bb%84%e4%b8%ad%e7%9a%84%e9%80%86%e5%ba%8f%e5%af%b9%e5%9b%b0%e9%9a%behttpsleetcodecnproblemsshu-zu-zhong-de-ni-xu-dui-lcof" aria-label="46. 剑指 Offer 51. 数组中的逆序对(困难)">46. <a href="https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/">剑指 Offer 51. 数组中的逆序对(困难)</a></a></li>
                 <li>
-                    <a href="#49-%e5%89%91%e6%8c%87-offer-52-%e4%b8%a4%e4%b8%aa%e9%93%be%e8%a1%a8%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e5%85%ac%e5%85%b1%e8%8a%82%e7%82%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemsliang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof" aria-label="49. 剑指 Offer 52. 两个链表的第一个公共节点(简单)">49. <a href="https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">剑指 Offer 52. 两个链表的第一个公共节点(简单)</a></a></li>
+                    <a href="#47-%e5%89%91%e6%8c%87-offer-52-%e4%b8%a4%e4%b8%aa%e9%93%be%e8%a1%a8%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e5%85%ac%e5%85%b1%e8%8a%82%e7%82%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemsliang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof" aria-label="47. 剑指 Offer 52. 两个链表的第一个公共节点(简单)">47. <a href="https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">剑指 Offer 52. 两个链表的第一个公共节点(简单)</a></a></li>
                 <li>
-                    <a href="#50-%e5%89%91%e6%8c%87-offer-53---i-%e5%9c%a8%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84%e4%b8%ad%e6%9f%a5%e6%89%be%e6%95%b0%e5%ad%97-i%e7%ae%80%e5%8d%95httpsleetcodecnproblemszai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof" aria-label="50. 剑指 Offer 53 - I. 在排序数组中查找数字 I(简单)">50. <a href="https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/">剑指 Offer 53 - I. 在排序数组中查找数字 I(简单)</a></a></li>
+                    <a href="#48-%e5%89%91%e6%8c%87-offer-53---i-%e5%9c%a8%e6%8e%92%e5%ba%8f%e6%95%b0%e7%bb%84%e4%b8%ad%e6%9f%a5%e6%89%be%e6%95%b0%e5%ad%97-i%e7%ae%80%e5%8d%95httpsleetcodecnproblemszai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof" aria-label="48. 剑指 Offer 53 - I. 在排序数组中查找数字 I(简单)">48. <a href="https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/">剑指 Offer 53 - I. 在排序数组中查找数字 I(简单)</a></a></li>
                 <li>
-                    <a href="#51-%e5%89%91%e6%8c%87-offer-53---ii-0n-1%e4%b8%ad%e7%bc%ba%e5%a4%b1%e7%9a%84%e6%95%b0%e5%ad%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemsque-shi-de-shu-zi-lcof" aria-label="51. 剑指 Offer 53 - II. 0～n-1中缺失的数字(简单)">51. <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">剑指 Offer 53 - II. 0～n-1中缺失的数字(简单)</a></a></li>
+                    <a href="#49-%e5%89%91%e6%8c%87-offer-53---ii-0n-1%e4%b8%ad%e7%bc%ba%e5%a4%b1%e7%9a%84%e6%95%b0%e5%ad%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemsque-shi-de-shu-zi-lcof" aria-label="49. 剑指 Offer 53 - II. 0～n-1中缺失的数字(简单)">49. <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">剑指 Offer 53 - II. 0～n-1中缺失的数字(简单)</a></a></li>
                 <li>
-                    <a href="#52-%e5%89%91%e6%8c%87-offer-54-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e7%ac%ack%e5%a4%a7%e8%8a%82%e7%82%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-sou-suo-shu-de-di-kda-jie-dian-lcof" aria-label="52. 剑指 Offer 54. 二叉搜索树的第k大节点(简单)">52. <a href="https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/">剑指 Offer 54. 二叉搜索树的第k大节点(简单)</a></a></li>
+                    <a href="#50-%e5%89%91%e6%8c%87-offer-54-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e7%ac%ack%e5%a4%a7%e8%8a%82%e7%82%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-sou-suo-shu-de-di-kda-jie-dian-lcof" aria-label="50. 剑指 Offer 54. 二叉搜索树的第k大节点(简单)">50. <a href="https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/">剑指 Offer 54. 二叉搜索树的第k大节点(简单)</a></a></li>
                 <li>
-                    <a href="#53-%e5%89%91%e6%8c%87-offer-55---i-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e6%b7%b1%e5%ba%a6%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-shu-de-shen-du-lcof" aria-label="53. 剑指 Offer 55 - I. 二叉树的深度(简单)">53. <a href="https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/">剑指 Offer 55 - I. 二叉树的深度(简单)</a></a></li>
+                    <a href="#51-%e5%89%91%e6%8c%87-offer-55---i-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e6%b7%b1%e5%ba%a6%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-shu-de-shen-du-lcof" aria-label="51. 剑指 Offer 55 - I. 二叉树的深度(简单)">51. <a href="https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/">剑指 Offer 55 - I. 二叉树的深度(简单)</a></a></li>
                 <li>
-                    <a href="#54-%e5%89%91%e6%8c%87-offer-55---ii-%e5%b9%b3%e8%a1%a1%e4%ba%8c%e5%8f%89%e6%a0%91%e7%ae%80%e5%8d%95httpsleetcodecnproblemsping-heng-er-cha-shu-lcof" aria-label="54. 剑指 Offer 55 - II. 平衡二叉树(简单)">54. <a href="https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/">剑指 Offer 55 - II. 平衡二叉树(简单)</a></a></li>
+                    <a href="#52-%e5%89%91%e6%8c%87-offer-55---ii-%e5%b9%b3%e8%a1%a1%e4%ba%8c%e5%8f%89%e6%a0%91%e7%ae%80%e5%8d%95httpsleetcodecnproblemsping-heng-er-cha-shu-lcof" aria-label="52. 剑指 Offer 55 - II. 平衡二叉树(简单)">52. <a href="https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/">剑指 Offer 55 - II. 平衡二叉树(简单)</a></a></li>
                 <li>
-                    <a href="#55-%e5%89%91%e6%8c%87-offer-56---i-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof" aria-label="55. 剑指 Offer 56 - I. 数组中数字出现的次数(中等)">55. <a href="https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/">剑指 Offer 56 - I. 数组中数字出现的次数(中等)</a></a></li>
+                    <a href="#53-%e5%89%91%e6%8c%87-offer-56---i-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof" aria-label="53. 剑指 Offer 56 - I. 数组中数字出现的次数(中等)">53. <a href="https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/">剑指 Offer 56 - I. 数组中数字出现的次数(中等)</a></a></li>
                 <li>
-                    <a href="#56-%e5%89%91%e6%8c%87-offer-56---ii-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0-ii%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof" aria-label="56. 剑指 Offer 56 - II. 数组中数字出现的次数 II(中等)">56. <a href="https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/">剑指 Offer 56 - II. 数组中数字出现的次数 II(中等)</a></a></li>
+                    <a href="#54-%e5%89%91%e6%8c%87-offer-56---ii-%e6%95%b0%e7%bb%84%e4%b8%ad%e6%95%b0%e5%ad%97%e5%87%ba%e7%8e%b0%e7%9a%84%e6%ac%a1%e6%95%b0-ii%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof" aria-label="54. 剑指 Offer 56 - II. 数组中数字出现的次数 II(中等)">54. <a href="https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/">剑指 Offer 56 - II. 数组中数字出现的次数 II(中等)</a></a></li>
                 <li>
-                    <a href="#57-%e5%89%91%e6%8c%87-offer-57-%e5%92%8c%e4%b8%bas%e7%9a%84%e4%b8%a4%e4%b8%aa%e6%95%b0%e5%ad%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemshe-wei-sde-liang-ge-shu-zi-lcof" aria-label="57. 剑指 Offer 57. 和为s的两个数字(简单)">57. <a href="https://leetcode.cn/problems/he-wei-sde-liang-ge-shu-zi-lcof/">剑指 Offer 57. 和为s的两个数字(简单)</a></a></li>
+                    <a href="#55-%e5%89%91%e6%8c%87-offer-57-%e5%92%8c%e4%b8%bas%e7%9a%84%e4%b8%a4%e4%b8%aa%e6%95%b0%e5%ad%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemshe-wei-sde-liang-ge-shu-zi-lcof" aria-label="55. 剑指 Offer 57. 和为s的两个数字(简单)">55. <a href="https://leetcode.cn/problems/he-wei-sde-liang-ge-shu-zi-lcof/">剑指 Offer 57. 和为s的两个数字(简单)</a></a></li>
                 <li>
-                    <a href="#58-%e5%89%91%e6%8c%87-offer-57---ii-%e5%92%8c%e4%b8%bas%e7%9a%84%e8%bf%9e%e7%bb%ad%e6%ad%a3%e6%95%b0%e5%ba%8f%e5%88%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemshe-wei-sde-lian-xu-zheng-shu-xu-lie-lcof" aria-label="58. 剑指 Offer 57 - II. 和为s的连续正数序列(简单)">58. <a href="https://leetcode.cn/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/">剑指 Offer 57 - II. 和为s的连续正数序列(简单)</a></a></li>
+                    <a href="#56-%e5%89%91%e6%8c%87-offer-57---ii-%e5%92%8c%e4%b8%bas%e7%9a%84%e8%bf%9e%e7%bb%ad%e6%ad%a3%e6%95%b0%e5%ba%8f%e5%88%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemshe-wei-sde-lian-xu-zheng-shu-xu-lie-lcof" aria-label="56. 剑指 Offer 57 - II. 和为s的连续正数序列(简单)">56. <a href="https://leetcode.cn/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/">剑指 Offer 57 - II. 和为s的连续正数序列(简单)</a></a></li>
                 <li>
-                    <a href="#59-%e5%89%91%e6%8c%87-offer-58---i-%e7%bf%bb%e8%bd%ac%e5%8d%95%e8%af%8d%e9%a1%ba%e5%ba%8f%e7%ae%80%e5%8d%95httpsleetcodecnproblemsfan-zhuan-dan-ci-shun-xu-lcof" aria-label="59. 剑指 Offer 58 - I. 翻转单词顺序(简单)">59. <a href="https://leetcode.cn/problems/fan-zhuan-dan-ci-shun-xu-lcof/">剑指 Offer 58 - I. 翻转单词顺序(简单)</a></a></li>
+                    <a href="#57-%e5%89%91%e6%8c%87-offer-58---i-%e7%bf%bb%e8%bd%ac%e5%8d%95%e8%af%8d%e9%a1%ba%e5%ba%8f%e7%ae%80%e5%8d%95httpsleetcodecnproblemsfan-zhuan-dan-ci-shun-xu-lcof" aria-label="57. 剑指 Offer 58 - I. 翻转单词顺序(简单)">57. <a href="https://leetcode.cn/problems/fan-zhuan-dan-ci-shun-xu-lcof/">剑指 Offer 58 - I. 翻转单词顺序(简单)</a></a></li>
                 <li>
-                    <a href="#60-%e5%89%91%e6%8c%87-offer-58---ii-%e5%b7%a6%e6%97%8b%e8%bd%ac%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%ae%80%e5%8d%95httpsleetcodecnproblemszuo-xuan-zhuan-zi-fu-chuan-lcof" aria-label="60. 剑指 Offer 58 - II. 左旋转字符串(简单)">60. <a href="https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/">剑指 Offer 58 - II. 左旋转字符串(简单)</a></a></li>
+                    <a href="#58-%e5%89%91%e6%8c%87-offer-58---ii-%e5%b7%a6%e6%97%8b%e8%bd%ac%e5%ad%97%e7%ac%a6%e4%b8%b2%e7%ae%80%e5%8d%95httpsleetcodecnproblemszuo-xuan-zhuan-zi-fu-chuan-lcof" aria-label="58. 剑指 Offer 58 - II. 左旋转字符串(简单)">58. <a href="https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/">剑指 Offer 58 - II. 左旋转字符串(简单)</a></a></li>
                 <li>
-                    <a href="#61-%e5%89%91%e6%8c%87-offer-59---i-%e6%bb%91%e5%8a%a8%e7%aa%97%e5%8f%a3%e7%9a%84%e6%9c%80%e5%a4%a7%e5%80%bc%e5%9b%b0%e9%9a%behttpsleetcodecnproblemshua-dong-chuang-kou-de-zui-da-zhi-lcof" aria-label="61. 剑指 Offer 59 - I. 滑动窗口的最大值(困难)">61. <a href="https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/">剑指 Offer 59 - I. 滑动窗口的最大值(困难)</a></a></li>
+                    <a href="#59-%e5%89%91%e6%8c%87-offer-59---i-%e6%bb%91%e5%8a%a8%e7%aa%97%e5%8f%a3%e7%9a%84%e6%9c%80%e5%a4%a7%e5%80%bc%e5%9b%b0%e9%9a%behttpsleetcodecnproblemshua-dong-chuang-kou-de-zui-da-zhi-lcof" aria-label="59. 剑指 Offer 59 - I. 滑动窗口的最大值(困难)">59. <a href="https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/">剑指 Offer 59 - I. 滑动窗口的最大值(困难)</a></a></li>
                 <li>
-                    <a href="#62-%e5%89%91%e6%8c%87-offer-59---ii-%e9%98%9f%e5%88%97%e7%9a%84%e6%9c%80%e5%a4%a7%e5%80%bc%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsdui-lie-de-zui-da-zhi-lcof" aria-label="62. 剑指 Offer 59 - II. 队列的最大值(中等)">62. <a href="https://leetcode.cn/problems/dui-lie-de-zui-da-zhi-lcof/">剑指 Offer 59 - II. 队列的最大值(中等)</a></a></li>
+                    <a href="#60-%e5%89%91%e6%8c%87-offer-59---ii-%e9%98%9f%e5%88%97%e7%9a%84%e6%9c%80%e5%a4%a7%e5%80%bc%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsdui-lie-de-zui-da-zhi-lcof" aria-label="60. 剑指 Offer 59 - II. 队列的最大值(中等)">60. <a href="https://leetcode.cn/problems/dui-lie-de-zui-da-zhi-lcof/">剑指 Offer 59 - II. 队列的最大值(中等)</a></a></li>
                 <li>
-                    <a href="#63-%e5%89%91%e6%8c%87-offer-60-n%e4%b8%aa%e9%aa%b0%e5%ad%90%e7%9a%84%e7%82%b9%e6%95%b0%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsnge-tou-zi-de-dian-shu-lcof" aria-label="63. 剑指 Offer 60. n个骰子的点数(中等)">63. <a href="https://leetcode.cn/problems/nge-tou-zi-de-dian-shu-lcof/">剑指 Offer 60. n个骰子的点数(中等)</a></a></li>
+                    <a href="#61-%e5%89%91%e6%8c%87-offer-60-n%e4%b8%aa%e9%aa%b0%e5%ad%90%e7%9a%84%e7%82%b9%e6%95%b0%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsnge-tou-zi-de-dian-shu-lcof" aria-label="61. 剑指 Offer 60. n个骰子的点数(中等)">61. <a href="https://leetcode.cn/problems/nge-tou-zi-de-dian-shu-lcof/">剑指 Offer 60. n个骰子的点数(中等)</a></a></li>
                 <li>
-                    <a href="#64-%e5%89%91%e6%8c%87-offer-61-%e6%89%91%e5%85%8b%e7%89%8c%e4%b8%ad%e7%9a%84%e9%a1%ba%e5%ad%90%e7%ae%80%e5%8d%95httpsleetcodecnproblemsbu-ke-pai-zhong-de-shun-zi-lcof" aria-label="64. 剑指 Offer 61. 扑克牌中的顺子(简单)">64. <a href="https://leetcode.cn/problems/bu-ke-pai-zhong-de-shun-zi-lcof/">剑指 Offer 61. 扑克牌中的顺子(简单)</a></a></li>
+                    <a href="#62-%e5%89%91%e6%8c%87-offer-61-%e6%89%91%e5%85%8b%e7%89%8c%e4%b8%ad%e7%9a%84%e9%a1%ba%e5%ad%90%e7%ae%80%e5%8d%95httpsleetcodecnproblemsbu-ke-pai-zhong-de-shun-zi-lcof" aria-label="62. 剑指 Offer 61. 扑克牌中的顺子(简单)">62. <a href="https://leetcode.cn/problems/bu-ke-pai-zhong-de-shun-zi-lcof/">剑指 Offer 61. 扑克牌中的顺子(简单)</a></a></li>
                 <li>
-                    <a href="#65-%e5%89%91%e6%8c%87-offer-62-%e5%9c%86%e5%9c%88%e4%b8%ad%e6%9c%80%e5%90%8e%e5%89%a9%e4%b8%8b%e7%9a%84%e6%95%b0%e5%ad%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemsyuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof" aria-label="65. 剑指 Offer 62. 圆圈中最后剩下的数字(简单)">65. <a href="https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/">剑指 Offer 62. 圆圈中最后剩下的数字(简单)</a></a></li>
+                    <a href="#63-%e5%89%91%e6%8c%87-offer-62-%e5%9c%86%e5%9c%88%e4%b8%ad%e6%9c%80%e5%90%8e%e5%89%a9%e4%b8%8b%e7%9a%84%e6%95%b0%e5%ad%97%e7%ae%80%e5%8d%95httpsleetcodecnproblemsyuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof" aria-label="63. 剑指 Offer 62. 圆圈中最后剩下的数字(简单)">63. <a href="https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/">剑指 Offer 62. 圆圈中最后剩下的数字(简单)</a></a></li>
                 <li>
-                    <a href="#66-%e5%89%91%e6%8c%87-offer-63-%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e5%a4%a7%e5%88%a9%e6%b6%a6%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsgu-piao-de-zui-da-li-run-lcof" aria-label="66. 剑指 Offer 63. 股票的最大利润(中等)">66. <a href="https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/">剑指 Offer 63. 股票的最大利润(中等)</a></a></li>
+                    <a href="#64-%e5%89%91%e6%8c%87-offer-63-%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e5%a4%a7%e5%88%a9%e6%b6%a6%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsgu-piao-de-zui-da-li-run-lcof" aria-label="64. 剑指 Offer 63. 股票的最大利润(中等)">64. <a href="https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/">剑指 Offer 63. 股票的最大利润(中等)</a></a></li>
                 <li>
-                    <a href="#67-%e5%89%91%e6%8c%87-offer-64-%e6%b1%8212n%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsqiu-12n-lcof" aria-label="67. 剑指 Offer 64. 求1&#43;2&#43;…&#43;n(中等)">67. <a href="https://leetcode.cn/problems/qiu-12n-lcof/">剑指 Offer 64. 求1+2+…+n(中等)</a></a></li>
+                    <a href="#65-%e5%89%91%e6%8c%87-offer-64-%e6%b1%8212n%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsqiu-12n-lcof" aria-label="65. 剑指 Offer 64. 求1&#43;2&#43;…&#43;n(中等)">65. <a href="https://leetcode.cn/problems/qiu-12n-lcof/">剑指 Offer 64. 求1+2+…+n(中等)</a></a></li>
                 <li>
-                    <a href="#68-%e5%89%91%e6%8c%87-offer-65-%e4%b8%8d%e7%94%a8%e5%8a%a0%e5%87%8f%e4%b9%98%e9%99%a4%e5%81%9a%e5%8a%a0%e6%b3%95%e7%ae%80%e5%8d%95httpsleetcodecnproblemsbu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof" aria-label="68. 剑指 Offer 65. 不用加减乘除做加法(简单)">68. <a href="https://leetcode.cn/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/">剑指 Offer 65. 不用加减乘除做加法(简单)</a></a></li>
+                    <a href="#66-%e5%89%91%e6%8c%87-offer-65-%e4%b8%8d%e7%94%a8%e5%8a%a0%e5%87%8f%e4%b9%98%e9%99%a4%e5%81%9a%e5%8a%a0%e6%b3%95%e7%ae%80%e5%8d%95httpsleetcodecnproblemsbu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof" aria-label="66. 剑指 Offer 65. 不用加减乘除做加法(简单)">66. <a href="https://leetcode.cn/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/">剑指 Offer 65. 不用加减乘除做加法(简单)</a></a></li>
                 <li>
-                    <a href="#69-%e5%89%91%e6%8c%87-offer-66-%e6%9e%84%e5%bb%ba%e4%b9%98%e7%a7%af%e6%95%b0%e7%bb%84%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsgou-jian-cheng-ji-shu-zu-lcof" aria-label="69. 剑指 Offer 66. 构建乘积数组(中等)">69. <a href="https://leetcode.cn/problems/gou-jian-cheng-ji-shu-zu-lcof/">剑指 Offer 66. 构建乘积数组(中等)</a></a></li>
+                    <a href="#67-%e5%89%91%e6%8c%87-offer-66-%e6%9e%84%e5%bb%ba%e4%b9%98%e7%a7%af%e6%95%b0%e7%bb%84%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsgou-jian-cheng-ji-shu-zu-lcof" aria-label="67. 剑指 Offer 66. 构建乘积数组(中等)">67. <a href="https://leetcode.cn/problems/gou-jian-cheng-ji-shu-zu-lcof/">剑指 Offer 66. 构建乘积数组(中等)</a></a></li>
                 <li>
-                    <a href="#70-%e5%89%91%e6%8c%87-offer-67-%e6%8a%8a%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b4%e6%95%b0%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof" aria-label="70. 剑指 Offer 67. 把字符串转换成整数(中等)">70. <a href="https://leetcode.cn/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/">剑指 Offer 67. 把字符串转换成整数(中等)</a></a></li>
+                    <a href="#68-%e5%89%91%e6%8c%87-offer-67-%e6%8a%8a%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%bd%ac%e6%8d%a2%e6%88%90%e6%95%b4%e6%95%b0%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof" aria-label="68. 剑指 Offer 67. 把字符串转换成整数(中等)">68. <a href="https://leetcode.cn/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/">剑指 Offer 67. 把字符串转换成整数(中等)</a></a></li>
                 <li>
-                    <a href="#71-%e5%89%91%e6%8c%87-offer-68---i-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof" aria-label="71. 剑指 Offer 68 - I. 二叉搜索树的最近公共祖先(简单)">71. <a href="https://leetcode.cn/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - I. 二叉搜索树的最近公共祖先(简单)</a></a></li>
+                    <a href="#69-%e5%89%91%e6%8c%87-offer-68---i-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof" aria-label="69. 剑指 Offer 68 - I. 二叉搜索树的最近公共祖先(简单)">69. <a href="https://leetcode.cn/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - I. 二叉搜索树的最近公共祖先(简单)</a></a></li>
                 <li>
-                    <a href="#72-%e5%89%91%e6%8c%87-offer-68---ii-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof" aria-label="72. 剑指 Offer 68 - II. 二叉树的最近公共祖先(简单)">72. <a href="https://leetcode.cn/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - II. 二叉树的最近公共祖先(简单)</a></a>
+                    <a href="#70-%e5%89%91%e6%8c%87-offer-68---ii-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e6%9c%80%e8%bf%91%e5%85%ac%e5%85%b1%e7%a5%96%e5%85%88%e7%ae%80%e5%8d%95httpsleetcodecnproblemser-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof" aria-label="70. 剑指 Offer 68 - II. 二叉树的最近公共祖先(简单)">70. <a href="https://leetcode.cn/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - II. 二叉树的最近公共祖先(简单)</a></a>
                 </li>
             </ul>
         </div>
@@ -509,7 +509,7 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h2 id="48-剑指-offer-51-数组中的逆序对困难httpsleetcodecnproblemsshu-zu-zhong-de-ni-xu-dui-lcof">48. <a href="https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/">剑指 Offer 51. 数组中的逆序对(困难)</a><a hidden class="anchor" aria-hidden="true" href="#48-剑指-offer-51-数组中的逆序对困难httpsleetcodecnproblemsshu-zu-zhong-de-ni-xu-dui-lcof">#</a></h2>
+        <div class="post-content"><h2 id="46-剑指-offer-51-数组中的逆序对困难httpsleetcodecnproblemsshu-zu-zhong-de-ni-xu-dui-lcof">46. <a href="https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/">剑指 Offer 51. 数组中的逆序对(困难)</a><a hidden class="anchor" aria-hidden="true" href="#46-剑指-offer-51-数组中的逆序对困难httpsleetcodecnproblemsshu-zu-zhong-de-ni-xu-dui-lcof">#</a></h2>
 <div align=center><img src="51.png" style="zoom:70%;"/></div>
 <ul>
 <li>
@@ -541,7 +541,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> merge(<span style="color:#ae81ff">0</span>,len(nums)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="49-剑指-offer-52-两个链表的第一个公共节点简单httpsleetcodecnproblemsliang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof">49. <a href="https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">剑指 Offer 52. 两个链表的第一个公共节点(简单)</a><a hidden class="anchor" aria-hidden="true" href="#49-剑指-offer-52-两个链表的第一个公共节点简单httpsleetcodecnproblemsliang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof">#</a></h2>
+<h2 id="47-剑指-offer-52-两个链表的第一个公共节点简单httpsleetcodecnproblemsliang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof">47. <a href="https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/">剑指 Offer 52. 两个链表的第一个公共节点(简单)</a><a hidden class="anchor" aria-hidden="true" href="#47-剑指-offer-52-两个链表的第一个公共节点简单httpsleetcodecnproblemsliang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof">#</a></h2>
 <div align=center><img src="52.png" style="zoom:70%;"/></div>
 <ul>
 <li>
@@ -555,7 +555,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> A
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="50-剑指-offer-53---i-在排序数组中查找数字-i简单httpsleetcodecnproblemszai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof">50. <a href="https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/">剑指 Offer 53 - I. 在排序数组中查找数字 I(简单)</a><a hidden class="anchor" aria-hidden="true" href="#50-剑指-offer-53---i-在排序数组中查找数字-i简单httpsleetcodecnproblemszai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof">#</a></h2>
+<h2 id="48-剑指-offer-53---i-在排序数组中查找数字-i简单httpsleetcodecnproblemszai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof">48. <a href="https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/">剑指 Offer 53 - I. 在排序数组中查找数字 I(简单)</a><a hidden class="anchor" aria-hidden="true" href="#48-剑指-offer-53---i-在排序数组中查找数字-i简单httpsleetcodecnproblemszai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof">#</a></h2>
 <div align=center><img src="533.png" style="zoom:80%;"/></div>
 <ul>
 <li>
@@ -574,7 +574,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> helper(target) <span style="color:#f92672">-</span> helper(target <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="51-剑指-offer-53---ii-0n-1中缺失的数字简单httpsleetcodecnproblemsque-shi-de-shu-zi-lcof">51. <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">剑指 Offer 53 - II. 0～n-1中缺失的数字(简单)</a><a hidden class="anchor" aria-hidden="true" href="#51-剑指-offer-53---ii-0n-1中缺失的数字简单httpsleetcodecnproblemsque-shi-de-shu-zi-lcof">#</a></h2>
+<h2 id="49-剑指-offer-53---ii-0n-1中缺失的数字简单httpsleetcodecnproblemsque-shi-de-shu-zi-lcof">49. <a href="https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/">剑指 Offer 53 - II. 0～n-1中缺失的数字(简单)</a><a hidden class="anchor" aria-hidden="true" href="#49-剑指-offer-53---ii-0n-1中缺失的数字简单httpsleetcodecnproblemsque-shi-de-shu-zi-lcof">#</a></h2>
 <div align=center><img src="532.png" style="zoom:80%;"/></div>
 <ul>
 <li>
@@ -590,7 +590,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> i
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="52-剑指-offer-54-二叉搜索树的第k大节点简单httpsleetcodecnproblemser-cha-sou-suo-shu-de-di-kda-jie-dian-lcof">52. <a href="https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/">剑指 Offer 54. 二叉搜索树的第k大节点(简单)</a><a hidden class="anchor" aria-hidden="true" href="#52-剑指-offer-54-二叉搜索树的第k大节点简单httpsleetcodecnproblemser-cha-sou-suo-shu-de-di-kda-jie-dian-lcof">#</a></h2>
+<h2 id="50-剑指-offer-54-二叉搜索树的第k大节点简单httpsleetcodecnproblemser-cha-sou-suo-shu-de-di-kda-jie-dian-lcof">50. <a href="https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/">剑指 Offer 54. 二叉搜索树的第k大节点(简单)</a><a hidden class="anchor" aria-hidden="true" href="#50-剑指-offer-54-二叉搜索树的第k大节点简单httpsleetcodecnproblemser-cha-sou-suo-shu-de-di-kda-jie-dian-lcof">#</a></h2>
 <div align=center><img src="54.png" style="zoom:80%;"/></div>
 <ul>
 <li>
@@ -610,7 +610,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>res
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="53-剑指-offer-55---i-二叉树的深度简单httpsleetcodecnproblemser-cha-shu-de-shen-du-lcof">53. <a href="https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/">剑指 Offer 55 - I. 二叉树的深度(简单)</a><a hidden class="anchor" aria-hidden="true" href="#53-剑指-offer-55---i-二叉树的深度简单httpsleetcodecnproblemser-cha-shu-de-shen-du-lcof">#</a></h2>
+<h2 id="51-剑指-offer-55---i-二叉树的深度简单httpsleetcodecnproblemser-cha-shu-de-shen-du-lcof">51. <a href="https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/">剑指 Offer 55 - I. 二叉树的深度(简单)</a><a hidden class="anchor" aria-hidden="true" href="#51-剑指-offer-55---i-二叉树的深度简单httpsleetcodecnproblemser-cha-shu-de-shen-du-lcof">#</a></h2>
 <div align=center><img src="55.png" style="zoom:80%;"/></div>
 <ul>
 <li>
@@ -638,7 +638,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> max(self<span style="color:#f92672">.</span>maxDepth(root<span style="color:#f92672">.</span>left), self<span style="color:#f92672">.</span>maxDepth(root<span style="color:#f92672">.</span>right)) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="54-剑指-offer-55---ii-平衡二叉树简单httpsleetcodecnproblemsping-heng-er-cha-shu-lcof">54. <a href="https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/">剑指 Offer 55 - II. 平衡二叉树(简单)</a><a hidden class="anchor" aria-hidden="true" href="#54-剑指-offer-55---ii-平衡二叉树简单httpsleetcodecnproblemsping-heng-er-cha-shu-lcof">#</a></h2>
+<h2 id="52-剑指-offer-55---ii-平衡二叉树简单httpsleetcodecnproblemsping-heng-er-cha-shu-lcof">52. <a href="https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/">剑指 Offer 55 - II. 平衡二叉树(简单)</a><a hidden class="anchor" aria-hidden="true" href="#52-剑指-offer-55---ii-平衡二叉树简单httpsleetcodecnproblemsping-heng-er-cha-shu-lcof">#</a></h2>
 <div align=center><img src="552.png" style="zoom:70%;"/></div>
 <p>树的深度=max(左深度，右深度)+1</p>
 <ul>
@@ -667,7 +667,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> max(self<span style="color:#f92672">.</span>depth(root<span style="color:#f92672">.</span>left), self<span style="color:#f92672">.</span>depth(root<span style="color:#f92672">.</span>right)) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="55-剑指-offer-56---i-数组中数字出现的次数中等httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof">55. <a href="https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/">剑指 Offer 56 - I. 数组中数字出现的次数(中等)</a><a hidden class="anchor" aria-hidden="true" href="#55-剑指-offer-56---i-数组中数字出现的次数中等httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof">#</a></h2>
+<h2 id="53-剑指-offer-56---i-数组中数字出现的次数中等httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof">53. <a href="https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/">剑指 Offer 56 - I. 数组中数字出现的次数(中等)</a><a hidden class="anchor" aria-hidden="true" href="#53-剑指-offer-56---i-数组中数字出现的次数中等httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof">#</a></h2>
 <div align=center><img src="561.png" style="zoom:70%;"/></div>
 <ul>
 <li>
@@ -686,7 +686,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x,y
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="56-剑指-offer-56---ii-数组中数字出现的次数-ii中等httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof">56. <a href="https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/">剑指 Offer 56 - II. 数组中数字出现的次数 II(中等)</a><a hidden class="anchor" aria-hidden="true" href="#56-剑指-offer-56---ii-数组中数字出现的次数-ii中等httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof">#</a></h2>
+<h2 id="54-剑指-offer-56---ii-数组中数字出现的次数-ii中等httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof">54. <a href="https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/">剑指 Offer 56 - II. 数组中数字出现的次数 II(中等)</a><a hidden class="anchor" aria-hidden="true" href="#54-剑指-offer-56---ii-数组中数字出现的次数-ii中等httpsleetcodecnproblemsshu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof">#</a></h2>
 <div align=center><img src="562.png" style="zoom:70%;"/></div>
 <ul>
 <li>
@@ -720,7 +720,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ones
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="57-剑指-offer-57-和为s的两个数字简单httpsleetcodecnproblemshe-wei-sde-liang-ge-shu-zi-lcof">57. <a href="https://leetcode.cn/problems/he-wei-sde-liang-ge-shu-zi-lcof/">剑指 Offer 57. 和为s的两个数字(简单)</a><a hidden class="anchor" aria-hidden="true" href="#57-剑指-offer-57-和为s的两个数字简单httpsleetcodecnproblemshe-wei-sde-liang-ge-shu-zi-lcof">#</a></h2>
+<h2 id="55-剑指-offer-57-和为s的两个数字简单httpsleetcodecnproblemshe-wei-sde-liang-ge-shu-zi-lcof">55. <a href="https://leetcode.cn/problems/he-wei-sde-liang-ge-shu-zi-lcof/">剑指 Offer 57. 和为s的两个数字(简单)</a><a hidden class="anchor" aria-hidden="true" href="#55-剑指-offer-57-和为s的两个数字简单httpsleetcodecnproblemshe-wei-sde-liang-ge-shu-zi-lcof">#</a></h2>
 <div align=center><img src="57.png" style="zoom:70%;"/></div>
 <ul>
 <li>
@@ -736,7 +736,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> []
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="58-剑指-offer-57---ii-和为s的连续正数序列简单httpsleetcodecnproblemshe-wei-sde-lian-xu-zheng-shu-xu-lie-lcof">58. <a href="https://leetcode.cn/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/">剑指 Offer 57 - II. 和为s的连续正数序列(简单)</a><a hidden class="anchor" aria-hidden="true" href="#58-剑指-offer-57---ii-和为s的连续正数序列简单httpsleetcodecnproblemshe-wei-sde-lian-xu-zheng-shu-xu-lie-lcof">#</a></h2>
+<h2 id="56-剑指-offer-57---ii-和为s的连续正数序列简单httpsleetcodecnproblemshe-wei-sde-lian-xu-zheng-shu-xu-lie-lcof">56. <a href="https://leetcode.cn/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/">剑指 Offer 57 - II. 和为s的连续正数序列(简单)</a><a hidden class="anchor" aria-hidden="true" href="#56-剑指-offer-57---ii-和为s的连续正数序列简单httpsleetcodecnproblemshe-wei-sde-lian-xu-zheng-shu-xu-lie-lcof">#</a></h2>
 <div align=center><img src="572.png""/></div>
 <ul>
 <li>
@@ -752,7 +752,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> res
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="59-剑指-offer-58---i-翻转单词顺序简单httpsleetcodecnproblemsfan-zhuan-dan-ci-shun-xu-lcof">59. <a href="https://leetcode.cn/problems/fan-zhuan-dan-ci-shun-xu-lcof/">剑指 Offer 58 - I. 翻转单词顺序(简单)</a><a hidden class="anchor" aria-hidden="true" href="#59-剑指-offer-58---i-翻转单词顺序简单httpsleetcodecnproblemsfan-zhuan-dan-ci-shun-xu-lcof">#</a></h2>
+<h2 id="57-剑指-offer-58---i-翻转单词顺序简单httpsleetcodecnproblemsfan-zhuan-dan-ci-shun-xu-lcof">57. <a href="https://leetcode.cn/problems/fan-zhuan-dan-ci-shun-xu-lcof/">剑指 Offer 58 - I. 翻转单词顺序(简单)</a><a hidden class="anchor" aria-hidden="true" href="#57-剑指-offer-58---i-翻转单词顺序简单httpsleetcodecnproblemsfan-zhuan-dan-ci-shun-xu-lcof">#</a></h2>
 <div align=center><img src="581.png"/></div>
 <ul>
 <li>
@@ -777,7 +777,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39; &#39;</span><span style="color:#f92672">.</span>join(res) <span style="color:#75715e"># 拼接并返回</span>
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="60-剑指-offer-58---ii-左旋转字符串简单httpsleetcodecnproblemszuo-xuan-zhuan-zi-fu-chuan-lcof">60. <a href="https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/">剑指 Offer 58 - II. 左旋转字符串(简单)</a><a hidden class="anchor" aria-hidden="true" href="#60-剑指-offer-58---ii-左旋转字符串简单httpsleetcodecnproblemszuo-xuan-zhuan-zi-fu-chuan-lcof">#</a></h2>
+<h2 id="58-剑指-offer-58---ii-左旋转字符串简单httpsleetcodecnproblemszuo-xuan-zhuan-zi-fu-chuan-lcof">58. <a href="https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/">剑指 Offer 58 - II. 左旋转字符串(简单)</a><a hidden class="anchor" aria-hidden="true" href="#58-剑指-offer-58---ii-左旋转字符串简单httpsleetcodecnproblemszuo-xuan-zhuan-zi-fu-chuan-lcof">#</a></h2>
 <div align=center><img src="582.png"/></div>
 <ul>
 <li>
@@ -805,7 +805,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> res
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="61-剑指-offer-59---i-滑动窗口的最大值困难httpsleetcodecnproblemshua-dong-chuang-kou-de-zui-da-zhi-lcof">61. <a href="https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/">剑指 Offer 59 - I. 滑动窗口的最大值(困难)</a><a hidden class="anchor" aria-hidden="true" href="#61-剑指-offer-59---i-滑动窗口的最大值困难httpsleetcodecnproblemshua-dong-chuang-kou-de-zui-da-zhi-lcof">#</a></h2>
+<h2 id="59-剑指-offer-59---i-滑动窗口的最大值困难httpsleetcodecnproblemshua-dong-chuang-kou-de-zui-da-zhi-lcof">59. <a href="https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/">剑指 Offer 59 - I. 滑动窗口的最大值(困难)</a><a hidden class="anchor" aria-hidden="true" href="#59-剑指-offer-59---i-滑动窗口的最大值困难httpsleetcodecnproblemshua-dong-chuang-kou-de-zui-da-zhi-lcof">#</a></h2>
 <div align=center><img src="59.png"/></div>
 <ul>
 <li>
@@ -827,7 +827,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> res
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="62-剑指-offer-59---ii-队列的最大值中等httpsleetcodecnproblemsdui-lie-de-zui-da-zhi-lcof">62. <a href="https://leetcode.cn/problems/dui-lie-de-zui-da-zhi-lcof/">剑指 Offer 59 - II. 队列的最大值(中等)</a><a hidden class="anchor" aria-hidden="true" href="#62-剑指-offer-59---ii-队列的最大值中等httpsleetcodecnproblemsdui-lie-de-zui-da-zhi-lcof">#</a></h2>
+<h2 id="60-剑指-offer-59---ii-队列的最大值中等httpsleetcodecnproblemsdui-lie-de-zui-da-zhi-lcof">60. <a href="https://leetcode.cn/problems/dui-lie-de-zui-da-zhi-lcof/">剑指 Offer 59 - II. 队列的最大值(中等)</a><a hidden class="anchor" aria-hidden="true" href="#60-剑指-offer-59---ii-队列的最大值中等httpsleetcodecnproblemsdui-lie-de-zui-da-zhi-lcof">#</a></h2>
 <div align=center><img src="592.png"/></div>
 <ul>
 <li>
@@ -851,7 +851,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> val
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="63-剑指-offer-60-n个骰子的点数中等httpsleetcodecnproblemsnge-tou-zi-de-dian-shu-lcof">63. <a href="https://leetcode.cn/problems/nge-tou-zi-de-dian-shu-lcof/">剑指 Offer 60. n个骰子的点数(中等)</a><a hidden class="anchor" aria-hidden="true" href="#63-剑指-offer-60-n个骰子的点数中等httpsleetcodecnproblemsnge-tou-zi-de-dian-shu-lcof">#</a></h2>
+<h2 id="61-剑指-offer-60-n个骰子的点数中等httpsleetcodecnproblemsnge-tou-zi-de-dian-shu-lcof">61. <a href="https://leetcode.cn/problems/nge-tou-zi-de-dian-shu-lcof/">剑指 Offer 60. n个骰子的点数(中等)</a><a hidden class="anchor" aria-hidden="true" href="#61-剑指-offer-60-n个骰子的点数中等httpsleetcodecnproblemsnge-tou-zi-de-dian-shu-lcof">#</a></h2>
 <div align=center><img src="60.png"/></div>
 <ul>
 <li>
@@ -870,7 +870,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> dp
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="64-剑指-offer-61-扑克牌中的顺子简单httpsleetcodecnproblemsbu-ke-pai-zhong-de-shun-zi-lcof">64. <a href="https://leetcode.cn/problems/bu-ke-pai-zhong-de-shun-zi-lcof/">剑指 Offer 61. 扑克牌中的顺子(简单)</a><a hidden class="anchor" aria-hidden="true" href="#64-剑指-offer-61-扑克牌中的顺子简单httpsleetcodecnproblemsbu-ke-pai-zhong-de-shun-zi-lcof">#</a></h2>
+<h2 id="62-剑指-offer-61-扑克牌中的顺子简单httpsleetcodecnproblemsbu-ke-pai-zhong-de-shun-zi-lcof">62. <a href="https://leetcode.cn/problems/bu-ke-pai-zhong-de-shun-zi-lcof/">剑指 Offer 61. 扑克牌中的顺子(简单)</a><a hidden class="anchor" aria-hidden="true" href="#62-剑指-offer-61-扑克牌中的顺子简单httpsleetcodecnproblemsbu-ke-pai-zhong-de-shun-zi-lcof">#</a></h2>
 <div align=center><img src="61.png"/></div>
 <ul>
 <li>
@@ -900,7 +900,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ma <span style="color:#f92672">-</span> mi <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span> 
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="65-剑指-offer-62-圆圈中最后剩下的数字简单httpsleetcodecnproblemsyuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof">65. <a href="https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/">剑指 Offer 62. 圆圈中最后剩下的数字(简单)</a><a hidden class="anchor" aria-hidden="true" href="#65-剑指-offer-62-圆圈中最后剩下的数字简单httpsleetcodecnproblemsyuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof">#</a></h2>
+<h2 id="63-剑指-offer-62-圆圈中最后剩下的数字简单httpsleetcodecnproblemsyuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof">63. <a href="https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/">剑指 Offer 62. 圆圈中最后剩下的数字(简单)</a><a hidden class="anchor" aria-hidden="true" href="#63-剑指-offer-62-圆圈中最后剩下的数字简单httpsleetcodecnproblemsyuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof">#</a></h2>
 <div align=center><img src="62.png"/></div>
 <ul>
 <li>
@@ -953,7 +953,7 @@ $$</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> x
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="66-剑指-offer-63-股票的最大利润中等httpsleetcodecnproblemsgu-piao-de-zui-da-li-run-lcof">66. <a href="https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/">剑指 Offer 63. 股票的最大利润(中等)</a><a hidden class="anchor" aria-hidden="true" href="#66-剑指-offer-63-股票的最大利润中等httpsleetcodecnproblemsgu-piao-de-zui-da-li-run-lcof">#</a></h2>
+<h2 id="64-剑指-offer-63-股票的最大利润中等httpsleetcodecnproblemsgu-piao-de-zui-da-li-run-lcof">64. <a href="https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/">剑指 Offer 63. 股票的最大利润(中等)</a><a hidden class="anchor" aria-hidden="true" href="#64-剑指-offer-63-股票的最大利润中等httpsleetcodecnproblemsgu-piao-de-zui-da-li-run-lcof">#</a></h2>
 <div align=center><img src="63.png"/></div>
 <ul>
 <li>
@@ -967,7 +967,7 @@ $$</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> profit
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="67-剑指-offer-64-求12n中等httpsleetcodecnproblemsqiu-12n-lcof">67. <a href="https://leetcode.cn/problems/qiu-12n-lcof/">剑指 Offer 64. 求1+2+…+n(中等)</a><a hidden class="anchor" aria-hidden="true" href="#67-剑指-offer-64-求12n中等httpsleetcodecnproblemsqiu-12n-lcof">#</a></h2>
+<h2 id="65-剑指-offer-64-求12n中等httpsleetcodecnproblemsqiu-12n-lcof">65. <a href="https://leetcode.cn/problems/qiu-12n-lcof/">剑指 Offer 64. 求1+2+…+n(中等)</a><a hidden class="anchor" aria-hidden="true" href="#65-剑指-offer-64-求12n中等httpsleetcodecnproblemsqiu-12n-lcof">#</a></h2>
 <div align=center><img src="64.png"/></div>
 <ul>
 <li>
@@ -982,7 +982,7 @@ $$</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>res
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="68-剑指-offer-65-不用加减乘除做加法简单httpsleetcodecnproblemsbu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof">68. <a href="https://leetcode.cn/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/">剑指 Offer 65. 不用加减乘除做加法(简单)</a><a hidden class="anchor" aria-hidden="true" href="#68-剑指-offer-65-不用加减乘除做加法简单httpsleetcodecnproblemsbu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof">#</a></h2>
+<h2 id="66-剑指-offer-65-不用加减乘除做加法简单httpsleetcodecnproblemsbu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof">66. <a href="https://leetcode.cn/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/">剑指 Offer 65. 不用加减乘除做加法(简单)</a><a hidden class="anchor" aria-hidden="true" href="#66-剑指-offer-65-不用加减乘除做加法简单httpsleetcodecnproblemsbu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof">#</a></h2>
 <div align=center><img src="65.png"/></div>
 <ul>
 <li>
@@ -993,10 +993,13 @@ $$</p>
 $$
 \begin{cases}
 n=a\oplus b\\
-c=a&amp;b&laquo;1
+c=(a\&amp;b)&laquo;1
 \end{cases}
 $$
 循环求n和c，直至<code>c=0</code>，此时<code>s=n</code>。</p>
+</li>
+</ul>
+<div align=center><img src="652.png" style="zoom:50%;"/></div>
 <p><strong>python负数的存储</strong>：</p>
 <ul>
 <li><strong>获取负数的补码</strong>。数字与十六进制数<code>0xffffffff</code>相与，将该数字32位以上都变为
@@ -1010,9 +1013,7 @@ $$
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> c <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
 </span></span><span style="display:flex;"><span>            n, c <span style="color:#f92672">=</span> (n <span style="color:#f92672">^</span> c), (n <span style="color:#f92672">&amp;</span> c) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&amp;</span> x
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> n <span style="color:#66d9ef">if</span> n <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0x7fffffff</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">~</span>(n <span style="color:#f92672">^</span> x)
-</span></span></code></pre></div></li>
-</ul>
-<h2 id="69-剑指-offer-66-构建乘积数组中等httpsleetcodecnproblemsgou-jian-cheng-ji-shu-zu-lcof">69. <a href="https://leetcode.cn/problems/gou-jian-cheng-ji-shu-zu-lcof/">剑指 Offer 66. 构建乘积数组(中等)</a><a hidden class="anchor" aria-hidden="true" href="#69-剑指-offer-66-构建乘积数组中等httpsleetcodecnproblemsgou-jian-cheng-ji-shu-zu-lcof">#</a></h2>
+</span></span></code></pre></div><h2 id="67-剑指-offer-66-构建乘积数组中等httpsleetcodecnproblemsgou-jian-cheng-ji-shu-zu-lcof">67. <a href="https://leetcode.cn/problems/gou-jian-cheng-ji-shu-zu-lcof/">剑指 Offer 66. 构建乘积数组(中等)</a><a hidden class="anchor" aria-hidden="true" href="#67-剑指-offer-66-构建乘积数组中等httpsleetcodecnproblemsgou-jian-cheng-ji-shu-zu-lcof">#</a></h2>
 <div align=center><img src="66.png"/></div>
 <ul>
 <li>
@@ -1031,7 +1032,7 @@ $$
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="70-剑指-offer-67-把字符串转换成整数中等httpsleetcodecnproblemsba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof">70. <a href="https://leetcode.cn/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/">剑指 Offer 67. 把字符串转换成整数(中等)</a><a hidden class="anchor" aria-hidden="true" href="#70-剑指-offer-67-把字符串转换成整数中等httpsleetcodecnproblemsba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof">#</a></h2>
+<h2 id="68-剑指-offer-67-把字符串转换成整数中等httpsleetcodecnproblemsba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof">68. <a href="https://leetcode.cn/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/">剑指 Offer 67. 把字符串转换成整数(中等)</a><a hidden class="anchor" aria-hidden="true" href="#68-剑指-offer-67-把字符串转换成整数中等httpsleetcodecnproblemsba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof">#</a></h2>
 <div align=center><img src="67.png"/></div>
 <ul>
 <li>
@@ -1065,7 +1066,7 @@ $$
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> sign <span style="color:#f92672">*</span> res
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="71-剑指-offer-68---i-二叉搜索树的最近公共祖先简单httpsleetcodecnproblemser-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof">71. <a href="https://leetcode.cn/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - I. 二叉搜索树的最近公共祖先(简单)</a><a hidden class="anchor" aria-hidden="true" href="#71-剑指-offer-68---i-二叉搜索树的最近公共祖先简单httpsleetcodecnproblemser-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof">#</a></h2>
+<h2 id="69-剑指-offer-68---i-二叉搜索树的最近公共祖先简单httpsleetcodecnproblemser-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof">69. <a href="https://leetcode.cn/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - I. 二叉搜索树的最近公共祖先(简单)</a><a hidden class="anchor" aria-hidden="true" href="#69-剑指-offer-68---i-二叉搜索树的最近公共祖先简单httpsleetcodecnproblemser-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof">#</a></h2>
 <div align=center><img src="681.png"/></div>
 <p>若root为p和q的最近公共祖先，则有：</p>
 <ol>
@@ -1098,7 +1099,7 @@ $$
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> root
 </span></span></code></pre></div></li>
 </ul>
-<h2 id="72-剑指-offer-68---ii-二叉树的最近公共祖先简单httpsleetcodecnproblemser-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof">72. <a href="https://leetcode.cn/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - II. 二叉树的最近公共祖先(简单)</a><a hidden class="anchor" aria-hidden="true" href="#72-剑指-offer-68---ii-二叉树的最近公共祖先简单httpsleetcodecnproblemser-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof">#</a></h2>
+<h2 id="70-剑指-offer-68---ii-二叉树的最近公共祖先简单httpsleetcodecnproblemser-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof">70. <a href="https://leetcode.cn/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/">剑指 Offer 68 - II. 二叉树的最近公共祖先(简单)</a><a hidden class="anchor" aria-hidden="true" href="#70-剑指-offer-68---ii-二叉树的最近公共祖先简单httpsleetcodecnproblemser-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof">#</a></h2>
 <div align=center><img src="682.png"/></div>
 <ul>
 <li>

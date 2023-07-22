@@ -8,7 +8,7 @@ author: ["Achilles"]
 categories: # 没有分类界面可以不填写
 - 
 tags: ["算法题","学习笔记"] # 标签
-description: "leetcode 剑指offer 48~72题提示清单"
+description: "leetcode 剑指offer 46~70题提示清单"
 weight:
 slug: ""
 draft: false # 是否为草稿
@@ -29,7 +29,7 @@ cover:
     relative: false
 ---
 
-## 48. [剑指 Offer 51. 数组中的逆序对(困难)](https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
+## 46. [剑指 Offer 51. 数组中的逆序对(困难)](https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/)
 
 <div align=center><img src="51.png" style="zoom:70%;"/></div>
 
@@ -66,7 +66,7 @@ cover:
           return merge(0,len(nums)-1)
   ```
 
-## 49. [剑指 Offer 52. 两个链表的第一个公共节点(简单)](https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/)
+## 47. [剑指 Offer 52. 两个链表的第一个公共节点(简单)](https://leetcode.cn/problems/liang-ge-lian-biao-de-di-yi-ge-gong-gong-jie-dian-lcof/)
 
 <div align=center><img src="52.png" style="zoom:70%;"/></div>
 
@@ -82,7 +82,7 @@ cover:
           return A
   ```
 
-## 50. [剑指 Offer 53 - I. 在排序数组中查找数字 I(简单)](https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/)
+## 48. [剑指 Offer 53 - I. 在排序数组中查找数字 I(简单)](https://leetcode.cn/problems/zai-pai-xu-shu-zu-zhong-cha-zhao-shu-zi-lcof/)
 
 <div align=center><img src="533.png" style="zoom:80%;"/></div>
 
@@ -105,7 +105,7 @@ cover:
           return helper(target) - helper(target - 1)
   ```
 
-## 51. [剑指 Offer 53 - II. 0～n-1中缺失的数字(简单)](https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/)
+## 49. [剑指 Offer 53 - II. 0～n-1中缺失的数字(简单)](https://leetcode.cn/problems/que-shi-de-shu-zi-lcof/)
 
 <div align=center><img src="532.png" style="zoom:80%;"/></div>
 
@@ -124,7 +124,7 @@ cover:
           return i
   ```
 
-## 52. [剑指 Offer 54. 二叉搜索树的第k大节点(简单)](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/)
+## 50. [剑指 Offer 54. 二叉搜索树的第k大节点(简单)](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-di-kda-jie-dian-lcof/)
 
 <div align=center><img src="54.png" style="zoom:80%;"/></div>
 
@@ -147,7 +147,7 @@ cover:
           return self.res
   ```
 
-## 53. [剑指 Offer 55 - I. 二叉树的深度(简单)](https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/)
+## 51. [剑指 Offer 55 - I. 二叉树的深度(简单)](https://leetcode.cn/problems/er-cha-shu-de-shen-du-lcof/)
 
 <div align=center><img src="55.png" style="zoom:80%;"/></div>
 
@@ -181,7 +181,7 @@ cover:
           return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
   ```
 
-## 54. [剑指 Offer 55 - II. 平衡二叉树(简单)](https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/)
+## 52. [剑指 Offer 55 - II. 平衡二叉树(简单)](https://leetcode.cn/problems/ping-heng-er-cha-shu-lcof/)
 
 <div align=center><img src="552.png" style="zoom:70%;"/></div>
 
@@ -215,7 +215,7 @@ cover:
           return max(self.depth(root.left), self.depth(root.right)) + 1
   ```
 
-## 55. [剑指 Offer 56 - I. 数组中数字出现的次数(中等)](https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/)
+## 53. [剑指 Offer 56 - I. 数组中数字出现的次数(中等)](https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-lcof/)
 
 <div align=center><img src="561.png" style="zoom:70%;"/></div>
 
@@ -239,7 +239,7 @@ cover:
           return x,y
   ```
 
-## 56. [剑指 Offer 56 - II. 数组中数字出现的次数 II(中等)](https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/)
+## 54. [剑指 Offer 56 - II. 数组中数字出现的次数 II(中等)](https://leetcode.cn/problems/shu-zu-zhong-shu-zi-chu-xian-de-ci-shu-ii-lcof/)
 
 <div align=center><img src="562.png" style="zoom:70%;"/></div>
 
@@ -281,7 +281,7 @@ cover:
           return ones
   ```
 
-## 57. [剑指 Offer 57. 和为s的两个数字(简单)](https://leetcode.cn/problems/he-wei-sde-liang-ge-shu-zi-lcof/)
+## 55. [剑指 Offer 57. 和为s的两个数字(简单)](https://leetcode.cn/problems/he-wei-sde-liang-ge-shu-zi-lcof/)
 
 <div align=center><img src="57.png" style="zoom:70%;"/></div>
 
@@ -299,7 +299,7 @@ cover:
           return []
   ```
 
-## 58. [剑指 Offer 57 - II. 和为s的连续正数序列(简单)](https://leetcode.cn/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/)
+## 56. [剑指 Offer 57 - II. 和为s的连续正数序列(简单)](https://leetcode.cn/problems/he-wei-sde-lian-xu-zheng-shu-xu-lie-lcof/)
 
 <div align=center><img src="572.png""/></div>
 
@@ -318,7 +318,7 @@ cover:
           return res
   ```
 
-## 59. [剑指 Offer 58 - I. 翻转单词顺序(简单)](https://leetcode.cn/problems/fan-zhuan-dan-ci-shun-xu-lcof/)
+## 57. [剑指 Offer 58 - I. 翻转单词顺序(简单)](https://leetcode.cn/problems/fan-zhuan-dan-ci-shun-xu-lcof/)
 
 <div align=center><img src="581.png"/></div>
 
@@ -348,7 +348,7 @@ cover:
           return ' '.join(res) # 拼接并返回
   ```
 
-## 60. [剑指 Offer 58 - II. 左旋转字符串(简单)](https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/)
+## 58. [剑指 Offer 58 - II. 左旋转字符串(简单)](https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/)
 
 <div align=center><img src="582.png"/></div>
 
@@ -382,7 +382,7 @@ cover:
           return res
   ```
 
-## 61. [剑指 Offer 59 - I. 滑动窗口的最大值(困难)](https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/)
+## 59. [剑指 Offer 59 - I. 滑动窗口的最大值(困难)](https://leetcode.cn/problems/hua-dong-chuang-kou-de-zui-da-zhi-lcof/)
 
 <div align=center><img src="59.png"/></div>
 
@@ -408,7 +408,7 @@ cover:
           return res
   ```
 
-## 62. [剑指 Offer 59 - II. 队列的最大值(中等)](https://leetcode.cn/problems/dui-lie-de-zui-da-zhi-lcof/)
+## 60. [剑指 Offer 59 - II. 队列的最大值(中等)](https://leetcode.cn/problems/dui-lie-de-zui-da-zhi-lcof/)
 
 <div align=center><img src="592.png"/></div>
 
@@ -435,7 +435,7 @@ cover:
           return val
   ```
 
-## 63. [剑指 Offer 60. n个骰子的点数(中等)](https://leetcode.cn/problems/nge-tou-zi-de-dian-shu-lcof/)
+## 61. [剑指 Offer 60. n个骰子的点数(中等)](https://leetcode.cn/problems/nge-tou-zi-de-dian-shu-lcof/)
 
 <div align=center><img src="60.png"/></div>
 
@@ -458,7 +458,7 @@ cover:
           return dp
   ```
 
-## 64. [剑指 Offer 61. 扑克牌中的顺子(简单)](https://leetcode.cn/problems/bu-ke-pai-zhong-de-shun-zi-lcof/)
+## 62. [剑指 Offer 61. 扑克牌中的顺子(简单)](https://leetcode.cn/problems/bu-ke-pai-zhong-de-shun-zi-lcof/)
 
 <div align=center><img src="61.png"/></div>
 
@@ -493,7 +493,7 @@ cover:
           return ma - mi < 5 
   ```
 
-## 65. [剑指 Offer 62. 圆圈中最后剩下的数字(简单)](https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/)
+## 63. [剑指 Offer 62. 圆圈中最后剩下的数字(简单)](https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/)
 
 <div align=center><img src="62.png"/></div>
 
@@ -531,7 +531,7 @@ cover:
           return x
   ```
 
-## 66. [剑指 Offer 63. 股票的最大利润(中等)](https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/)
+## 64. [剑指 Offer 63. 股票的最大利润(中等)](https://leetcode.cn/problems/gu-piao-de-zui-da-li-run-lcof/)
 
 <div align=center><img src="63.png"/></div>
 
@@ -547,7 +547,7 @@ cover:
           return profit
   ```
 
-## 67. [剑指 Offer 64. 求1+2+…+n(中等)](https://leetcode.cn/problems/qiu-12n-lcof/)
+## 65. [剑指 Offer 64. 求1+2+…+n(中等)](https://leetcode.cn/problems/qiu-12n-lcof/)
 
 <div align=center><img src="64.png"/></div>
 
@@ -565,7 +565,7 @@ cover:
           return self.res
   ```
 
-## 68. [剑指 Offer 65. 不用加减乘除做加法(简单)](https://leetcode.cn/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/)
+## 66. [剑指 Offer 65. 不用加减乘除做加法(简单)](https://leetcode.cn/problems/bu-yong-jia-jian-cheng-chu-zuo-jia-fa-lcof/)
 
 <div align=center><img src="65.png"/></div>
 
@@ -579,10 +579,12 @@ cover:
   $$
   \begin{cases}
   n=a\oplus b\\\\
-  c=a\&b<<1
+  c=(a\\&b)<<1
   \end{cases}
   $$
   循环求n和c，直至`c=0`，此时`s=n`。
+
+<div align=center><img src="652.png" style="zoom:50%;"/></div>
 
   **python负数的存储**：
 
@@ -600,7 +602,7 @@ cover:
           return n if n <= 0x7fffffff else ~(n ^ x)
   ```
 
-## 69. [剑指 Offer 66. 构建乘积数组(中等)](https://leetcode.cn/problems/gou-jian-cheng-ji-shu-zu-lcof/)
+## 67. [剑指 Offer 66. 构建乘积数组(中等)](https://leetcode.cn/problems/gou-jian-cheng-ji-shu-zu-lcof/)
 
 <div align=center><img src="66.png"/></div>
 
@@ -622,7 +624,7 @@ cover:
           return ans
   ```
 
-## 70. [剑指 Offer 67. 把字符串转换成整数(中等)](https://leetcode.cn/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/)
+## 68. [剑指 Offer 67. 把字符串转换成整数(中等)](https://leetcode.cn/problems/ba-zi-fu-chuan-zhuan-huan-cheng-zheng-shu-lcof/)
 
 <div align=center><img src="67.png"/></div>
 
@@ -656,7 +658,7 @@ cover:
           return sign * res
   ```
 
-## 71. [剑指 Offer 68 - I. 二叉搜索树的最近公共祖先(简单)](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
+## 69. [剑指 Offer 68 - I. 二叉搜索树的最近公共祖先(简单)](https://leetcode.cn/problems/er-cha-sou-suo-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
 
 <div align=center><img src="681.png"/></div>
 
@@ -693,7 +695,7 @@ cover:
           return root
   ```
 
-## 72. [剑指 Offer 68 - II. 二叉树的最近公共祖先(简单)](https://leetcode.cn/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
+## 70. [剑指 Offer 68 - II. 二叉树的最近公共祖先(简单)](https://leetcode.cn/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
 
 <div align=center><img src="682.png"/></div>
 
