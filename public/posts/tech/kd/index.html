@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>知识蒸馏速览 | 烈烈风中、的博客</title>
+<meta name="keywords" content="学习笔记, 知识蒸馏">
+<meta name="description" content="知识蒸馏的基础概念">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/kd/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="知识蒸馏速览" />
+<meta property="og:description" content="知识蒸馏的基础概念" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/kd/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/kd/cover.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-25T17:20:26+08:00" />
+<meta property="article:modified_time" content="2023-07-25T17:20:26+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/kd/cover.png" />
+<meta name="twitter:title" content="知识蒸馏速览"/>
+<meta name="twitter:description" content="知识蒸馏的基础概念"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "👨🏻‍💻 技术",
+          "item": "https://Achilles-10.github.io/posts/tech/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "知识蒸馏速览",
+      "item": "https://Achilles-10.github.io/posts/tech/kd/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "知识蒸馏速览",
+  "name": "知识蒸馏速览",
+  "description": "知识蒸馏的基础概念",
+  "keywords": [
+    "学习笔记", "知识蒸馏"
+  ],
+  "articleBody": "知识蒸馏（Knowledge Distillation） 深度学习的主要挑战在于，受限制于资源容量，深度神经模型很难部署在资源受限制的设备上，如嵌入式设备和移动设备。知识蒸馏作为模型压缩和加速技术的代表，可以有效的从大型的教师模型中学习到小型的学生模型。\n知识蒸馏主要思想是：学生模型模仿教师模型，二者相互竞争，是的学生模型可以与教师模型持平甚至卓越的表现。关键问题是如何将知识从大的教师模型转移到小的学生模型。知识蒸馏系统由知识、蒸馏算法和师生架构三个关键部分组成。如上图所示。\n知识 在知识蒸馏中，知识可以分为基于响应的知识（response-based knowledge），基于特征的知识（ feature-based knowledge）, 基于关系的知识（relation-based knowledge），下图为教师模型中不同知识类别的直观示例。\n基于响应的知识（Response-Based Knowledge） 基于响应的知识的主要思想是让学生网络直接模仿教师网络的最终预测。假设对数向量 $z$ 为全连接层的最后输出，基于响应的蒸馏形式可以描述为： $$ L_{ResD}(z_t,z_s)=L_R(z_t,z_s) $$ 其中 $L_R$ 表示散度损失或者交叉熵损失，典型的基于响应的知识蒸馏结构如下图所示。\n最流行的基于响应的图像分类知识被称为软目标（soft target），软目标是输入的类别的概率，可以通过 softmax 函数估计为： $$ p(z_i,T)=\\frac{\\exp(z_i/T)}{\\sum_j\\exp(z_j/T)} $$ $z_i$ 为第i个类别的 logit，T 是温度因子,因此 soft logits 的知识蒸馏损失函数可以重写为： $$ L_{ResD}(p(z_t,T),p(z_s,T))=L_R(p(z_t,T),p(z_s,T)) $$ 通常，$L_R$ 使用 KL 散度损失。基于响应的知识通常需要依赖最后一层的输出，无法解决来自教师模型的中间层面的监督，而这对于使用非常深的神经网络进行表征学习非常重要。由于 logits 实际上是类别概率分布，因此基于响应的知识蒸馏限制在监督学习。\n下图为基准的知识蒸馏的具体网络架构。可见，知识蒸馏的损失函数为教师与学生网络在温度T下的蒸馏损失和学生网络输出与GT在温度1下的学生损失。\n温度的设置 模型在训练收敛后，softmax的输出不会是完全符合one-hot向量那种极端分布的，而是在各个类别上均有概率，即教师模型中在这些负类别（非正确类别）上输出的概率分布包含了一定的隐藏信息。在使用softmax的时候往往会将一个差别不大的输出变成很极端的分布，用一个三分类模型的输出举例： $$ [10,11,12]\\rightarrow[0.0900,0.2447,0.6652] $$ 原本的分布很接近均匀分布，但经过softmax，不同类别的概率相差很大。这就导致类别间的隐藏的相关性信息不再那么明显。为了解决这个问题，引入温度系数。\n对于随机生成的分布：$z\\in\\mathbb{R}^{10}\\sim N(10,2)$，在不同温度下，数据分布的变化情况如下图所示：\n对于蒸馏温度T，如果T接近于0，则最大值接近1，其他值接近0，近似于 argmax；如果T越大，则输出分布越平缓，相当于平滑的作用，保留相似信息。\n在蒸馏时，令教师与学生模型的损失为$L_1$，学生模型与真实标签之间的损失为$L_2$。$L_1$可以看做是引入的正则项，能够使得学生模型学到教师模型中高度泛化的知识，从而需要更少的训练样本即可收敛。\n$L_1$项始终使用较大的温度系数，$L_2$项使用较小的温度系数。这是由于温度系数较大时，模型需要训练得到一个很陡峭的输出，经过softmax之后才能获得一个相对陡峭的结果；温度系数较小时，模型输出稍微有点起伏，softmax就很敏感地把分布变得尖锐，认为模型学到了知识。\n基于特征的知识（Feature-Based Knowledge） 深度神经网络善于学习到不同层级的表征，因此中间层和输出层的都可以被用作知识来监督训练学生模型，中间层的知识对于输出层的知识是一个很好的补充。其蒸馏损失可以表示为： $$ L_{FeaD}(f_t(x),f_s(x))=L_F(\\Phi_t(f_t(x)),\\Phi_s(f_s(x))) $$ 其中 $f_t(x),f_s(x)$ 分别表示教师和学生网络的中间层特征图。变换函数 $\\Phi(\\cdot)$ 当特征图大小不同时应用，$L_F$ 衡量两个特征图的相似性，常用的有 L1, L2, 交叉熵等。下图为基于特征的知识蒸馏模型的架构。\n基于关系的知识（Relation-Based Knowledge） 基于响应和基于特征的知识都使用了教师模型中特定层的输出，基于关系的知识进一步探索了不同层或数据样本的关系。一般，将基于特征图关系的关系知识蒸馏loss表述如下： $$ L_{RelD}(f_t,f_s)=L_{R}(\\Psi_t(\\hat{f_t},\\check{f_t}),\\Psi_s(\\hat{f_s},\\check{f_s})) $$ 其中，$f_t,f_s$ 表示教师和学生网络的特征图，$(\\hat{f_t},\\check{f_t})$ 和 $(\\hat{f_s},\\check{f_s})$ 表示教师和学生网络的特征图组（pair），$\\Psi(\\cdot)$ 函数表示特征图组的相似性。\n蒸馏策略（Distillation Schemes） 根据教师模型是否与学生模型同时更新，知识蒸馏的学习方案可分为离线蒸馏（offline distillation）、在线蒸馏（online distillation）和自蒸馏（self-distillation）。\n从人类师生学习的角度也可以直观地理解离线、在线和自蒸馏。离线蒸馏是指知识渊博的教师教授学生知识；在线蒸馏是指教师和学生一起学习；自我蒸馏是指学生自己学习知识。\n离线蒸馏（Offline Distillation） 离线蒸馏包括两个阶段：1）大型教师模型蒸馏前在训练集上训练；2）教师模型在蒸馏过程中指导学生模型训练。\n离线蒸馏方法有训练时间长、复杂等缺点，而在教师模型的指导下，离线蒸馏中的学生模型的训练通常是有效的。此外，教师与学生之间的能力差距始终存在，而且学生往往对教师有极大依赖。\n在线蒸馏（Online Distillation） 为了克服离线蒸馏的局限性，提出了在线蒸馏来进一步提高学生模型的性能。在线蒸馏时，教师模型和学生模型同步更新，而整个知识蒸馏框架都是端到端可训练的。\n自蒸馏（Self-Distillation） 在自蒸馏中，教师和学生模型使用相同的网络，这可以看作是在线蒸馏的一个特例，例如将网络深层的知识蒸馏到浅层部分。\n教师学生结构（Teacher-Student Architecture） 学生网络的结构通常有以下选择：\n教师网络的简化版本，层数更少，每一层的通道数更少； 保留教师网络的结构，学生网络为其量化版本； 具有高效基本运算的小型网络； 具有优化全局网络结构的小网络； 与教师网络的结构相同. 教师和学生网络的关系如下图。\n蒸馏算法（Distillation Algorithms） 对抗性蒸馏（Adversarial Distillation）\n多教师蒸馏（Multi-teacher Distillation）\n跨模态蒸馏（Cross-Modal Distillation）\n基于图的蒸馏（Graph-Based Distillation）\n基于注意力的蒸馏（Attention-Based Distillation）\n无数据的蒸馏（Data-Free Distillation）\n量化蒸馏（Quantized Distillation）\n终身蒸馏（Lifelong Distillation）\n基于神经架构搜索的蒸馏（NAS-Based Distillation）\n",
+  "wordCount" : "2794",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/tech/kd/cover.png","datePublished": "2023-07-25T17:20:26+08:00",
+  "dateModified": "2023-07-25T17:20:26+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/tech/kd/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                知识蒸馏速览
+            </h1>
+            <div class="post-description">
+                知识蒸馏的基础概念
+            </div>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 7 月 25 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>2794字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>6分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/" style="color: var(--secondary)!important;">知识蒸馏</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/kd/cover.png" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%9f%a5%e8%af%86%e8%92%b8%e9%a6%8fknowledge-distillation" aria-label="知识蒸馏（Knowledge Distillation）">知识蒸馏（Knowledge Distillation）</a></li>
+                <li>
+                    <a href="#%e7%9f%a5%e8%af%86" aria-label="知识">知识</a><ul>
+                        
+                <li>
+                    <a href="#%e5%9f%ba%e4%ba%8e%e5%93%8d%e5%ba%94%e7%9a%84%e7%9f%a5%e8%af%86response-based-knowledge" aria-label="基于响应的知识（Response-Based Knowledge）">基于响应的知识（Response-Based Knowledge）</a><ul>
+                        
+                <li>
+                    <a href="#%e6%b8%a9%e5%ba%a6%e7%9a%84%e8%ae%be%e7%bd%ae" aria-label="温度的设置">温度的设置</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%9f%ba%e4%ba%8e%e7%89%b9%e5%be%81%e7%9a%84%e7%9f%a5%e8%af%86feature-based-knowledge" aria-label="基于特征的知识（Feature-Based Knowledge）">基于特征的知识（Feature-Based Knowledge）</a></li>
+                <li>
+                    <a href="#%e5%9f%ba%e4%ba%8e%e5%85%b3%e7%b3%bb%e7%9a%84%e7%9f%a5%e8%af%86relation-based-knowledge" aria-label="基于关系的知识（Relation-Based Knowledge）">基于关系的知识（Relation-Based Knowledge）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e8%92%b8%e9%a6%8f%e7%ad%96%e7%95%a5distillation-schemes" aria-label="蒸馏策略（Distillation Schemes）">蒸馏策略（Distillation Schemes）</a><ul>
+                        
+                <li>
+                    <a href="#%e7%a6%bb%e7%ba%bf%e8%92%b8%e9%a6%8foffline-distillation" aria-label="离线蒸馏（Offline Distillation）">离线蒸馏（Offline Distillation）</a></li>
+                <li>
+                    <a href="#%e5%9c%a8%e7%ba%bf%e8%92%b8%e9%a6%8fonline-distillation" aria-label="在线蒸馏（Online Distillation）">在线蒸馏（Online Distillation）</a></li>
+                <li>
+                    <a href="#%e8%87%aa%e8%92%b8%e9%a6%8fself-distillation" aria-label="自蒸馏（Self-Distillation）">自蒸馏（Self-Distillation）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%95%99%e5%b8%88%e5%ad%a6%e7%94%9f%e7%bb%93%e6%9e%84teacher-student-architecture" aria-label="教师学生结构（Teacher-Student Architecture）">教师学生结构（Teacher-Student Architecture）</a></li>
+                <li>
+                    <a href="#%e8%92%b8%e9%a6%8f%e7%ae%97%e6%b3%95distillation-algorithms" aria-label="蒸馏算法（Distillation Algorithms）">蒸馏算法（Distillation Algorithms）</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="知识蒸馏knowledge-distillation">知识蒸馏（Knowledge Distillation）<a hidden class="anchor" aria-hidden="true" href="#知识蒸馏knowledge-distillation">#</a></h2>
+<p>深度学习的主要挑战在于，受限制于资源容量，深度神经模型很难部署在资源受限制的设备上，如嵌入式设备和移动设备。知识蒸馏作为<strong>模型压缩</strong>和加速技术的代表，可以有效的从大型的教师模型中学习到小型的学生模型。</p>
+<div align=center><img src="kd.png" style="zoom:40%"/></div>
+<p><strong>知识蒸馏主要思想是：学生模型模仿教师模型，二者相互竞争，是的学生模型可以与教师模型持平甚至卓越的表现</strong>。关键问题是如何将知识从大的教师模型转移到小的学生模型。知识蒸馏系统由知识、蒸馏算法和师生架构三个关键部分组成。如上图所示。</p>
+<h2 id="知识">知识<a hidden class="anchor" aria-hidden="true" href="#知识">#</a></h2>
+<p>在知识蒸馏中，知识可以分为基于<strong>响应</strong>的知识（response-based knowledge），基于<strong>特征</strong>的知识（ feature-based knowledge）, 基于<strong>关系</strong>的知识（relation-based knowledge），下图为教师模型中不同知识类别的直观示例。</p>
+<div align=center><img src="knowledge.png" style="zoom:60%"/></div>
+<p><img loading="lazy" src="/Users/achilles/Desktop/%e7%a7%8b%e6%8b%9b%e5%87%86%e5%a4%87%e7%ac%94%e8%ae%b0/kd/imgs/knowledge.png" alt=""  />
+</p>
+<h3 id="基于响应的知识response-based-knowledge">基于响应的知识（Response-Based Knowledge）<a hidden class="anchor" aria-hidden="true" href="#基于响应的知识response-based-knowledge">#</a></h3>
+<p>基于响应的知识的主要思想是让学生网络直接模仿教师网络的最终预测。假设对数向量 $z$ 为全连接层的最后输出，基于响应的蒸馏形式可以描述为：
+$$
+L_{ResD}(z_t,z_s)=L_R(z_t,z_s)
+$$
+其中 $L_R$ 表示散度损失或者交叉熵损失，典型的基于响应的知识蒸馏结构如下图所示。</p>
+<div align=center><img src="reskd.png" style="zoom:55%"/></div>
+<p>最流行的基于响应的图像分类知识被称为软目标（soft target），软目标是输入的类别的概率，可以通过 softmax 函数估计为：
+$$
+p(z_i,T)=\frac{\exp(z_i/T)}{\sum_j\exp(z_j/T)}
+$$
+$z_i$ 为第i个类别的 logit，T 是温度因子,因此 soft logits 的知识蒸馏损失函数可以重写为：
+$$
+L_{ResD}(p(z_t,T),p(z_s,T))=L_R(p(z_t,T),p(z_s,T))
+$$
+通常，$L_R$ 使用 KL 散度损失。基于响应的知识通常需要依赖最后一层的输出，无法解决来自教师模型的中间层面的监督，而这对于使用非常深的神经网络进行表征学习非常重要。由于 logits 实际上是类别概率分布，因此基于响应的知识蒸馏限制在监督学习。</p>
+<p>下图为基准的知识蒸馏的具体网络架构。可见，知识蒸馏的损失函数为教师与学生网络在温度T下的蒸馏损失和学生网络输出与GT在温度1下的学生损失。</p>
+<div align=center><img src="benchmark.png" style="zoom:55%"/></div>
+<h4 id="温度的设置">温度的设置<a hidden class="anchor" aria-hidden="true" href="#温度的设置">#</a></h4>
+<p>模型在训练收敛后，softmax的输出不会是完全符合one-hot向量那种极端分布的，而是在各个类别上均有概率，即教师模型中在这些负类别（非正确类别）上输出的概率分布包含了一定的隐藏信息。在使用softmax的时候往往会将一个差别不大的输出变成很极端的分布，用一个三分类模型的输出举例：
+$$
+[10,11,12]\rightarrow[0.0900,0.2447,0.6652]
+$$
+原本的分布很接近均匀分布，但经过softmax，不同类别的概率相差很大。这就导致类别间的隐藏的相关性信息不再那么明显。为了解决这个问题，引入温度系数。</p>
+<p>对于随机生成的分布：$z\in\mathbb{R}^{10}\sim N(10,2)$，在不同温度下，数据分布的变化情况如下图所示：</p>
+<div align=center><img src="temp.png" style="zoom:80%"/></div>
+<p>对于蒸馏温度T，如果T接近于0，则最大值接近1，其他值接近0，近似于 argmax；如果T越大，则输出分布越平缓，相当于平滑的作用，保留相似信息。</p>
+<p>在蒸馏时，令教师与学生模型的损失为$L_1$，学生模型与真实标签之间的损失为$L_2$。$L_1$可以看做是引入的正则项，能够使得学生模型学到教师模型中高度泛化的知识，从而需要更少的训练样本即可收敛。</p>
+<p>$L_1$项始终使用较大的温度系数，$L_2$项使用较小的温度系数。这是由于<strong>温度系数较大时，模型需要训练得到一个很陡峭的输出，经过softmax之后才能获得一个相对陡峭的结果；温度系数较小时，模型输出稍微有点起伏，softmax就很敏感地把分布变得尖锐，认为模型学到了知识。</strong></p>
+<h3 id="基于特征的知识feature-based-knowledge">基于特征的知识（Feature-Based Knowledge）<a hidden class="anchor" aria-hidden="true" href="#基于特征的知识feature-based-knowledge">#</a></h3>
+<p>深度神经网络善于学习到不同层级的表征，因此中间层和输出层的都可以被用作知识来监督训练学生模型，中间层的知识对于输出层的知识是一个很好的补充。其蒸馏损失可以表示为：
+$$
+L_{FeaD}(f_t(x),f_s(x))=L_F(\Phi_t(f_t(x)),\Phi_s(f_s(x)))
+$$
+其中 $f_t(x),f_s(x)$ 分别表示教师和学生网络的中间层特征图。变换函数 $\Phi(\cdot)$ 当特征图大小不同时应用，$L_F$ 衡量两个特征图的相似性，常用的有 L1, L2, 交叉熵等。下图为基于特征的知识蒸馏模型的架构。</p>
+<div align=center><img src="feakd.png" style="zoom:55%"/></div>
+<h3 id="基于关系的知识relation-based-knowledge">基于关系的知识（Relation-Based Knowledge）<a hidden class="anchor" aria-hidden="true" href="#基于关系的知识relation-based-knowledge">#</a></h3>
+<p>基于响应和基于特征的知识都使用了教师模型中特定层的输出，基于关系的知识进一步探索了不同层或数据样本的关系。一般，将基于特征图关系的关系知识蒸馏loss表述如下：
+$$
+L_{RelD}(f_t,f_s)=L_{R}(\Psi_t(\hat{f_t},\check{f_t}),\Psi_s(\hat{f_s},\check{f_s}))
+$$
+其中，$f_t,f_s$ 表示教师和学生网络的特征图，$(\hat{f_t},\check{f_t})$ 和 $(\hat{f_s},\check{f_s})$ 表示教师和学生网络的特征图组（pair），$\Psi(\cdot)$ 函数表示特征图组的相似性。</p>
+<div align=center><img src="relkd.png" style="zoom:55%"/></div>
+<h2 id="蒸馏策略distillation-schemes">蒸馏策略（Distillation Schemes）<a hidden class="anchor" aria-hidden="true" href="#蒸馏策略distillation-schemes">#</a></h2>
+<p>根据教师模型是否与学生模型同时更新，知识蒸馏的学习方案可分为离线蒸馏（offline distillation）、在线蒸馏（online distillation）和自蒸馏（self-distillation）。</p>
+<p>从人类师生学习的角度也可以直观地理解离线、在线和自蒸馏。离线蒸馏是指知识渊博的教师教授学生知识；在线蒸馏是指教师和学生一起学习；自我蒸馏是指学生自己学习知识。</p>
+<div align=center><img src="distillation.png" style="zoom:50%"/></div>
+<h3 id="离线蒸馏offline-distillation">离线蒸馏（Offline Distillation）<a hidden class="anchor" aria-hidden="true" href="#离线蒸馏offline-distillation">#</a></h3>
+<p>离线蒸馏包括两个阶段：1）大型教师模型蒸馏前在训练集上训练；2）教师模型在蒸馏过程中指导学生模型训练。</p>
+<p>离线蒸馏方法有训练时间长、复杂等缺点，而在教师模型的指导下，离线蒸馏中的学生模型的训练通常是有效的。此外，教师与学生之间的能力差距始终存在，而且学生往往对教师有极大依赖。</p>
+<h3 id="在线蒸馏online-distillation">在线蒸馏（Online Distillation）<a hidden class="anchor" aria-hidden="true" href="#在线蒸馏online-distillation">#</a></h3>
+<p>为了克服离线蒸馏的局限性，提出了在线蒸馏来进一步提高学生模型的性能。在线蒸馏时，教师模型和学生模型同步更新，而整个知识蒸馏框架都是端到端可训练的。</p>
+<h3 id="自蒸馏self-distillation">自蒸馏（Self-Distillation）<a hidden class="anchor" aria-hidden="true" href="#自蒸馏self-distillation">#</a></h3>
+<p>在自蒸馏中，教师和学生模型使用相同的网络，这可以看作是在线蒸馏的一个特例，例如将网络深层的知识蒸馏到浅层部分。</p>
+<h2 id="教师学生结构teacher-student-architecture">教师学生结构（Teacher-Student Architecture）<a hidden class="anchor" aria-hidden="true" href="#教师学生结构teacher-student-architecture">#</a></h2>
+<p>学生网络的结构通常有以下选择：</p>
+<ol>
+<li>教师网络的简化版本，层数更少，每一层的通道数更少；</li>
+<li>保留教师网络的结构，学生网络为其量化版本；</li>
+<li>具有高效基本运算的小型网络；</li>
+<li>具有优化全局网络结构的小网络；</li>
+<li>与教师网络的结构相同.</li>
+</ol>
+<p>教师和学生网络的关系如下图。</p>
+<div align=center><img src="ts.png" style="zoom:60%"/></div>
+<h2 id="蒸馏算法distillation-algorithms">蒸馏算法（Distillation Algorithms）<a hidden class="anchor" aria-hidden="true" href="#蒸馏算法distillation-algorithms">#</a></h2>
+<ul>
+<li>
+<p>对抗性蒸馏（Adversarial Distillation）</p>
+</li>
+<li>
+<p>多教师蒸馏（Multi-teacher Distillation）</p>
+</li>
+<li>
+<p>跨模态蒸馏（Cross-Modal Distillation）</p>
+</li>
+<li>
+<p>基于图的蒸馏（Graph-Based Distillation）</p>
+</li>
+<li>
+<p>基于注意力的蒸馏（Attention-Based Distillation）</p>
+</li>
+<li>
+<p>无数据的蒸馏（Data-Free Distillation）</p>
+</li>
+<li>
+<p>量化蒸馏（Quantized Distillation）</p>
+</li>
+<li>
+<p>终身蒸馏（Lifelong Distillation）</p>
+</li>
+<li>
+<p>基于神经架构搜索的蒸馏（NAS-Based Distillation）</p>
+</li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/face/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>人脸检测器：MTCNN 与 RetinaFace</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>
