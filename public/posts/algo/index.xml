@@ -6,7 +6,16 @@
     <description>Recent content in 📕 算法 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 02 May 2023 09:29:43 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/algo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 23 Jul 2023 16:11:27 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/algo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LeetCode 热题 100 与 CodeTop</title>
+      <link>https://Achilles-10.github.io/posts/algo/hot1/</link>
+      <pubDate>Sun, 23 Jul 2023 16:11:27 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/algo/hot1/</guid>
+      <description>持续更新。。。 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&amp;gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希 def groupAnagrams(self, strs: List[str]) -&amp;gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &amp;#39;&amp;#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希 def groupAnagrams(self, strs: List[str]) -&amp;gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&amp;#34;a&amp;#34;)] += 1 # 需要将 list 转换成 tuple 才能</description>
+    </item>
+    
     <item>
       <title>剑指offer复习笔记(3)</title>
       <link>https://Achilles-10.github.io/posts/algo/offer3/</link>
