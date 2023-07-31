@@ -368,7 +368,40 @@ cover:
           return ans
   ```
 
-  
+### 12. [最小覆盖子串（困难）](https://leetcode.cn/problems/minimum-window-substring/)
+
+<div align=center><img src="12.png" style="zoom:50%;" /></div>
+
+* 滑动窗口+哈希表
+
+  维护一个哈希表，存储所需字符的数量。
+
+  不断右移窗口右端点，直至窗口内包含了 t 的所有元素；不断右移窗口左端点，将不必要的元素排除，记录最佳答案；不断重复，直至右端点超出了 s 的范围。
+
+  额外使用一个 cnt 变量来记录所需元素的总数量，当 cnt=0 时即可开始收缩窗口。
+
+  ```python
+  def minWindow(self, s: str, t: str) -> str:
+      m,n=len(s),len(t)
+      if n>m: return ""
+      tab = Counter(t)
+      cnt,i = n,0
+      ans,start=float('inf'),-1
+      for j,c in enumerate(s):
+          if tab[c]>0:
+              cnt-=1
+          tab[c]-=1
+          if cnt==0: # 满足所需字符
+              while s[i] not in tab or tab[s[i]]<0: # 排除不必要元素
+                  if tab[s[i]]<0:
+                      tab[s[i]]+=1
+                  i+=1
+              if j-i+1<ans: ans,start=j-i+1,start # 最佳答案
+              tab[s[i]]+=1
+              cnt+=1
+              i+=1
+      return s[start:start+ans] if start!=-1 else ""
+  ```
 
 ## 普通数组
 
@@ -410,6 +443,47 @@ cover:
           else: # 重叠区间，更新右端点
               ans[-1][1]=max(ans[-1][1],interval[1])
       return ans
+  ```
+
+  
+
+### 17. ⭐️ [缺失的第一个正数（困难）](https://leetcode.cn/problems/first-missing-positive/)
+
+<div align=center><img src="17.png" style="zoom:50%;" /></div>
+
+* 标记数组
+
+  首先将所有负数转换为 n+1；遍历数组，将属于 $[1,N]$ 的元素对应位置标记为负数；寻找第一个不为负数的位置，即为缺失的第一个正数。
+
+  <div align=center><img src="171.png" style="zoom:50%;" /></div>
+
+  ```python
+  def firstMissingPositive(self, nums: List[int]) -> int:
+      n = len(nums)
+      for i in range(n):
+          if nums[i]<=0: nums[i]=n+1
+      for i in range(n):
+          num=abs(nums[i]) # 若已被标记为负数，取其绝对值进行判断
+          if num<n+1: nums[num-1]=-abs(nums[num-1])
+      for i in range(n):
+          if nums[i]>0: return i+1
+      return n+1
+  ```
+
+* 置换
+
+  通过置换使 $nums[i]=i+1$。当 $1\leq nums[i]\leq n\ 且\ nums[i]-1\neq i$ 时，进行交换。为防止死循环，还需要保证进行置换的两个值不相等，即 $nums[i]\neq nums[nums[i]-1]$。
+
+  ```python
+  def firstMissingPositive(self, nums: List[int]) -> int:
+      n = len(nums)
+      for i in range(n):
+          while 1<=nums[i]<=n and nums[i]!=nums[nums[i]-1]: # 为防止死循环，判断条件不能为 i!=nums[i]-1
+              nums[nums[i]-1],nums[i]=nums[i],nums[nums[i]-1]
+      for i in range(n):
+          if nums[i]-1!=i:
+              return i+1
+      return n+1
   ```
 
   
@@ -1999,7 +2073,77 @@ cover:
       return int(k)
   ```
 
+### 108. [字符串转换整数 (atoi)（中等）](https://leetcode.cn/problems/string-to-integer-atoi/)
+
+<div align=center><img src="e108.png" style="zoom:50%;" /></div>
+
+* 模拟
+
+  设置边界变量 $bdr=2^{31}//10$，当遍历到下一位数字时，当前结果大于边界变量或等于边界变量且当前数字大于 7 时发生越界。 $2^{31}=2147483648$
+
+  ```python
+  def myAtoi(self, s: str) -> int:
+      if not s:
+          return 0
+      ans,flag,i=0,1,0
+      bdr,min_int,max_int=2**31//10,-2**31,2**31-1
+      while s[i]==' ':
+          i+=1
+          if i==len(s): return 0
+      if s[i] in '-+':
+          if s[i]=='-': flag=-1
+          i+=1
+      for c in s[i:]:
+          if not '0'<=c<='9': break
+          if ans>bdr or (ans==bdr and c>'7'): # 越界
+              return max_int if flag==1 else min_int
+          ans = ans*10+int(c)
+      return ans*flag 
+  ```
+
+### 109. [比较版本号（中等）](https://leetcode.cn/problems/compare-version-numbers/)
+
+<div align=center><img src="e109.png" style="zoom:50%;" /></div>
+
+* 字符串分割
+
+  若版本号不存在某下标处的修订号，视为0。
+
+  使用 `itertools.zip_longest`。内置的 `zip` 函数以元素最小的对象为基准，`itertools.zip_longest` 以元素最多的元素为基准，使用 `fillvalue` 填充。
+
+  ```python
+  from itertools import zip_longest
+  def compareVersion(self, version1: str, version2: str) -> int:
+      for v1, v2 in zip_longest(version1.split('.'), version2.split('.'), fillvalue=0):
+          x, y = int(v1), int(v2)
+          if x != y:
+              return 1 if x > y else -1
+      return 0
+  ```
+
+* 双指针
+
+  使用双指针优化空间复杂度。
+
+  ```python
+  def compareVersion(self, version1: str, version2: str) -> int:
+      m,n=len(version1),len(version2)
+      i,j=0,0
+      while i<m or j<n:
+          v1=0
+          while i<m and version1[i]!='.':
+              v1=v1*10+int(version1[i])
+              i+=1
+          i+=1 # 跳过 .
+          v2=0
+          while j<n and version2[j]!='.':
+              v2=v2*10+int(version2[j])
+              j+=1
+          j+=1 # 跳过 .
+          if v1!=v2:
+              return 1 if v1>v2 else -1
+      return 0
+  ```
+
   
-
-
 
