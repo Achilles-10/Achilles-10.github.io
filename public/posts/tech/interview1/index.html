@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>百面深度学习：卷积神经网络 | 烈烈风中、的博客</title>
+<meta name="keywords" content="面试, 学习笔记">
+<meta name="description" content="卷积神经网络常见面试题">
+<meta name="author" content="Achilles">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/interview1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+        onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="16x16" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="icon" type="image/png" sizes="32x32" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="apple-touch-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<link rel="mask-icon" href="https://Achilles-10.github.io/img/profile.jpg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script defer src="https://unpkg.com/mermaid@8.8.1/dist/mermaid.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+<script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.css" integrity="sha384-bYdxxUwYipFNohQlHt0bjN/LCpueqWz13HufFEV1SUatKs1cm4L6fFgCi1jT643X" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/katex.min.js" integrity="sha384-Qsn9KnoKISj6dI8g7p1HBlNpVx0I8p1SvlwOldgi3IorMle61nQy4zEahWYtljaz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+
+<meta property="og:title" content="百面深度学习：卷积神经网络" />
+<meta property="og:description" content="卷积神经网络常见面试题" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/interview1/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/interview1/cover.gif" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-07-26T18:50:49+08:00" />
+<meta property="article:modified_time" content="2023-07-26T18:50:49+08:00" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/interview1/cover.gif" />
+<meta name="twitter:title" content="百面深度学习：卷积神经网络"/>
+<meta name="twitter:description" content="卷积神经网络常见面试题"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+
+        {
+          "@type": "ListItem",
+          "position":  2 ,
+          "name": "📚 文章",
+          "item": "https://Achilles-10.github.io/posts/"
+        },
+
+        {
+          "@type": "ListItem",
+          "position":  3 ,
+          "name": "👨🏻‍💻 技术",
+          "item": "https://Achilles-10.github.io/posts/tech/"
+        }, 
+    {
+      "@type": "ListItem",
+      "position":  4 ,
+      "name": "百面深度学习：卷积神经网络",
+      "item": "https://Achilles-10.github.io/posts/tech/interview1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "百面深度学习：卷积神经网络",
+  "name": "百面深度学习：卷积神经网络",
+  "description": "卷积神经网络常见面试题",
+  "keywords": [
+    "面试", "学习笔记"
+  ],
+  "articleBody": "一、卷积基础知识 关键词：卷积操作、卷积核、感受野（Receptive Field）、特征图（feature map）、卷积神经网络\n1. 简述卷积的基本操作，并分析其与全连接层的区别 在卷积操作中，卷积核与输入图像上滑动，进行点乘操作，然后求和得到一个单个值，这个值作为输出特征图中的一个像素，每个卷积核都会产生一个对应的特征图。\n全连接层的输出层的每个节点与输出层的每个节点都有权重连接，而卷积层具有局部连接、权值共享和输入/输出数据结构化的特点，参数量和计算复杂度远小于全连接层，并且与生物视觉传导机制有一定的相似性。\n局部连接：卷积核尺寸小于输入特征图尺寸，输出层上的每个节点都只有输入层的部分节点连接；而全连接层中节点之间的连接是稠密的； 权值共享：由于卷积核的滑动窗口机制，输出层不同位置的节点与输入层的连接权值是一样的（卷积核参数）；全连接层中不同节点之间的权值是不同的； 输入/输出数据的结构化：卷积操作不会改变输入数据的结构信息；而全连接层的的输出数据会被展成（flatten）扁平的一维数组； 平移不变性：即对于输入图像中的某个特征，如果在图像中移动它，卷积层仍然可以检测到相同的特征；全连接层通常不具备这种平移不变性； 输入尺寸： 卷积层对于不同尺寸的输入图像都可以处理；全连接层输入的大小是固定的。 2. 在卷积神经网络中，如何计算各层的感受野大小 感受野的定义是，对于某层输出特征图上的某个点，在原始输入数据上能影响到这个点的取值的区域。\n若第 i 层为卷积层或池化层，不考虑padding，则有： $$ F(i)=[F(i-1)-1]\\times s+K\\\\ K=(k-1)\\times \\text{dilation}+1=(r-1)*(k-1)+k $$ 其中，s 表示 stride，k 表示 kernel_size，$F(0)=1$。\n若第 i 层为激活层、归一化层，则步长为1，感受野大小 $F(i)=F(i-1)$。\n若第 i 层为全连接层，则感受野为整个输入数据全域，即 $F(i)=L_{input}$\n3. 卷积层的输出尺寸、参数量和计算量 输出尺寸： $$ H_{out}=\\lfloor\\frac{H_{in}+2\\times p-K}{s}\\rfloor+1 $$ 其中，p 为 padding，s 为 stride，$K=(k-1)\\times\\text{dilation}+1$，k 为 kernel_size。\n向下取整是放弃了左上侧的部分数据，使得卷积核滑动窗能够恰好到达右下角的点。\npadding=same：在特征图上下/左右共填充 k-1 行/列，此时输出 $H_{out}=\\lfloor\\frac{H_{in}-1}{s}\\rfloor+1$ padding=valid：不对输入特征图进行边界填充，直接放弃右下侧卷积核无法滑动到的区域。 padding 的作用：\n避免边缘信息丢失 保持特征图大小 控制输出大小 参数量：\n每个卷积核的参数量为 $C_{in}K_wK_h+1$ ，1 表示偏置，若不考虑偏置则可以忽略。有 $C_{out}$ 个卷积核，则参数量为： $$ C_{out}(C_{in}K_wK_h+1) $$\n计算量：\n卷积层的计算量主要取决于三个因素：输出特征图的尺寸、卷积核的尺寸和输出通道数。\n卷积操作的计算量大约为 $C_{in}K_wK_h$，卷积核滑动的次数为输出特征图的数据个数，即 $C_{out}L_wL_h$，因此整体的计算量为： $$ C_{in}C_{out}L_w^{(o)}L_h^{(o)}K_wK_h $$\n二、卷积的变种 关键词：分组卷积（Group Convolution）、转置卷积（Transposed Convolution）、空洞卷积（Dilated Convolution）、可变形卷积（Deformable Convolution）\n1. 简述分组卷积及其应用场景 在普通卷积中，由于一个卷积核对应输出特征图的一个通道，而每个卷积核会作用到输入特征图的所有通道上，因此普通卷积在“通道”这个维度上是“全连接”的。\n分组卷积是将输入通道和和输出通道划分同样的组数，仅让处于相同组号的输入输出通道相互进行“全连接”。若记 g 为划分的组数，则分组卷积能降低计算量和参数量为原来的 1/g。\n分组卷积最初在 AlexNet 网络中引入，用于解决单个 GPU 无法处理含有较大计算量和存储需求的卷积层这个问题，用分组卷积将计算和存储分配到多个GPU上并行计算。目前分组卷积更多用于构建小型网络模型，例如深度可分离卷积（depthwise ）。\n分组卷积潜在的问题：\n效率提升不如理论上明显：对内存的访问频繁程度并未降低，且现有 GPU 加速库（cuDNN）对其优化程度有限；\n信息交互弱：因为它独立地处理每个组，可能无法充分利用输入通道之间的相关性。\n深度可分离卷积（Depthwise Separable Convolution）：\n将标准的卷积操作分解为两个步骤：深度卷积（Depthwise Convolution）和逐点卷积（Pointwise Convolution）：\n深度卷积（Depthwise Convolution）： 深度卷积独立地对输入的每个通道进行卷积操作，对于输入通道数为C的输入特征图，它使用C个卷积核进行卷积。参数量为 $C_{in}\\times K\\times K$。 逐点卷积（Pointwise Convolution）： 在深度卷积之后，使用1x1的卷积改变深度卷积输出的通道数。参数量为 $C_{in}\\times C_{out}$。 总的参数量为 $C_{in}\\times K\\times K + C_{in}\\times C_{out}$。\n深度可分离卷积能够减少参数量和计算量，加速推理过程，实现轻量级模型和移动端应用。但同样存在信息交互弱的问题，可能对模型的性能产生一定影响。\n2. 1x1 卷积的作用 1x1 卷积，也称为逐点卷积（Pointwise Convolution），卷积核大小为 1x1，不考虑输入数据局部信息之间的关系，而把关注点放在不同通道间。\n作用：\n降维和增加通道数： 1x1 卷积可以降低特征图的通道数，从而减少网络的参数量和计算复杂度。同时，它也可以增加通道数，引入更多的特征表示。 特征融合： 1x1 本质是对每个像素点在不同通道上进行线性组合，可以用于特征的融合，从而提高模型的表征能力。 非线性映射： 尽管1x1卷积只是在通道上进行线性组合，但之后可以通过非线性激活函数进行非线性映射，增加网络的表达能力。 3. 简述转置卷积的主要思想以及应用场景 转置卷积（Transposed Convolution），也称为反卷积（Deconvolution）。主要思想是将卷积操作中的输入和输出交换，从而将低维特征映射扩展到高维特征映射。\n转置卷积是通过卷积核的翻转和补零操作来实现的，具体实现时，以二维卷积为例，一个卷积核尺寸为 $k_w\\times k_h$，滑动步长 $(s_w,s_h)$，边界填充尺寸为 $(p_w,p_h)$ 的普通卷积：\n如果 $s\u003e1$，对输入特征图进行扩张（上采样）：相邻数据点之间填充 $s_{w/h}-1$ 个零； 对输入特征图进行边界填充：对左右/上下两侧分别填充 $\\hat{p}{w/h}=k{w/h}-p_{w/h}-1$ 个零列/行； 变换后再输入特征图上做卷积核大小为 $k_w\\times k_h$，滑动步长为 $(1,1)$ 的普通卷积。 输出特征图大小为 $H_{out} = s\\times(H_{in}-1)+k$\n转置卷积的应用场景：\n图像分割和语义分割： 转置卷积可用于将低分辨率的特征图上采样到原始输入图像大小，以生成像素级的分割结果。 图像生成和超分辨率重建： 在图像生成任务中，例如GAN（生成对抗网络）中的生成器部分，转置卷积用于将输入的随机噪声扩展成高分辨率的图像。同样，转置卷积在超分辨率重建中也能够将低分辨率图像上采样成高分辨率图像。 卷积神经网络中的上采样： 使用转置卷积进行上采样，提高特征图的尺寸，以便更好地捕捉图像中的细节和全局信息。 4. 简述空洞卷积的设计思路 空洞卷积（Dilated Convolution），也称为膨胀卷积或扩张卷积。通过在卷积核中引入扩张率（dilation rate）这个超参数来指定相邻采样点之间的间隔：扩张率为 r 的空洞卷积，卷积核上相邻数据点之间有 r-1 个空洞，如下图所示，这是一个卷积核大小为 3，扩张率为 2 的空洞卷积。\n空洞卷积的感受野为 $F = (r-1)*(k-1)+k$，当卷积核大小为 3，扩张率为 2 时，感受野计算方式如下图所示。经过一层空洞卷积感受野为 $3\\times 3$，两层空洞卷积后为 $5\\times 5$。\n空洞卷积利用空洞结构扩大了卷积尺寸，不经过下采样操作即可增大感受野，同时还保留了输入数据的内部结构，能够捕捉更广阔的上下文信息，从而增强卷积神经网络的感知能力。\n5. 可变形卷积旨在解决哪类问题 可变形卷积（Deformable Convolution）是一种改进的卷积操作，旨在解决传统卷积在处理不规则形状和变形目标时的不足。可变形卷积通过引入可学习的偏移量来动态调整卷积核的采样位置，从而适应不同目标的变形和不规则形状，提高模型对于复杂场景的表征能力。\n如下图所示，（a）是普通卷积和，（b）（c）（d）是可变形卷积核。\n当偏移后的采样点不是整数时，需要用双线性插值来计算对应的特征值。\n三、卷积神经网络的整体结构 关键词：AlexNet、VGGNet、Inception、ResNet\n1. 简述卷积神经网络近年来在结构设计上的主要发展和变迁（从 AlexNet 到 ResNet 系列） AlexNet\n网络结构是堆砌的卷积层和池化层，在网络末端加上全连接层和 Softmax 以处理多分类任务。\n采用 ReLU 替换 Sigmoid 作为激活函数，缓解深层网络梯度消失的问题； 引入局部响应归一化（Local Response Normalization，LRN）； 应用 Dropout 和数据扩充（data augmentation）来提升效果； 使用步长小于池化核的重叠最大池化； 使用分组卷积来突破当时 GPU 的显存瓶颈。 VGGNet\n相较于 AlexNet，VGGNet 做了以下改变：\n用多个 $3\\times3$ 小卷积核替代之前的 $5\\times 5,\\ 7\\times 7$ 大卷积核，这样可以在更少参数量合计算量的情况下获得同样的感受野和更大的网络深度； 用 $2\\times2$ 池化核替代之前的 $3\\times3$ 池化核； 去掉局部响应归一化模块。 GoogLeNet / Inception-v1\n提出 Inception 模块，将大通道卷积层替换为多个小通道卷积层组成的分支结构。\n提出瓶颈（bottleneck）结构，即在计算大卷积层之前先用 $1\\times1$ 卷积对通道压缩以减少计算量； 网络中间层使用多条分支，连接辅助分类器，缓解梯度消失问题； 修改 VGGNet 等网络在末端使用多个全连接层的做法，降低一个全连接层换成平均池化层（Global Average Pooling）； Inception-v2 和 Inception-v3\n提出四点网路结构设计的准则：\n避免表达瓶颈（representational bottleneck），尤其是网络前几层。尽量让网络从前到后各层的信息表征能力逐渐降低，不能突然剧烈下降或中间某些节点出现瓶颈； 特征图通道越多，能表达的解耦信息越多，更容易进行局部处理，加速网络训练过程； 若要在特征图上做空域的聚合操作，可以先压缩特征图通道； 在限定总计算量的情况下，网络结构的深度和宽度需要平衡； 文中提出两种卷积分解思路：\n将 $5\\times5$ 卷积核分解为两个 $3\\times3$ 小卷积核，更一般的，将 $(2k+1)\\times(2k+1)$ 卷积核分解为 k 个 $3\\times3$ 卷积核。如下图 (b)； 将 $k\\times k$ 卷积核分解为 $1\\times k$ 和 $k\\times 1$ 卷积核的串联/并联。如下图 (c) 和 (d)； 为了缓解单纯用池化层下采样带来的表达瓶颈问题，在原始 Inception 模块上修改，将每条支路最后一层的步长改为2，如下图。\nResNet\nResNet 的提出基于这样一种现象：随着网络层数加深，训练误差和测试误差都会上升，这种现象称为网络退化（degeneration）。ResNet 使用跳层连接（shortcut connection）来解决这个问题，跳层连接有以下两点好处：\n抑制梯度消失的现象，使网络在加深时性能不会下降； 由于 “近道” 的存在，若网络在层数加深退化时，可以通过控制 “近道” 和 “非近道” 的组合比例来退回到之前浅层时的状态，即 “近道” 具备自我关闭能力。 Inception-v4 和 Inception-ResNet\nv4 在 v3 的基础上修改了网络初始几层的结构（Stem），同时应用了 Inception-A、Inception-B 和 Inception-C 模块，提出 Reduction-A、Reduction-B 模块。\nResNeXt 缩小了瓶颈比，并将中间的普通卷积改为分组卷积。\n四、卷积神经网络的基础模块 关键词：批归一化（Batch Normalization, BN）、全局平均池化（Global Average Pooling）、瓶颈结构、沙漏结构（hourglass）\n1. 批归一化是为了解决什么问题？它的参数有何意义？它在网络中一般放在什么位置？ 解决梯度消失和梯度爆炸问题：批归一化通过将输入数据在每个批次上进行标准化，可以使得数据的分布更稳定，有助于缓解梯度消失和梯度爆炸问题； 加速收敛：批归一化避免训练过程中的内部协变量偏移现象，使训练过程更稳定，可以使用更高的学习率，加速训练； 增强泛化能力：批归一化作为一种正则化方法，可以减少模型的过拟合，增强泛化能力。 BN公式如下： $$ y=\\gamma\\cdot\\frac{x-\\mu}{\\sqrt{\\sigma^2+\\epsilon}}+\\beta $$ 有 $\\gamma,\\beta$ 两个可学习的平移参数和缩放参数，具有以下作用：\n保留网络各层在训练过程中的学习成果。若没有这两个参数，BN 退化为普通的标准化，不能有效学习。添加参数后可以保留每个神经元学习的成果； 保证激活单元的非线性表达能力。添加参数后，BN 的数据可以进入到激活函数的非线性区域； 使 BN 模块具有自我关闭功能。若 $\\gamma,\\beta$ 分别取数据的均值和标准差，则可以回复初始的输入值，即关闭 BN 模块。 BN 模块通常放在激活层前，可以避免 BN 破坏非线性特征的分布；此外，BN 可以使数据不落入激活函数的饱和区域，缓解梯度消失问题；\n由于现在常用激活函数为 ReLU，可以将 BN 放在激活层后，避免数据在激活层之前被转化成相似模式而使非线性特征趋于同化。\n2. 用于分类任务的卷积神经网络的最后几层一般是什么层？在最近几年有什么变化？ 网络末端一般是几层全连接层。\n近几年，分类网络在卷积层之后、最后一层之前通常采用全局平均池化，它具备与全连接层相似的效果（提取全局信息），并有如下优点：\n参数量和计算量大大降低。GAP 的参数量为0，计算量为 $cwh$；输出单元数为 k 的全连接层参数量和计算量都是 $cwhk$。 具有较好可解释性。可以知道特征图上那些点对最后的分类贡献大。 3. 卷积神经网络中的瓶颈结构和沙漏结构提出的初衷是什么？可以应用于哪些问题？ 瓶颈结构：\n瓶颈结构初衷是为了降低大卷积层的计算量。在大卷积层之前先用 1x1 卷积来缩减特征图通道数；在完成大卷积后，根据需要可以再使用 1x1 卷积来恢复特征图通道数。\n瓶颈结构能够用更小的计算代价达到与之前相似或更好的效果（增加了网络层数）。\n沙漏结构\n沙漏结构的设计初衷是解决图像分割、关键点检测等任务中对于全局和局部信息的兼顾问题。沙漏结构一般包括以下两个分支：\n自底向上（bottom-up）：利用卷积、池化等操作将特征图的尺寸逐层压缩(通道数可能增加)，类似于自编码器中的编码器(encoder) 自顶向下（top-down）分支：利用反卷积或插值等上采样操作将特征图的尺寸逐层扩大(通道数可能降低)，类似于自编码器中的解码器(decoder)。 ",
+  "wordCount" : "5612",
+  "inLanguage": "en",
+  "image":"https://Achilles-10.github.io/posts/tech/interview1/cover.gif","datePublished": "2023-07-26T18:50:49+08:00",
+  "dateModified": "2023-07-26T18:50:49+08:00",
+  "author":[{
+    "@type": "Person",
+    "name": "Achilles"
+  }],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://Achilles-10.github.io/posts/tech/interview1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "烈烈风中、的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://Achilles-10.github.io/img/profile.jpg"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    (function () {
+        let  arr,reg = new RegExp("(^| )"+"change-themes"+"=([^;]*)(;|$)");
+        if(arr = document.cookie.match(reg)) {
+        } else {
+            if (new Date().getHours() >= 19 || new Date().getHours() < 6) {
+                document.body.classList.add('dark');
+                localStorage.setItem("pref-theme", 'dark');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem("pref-theme", 'light');
+            }
+        }
+    })()
+
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://Achilles-10.github.io" accesskey="h" title="烈烈风中、的个人博客 (Alt + H)">
+            <img src="https://Achilles-10.github.io/img/profile.jpg" alt="logo" aria-label="logo"
+                 height="36">烈烈风中、的个人博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://Achilles-10.github.io/" title="🏠 主页">
+                <span>🏠 主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/posts" title="📚 文章">
+                <span>📚 文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/tags" title="🧩 标签">
+                <span>🧩 标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/archives/" title="⏱️ 时间轴">
+                <span>⏱️ 时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/about" title="🙋🏻‍♂️ 关于">
+                <span>🙋🏻‍♂️ 关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://Achilles-10.github.io/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <span>🔍 搜索</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+</style>
+
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
+            <h1 class="post-title">
+                百面深度学习：卷积神经网络
+            </h1>
+            <div class="post-description">
+                卷积神经网络常见面试题
+            </div>
+            <div class="post-meta"><style>
+    i[id*="post_meta_style"] {
+        display: flex;
+        align-items: center;
+        margin: 0 0 10px 0;
+    }
+
+    .parent-post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        opacity: 0.8;
+    }
+</style>
+
+<span class="parent-post-meta">
+    <span id="post_meta_style_1">
+        <span class="fa fa-calendar-check-o"></span>
+        <span>2023 年 7 月 26 日
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    
+    
+    
+    
+    
+    
+    
+    <span id="post_meta_style_3">
+        <span class="fa fa-file-word-o"></span>
+        <span>5612字
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_4">
+        <span class="fa fa-clock-o"></span>
+        <span>12分钟
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_5">
+        <span class="fa fa-user-o"></span>
+        <span>Achilles
+            &nbsp;&nbsp;
+        </span>
+    </span>
+    <span id="post_meta_style_6">
+        <span class="fa fa-tags" style="opacity: 0.8"></span>
+        <span>
+            <span class="post-tags-meta">
+                <a href="https://Achilles-10.github.io/tags/%E9%9D%A2%E8%AF%95/" style="color: var(--secondary)!important;">面试</a>
+                &nbsp;<a href="https://Achilles-10.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="color: var(--secondary)!important;">学习笔记</a>
+            </span>
+        </span>
+    </span>
+</span>
+<span style="opacity: 0.8;">
+                    <span id="post_meta_style_7">
+                        &nbsp;&nbsp;
+                        <span class="fa fa-eye" ></span>
+                        <span>
+                            <span id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv"></span></span>
+                            &nbsp;&nbsp;
+                        </span>
+                    </span>
+                    <span id="post_meta_style_8">
+                        <span class="fa fa-commenting-o"></span>
+                        <span>
+                            <script src="https://cdn.staticfile.org/twikoo//twikoo.all.min.js"></script>
+                            <script>
+                                let url = document.documentURI
+                                
+                                let dnsUrl = "https://Achilles-10.github.io"
+                                let urlSplit = url.split(dnsUrl)
+                                let finalUrl = urlSplit[1]
+                                if (finalUrl[0] !== '/') {
+                                    finalUrl = '/'+finalUrl
+                                }
+                                twikoo.getCommentsCount({
+                                    envId:  null , 
+                                region:  null , 
+                                urls: [ 
+                                    
+                                    finalUrl,
+                                ],
+                                    includeReply: false 
+                                }).then(function (res) {
+                                    let count = res[0].count
+                                    const obj = document.getElementById("comment_count");
+                                    obj.innerText = count
+                                    
+                                    
+                                    
+                                }).catch(function (err) {
+                                    
+                                    console.error(err);
+                                });
+                            </script>
+                            <span id="comment_count"></span>
+                        </span>
+                    </span>
+                </span>
+
+</div>
+        </header> 
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/interview1/cover.gif" alt="">
+    
+</figure><aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e4%b8%80%e5%8d%b7%e7%a7%af%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86" aria-label="一、卷积基础知识">一、卷积基础知识</a><ul>
+                        
+                <li>
+                    <a href="#1-%e7%ae%80%e8%bf%b0%e5%8d%b7%e7%a7%af%e7%9a%84%e5%9f%ba%e6%9c%ac%e6%93%8d%e4%bd%9c%e5%b9%b6%e5%88%86%e6%9e%90%e5%85%b6%e4%b8%8e%e5%85%a8%e8%bf%9e%e6%8e%a5%e5%b1%82%e7%9a%84%e5%8c%ba%e5%88%ab" aria-label="1. 简述卷积的基本操作，并分析其与全连接层的区别">1. 简述卷积的基本操作，并分析其与全连接层的区别</a></li>
+                <li>
+                    <a href="#2-%e5%9c%a8%e5%8d%b7%e7%a7%af%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e4%b8%ad%e5%a6%82%e4%bd%95%e8%ae%a1%e7%ae%97%e5%90%84%e5%b1%82%e7%9a%84%e6%84%9f%e5%8f%97%e9%87%8e%e5%a4%a7%e5%b0%8f" aria-label="2. 在卷积神经网络中，如何计算各层的感受野大小">2. 在卷积神经网络中，如何计算各层的感受野大小</a></li>
+                <li>
+                    <a href="#3-%e5%8d%b7%e7%a7%af%e5%b1%82%e7%9a%84%e8%be%93%e5%87%ba%e5%b0%ba%e5%af%b8%e5%8f%82%e6%95%b0%e9%87%8f%e5%92%8c%e8%ae%a1%e7%ae%97%e9%87%8f" aria-label="3. 卷积层的输出尺寸、参数量和计算量">3. 卷积层的输出尺寸、参数量和计算量</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%ba%8c%e5%8d%b7%e7%a7%af%e7%9a%84%e5%8f%98%e7%a7%8d" aria-label="二、卷积的变种">二、卷积的变种</a><ul>
+                        
+                <li>
+                    <a href="#1-%e7%ae%80%e8%bf%b0%e5%88%86%e7%bb%84%e5%8d%b7%e7%a7%af%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="1. 简述分组卷积及其应用场景">1. 简述分组卷积及其应用场景</a></li>
+                <li>
+                    <a href="#2-1x1-%e5%8d%b7%e7%a7%af%e7%9a%84%e4%bd%9c%e7%94%a8" aria-label="2. 1x1 卷积的作用">2. 1x1 卷积的作用</a></li>
+                <li>
+                    <a href="#3-%e7%ae%80%e8%bf%b0%e8%bd%ac%e7%bd%ae%e5%8d%b7%e7%a7%af%e7%9a%84%e4%b8%bb%e8%a6%81%e6%80%9d%e6%83%b3%e4%bb%a5%e5%8f%8a%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="3. 简述转置卷积的主要思想以及应用场景">3. 简述转置卷积的主要思想以及应用场景</a></li>
+                <li>
+                    <a href="#4-%e7%ae%80%e8%bf%b0%e7%a9%ba%e6%b4%9e%e5%8d%b7%e7%a7%af%e7%9a%84%e8%ae%be%e8%ae%a1%e6%80%9d%e8%b7%af" aria-label="4. 简述空洞卷积的设计思路">4. 简述空洞卷积的设计思路</a></li>
+                <li>
+                    <a href="#5-%e5%8f%af%e5%8f%98%e5%bd%a2%e5%8d%b7%e7%a7%af%e6%97%a8%e5%9c%a8%e8%a7%a3%e5%86%b3%e5%93%aa%e7%b1%bb%e9%97%ae%e9%a2%98" aria-label="5. 可变形卷积旨在解决哪类问题">5. 可变形卷积旨在解决哪类问题</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e4%b8%89%e5%8d%b7%e7%a7%af%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e7%9a%84%e6%95%b4%e4%bd%93%e7%bb%93%e6%9e%84" aria-label="三、卷积神经网络的整体结构">三、卷积神经网络的整体结构</a><ul>
+                        
+                <li>
+                    <a href="#1-%e7%ae%80%e8%bf%b0%e5%8d%b7%e7%a7%af%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e8%bf%91%e5%b9%b4%e6%9d%a5%e5%9c%a8%e7%bb%93%e6%9e%84%e8%ae%be%e8%ae%a1%e4%b8%8a%e7%9a%84%e4%b8%bb%e8%a6%81%e5%8f%91%e5%b1%95%e5%92%8c%e5%8f%98%e8%bf%81%e4%bb%8e-alexnet-%e5%88%b0-resnet-%e7%b3%bb%e5%88%97" aria-label="1. 简述卷积神经网络近年来在结构设计上的主要发展和变迁（从 AlexNet 到 ResNet 系列）">1. 简述卷积神经网络近年来在结构设计上的主要发展和变迁（从 AlexNet 到 ResNet 系列）</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e5%9b%9b%e5%8d%b7%e7%a7%af%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e7%9a%84%e5%9f%ba%e7%a1%80%e6%a8%a1%e5%9d%97" aria-label="四、卷积神经网络的基础模块">四、卷积神经网络的基础模块</a><ul>
+                        
+                <li>
+                    <a href="#1-%e6%89%b9%e5%bd%92%e4%b8%80%e5%8c%96%e6%98%af%e4%b8%ba%e4%ba%86%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98%e5%ae%83%e7%9a%84%e5%8f%82%e6%95%b0%e6%9c%89%e4%bd%95%e6%84%8f%e4%b9%89%e5%ae%83%e5%9c%a8%e7%bd%91%e7%bb%9c%e4%b8%ad%e4%b8%80%e8%88%ac%e6%94%be%e5%9c%a8%e4%bb%80%e4%b9%88%e4%bd%8d%e7%bd%ae" aria-label="1. 批归一化是为了解决什么问题？它的参数有何意义？它在网络中一般放在什么位置？">1. 批归一化是为了解决什么问题？它的参数有何意义？它在网络中一般放在什么位置？</a></li>
+                <li>
+                    <a href="#2-%e7%94%a8%e4%ba%8e%e5%88%86%e7%b1%bb%e4%bb%bb%e5%8a%a1%e7%9a%84%e5%8d%b7%e7%a7%af%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e7%9a%84%e6%9c%80%e5%90%8e%e5%87%a0%e5%b1%82%e4%b8%80%e8%88%ac%e6%98%af%e4%bb%80%e4%b9%88%e5%b1%82%e5%9c%a8%e6%9c%80%e8%bf%91%e5%87%a0%e5%b9%b4%e6%9c%89%e4%bb%80%e4%b9%88%e5%8f%98%e5%8c%96" aria-label="2. 用于分类任务的卷积神经网络的最后几层一般是什么层？在最近几年有什么变化？">2. 用于分类任务的卷积神经网络的最后几层一般是什么层？在最近几年有什么变化？</a></li>
+                <li>
+                    <a href="#3-%e5%8d%b7%e7%a7%af%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e4%b8%ad%e7%9a%84%e7%93%b6%e9%a2%88%e7%bb%93%e6%9e%84%e5%92%8c%e6%b2%99%e6%bc%8f%e7%bb%93%e6%9e%84%e6%8f%90%e5%87%ba%e7%9a%84%e5%88%9d%e8%a1%b7%e6%98%af%e4%bb%80%e4%b9%88%e5%8f%af%e4%bb%a5%e5%ba%94%e7%94%a8%e4%ba%8e%e5%93%aa%e4%ba%9b%e9%97%ae%e9%a2%98" aria-label="3. 卷积神经网络中的瓶颈结构和沙漏结构提出的初衷是什么？可以应用于哪些问题？">3. 卷积神经网络中的瓶颈结构和沙漏结构提出的初衷是什么？可以应用于哪些问题？</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="一卷积基础知识">一、卷积基础知识<a hidden class="anchor" aria-hidden="true" href="#一卷积基础知识">#</a></h2>
+<p>关键词：卷积操作、卷积核、感受野（Receptive Field）、特征图（feature map）、卷积神经网络</p>
+<h3 id="1-简述卷积的基本操作并分析其与全连接层的区别">1. 简述卷积的基本操作，并分析其与全连接层的区别<a hidden class="anchor" aria-hidden="true" href="#1-简述卷积的基本操作并分析其与全连接层的区别">#</a></h3>
+<p>在卷积操作中，卷积核与输入图像上<strong>滑动</strong>，进行<strong>点乘</strong>操作，然后求和得到一个单个值，这个值作为输出特征图中的一个像素，每个卷积核都会产生一个对应的特征图。</p>
+<div align=center><img src="2.png" style="zoom:70%;" /></div>
+<p>全连接层的输出层的每个节点与输出层的每个节点都有权重连接，而卷积层具有<strong>局部连接</strong>、<strong>权值共享</strong>和<strong>输入/输出数据结构化</strong>的特点，<strong>参数量</strong>和<strong>计算复杂度</strong>远小于全连接层，并且与生物视觉传导机制有一定的相似性。</p>
+<ul>
+<li><strong>局部连接</strong>：卷积核尺寸小于输入特征图尺寸，输出层上的每个节点都只有输入层的<strong>部分节点</strong>连接；而全连接层中节点之间的连接是稠密的；</li>
+<li><strong>权值共享</strong>：由于卷积核的<strong>滑动窗口</strong>机制，输出层不同位置的节点与输入层的连接权值是一样的（卷积核参数）；全连接层中不同节点之间的权值是不同的；</li>
+<li><strong>输入/输出数据的结构化</strong>：卷积操作不会改变输入数据的结构信息；而全连接层的的输出数据会被展成（flatten）扁平的一维数组；</li>
+<li><strong>平移不变性</strong>：即对于输入图像中的某个特征，如果在图像中移动它，卷积层仍然可以检测到相同的特征；全连接层通常不具备这种平移不变性；</li>
+<li><strong>输入尺寸</strong>： 卷积层对于不同尺寸的输入图像都可以处理；全连接层输入的大小是固定的。</li>
+</ul>
+<h3 id="2-在卷积神经网络中如何计算各层的感受野大小">2. 在卷积神经网络中，如何计算各层的感受野大小<a hidden class="anchor" aria-hidden="true" href="#2-在卷积神经网络中如何计算各层的感受野大小">#</a></h3>
+<p>感受野的定义是，对于某层输出特征图上的某个点，在原始输入数据上能影响到这个点的取值的区域。</p>
+<ul>
+<li>
+<p>若第 i 层为卷积层或池化层，不考虑padding，则有：
+$$
+F(i)=[F(i-1)-1]\times s+K\\ K=(k-1)\times \text{dilation}+1=(r-1)*(k-1)+k
+$$
+其中，s 表示 stride，k 表示 kernel_size，$F(0)=1$。</p>
+</li>
+<li>
+<p>若第 i 层为激活层、归一化层，则步长为1，感受野大小 $F(i)=F(i-1)$。</p>
+</li>
+<li>
+<p>若第 i 层为全连接层，则感受野为整个输入数据全域，即 $F(i)=L_{input}$</p>
+</li>
+</ul>
+<div align=center><img src="1.png" style="zoom:65%;" /></div>
+<h3 id="3-卷积层的输出尺寸参数量和计算量">3. 卷积层的输出尺寸、参数量和计算量<a hidden class="anchor" aria-hidden="true" href="#3-卷积层的输出尺寸参数量和计算量">#</a></h3>
+<ul>
+<li>
+<p>输出尺寸：
+$$
+H_{out}=\lfloor\frac{H_{in}+2\times p-K}{s}\rfloor+1
+$$
+其中，p 为 padding，s 为 stride，$K=(k-1)\times\text{dilation}+1$，k 为 kernel_size。</p>
+<p>向下取整是放弃了左上侧的部分数据，使得卷积核滑动窗能够恰好到达右下角的点。</p>
+<ul>
+<li>padding=same：在特征图上下/左右共填充 k-1 行/列，此时输出 $H_{out}=\lfloor\frac{H_{in}-1}{s}\rfloor+1$</li>
+<li>padding=valid：不对输入特征图进行边界填充，直接放弃右下侧卷积核无法滑动到的区域。</li>
+</ul>
+<blockquote>
+<p><strong>padding 的作用</strong>：</p>
+<ol>
+<li>避免边缘信息丢失</li>
+<li>保持特征图大小</li>
+<li>控制输出大小</li>
+</ol>
+</blockquote>
+</li>
+<li>
+<p>参数量：</p>
+<p>每个卷积核的参数量为 $C_{in}K_wK_h+1$ ，1 表示偏置，若不考虑偏置则可以忽略。有 $C_{out}$ 个卷积核，则参数量为：
+$$
+C_{out}(C_{in}K_wK_h+1)
+$$</p>
+</li>
+<li>
+<p>计算量：</p>
+<p>卷积层的计算量主要取决于三个因素：输出特征图的尺寸、卷积核的尺寸和输出通道数。</p>
+<p>卷积操作的计算量大约为 $C_{in}K_wK_h$，卷积核滑动的次数为输出特征图的数据个数，即 $C_{out}L_wL_h$，因此整体的计算量为：
+$$
+C_{in}C_{out}L_w^{(o)}L_h^{(o)}K_wK_h
+$$</p>
+</li>
+</ul>
+<h2 id="二卷积的变种">二、卷积的变种<a hidden class="anchor" aria-hidden="true" href="#二卷积的变种">#</a></h2>
+<p>关键词：分组卷积（Group Convolution）、转置卷积（Transposed Convolution）、空洞卷积（Dilated Convolution）、可变形卷积（Deformable Convolution）</p>
+<h3 id="1-简述分组卷积及其应用场景">1. 简述分组卷积及其应用场景<a hidden class="anchor" aria-hidden="true" href="#1-简述分组卷积及其应用场景">#</a></h3>
+<p>在普通卷积中，由于一个卷积核对应输出特征图的一个通道，而每个卷积核会作用到输入特征图的所有通道上，因此普通卷积在“通道”这个维度上是“<strong>全连接</strong>”的。</p>
+<p>分组卷积是将输入通道和和输出通道划分同样的组数，仅让处于相同组号的输入输出通道相互进行“全连接”。若记 g 为划分的组数，则分组卷积能降低计算量和参数量为原来的 1/g。</p>
+<div align=center><img src="3.png" style="zoom:80%;" /></div>
+<p>分组卷积最初在 AlexNet 网络中引入，用于解决单个 GPU 无法处理含有较大计算量和存储需求的卷积层这个问题，用分组卷积将计算和存储分配到多个GPU上<strong>并行计算</strong>。目前分组卷积更多用于构建<strong>小型网络</strong>模型，例如<strong>深度可分离卷积</strong>（depthwise ）。</p>
+<p>分组卷积潜在的问题：</p>
+<ul>
+<li>
+<p>效率提升不如理论上明显：对内存的访问频繁程度并未降低，且现有 GPU 加速库（cuDNN）对其优化程度有限；</p>
+</li>
+<li>
+<p>信息交互弱：因为它独立地处理每个组，可能无法充分利用输入通道之间的相关性。</p>
+</li>
+</ul>
+<blockquote>
+<p><strong>深度可分离卷积（Depthwise Separable Convolution）</strong>：</p>
+<p>将标准的卷积操作分解为两个步骤：深度卷积（Depthwise Convolution）和逐点卷积（Pointwise Convolution）：</p>
+<ol>
+<li><strong>深度卷积（Depthwise Convolution）：</strong> 深度卷积独立地对输入的每个通道进行卷积操作，对于输入通道数为C的输入特征图，它使用C个卷积核进行卷积。参数量为 $C_{in}\times K\times K$。</li>
+<li><strong>逐点卷积（Pointwise Convolution）：</strong> 在深度卷积之后，使用1x1的卷积改变深度卷积输出的通道数。参数量为 $C_{in}\times C_{out}$。</li>
+</ol>
+<p>总的参数量为 $C_{in}\times K\times K + C_{in}\times C_{out}$。</p>
+<p>深度可分离卷积能够<strong>减少参数量和计算量</strong>，<strong>加速推理过程</strong>，<strong>实现轻量级模型和移动端应用</strong>。但同样存在<strong>信息交互弱</strong>的问题，可能对模型的性能产生一定影响。</p>
+<div align=center><img src="4.png" style="zoom:50%;" /></div>
+</blockquote>
+<h3 id="2-1x1-卷积的作用">2. 1x1 卷积的作用<a hidden class="anchor" aria-hidden="true" href="#2-1x1-卷积的作用">#</a></h3>
+<p>1x1 卷积，也称为逐点卷积（Pointwise Convolution），卷积核大小为 1x1，不考虑输入数据局部信息之间的关系，而把关注点放在不同通道间。</p>
+<div align=center><img src="10.png" style="zoom:40%;" /></div>
+<p>作用：</p>
+<ol>
+<li><strong>降维和增加通道数：</strong> 1x1 卷积可以降低特征图的通道数，从而减少网络的参数量和计算复杂度。同时，它也可以增加通道数，引入更多的特征表示。</li>
+<li><strong>特征融合：</strong> 1x1 本质是对每个像素点在不同通道上进行线性组合，可以用于特征的融合，从而提高模型的表征能力。</li>
+<li><strong>非线性映射：</strong> 尽管1x1卷积只是在通道上进行线性组合，但之后可以通过非线性激活函数进行非线性映射，增加网络的表达能力。</li>
+</ol>
+<h3 id="3-简述转置卷积的主要思想以及应用场景">3. 简述转置卷积的主要思想以及应用场景<a hidden class="anchor" aria-hidden="true" href="#3-简述转置卷积的主要思想以及应用场景">#</a></h3>
+<p>转置卷积（Transposed Convolution），也称为反卷积（Deconvolution）。主要思想是将卷积操作中的输入和输出交换，从而将低维特征映射扩展到高维特征映射。</p>
+<p>转置卷积是通过卷积核的翻转和补零操作来实现的，具体实现时，以二维卷积为例，一个卷积核尺寸为 $k_w\times k_h$，滑动步长 $(s_w,s_h)$，边界填充尺寸为 $(p_w,p_h)$ 的普通卷积：</p>
+<ol>
+<li>如果 $s&gt;1$，对输入特征图进行扩张（上采样）：相邻数据点之间填充 $s_{w/h}-1$ 个零；</li>
+<li>对输入特征图进行边界填充：对左右/上下两侧分别填充 $\hat{p}<em>{w/h}=k</em>{w/h}-p_{w/h}-1$ 个零列/行；</li>
+<li>变换后再输入特征图上做卷积核大小为 $k_w\times k_h$，滑动步长为 $(1,1)$ 的普通卷积。</li>
+</ol>
+<p>输出特征图大小为 $H_{out} = s\times(H_{in}-1)+k$</p>
+<div align=center><img src="7.gif" style="zoom:60%;" /></div>
+<p><strong>转置卷积的应用场景：</strong></p>
+<ol>
+<li><strong>图像分割和语义分割：</strong> 转置卷积可用于将低分辨率的特征图上采样到原始输入图像大小，以生成像素级的分割结果。</li>
+<li><strong>图像生成和超分辨率重建：</strong> 在图像生成任务中，例如GAN（生成对抗网络）中的生成器部分，转置卷积用于将输入的随机噪声扩展成高分辨率的图像。同样，转置卷积在超分辨率重建中也能够将低分辨率图像上采样成高分辨率图像。</li>
+<li><strong>卷积神经网络中的上采样：</strong> 使用转置卷积进行上采样，提高特征图的尺寸，以便更好地捕捉图像中的细节和全局信息。</li>
+</ol>
+<h3 id="4-简述空洞卷积的设计思路">4. 简述空洞卷积的设计思路<a hidden class="anchor" aria-hidden="true" href="#4-简述空洞卷积的设计思路">#</a></h3>
+<p>空洞卷积（Dilated Convolution），也称为膨胀卷积或扩张卷积。通过在卷积核中引入<strong>扩张率</strong>（dilation rate）这个超参数来指定相邻采样点之间的间隔：扩张率为 r 的空洞卷积，卷积核上相邻数据点之间有 r-1 个空洞，如下图所示，这是一个卷积核大小为 3，扩张率为 2 的空洞卷积。</p>
+<div align=center><img src="6.png" style="zoom:40%;" /></div>
+<p>空洞卷积的感受野为 $F = (r-1)*(k-1)+k$，当卷积核大小为 3，扩张率为 2 时，感受野计算方式如下图所示。经过一层空洞卷积感受野为 $3\times 3$，两层空洞卷积后为 $5\times 5$。</p>
+<div align=center><img src="8.png" style="zoom:40%;" /></div>
+<p>空洞卷积利用空洞结构扩大了卷积尺寸，不经过下采样操作即可增大感受野，同时还保留了输入数据的内部结构，能够捕捉更广阔的上下文信息，从而增强卷积神经网络的感知能力。</p>
+<h3 id="5-可变形卷积旨在解决哪类问题">5. 可变形卷积旨在解决哪类问题<a hidden class="anchor" aria-hidden="true" href="#5-可变形卷积旨在解决哪类问题">#</a></h3>
+<p>可变形卷积（Deformable Convolution）是一种改进的卷积操作，旨在解决传统卷积在处理不规则形状和变形目标时的不足。可变形卷积通过引入可学习的偏移量来动态调整卷积核的采样位置，从而适应不同目标的变形和不规则形状，提高模型对于复杂场景的表征能力。</p>
+<p>如下图所示，（a）是普通卷积和，（b）（c）（d）是可变形卷积核。</p>
+<div align=center><img src="9.png" style="zoom:50%;" /></div>
+<p>当偏移后的采样点不是整数时，需要用<strong>双线性插值</strong>来计算对应的特征值。</p>
+<h2 id="三卷积神经网络的整体结构">三、卷积神经网络的整体结构<a hidden class="anchor" aria-hidden="true" href="#三卷积神经网络的整体结构">#</a></h2>
+<p>关键词：AlexNet、VGGNet、Inception、ResNet</p>
+<h3 id="1-简述卷积神经网络近年来在结构设计上的主要发展和变迁从-alexnet-到-resnet-系列">1. 简述卷积神经网络近年来在结构设计上的主要发展和变迁（从 AlexNet 到 ResNet 系列）<a hidden class="anchor" aria-hidden="true" href="#1-简述卷积神经网络近年来在结构设计上的主要发展和变迁从-alexnet-到-resnet-系列">#</a></h3>
+<ul>
+<li>
+<p><strong>AlexNet</strong></p>
+<p>网络结构是堆砌的卷积层和池化层，在网络末端加上全连接层和 Softmax 以处理多分类任务。</p>
+<ul>
+<li>采用 <strong>ReLU</strong> 替换 Sigmoid 作为激活函数，缓解深层网络梯度消失的问题；</li>
+<li>引入<strong>局部响应归一化</strong>（Local Response Normalization，LRN）；</li>
+<li>应用 <strong>Dropout</strong> 和<strong>数据扩充</strong>（data augmentation）来提升效果；</li>
+<li>使用步长小于池化核的重叠<strong>最大池化</strong>；</li>
+<li>使用<strong>分组卷积</strong>来突破当时 GPU 的显存瓶颈。</li>
+</ul>
+</li>
+<li>
+<p><strong>VGGNet</strong></p>
+<p>相较于 AlexNet，VGGNet 做了以下改变：</p>
+<ul>
+<li>用多个 $3\times3$ <strong>小卷积核</strong>替代之前的 $5\times 5,\ 7\times 7$ 大卷积核，这样可以在更少参数量合计算量的情况下获得同样的感受野和更大的网络深度；</li>
+<li>用 <strong>$2\times2$ 池化核</strong>替代之前的 $3\times3$ 池化核；</li>
+<li><strong>去掉</strong>局部响应归一化模块。</li>
+</ul>
+</li>
+<li>
+<p><strong>GoogLeNet / Inception-v1</strong></p>
+<p>提出 <strong>Inception 模块</strong>，将大通道卷积层替换为多个小通道卷积层组成的分支结构。</p>
+<ul>
+<li>提出<strong>瓶颈</strong>（bottleneck）结构，即在计算大卷积层之前先用 $1\times1$ 卷积对通道压缩以减少计算量；</li>
+<li>网络中间层使用<strong>多条分支</strong>，连接辅助分类器，缓解梯度消失问题；</li>
+<li>修改 VGGNet 等网络在末端使用多个全连接层的做法，降低一个全连接层换成<strong>平均池化层（Global Average Pooling）</strong>；</li>
+</ul>
+<div align=center><img src="11.png" style="zoom:70%;" /></div>
+</li>
+<li>
+<p><strong>Inception-v2 和 Inception-v3</strong></p>
+<p>提出四点网路结构设计的准则：</p>
+<ol>
+<li><strong>避免表达瓶颈</strong>（representational bottleneck），尤其是网络前几层。尽量让网络从前到后各层的信息表征能力逐渐降低，不能突然剧烈下降或中间某些节点出现瓶颈；</li>
+<li><strong>特征图通道越多</strong>，能表达的解耦信息越多，更容易进行局部处理，加速网络训练过程；</li>
+<li>若要在特征图上做空域的聚合操作，可以先<strong>压缩特征图通道</strong>；</li>
+<li>在限定总计算量的情况下，网络结构的<strong>深度和宽度需要平衡</strong>；</li>
+</ol>
+<p>文中提出两种卷积分解思路：</p>
+<ol>
+<li>将 $5\times5$ 卷积核分解为两个 $3\times3$ <strong>小卷积核</strong>，更一般的，将 $(2k+1)\times(2k+1)$ 卷积核分解为 k 个 $3\times3$ 卷积核。如下图 (b)；</li>
+<li>将 $k\times k$ 卷积核分解为 $1\times k$ 和 $k\times 1$ 卷积核的串联/并联。如下图 (c) 和 (d)；</li>
+</ol>
+<div align=center><img src="12.png" style="zoom:40%;" /></div>
+<p>为了缓解单纯用池化层下采样带来的表达瓶颈问题，在原始 Inception 模块上修改，将每条支路最后一层的步长改为2，如下图。</p>
+<div align=center><img src="13.png" style="zoom:20%;" /></div>
+</li>
+<li>
+<p>ResNet</p>
+<p>ResNet 的提出基于这样一种现象：随着网络层数加深，训练误差和测试误差都会上升，这种现象称为<strong>网络退化</strong>（degeneration）。ResNet 使用<strong>跳层连接</strong>（shortcut connection）来解决这个问题，跳层连接有以下两点好处：</p>
+<ol>
+<li>抑制梯度消失的现象，使网络在加深时性能不会下降；</li>
+<li>由于 “近道” 的存在，若网络在层数加深退化时，可以通过控制 “近道” 和 “非近道” 的组合比例来退回到之前浅层时的状态，即 “近道” 具备自我关闭能力。</li>
+</ol>
+<div align=center><img src="14.png" style="zoom:55%;" /></div>
+</li>
+<li>
+<p>Inception-v4 和 Inception-ResNet</p>
+<p>v4 在 v3 的基础上修改了网络初始几层的结构（Stem），同时应用了 Inception-A、Inception-B 和 Inception-C 模块，提出 Reduction-A、Reduction-B 模块。</p>
+<p>ResNeXt 缩小了瓶颈比，并将中间的普通卷积改为分组卷积。</p>
+</li>
+</ul>
+<h2 id="四卷积神经网络的基础模块">四、卷积神经网络的基础模块<a hidden class="anchor" aria-hidden="true" href="#四卷积神经网络的基础模块">#</a></h2>
+<p>关键词：批归一化（Batch Normalization, BN）、全局平均池化（Global Average Pooling）、瓶颈结构、沙漏结构（hourglass）</p>
+<h3 id="1-批归一化是为了解决什么问题它的参数有何意义它在网络中一般放在什么位置">1. 批归一化是为了解决什么问题？它的参数有何意义？它在网络中一般放在什么位置？<a hidden class="anchor" aria-hidden="true" href="#1-批归一化是为了解决什么问题它的参数有何意义它在网络中一般放在什么位置">#</a></h3>
+<ol>
+<li><strong>解决梯度消失和梯度爆炸问题</strong>：批归一化通过将输入数据在每个批次上进行标准化，可以使得数据的分布更稳定，有助于缓解梯度消失和梯度爆炸问题；</li>
+<li><strong>加速收敛</strong>：批归一化避免训练过程中的内部协变量偏移现象，使训练过程更稳定，可以使用更高的学习率，加速训练；</li>
+<li><strong>增强泛化能力</strong>：批归一化作为一种正则化方法，可以减少模型的过拟合，增强泛化能力。</li>
+</ol>
+<p>BN公式如下：
+$$
+y=\gamma\cdot\frac{x-\mu}{\sqrt{\sigma^2+\epsilon}}+\beta
+$$
+有 $\gamma,\beta$ 两个可学习的平移参数和缩放参数，具有以下作用：</p>
+<ol>
+<li><strong>保留网络各层在训练过程中的学习成果</strong>。若没有这两个参数，BN 退化为普通的标准化，不能有效学习。添加参数后可以保留每个神经元学习的成果；</li>
+<li><strong>保证激活单元的非线性表达能力</strong>。添加参数后，BN 的数据可以进入到激活函数的非线性区域；</li>
+<li><strong>使 BN 模块具有自我关闭功能</strong>。若 $\gamma,\beta$ 分别取数据的均值和标准差，则可以回复初始的输入值，即关闭 BN 模块。</li>
+</ol>
+<p>BN 模块通常放在激活层前，可以避免 BN 破坏非线性特征的分布；此外，BN 可以使数据不落入激活函数的饱和区域，缓解梯度消失问题；</p>
+<p>由于现在常用激活函数为 ReLU，可以将 BN 放在激活层后，避免数据在激活层之前被转化成相似模式而使非线性特征趋于同化。</p>
+<h3 id="2-用于分类任务的卷积神经网络的最后几层一般是什么层在最近几年有什么变化">2. 用于分类任务的卷积神经网络的最后几层一般是什么层？在最近几年有什么变化？<a hidden class="anchor" aria-hidden="true" href="#2-用于分类任务的卷积神经网络的最后几层一般是什么层在最近几年有什么变化">#</a></h3>
+<p>网络末端一般是几层全连接层。</p>
+<p>近几年，分类网络在卷积层之后、最后一层之前通常采用<strong>全局平均池化</strong>，它具备与全连接层相似的效果（提取全局信息），并有如下优点：</p>
+<ol>
+<li><strong>参数量和计算量大大降低</strong>。GAP 的参数量为0，计算量为 $cwh$；输出单元数为 k 的全连接层参数量和计算量都是 $cwhk$。</li>
+<li><strong>具有较好可解释性</strong>。可以知道特征图上那些点对最后的分类贡献大。</li>
+</ol>
+<h3 id="3-卷积神经网络中的瓶颈结构和沙漏结构提出的初衷是什么可以应用于哪些问题">3. 卷积神经网络中的瓶颈结构和沙漏结构提出的初衷是什么？可以应用于哪些问题？<a hidden class="anchor" aria-hidden="true" href="#3-卷积神经网络中的瓶颈结构和沙漏结构提出的初衷是什么可以应用于哪些问题">#</a></h3>
+<ul>
+<li>
+<p>瓶颈结构：</p>
+<p>瓶颈结构初衷是为了降低大卷积层的计算量。在大卷积层之前先用 1x1 卷积来缩减特征图通道数；在完成大卷积后，根据需要可以再使用 1x1 卷积来恢复特征图通道数。</p>
+<div align=center><img src="15.png" style="zoom:55%;" /></div>
+<p>瓶颈结构能够用更小的计算代价达到与之前相似或更好的效果（增加了网络层数）。</p>
+</li>
+<li>
+<p>沙漏结构</p>
+<p>沙漏结构的设计初衷是解决图像分割、关键点检测等任务中对于全局和局部信息的兼顾问题。沙漏结构一般包括以下两个分支：</p>
+<ol>
+<li>自底向上（bottom-up）：利用卷积、池化等操作将特征图的尺寸逐层压缩(通道数可能增加)，类似于自编码器中的编码器(encoder)</li>
+<li>自顶向下（top-down）分支：利用反卷积或插值等上采样操作将特征图的尺寸逐层扩大(通道数可能降低)，类似于自编码器中的解码器(decoder)。</li>
+</ol>
+<div align=center><img src="16.JPG" style="zoom:55%;" /></div>
+</li>
+</ul>
+
+
+        </div>
+
+        
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/vit/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>速通 Vision Transformer (ViT)</span>
+  </a>
+</nav>
+
+        </footer>
+    </div><div class="comments">
+    <script>
+    function loadComment() {
+        let theme = localStorage.getItem('pref-theme') === 'dark' ? 'dark' : 'light';
+        let s = document.createElement('script');
+        s.src = 'https://giscus.app/client.js';
+        s.setAttribute('data-repo', 'Achilles-10\/Achilles-10.github.io');
+        s.setAttribute('data-repo-id', 'R_kgDOJODJBA');
+        s.setAttribute('data-category', 'Announcements');
+        s.setAttribute('data-category-id', 'DIC_kwDOJODJBM4CVIpZ');
+        s.setAttribute('data-mapping', 'title');
+        s.setAttribute('data-reactions-enabled', '1');
+        s.setAttribute('data-emit-metadata', '1');
+        s.setAttribute('data-input-position', 'top');
+        s.setAttribute('data-lang', 'zh-CN');
+        s.setAttribute('data-theme', theme);
+        s.setAttribute('crossorigin', 'anonymous');
+        
+        s.setAttribute('async', '');
+        document.querySelector('div.comments').innerHTML = '';
+        document.querySelector('div.comments').appendChild(s);
+    }
+    loadComment();
+    </script>
+</div>
+
+</article>
+</main>
+
+<footer class="footer">
+    <span>
+        Copyright
+        &copy;
+        -2023
+        <a href="https://Achilles-10.github.io" style="color:#939393;">烈烈风中、的博客</a>
+        All Rights Reserved
+    </span>
+    
+    <span id="busuanzi_container">
+        <span class="fa fa-user"></span> <span id="busuanzi_value_site_uv"></span>
+        <span class="fa fa-eye"></span> <span id="busuanzi_value_site_pv"></span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z"/>
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        let theme = 'light';
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+        } else {
+            document.body.classList.add('dark');
+            theme = 'dark';
+            }
+        localStorage.setItem("pref-theme", theme);
+        const message = {'giscus': {'setConfig': {'theme': theme}}};
+        const iframe = document.querySelector('iframe.giscus-frame');
+        iframe.contentWindow.postMessage(message, 'https://giscus.app');
+    })
+</script>
+
+
+
+<script>
+    document.body.addEventListener('copy', function (e) {
+        if (window.getSelection().toString() && window.getSelection().toString().length > 50) {
+            let clipboardData = e.clipboardData || window.clipboardData;
+            if (clipboardData) {
+                e.preventDefault();
+                let htmlData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                let textData = window.getSelection().toString() +
+                    '\r\n\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                clipboardData.setData('text/html', htmlData);
+                clipboardData.setData('text/plain', textData);
+            }
+        }
+    });
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                let text = codeblock.textContent +
+                    '\r\n————————————————\r\n' +
+                    '版权声明：本文为「'+"烈烈风中、的博客"+'」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。' +
+                '\r\n原文链接：' + location.href;
+                navigator.clipboard.writeText(text);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {}
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+<script>
+    $("code[class^=language] ").on("mouseover", function () {
+        if (this.clientWidth < this.scrollWidth) {
+            $(this).css("width", "135%")
+            $(this).css("border-top-right-radius", "var(--radius)")
+        }
+    }).on("mouseout", function () {
+        $(this).css("width", "100%")
+        $(this).css("border-top-right-radius", "unset")
+    })
+</script>
+</body>
+
+</html>

@@ -6,7 +6,16 @@
     <description>Recent content in 面试 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 28 Mar 2023 23:59:35 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 26 Jul 2023 18:50:49 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>百面深度学习：卷积神经网络</title>
+      <link>https://Achilles-10.github.io/posts/tech/interview1/</link>
+      <pubDate>Wed, 26 Jul 2023 18:50:49 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/interview1/</guid>
+      <description>卷积神经网络常见面试题</description>
+    </item>
+    
     <item>
       <title>深度学习面试题：激活函数</title>
       <link>https://Achilles-10.github.io/posts/tech/activation/</link>

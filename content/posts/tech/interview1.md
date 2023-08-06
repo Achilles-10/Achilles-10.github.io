@@ -11,7 +11,7 @@ tags: ["面试","学习笔记"] # 标签
 description: "卷积神经网络常见面试题"
 weight:
 slug: ""
-draft: true # 是否为草稿
+draft: false # 是否为草稿
 comments: true # 本页面是否显示评论
 # reward: true # 打赏
 mermaid: true #是否开启mermaid
