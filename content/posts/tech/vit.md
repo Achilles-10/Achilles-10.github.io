@@ -225,3 +225,13 @@ class Transformer(nn.Module):
   点积结果需要除以一个数防止 softmax 结果过大使得梯度趋于 0。假设 Q 和 K 每一维都满足 0 均值 1 方差的分布，那么 Q*K 的方差为 n，除以 $\sqrt{n}$ 使结果满足方差为 1 的分布，达到归一化的效果。$aX\sim(0,a^2),X\sim(0,1)$
 
   <div align=center><img src="qkv.png" style="zoom:40%"/></div>
+  
+* 自注意力计算复杂度为 $O(n^2)$，怎么优化？
+
+  [[Explicit Sparse Transformer: Concentrated Attention Through Explicit Selection]](https://arxiv.org/abs/1912.11637)
+
+  一个元素可能只与部分元素有关，但标准自注意力会给每个元素都分配权重，可通过 top-k 显示稀疏化，只关注部分元素。
+
+  如下图，最左边为标准自注意力计算流程，中间为稀疏的流程，最右边为执行示意图。简而言之，在 Softmax 之前，先通过 top-k 选择少数重要的元素，将其他元素设置为负无穷。通过这种操作可以使注意力更加集中。
+
+  <div align=center><img src="sparse.png" style="zoom:30%"/></div>
