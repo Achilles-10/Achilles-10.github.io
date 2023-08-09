@@ -6,7 +6,16 @@
     <description>Recent content in 👨🏻‍💻 技术 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 26 Jul 2023 18:50:49 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Aug 2023 15:38:01 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深度学习面试题：Python</title>
+      <link>https://Achilles-10.github.io/posts/tech/python/</link>
+      <pubDate>Tue, 08 Aug 2023 15:38:01 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/python/</guid>
+      <description>深度学习算法岗 Python 语言相关常见面试题</description>
+    </item>
+    
     <item>
       <title>百面深度学习：卷积神经网络</title>
       <link>https://Achilles-10.github.io/posts/tech/interview1/</link>
