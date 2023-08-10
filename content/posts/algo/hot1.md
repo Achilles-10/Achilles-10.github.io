@@ -31,19 +31,17 @@ cover:
 
 ## 持续更新。。。
 
-9,10,15,16,18,
+9,16,18,28,
 
-28,31,33,43,
+31,33,43,45,47,
 
-45,47,53,54,55,
+53,55,58,61,
 
-58,61,62,63,64,
+62,63,64,68,74,
 
-68,73,74,76,
+76,80,82,83,84,
 
-80,82,83,84,88,
-
-89,96,98,100
+88,89,96,98,100
 
 ## 哈希
 
@@ -327,6 +325,28 @@ cover:
 
 ## 子串
 
+### 10. ⭐️ [和为 K 的子数组（中等）](https://leetcode.cn/problems/subarray-sum-equals-k/)
+
+<div align=center><img src="10.png" style="zoom:50%;" /></div>
+
+* ⭐️ 哈希表+前缀和
+
+  用哈希表记录前缀和出现的次数，若当前 s-k 在哈表中出现过，则说明可以构成 dict[s-k] 个和为 k 的子数组。
+
+  ```python
+  def subarraySum(self, nums: List[int], k: int) -> int:
+      s=ans=0
+      my_dict = defaultdict(int)
+      my_dict[0]=1
+      for num in nums:
+          s += num
+          ans += my_dict[s-k]
+          my_dict[s]+=1
+      return ans
+  ```
+
+  
+
 ### 11. ⭐️ [滑动窗口最大值（困难）](https://leetcode.cn/problems/sliding-window-maximum/)
 
 <div align=center><img src="11.png" style="zoom:50%;" /></div>
@@ -457,6 +477,67 @@ cover:
           else: # 重叠区间，更新右端点
               ans[-1][1]=max(ans[-1][1],interval[1])
       return ans
+  ```
+
+
+### 15. ⭐️ [轮转数组（中等）](https://leetcode.cn/problems/rotate-array/)
+
+<div align=center><img src="15.png" style="zoom:50%;" /></div>
+
+* 使用额外数组
+
+  ```python
+  def rotate(self, nums: List[int], k: int) -> None:
+      """
+      Do not return anything, modify nums in-place instead.
+      """
+      n,k=len(nums),k%n
+      if k==0: return
+      nums[:]=nums[n-k:]+nums[:n-k]
+  ```
+
+* ⭐️ 数组翻转
+
+  当我们将数组的元素向右移动 $k$ 次后，尾部 $k\bmod n$ 个元素会移动至数组头部，其余元素向后移动 $k\bmod n$ 个位置。因此可依次翻转全部数组、翻转 $[0,k\bmod n-1]$ 区间，翻转 $[k\bmod n,n-1]$ 区间。
+
+  <div align=center><img src="151.png" style="zoom:50%;" /></div>
+
+  ```python
+  def rotate(self, nums: List[int], k: int) -> None:
+      """
+      Do not return anything, modify nums in-place instead.
+      """
+      def reverse(i,j):
+          while i<j:
+              nums[i],nums[j]=nums[j],nums[i]
+              i,j=i+1,j-1
+      n=len(nums)
+      reverse(0,n-1)
+      reverse(0,k%n-1)
+      reverse(k%n,n-1)
+  ```
+
+* ⭐️ 循环交换
+
+  位置为 i 的元素将会出现在位置 (i+k)%n，每次处理时保存新位置的元素并将其交换至下一个位置，直到遍历完全部元素，遍历循环次数为 gcd(n,k)。
+
+  ```python
+  def rotate(self, nums: List[int], k: int) -> None:
+      """
+      Do not return anything, modify nums in-place instead.
+      """
+      def gcd(a,b):
+          return gcd(b%a,a) if a else b
+      n=len(nums)
+      k=k%n
+      cnt = gcd(k,n)
+      for start in range(cnt):
+          cur = (start + k) % n
+          prev = nums[start]
+          while start!=cur:
+              nums[cur],prev=prev,nums[cur]
+              cur = (cur + k)%n
+          nums[cur],prev=prev,nums[cur]
   ```
 
   
@@ -1570,6 +1651,61 @@ cover:
       return ans
   ```
 
+
+### 54. ⭐️ [课程表（中等）](https://leetcode.cn/problems/course-schedule/)
+
+<div align=center><img src="54.png" style="zoom:50%;" /></div>
+
+* DFS
+
+  定义节点三个状态，0：待搜索；1：正在搜索；2：完成搜索。如果在 DFS 过程中遇到了状态为 1 的节点，说明遇到了环，无法完成所有课程的学习。
+
+  ```python
+  def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+      edges = defaultdict(list)
+      for cour,pre in prerequisites:
+          edges[pre].append(cour)
+      visited = [0]*numCourses
+      valid=True
+      def dfs(u):
+          nonlocal valid
+          visited[u]=1 # 正在搜索
+          for v in edges[u]:
+              if visited[v]==0: # 当前节点未被搜索
+                  dfs(v)
+                  if not valid: return
+              elif visited[v]==1: # 遇到环
+                  valid=False
+                  return
+          visited[u]=2 # 完成搜索
+      for i in range(numCourses):
+          if valid and not visited[i]:
+              dfs(i)
+      return valid
+  ```
+
+* BFS
+
+  若一个课程节点的入度为 0，则表示该课程没有先修课程或先修课程已经学完，可以学习当前课程，去掉该节点的所有出边，则表示它的相邻节点少了一门先修课程。维护一个队列，不断地将入度为 0 的课程节点加入，直到答案中包含所有的节点（得到了一种拓扑排序）或者不存在没有入边的节点（图中包含环）。
+  
+  ```python
+  def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+      edges = defaultdict(list)
+      indeg = [0]*numCourses
+      for cour,pre in prerequisites:
+          edges[pre].append(cour)
+          indeg[cour]+=1 # 入度
+      q = collections.deque([u for u in range(numCourses) if indeg[u]==0]) # 将入度为 0 的节点加入队列
+      visited=0 # 遍历的节点数
+      while q:
+          u=q.popleft()
+          visited+=1
+          for v in edges[u]:
+              indeg[v]-=1
+              if indeg[v]==0: # 入度为 0，加入队列
+                  q.append(v)
+      return visited==numCourses 
+  ```
   
 
 ## 回溯
@@ -1928,6 +2064,85 @@ cover:
       return ''.join(stack)
   ```
 
+### 73. [每日温度（中等）](https://leetcode.cn/problems/daily-temperatures/)
+
+<div align=center><img src="73.png" style="zoom:50%;" /></div>
+
+* 单调栈
+
+  维护一个单调栈，存储温度下标，保证栈内下标对应的温度呈单调下降。每当遇到比栈顶对应温度高的温度时，将栈顶出栈，对应下标的 answer[idx] = i-idx。
+
+  ```python
+  def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+      n=len(temperatures)
+      answer,stack = [0]*n,[]
+      for i,temp in enumerate(temperatures):
+          while stack and temp>temperatures[stack[-1]]:
+              idx = stack.pop()
+              answer[idx]=i-idx
+          stack.append(i)
+      return answer
+  ```
+
+
+### 74. ⭐️ [柱状图中最大的矩形（困难）](https://leetcode.cn/problems/largest-rectangle-in-histogram/)
+
+<div align=center><img src="74.png" style="zoom:50%;" /></div>
+
+* 暴力解法
+
+* 单调栈
+
+  遍历每一柱子，找到左右两侧最近的高度小于 h 的柱子，这两根柱子之间的高度均不小于 h，则以当前柱子高度为高度的矩形面积为 (right-left-1)*h。维护一个单调栈使得栈中元素的高度非递减。
+
+  ```python
+  def largestRectangleArea(self, heights: List[int]) -> int:
+      n=len(heights)
+      left,right=[-1]*n,[n]*n
+      stack=[(-1,0)]
+      for i,h in enumerate(heights):
+          while stack and h<stack[-1][1]:
+              ii,hh=stack.pop()
+              right[ii]=i
+          left[i]=stack[-1][0]
+          stack.append((i,h))
+      ans = max((right[i]-left[i]-1)*heights[i] for i in range(n))
+      return ans
+  ```
+
+### extra. ⭐️ [最大矩形（困难）](https://leetcode.cn/problems/maximal-rectangle/)
+
+<div align=center><img src="741.png" style="zoom:50%;" /></div>
+
+* 前缀和+单调栈
+
+  把本题转换为上一题的解法。
+
+  ```python
+  def maximalRectangle(self, matrix: List[List[str]]) -> int:
+      if not matrix: return 0
+      m,n=len(matrix),len(matrix[0])
+      def get_heights(heights,n): # 单调栈求解单层最大矩形
+          left,right=[-1]*n,[n]*n
+          stack=[(-1,0)]
+          for i,h in enumerate(heights):
+              while stack and h<stack[-1][1]:
+                  ii,hh=stack.pop()
+                  right[ii]=i
+              left[i]=stack[-1][0]
+              stack.append((i,h))
+          ans = max((right[i]-left[i]-1)*heights[i] for i in range(n))
+          return ans
+        
+      for j in range(n):
+          matrix[0][j]=1 if matrix[0][j]=='1' else 0
+      for i in range(1,m): # 前缀和
+          for j in range(n):
+                  matrix[i][j]=matrix[i-1][j]+1 if matrix[i][j]=='1' else 0
+      ans = max(get_heights(matrix[i],n) for i in range(m))
+      return ans
+  ```
+
 ## 堆
 
 ### 75. [数组中的第K个最大元素（中等）](https://leetcode.cn/problems/kth-largest-element-in-an-array/)
@@ -1997,6 +2212,23 @@ cover:
   ```
 
 
+### extra. [买卖股票的最佳时机 II（中等）](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/)
+
+<div align=center><img src="e77.png" style="zoom:50%;" /></div>
+
+* 贪心
+
+  ```python
+  def maxProfit(self, prices: List[int]) -> int:
+      ans=0
+      for i in range(len(prices)-1):
+          if prices[i+1]>prices[i]:
+              ans+=prices[i+1]-prices[i] # 能赚钱就赚
+      return ans
+  ```
+
+  
+
 ### 78. [跳跃游戏（中等）](https://leetcode.cn/problems/jump-game/)
 
 <div align=center><img src="78.png" style="zoom:50%;" /></div>
@@ -2033,6 +2265,29 @@ cover:
           if i==end: # 达到当前最远位置
               ans+=1
               end=maxi
+      return ans
+  ```
+
+### 80. [划分字母区间（中等）](https://leetcode.cn/problems/partition-labels/)
+
+* 贪心
+
+  记录每个字母最右边出现的位置。当前遍历位置超出当前区间内字母最右出现位置时得到一个划分区间。
+
+  ```python
+  def partitionLabels(self, s: str) -> List[int]:
+      tab,ans={},[]
+      for i,c in enumerate(s):
+          tab[c]=i
+      start,far=0,tab[s[0]]
+      for i in range(1,len(s)):
+          if i>far:
+              ans.append(far-start+1)
+              start=i
+              far=tab[s[i]]
+          else:
+              far = max(far,tab[s[i]])
+      ans.append(len(s)-start)
       return ans
   ```
 
@@ -3254,6 +3509,42 @@ cover:
                   dp[i][j]=dp[i+1][j-1]+2
               else: dp[i][j]=max(dp[i][j-1],dp[i+1][j])
       return dp[0][-1]
+  ```
+
+### 122. [三角形最小路径和（中等）](https://leetcode.cn/problems/triangle/)
+
+<div align=center><img src="e122.png" style="zoom:50%;" /></div> 
+
+* 动态规划+空间优化
+
+  ```python
+  def minimumTotal(self, triangle: List[List[int]]) -> int:
+      n=len(triangle)
+      for i in range(1,n):
+          triangle[i][0]+=triangle[i-1][0]
+          for j in range(1,len(triangle[i])-1):
+              triangle[i][j]+=min(triangle[i-1][j],triangle[i-1][j-1])
+          triangle[i][-1]+=triangle[i-1][-1]
+      return min(triangle[-1])
+  ```
+
+
+### 123. [删除字符串中的所有相邻重复项（简单）](https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/)
+
+<div align=center><img src="e123.png" style="zoom:50%;" /></div> 
+
+* 栈
+
+  每当当前字符和栈顶元素相等时，则遇到了相邻重复项，弹出栈顶元素
+
+  ```python
+  def removeDuplicates(self, s: str) -> str:
+      i,stack=0,[]
+      while i<len(s):
+          if not stack or stack[-1]!=s[i]: stack.append(s[i])
+          else: stack.pop()
+          i+=1
+      return ''.join(stack)
   ```
 
   

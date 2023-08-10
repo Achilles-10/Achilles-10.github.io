@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>LeetCode 热题 100 与 CodeTop | 烈烈风中、的博客</title>
 <meta name="keywords" content="算法题, 学习笔记">
-<meta name="description" content="持续更新。。。 9,10,15,16,18, 28,31,33,43, 45,47,53,54,55, 58,61,62,63,64, 68,73,74,76, 80,82,83,84,88, 89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将">
+<meta name="description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list">
 <meta name="author" content="Achilles">
 <link rel="canonical" href="https://Achilles-10.github.io/posts/algo/hot1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
@@ -97,7 +97,7 @@ var _hmt = _hmt || [];
 </script>
 
 <meta property="og:title" content="LeetCode 热题 100 与 CodeTop" />
-<meta property="og:description" content="持续更新。。。 9,10,15,16,18, 28,31,33,43, 45,47,53,54,55, 58,61,62,63,64, 68,73,74,76, 80,82,83,84,88, 89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将" />
+<meta property="og:description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://Achilles-10.github.io/posts/algo/hot1/" />
 <meta property="og:image" content="https://Achilles-10.github.io/posts/algo/hot1/cover.png" /><meta property="article:section" content="posts" />
@@ -107,7 +107,7 @@ var _hmt = _hmt || [];
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://Achilles-10.github.io/posts/algo/hot1/cover.png" />
 <meta name="twitter:title" content="LeetCode 热题 100 与 CodeTop"/>
-<meta name="twitter:description" content="持续更新。。。 9,10,15,16,18, 28,31,33,43, 45,47,53,54,55, 58,61,62,63,64, 68,73,74,76, 80,82,83,84,88, 89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将"/>
+<meta name="twitter:description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list"/>
 
 
 <script type="application/ld+json">
@@ -144,12 +144,12 @@ var _hmt = _hmt || [];
   "@type": "BlogPosting",
   "headline": "LeetCode 热题 100 与 CodeTop",
   "name": "LeetCode 热题 100 与 CodeTop",
-  "description": "持续更新。。。 9,10,15,16,18, 28,31,33,43, 45,47,53,54,55, 58,61,62,63,64, 68,73,74,76, 80,82,83,84,88, 89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -\u0026gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希 def groupAnagrams(self, strs: List[str]) -\u0026gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = \u0026#39;\u0026#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希 def groupAnagrams(self, strs: List[str]) -\u0026gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(\u0026#34;a\u0026#34;)] += 1 # 需要将",
+  "description": "持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -\u0026gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希 def groupAnagrams(self, strs: List[str]) -\u0026gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = \u0026#39;\u0026#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希 def groupAnagrams(self, strs: List[str]) -\u0026gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(\u0026#34;a\u0026#34;)] += 1 # 需要将 list",
   "keywords": [
     "算法题", "学习笔记"
   ],
-  "articleBody": "持续更新。。。 9,10,15,16,18,\n28,31,33,43,\n45,47,53,54,55,\n58,61,62,63,64,\n68,73,74,76,\n80,82,83,84,88,\n89,96,98,100\n哈希 1. 两数之和（简单） 哈希\ndef twoSum(self, nums: List[int], target: int) -\u003e List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希\ndef groupAnagrams(self, strs: List[str]) -\u003e List[List[str]]: tab = defaultdict(list) for s in strs: key = ''.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希\ndef groupAnagrams(self, strs: List[str]) -\u003e List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(\"a\")] += 1 # 需要将 list 转换成 tuple 才能进行哈希 mp[tuple(counts)].append(st) return list(mp.values()) 3. 最长连续序列（中等） 哈希\n当 num-1 在集合中时，跳过。\n当 num-1 不在集合中，说明 num 为一个序列的起点，依次判断 cur+1 是否在集合中。\ndef longestConsecutive(self, nums: List[int]) -\u003e int: ans=0 nums_set = set(nums) for num in nums: if num-1 not in nums_set: cur,long = num,1 while cur+1 in nums_set: cur = cur+1 long += 1 ans = max(ans,long) return ans 哈希+动规\n记录序列端点的最大长度，每次遍历到 num，得到 num-1 和 num+1 序列的长度 l 和 r，则连续长度为 l+r+1，更新哈希表。\ndef longestConsecutive(self, nums: List[int]) -\u003e int: tab = dict() ans = 0 for num in nums: if num not in tab: l = tab.get(num-1,0) r = tab.get(num+1,0) cur = l+r+1 ans = max(ans,cur) tab[num]=cur tab[num-l]=cur tab[num+r]=cur return ans 双指针 4. 移动零（简单） 双指针\n将把 0 移动到末尾转换为把非零数字移动到数组开头，这样可以保证非零数字的相对顺序。\n设置左右指针 l 和 r，l 指向非零数字需要放置的地方，遍历 r，每当遇到 0 就和 l 处交换。\ndef moveZeroes(self, nums: List[int]) -\u003e None: \"\"\" Do not return anything, modify nums in-place instead. \"\"\" l,r,n=0,0,len(nums) while r\u003cn: if nums[r]!=0: nums[l],nums[r]=nums[r],nums[l] l+=1 r+=1 5. 盛最多水的容器（中等） 双指针\n每次移动较小的指针，才有可能使存储的水量变多。\ndef maxArea(self, height: List[int]) -\u003e int: n=len(height) ans,i,j=0,0,n-1 while i\u003cj: water = min(height[i],height[j])*(j-i) ans = max(water,ans) if height[i]\u003c=height[j]: i+=1 else: j-=1 return ans 6. 三数之和（中等） 双指针+排序\n排序，遍历到相同的数时跳过以达到去重的目的。\ndef threeSum(self, nums: List[int]) -\u003e List[List[int]]: n=len(nums) ans=[] nums.sort() for i in range(n-2): if i!=0 and nums[i]==nums[i-1]: continue if nums[i]\u003e0: break l,r=i+1,n-1 while l\u003cr: if nums[l]+nums[r]==-nums[i]: ans.append([nums[i],nums[l],nums[r]]) while l\u003cr and nums[l+1]==nums[l]: l+=1 while l\u003cr and nums[r-1]==nums[r]: r-=1 l+=1 r-=1 elif nums[l]+nums[r]\u003e-nums[i]: r-=1 else: l+=1 return ans extra. 合并两个有序数组（简单） 逆向双指针\ndef merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -\u003e None: p1,p2=m-1,n-1 idx = m+n-1 while p2\u003e=0: if p1\u003c0 or nums1[p1]\u003cnums2[p2]: nums1[idx]=nums2[p2] p2-=1 else: nums1[idx]=nums1[p1] p1-=1 idx-=1 7. ⭐️ 接雨水（困难） 动态规划\n维护两个数组 left 和 right，分别表示 i 处左右最高柱子的高度。i 处接的雨水为 min(left[i],right[i])-height[i]。\ndef trap(self, height: List[int]) -\u003e int: n=len(height) left,right=[height[0]]+[0]*(n-1),[0]*(n-1)+[height[-1]] for i in range(1,n): left[i]=max(left[i-1],height[i]) right[n-i-1]=max(right[n-i],height[n-i-1]) return sum(min(left[i],right[i])-height[i] for i in range(n)) 双指针\n使用双指针优化动态规划方法的空间复杂度。维护双指针 left 和 right 以及 两个变量 leftmax 和 rightmax 标志左右两侧柱子最高的高度。\ndef trap(self, height: List[int]) -\u003e int: n,ans=len(height),0 left,right=0,n-1 leftmax,rightmax=0,0 while left\u003cright: leftmax=max(leftmax,height[left]) rightmax=max(rightmax,height[right]) if height[left]\u003cheight[right]: ans+=leftmax-height[left] left+=1 else: ans+=rightmax-height[right] right-=1 return ans 单调栈\n维护一个单调栈，存储下标，保证下标对应的柱子高度递减。\n当遍历到下标 i 时，若下标 i 的柱子的高度大于栈顶元素 top 的高度，由于 height[top-1]\u003eheight[top]，此时得到一个可以接雨水的区域。重复这个操作直至栈空或 height[top]\u003e=height[i]。将 i 入栈。\ndef trap(self, height: List[int]) -\u003e int: n,ans,stack=len(height),0,[] for i, hi in enumerate(height): while stack and hi\u003eheight[stack[-1]]: top = stack.pop() if not stack: break w = i-stack[-1]-1 h = min(hi,height[stack[-1]])-height[top] ans += w*h stack.append(i) return ans 滑动窗口 8. 无重复字符的最长子串（中等） 滑动窗口+哈希\n哈希表存储窗口内的子串，遇到重复则更新左指针。\ndef lengthOfLongestSubstring(self, s: str) -\u003e int: seen=set() n=len(s) rp,ans=-1,0 for i in range(n): if i!=0: seen.remove(s[i-1]) while rp+1\u003cn and s[rp+1] not in seen: seen.add(s[rp+1]) rp+=1 ans = max(ans,rp-i+1) return ans #################################################### def lengthOfLongestSubstring(self, s: str) -\u003e int: n,ans=len(s),0 i,j=0,0 tab = dict() while j\u003cn: if s[j] in tab: i = max(i,tab[s[j]]+1) # 更新左指针 ans = max(j-i+1,ans) tab[s[j]]=j j+=1 return ans 子串 11. ⭐️ 滑动窗口最大值（困难） ⭐️ 堆\n维护一个大根堆，存储元素为 (-nums[i], i)。当窗口右端点遍历到 j 处时，将窗口右边的数加入到堆中，若堆顶元素 i",
-  "wordCount" : "14010",
+  "articleBody": "持续更新。。。 9,16,18,28,\n31,33,43,45,47,\n53,55,58,61,\n62,63,64,68,74,\n76,80,82,83,84,\n88,89,96,98,100\n哈希 1. 两数之和（简单） 哈希\ndef twoSum(self, nums: List[int], target: int) -\u003e List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希\ndef groupAnagrams(self, strs: List[str]) -\u003e List[List[str]]: tab = defaultdict(list) for s in strs: key = ''.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希\ndef groupAnagrams(self, strs: List[str]) -\u003e List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(\"a\")] += 1 # 需要将 list 转换成 tuple 才能进行哈希 mp[tuple(counts)].append(st) return list(mp.values()) 3. 最长连续序列（中等） 哈希\n当 num-1 在集合中时，跳过。\n当 num-1 不在集合中，说明 num 为一个序列的起点，依次判断 cur+1 是否在集合中。\ndef longestConsecutive(self, nums: List[int]) -\u003e int: ans=0 nums_set = set(nums) for num in nums: if num-1 not in nums_set: cur,long = num,1 while cur+1 in nums_set: cur = cur+1 long += 1 ans = max(ans,long) return ans 哈希+动规\n记录序列端点的最大长度，每次遍历到 num，得到 num-1 和 num+1 序列的长度 l 和 r，则连续长度为 l+r+1，更新哈希表。\ndef longestConsecutive(self, nums: List[int]) -\u003e int: tab = dict() ans = 0 for num in nums: if num not in tab: l = tab.get(num-1,0) r = tab.get(num+1,0) cur = l+r+1 ans = max(ans,cur) tab[num]=cur tab[num-l]=cur tab[num+r]=cur return ans 双指针 4. 移动零（简单） 双指针\n将把 0 移动到末尾转换为把非零数字移动到数组开头，这样可以保证非零数字的相对顺序。\n设置左右指针 l 和 r，l 指向非零数字需要放置的地方，遍历 r，每当遇到 0 就和 l 处交换。\ndef moveZeroes(self, nums: List[int]) -\u003e None: \"\"\" Do not return anything, modify nums in-place instead. \"\"\" l,r,n=0,0,len(nums) while r\u003cn: if nums[r]!=0: nums[l],nums[r]=nums[r],nums[l] l+=1 r+=1 5. 盛最多水的容器（中等） 双指针\n每次移动较小的指针，才有可能使存储的水量变多。\ndef maxArea(self, height: List[int]) -\u003e int: n=len(height) ans,i,j=0,0,n-1 while i\u003cj: water = min(height[i],height[j])*(j-i) ans = max(water,ans) if height[i]\u003c=height[j]: i+=1 else: j-=1 return ans 6. 三数之和（中等） 双指针+排序\n排序，遍历到相同的数时跳过以达到去重的目的。\ndef threeSum(self, nums: List[int]) -\u003e List[List[int]]: n=len(nums) ans=[] nums.sort() for i in range(n-2): if i!=0 and nums[i]==nums[i-1]: continue if nums[i]\u003e0: break l,r=i+1,n-1 while l\u003cr: if nums[l]+nums[r]==-nums[i]: ans.append([nums[i],nums[l],nums[r]]) while l\u003cr and nums[l+1]==nums[l]: l+=1 while l\u003cr and nums[r-1]==nums[r]: r-=1 l+=1 r-=1 elif nums[l]+nums[r]\u003e-nums[i]: r-=1 else: l+=1 return ans extra. 合并两个有序数组（简单） 逆向双指针\ndef merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -\u003e None: p1,p2=m-1,n-1 idx = m+n-1 while p2\u003e=0: if p1\u003c0 or nums1[p1]\u003cnums2[p2]: nums1[idx]=nums2[p2] p2-=1 else: nums1[idx]=nums1[p1] p1-=1 idx-=1 7. ⭐️ 接雨水（困难） 动态规划\n维护两个数组 left 和 right，分别表示 i 处左右最高柱子的高度。i 处接的雨水为 min(left[i],right[i])-height[i]。\ndef trap(self, height: List[int]) -\u003e int: n=len(height) left,right=[height[0]]+[0]*(n-1),[0]*(n-1)+[height[-1]] for i in range(1,n): left[i]=max(left[i-1],height[i]) right[n-i-1]=max(right[n-i],height[n-i-1]) return sum(min(left[i],right[i])-height[i] for i in range(n)) 双指针\n使用双指针优化动态规划方法的空间复杂度。维护双指针 left 和 right 以及 两个变量 leftmax 和 rightmax 标志左右两侧柱子最高的高度。\ndef trap(self, height: List[int]) -\u003e int: n,ans=len(height),0 left,right=0,n-1 leftmax,rightmax=0,0 while left\u003cright: leftmax=max(leftmax,height[left]) rightmax=max(rightmax,height[right]) if height[left]\u003cheight[right]: ans+=leftmax-height[left] left+=1 else: ans+=rightmax-height[right] right-=1 return ans 单调栈\n维护一个单调栈，存储下标，保证下标对应的柱子高度递减。\n当遍历到下标 i 时，若下标 i 的柱子的高度大于栈顶元素 top 的高度，由于 height[top-1]\u003eheight[top]，此时得到一个可以接雨水的区域。重复这个操作直至栈空或 height[top]\u003e=height[i]。将 i 入栈。\ndef trap(self, height: List[int]) -\u003e int: n,ans,stack=len(height),0,[] for i, hi in enumerate(height): while stack and hi\u003eheight[stack[-1]]: top = stack.pop() if not stack: break w = i-stack[-1]-1 h = min(hi,height[stack[-1]])-height[top] ans += w*h stack.append(i) return ans 滑动窗口 8. 无重复字符的最长子串（中等） 滑动窗口+哈希\n哈希表存储窗口内的子串，遇到重复则更新左指针。\ndef lengthOfLongestSubstring(self, s: str) -\u003e int: seen=set() n=len(s) rp,ans=-1,0 for i in range(n): if i!=0: seen.remove(s[i-1]) while rp+1\u003cn and s[rp+1] not in seen: seen.add(s[rp+1]) rp+=1 ans = max(ans,rp-i+1) return ans #################################################### def lengthOfLongestSubstring(self, s: str) -\u003e int: n,ans=len(s),0 i,j=0,0 tab = dict() while j\u003cn: if s[j] in tab: i = max(i,tab[s[j]]+1) # 更新左指针 ans = max(j-i+1,ans) tab[s[j]]=j j+=1 return ans 子串 10. ⭐️ 和为 K 的子数组（中等） ⭐️ 哈希表+前缀和\n用哈希表记录前缀和出现的次数，若当前 s-k 在哈表中出现过，则说明可以构成 dict[s-k] 个和为 k 的子数组。\ndef subarraySum(self, nums: List[int], k: int) -\u003e int: s=ans=0 my_dict = defaultdict(int) my_dict[0]=1 for num in nums: s += num ans += my_dict[s-k] my_dict[s]+=1 return ans 11. ⭐️ 滑动窗口最大值（困难） ⭐️ 堆\n维护一个大根堆，存储元素为 (-nums[i], i)。当窗口右端点遍历到 j 处时，将窗口右边的数加入到堆中，若堆顶元素 i",
+  "wordCount" : "15361",
   "inLanguage": "en",
   "image":"https://Achilles-10.github.io/posts/algo/hot1/cover.png","datePublished": "2023-07-23T16:11:27+08:00",
   "dateModified": "2023-07-23T16:11:27+08:00",
@@ -307,13 +307,13 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>14010字
+        <span>15361字
             &nbsp;&nbsp;
         </span>
     </span>
     <span id="post_meta_style_4">
         <span class="fa fa-clock-o"></span>
-        <span>28分钟
+        <span>31分钟
             &nbsp;&nbsp;
         </span>
     </span>
@@ -428,6 +428,8 @@ var _hmt = _hmt || [];
                     <a href="#%e5%ad%90%e4%b8%b2" aria-label="子串">子串</a><ul>
                         
                 <li>
+                    <a href="#10--%e5%92%8c%e4%b8%ba-k-%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84%e4%b8%ad%e7%ad%89httpsleetcodecnproblemssubarray-sum-equals-k" aria-label="10. ⭐️ 和为 K 的子数组（中等）">10. ⭐️ <a href="https://leetcode.cn/problems/subarray-sum-equals-k/">和为 K 的子数组（中等）</a></a></li>
+                <li>
                     <a href="#11--%e6%bb%91%e5%8a%a8%e7%aa%97%e5%8f%a3%e6%9c%80%e5%a4%a7%e5%80%bc%e5%9b%b0%e9%9a%behttpsleetcodecnproblemssliding-window-maximum" aria-label="11. ⭐️ 滑动窗口最大值（困难）">11. ⭐️ <a href="https://leetcode.cn/problems/sliding-window-maximum/">滑动窗口最大值（困难）</a></a></li>
                 <li>
                     <a href="#12-%e6%9c%80%e5%b0%8f%e8%a6%86%e7%9b%96%e5%ad%90%e4%b8%b2%e5%9b%b0%e9%9a%behttpsleetcodecnproblemsminimum-window-substring" aria-label="12. 最小覆盖子串（困难）">12. <a href="https://leetcode.cn/problems/minimum-window-substring/">最小覆盖子串（困难）</a></a></li></ul>
@@ -439,6 +441,8 @@ var _hmt = _hmt || [];
                     <a href="#13-%e6%9c%80%e5%a4%a7%e5%ad%90%e6%95%b0%e7%bb%84%e5%92%8c%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsmaximum-subarray" aria-label="13. 最大子数组和（中等）">13. <a href="https://leetcode.cn/problems/maximum-subarray/">最大子数组和（中等）</a></a></li>
                 <li>
                     <a href="#14-%e5%90%88%e5%b9%b6%e5%8c%ba%e9%97%b4%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsmerge-intervals" aria-label="14. 合并区间（中等）">14. <a href="https://leetcode.cn/problems/merge-intervals/">合并区间（中等）</a></a></li>
+                <li>
+                    <a href="#15--%e8%bd%ae%e8%bd%ac%e6%95%b0%e7%bb%84%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsrotate-array" aria-label="15. ⭐️ 轮转数组（中等）">15. ⭐️ <a href="https://leetcode.cn/problems/rotate-array/">轮转数组（中等）</a></a></li>
                 <li>
                     <a href="#17--%e7%bc%ba%e5%a4%b1%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e6%ad%a3%e6%95%b0%e5%9b%b0%e9%9a%behttpsleetcodecnproblemsfirst-missing-positive" aria-label="17. ⭐️ 缺失的第一个正数（困难）">17. ⭐️ <a href="https://leetcode.cn/problems/first-missing-positive/">缺失的第一个正数（困难）</a></a></li></ul>
                 </li>
@@ -522,7 +526,9 @@ var _hmt = _hmt || [];
                     <a href="#%e5%9b%be%e8%ae%ba" aria-label="图论">图论</a><ul>
                         
                 <li>
-                    <a href="#52-%e5%b2%9b%e5%b1%bf%e6%95%b0%e9%87%8f%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsnumber-of-islands" aria-label="52. 岛屿数量（中等）">52. <a href="https://leetcode.cn/problems/number-of-islands/">岛屿数量（中等）</a></a></li></ul>
+                    <a href="#52-%e5%b2%9b%e5%b1%bf%e6%95%b0%e9%87%8f%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsnumber-of-islands" aria-label="52. 岛屿数量（中等）">52. <a href="https://leetcode.cn/problems/number-of-islands/">岛屿数量（中等）</a></a></li>
+                <li>
+                    <a href="#54--%e8%af%be%e7%a8%8b%e8%a1%a8%e4%b8%ad%e7%ad%89httpsleetcodecnproblemscourse-schedule" aria-label="54. ⭐️ 课程表（中等）">54. ⭐️ <a href="https://leetcode.cn/problems/course-schedule/">课程表（中等）</a></a></li></ul>
                 </li>
                 <li>
                     <a href="#%e5%9b%9e%e6%ba%af" aria-label="回溯">回溯</a><ul>
@@ -558,7 +564,13 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#71--%e6%9c%80%e5%b0%8f%e6%a0%88%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsmin-stack" aria-label="71. ⭐️ 最小栈（中等）">71. ⭐️ <a href="https://leetcode.cn/problems/min-stack/">最小栈（中等）</a></a></li>
                 <li>
-                    <a href="#72-%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%a7%a3%e7%a0%81%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsdecode-string" aria-label="72. 字符串解码（中等）">72. <a href="https://leetcode.cn/problems/decode-string/">字符串解码（中等）</a></a></li></ul>
+                    <a href="#72-%e5%ad%97%e7%ac%a6%e4%b8%b2%e8%a7%a3%e7%a0%81%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsdecode-string" aria-label="72. 字符串解码（中等）">72. <a href="https://leetcode.cn/problems/decode-string/">字符串解码（中等）</a></a></li>
+                <li>
+                    <a href="#73-%e6%af%8f%e6%97%a5%e6%b8%a9%e5%ba%a6%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsdaily-temperatures" aria-label="73. 每日温度（中等）">73. <a href="https://leetcode.cn/problems/daily-temperatures/">每日温度（中等）</a></a></li>
+                <li>
+                    <a href="#74--%e6%9f%b1%e7%8a%b6%e5%9b%be%e4%b8%ad%e6%9c%80%e5%a4%a7%e7%9a%84%e7%9f%a9%e5%bd%a2%e5%9b%b0%e9%9a%behttpsleetcodecnproblemslargest-rectangle-in-histogram" aria-label="74. ⭐️ 柱状图中最大的矩形（困难）">74. ⭐️ <a href="https://leetcode.cn/problems/largest-rectangle-in-histogram/">柱状图中最大的矩形（困难）</a></a></li>
+                <li>
+                    <a href="#extra--%e6%9c%80%e5%a4%a7%e7%9f%a9%e5%bd%a2%e5%9b%b0%e9%9a%behttpsleetcodecnproblemsmaximal-rectangle" aria-label="extra. ⭐️ 最大矩形（困难）">extra. ⭐️ <a href="https://leetcode.cn/problems/maximal-rectangle/">最大矩形（困难）</a></a></li></ul>
                 </li>
                 <li>
                     <a href="#%e5%a0%86" aria-label="堆">堆</a><ul>
@@ -572,9 +584,13 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#77-%e4%b9%b0%e5%8d%96%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e4%bd%b3%e6%97%b6%e6%9c%ba%e7%ae%80%e5%8d%95httpsleetcodecnproblemsbest-time-to-buy-and-sell-stock" aria-label="77. 买卖股票的最佳时机（简单）">77. <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/">买卖股票的最佳时机（简单）</a></a></li>
                 <li>
+                    <a href="#extra-%e4%b9%b0%e5%8d%96%e8%82%a1%e7%a5%a8%e7%9a%84%e6%9c%80%e4%bd%b3%e6%97%b6%e6%9c%ba-ii%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsbest-time-to-buy-and-sell-stock-ii" aria-label="extra. 买卖股票的最佳时机 II（中等）">extra. <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/">买卖股票的最佳时机 II（中等）</a></a></li>
+                <li>
                     <a href="#78-%e8%b7%b3%e8%b7%83%e6%b8%b8%e6%88%8f%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsjump-game" aria-label="78. 跳跃游戏（中等）">78. <a href="https://leetcode.cn/problems/jump-game/">跳跃游戏（中等）</a></a></li>
                 <li>
-                    <a href="#79--%e8%b7%b3%e8%b7%83%e6%b8%b8%e6%88%8f-ii%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsjump-game-ii" aria-label="79. ⭐️ 跳跃游戏 II（中等）">79. ⭐️ <a href="https://leetcode.cn/problems/jump-game-ii/">跳跃游戏 II（中等）</a></a></li></ul>
+                    <a href="#79--%e8%b7%b3%e8%b7%83%e6%b8%b8%e6%88%8f-ii%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsjump-game-ii" aria-label="79. ⭐️ 跳跃游戏 II（中等）">79. ⭐️ <a href="https://leetcode.cn/problems/jump-game-ii/">跳跃游戏 II（中等）</a></a></li>
+                <li>
+                    <a href="#80-%e5%88%92%e5%88%86%e5%ad%97%e6%af%8d%e5%8c%ba%e9%97%b4%e4%b8%ad%e7%ad%89httpsleetcodecnproblemspartition-labels" aria-label="80. 划分字母区间（中等）">80. <a href="https://leetcode.cn/problems/partition-labels/">划分字母区间（中等）</a></a></li></ul>
                 </li>
                 <li>
                     <a href="#%e5%8a%a8%e6%80%81%e8%a7%84%e5%88%92" aria-label="动态规划">动态规划</a><ul>
@@ -664,7 +680,11 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#120-%e4%ba%8c%e5%8f%89%e6%a0%91%e6%9c%80%e5%a4%a7%e5%ae%bd%e5%ba%a6%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsmaximum-width-of-binary-tree" aria-label="120. 二叉树最大宽度（中等）">120. <a href="https://leetcode.cn/problems/maximum-width-of-binary-tree/">二叉树最大宽度（中等）</a></a></li>
                 <li>
-                    <a href="#121-%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e5%ad%90%e5%ba%8f%e5%88%97%e4%b8%ad%e7%ad%89httpsleetcodecnproblemslongest-palindromic-subsequence" aria-label="121. 最长回文子序列（中等）">121. <a href="https://leetcode.cn/problems/longest-palindromic-subsequence/">最长回文子序列（中等）</a></a>
+                    <a href="#121-%e6%9c%80%e9%95%bf%e5%9b%9e%e6%96%87%e5%ad%90%e5%ba%8f%e5%88%97%e4%b8%ad%e7%ad%89httpsleetcodecnproblemslongest-palindromic-subsequence" aria-label="121. 最长回文子序列（中等）">121. <a href="https://leetcode.cn/problems/longest-palindromic-subsequence/">最长回文子序列（中等）</a></a></li>
+                <li>
+                    <a href="#122-%e4%b8%89%e8%a7%92%e5%bd%a2%e6%9c%80%e5%b0%8f%e8%b7%af%e5%be%84%e5%92%8c%e4%b8%ad%e7%ad%89httpsleetcodecnproblemstriangle" aria-label="122. 三角形最小路径和（中等）">122. <a href="https://leetcode.cn/problems/triangle/">三角形最小路径和（中等）</a></a></li>
+                <li>
+                    <a href="#123-%e5%88%a0%e9%99%a4%e5%ad%97%e7%ac%a6%e4%b8%b2%e4%b8%ad%e7%9a%84%e6%89%80%e6%9c%89%e7%9b%b8%e9%82%bb%e9%87%8d%e5%a4%8d%e9%a1%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemsremove-all-adjacent-duplicates-in-string" aria-label="123. 删除字符串中的所有相邻重复项（简单）">123. <a href="https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/">删除字符串中的所有相邻重复项（简单）</a></a>
                 </li>
             </ul>
             </li>
@@ -732,13 +752,12 @@ var _hmt = _hmt || [];
     }
 </script>
         <div class="post-content"><h2 id="持续更新">持续更新。。。<a hidden class="anchor" aria-hidden="true" href="#持续更新">#</a></h2>
-<p>9,10,15,16,18,</p>
-<p>28,31,33,43,</p>
-<p>45,47,53,54,55,</p>
-<p>58,61,62,63,64,</p>
-<p>68,73,74,76,</p>
-<p>80,82,83,84,88,</p>
-<p>89,96,98,100</p>
+<p>9,16,18,28,</p>
+<p>31,33,43,45,47,</p>
+<p>53,55,58,61,</p>
+<p>62,63,64,68,74,</p>
+<p>76,80,82,83,84,</p>
+<p>88,89,96,98,100</p>
 <h2 id="哈希">哈希<a hidden class="anchor" aria-hidden="true" href="#哈希">#</a></h2>
 <h3 id="1-两数之和简单httpsleetcodecnproblemstwo-sum">1. <a href="https://leetcode.cn/problems/two-sum/">两数之和（简单）</a><a hidden class="anchor" aria-hidden="true" href="#1-两数之和简单httpsleetcodecnproblemstwo-sum">#</a></h3>
 <div align=center><img src="1.png" style="zoom:50%;" /></div>
@@ -976,6 +995,23 @@ var _hmt = _hmt || [];
 </span></span></code></pre></div></li>
 </ul>
 <h2 id="子串">子串<a hidden class="anchor" aria-hidden="true" href="#子串">#</a></h2>
+<h3 id="10--和为-k-的子数组中等httpsleetcodecnproblemssubarray-sum-equals-k">10. ⭐️ <a href="https://leetcode.cn/problems/subarray-sum-equals-k/">和为 K 的子数组（中等）</a><a hidden class="anchor" aria-hidden="true" href="#10--和为-k-的子数组中等httpsleetcodecnproblemssubarray-sum-equals-k">#</a></h3>
+<div align=center><img src="10.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>⭐️ 哈希表+前缀和</p>
+<p>用哈希表记录前缀和出现的次数，若当前 s-k 在哈表中出现过，则说明可以构成 dict[s-k] 个和为 k 的子数组。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">subarraySum</span>(self, nums: List[int], k: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    s<span style="color:#f92672">=</span>ans<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    my_dict <span style="color:#f92672">=</span> defaultdict(int)
+</span></span><span style="display:flex;"><span>    my_dict[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> num <span style="color:#f92672">in</span> nums:
+</span></span><span style="display:flex;"><span>        s <span style="color:#f92672">+=</span> num
+</span></span><span style="display:flex;"><span>        ans <span style="color:#f92672">+=</span> my_dict[s<span style="color:#f92672">-</span>k]
+</span></span><span style="display:flex;"><span>        my_dict[s]<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
 <h3 id="11--滑动窗口最大值困难httpsleetcodecnproblemssliding-window-maximum">11. ⭐️ <a href="https://leetcode.cn/problems/sliding-window-maximum/">滑动窗口最大值（困难）</a><a hidden class="anchor" aria-hidden="true" href="#11--滑动窗口最大值困难httpsleetcodecnproblemssliding-window-maximum">#</a></h3>
 <div align=center><img src="11.png" style="zoom:50%;" /></div>
 <ul>
@@ -1086,6 +1122,57 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>: <span style="color:#75715e"># 重叠区间，更新右端点</span>
 </span></span><span style="display:flex;"><span>            ans[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>]<span style="color:#f92672">=</span>max(ans[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>],interval[<span style="color:#ae81ff">1</span>])
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="15--轮转数组中等httpsleetcodecnproblemsrotate-array">15. ⭐️ <a href="https://leetcode.cn/problems/rotate-array/">轮转数组（中等）</a><a hidden class="anchor" aria-hidden="true" href="#15--轮转数组中等httpsleetcodecnproblemsrotate-array">#</a></h3>
+<div align=center><img src="15.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>使用额外数组</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rotate</span>(self, nums: List[int], k: int) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Do not return anything, modify nums in-place instead.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    n,k<span style="color:#f92672">=</span>len(nums),k<span style="color:#f92672">%</span>n
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> k<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    nums[:]<span style="color:#f92672">=</span>nums[n<span style="color:#f92672">-</span>k:]<span style="color:#f92672">+</span>nums[:n<span style="color:#f92672">-</span>k]
+</span></span></code></pre></div></li>
+<li>
+<p>⭐️ 数组翻转</p>
+<p>当我们将数组的元素向右移动 $k$ 次后，尾部 $k\bmod n$ 个元素会移动至数组头部，其余元素向后移动 $k\bmod n$ 个位置。因此可依次翻转全部数组、翻转 $[0,k\bmod n-1]$ 区间，翻转 $[k\bmod n,n-1]$ 区间。</p>
+<div align=center><img src="151.png" style="zoom:50%;" /></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rotate</span>(self, nums: List[int], k: int) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Do not return anything, modify nums in-place instead.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">reverse</span>(i,j):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> i<span style="color:#f92672">&lt;</span>j:
+</span></span><span style="display:flex;"><span>            nums[i],nums[j]<span style="color:#f92672">=</span>nums[j],nums[i]
+</span></span><span style="display:flex;"><span>            i,j<span style="color:#f92672">=</span>i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>,j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>len(nums)
+</span></span><span style="display:flex;"><span>    reverse(<span style="color:#ae81ff">0</span>,n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    reverse(<span style="color:#ae81ff">0</span>,k<span style="color:#f92672">%</span>n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    reverse(k<span style="color:#f92672">%</span>n,n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div></li>
+<li>
+<p>⭐️ 循环交换</p>
+<p>位置为 i 的元素将会出现在位置 (i+k)%n，每次处理时保存新位置的元素并将其交换至下一个位置，直到遍历完全部元素，遍历循环次数为 gcd(n,k)。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rotate</span>(self, nums: List[int], k: int) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Do not return anything, modify nums in-place instead.
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gcd</span>(a,b):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> gcd(b<span style="color:#f92672">%</span>a,a) <span style="color:#66d9ef">if</span> a <span style="color:#66d9ef">else</span> b
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>len(nums)
+</span></span><span style="display:flex;"><span>    k<span style="color:#f92672">=</span>k<span style="color:#f92672">%</span>n
+</span></span><span style="display:flex;"><span>    cnt <span style="color:#f92672">=</span> gcd(k,n)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> start <span style="color:#f92672">in</span> range(cnt):
+</span></span><span style="display:flex;"><span>        cur <span style="color:#f92672">=</span> (start <span style="color:#f92672">+</span> k) <span style="color:#f92672">%</span> n
+</span></span><span style="display:flex;"><span>        prev <span style="color:#f92672">=</span> nums[start]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> start<span style="color:#f92672">!=</span>cur:
+</span></span><span style="display:flex;"><span>            nums[cur],prev<span style="color:#f92672">=</span>prev,nums[cur]
+</span></span><span style="display:flex;"><span>            cur <span style="color:#f92672">=</span> (cur <span style="color:#f92672">+</span> k)<span style="color:#f92672">%</span>n
+</span></span><span style="display:flex;"><span>        nums[cur],prev<span style="color:#f92672">=</span>prev,nums[cur]
 </span></span></code></pre></div></li>
 </ul>
 <h3 id="17--缺失的第一个正数困难httpsleetcodecnproblemsfirst-missing-positive">17. ⭐️ <a href="https://leetcode.cn/problems/first-missing-positive/">缺失的第一个正数（困难）</a><a hidden class="anchor" aria-hidden="true" href="#17--缺失的第一个正数困难httpsleetcodecnproblemsfirst-missing-positive">#</a></h3>
@@ -2050,6 +2137,55 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
 </span></span></code></pre></div></li>
 </ul>
+<h3 id="54--课程表中等httpsleetcodecnproblemscourse-schedule">54. ⭐️ <a href="https://leetcode.cn/problems/course-schedule/">课程表（中等）</a><a hidden class="anchor" aria-hidden="true" href="#54--课程表中等httpsleetcodecnproblemscourse-schedule">#</a></h3>
+<div align=center><img src="54.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>DFS</p>
+<p>定义节点三个状态，0：待搜索；1：正在搜索；2：完成搜索。如果在 DFS 过程中遇到了状态为 1 的节点，说明遇到了环，无法完成所有课程的学习。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">canFinish</span>(self, numCourses: int, prerequisites: List[List[int]]) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>    edges <span style="color:#f92672">=</span> defaultdict(list)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> cour,pre <span style="color:#f92672">in</span> prerequisites:
+</span></span><span style="display:flex;"><span>        edges[pre]<span style="color:#f92672">.</span>append(cour)
+</span></span><span style="display:flex;"><span>    visited <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>numCourses
+</span></span><span style="display:flex;"><span>    valid<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dfs</span>(u):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">nonlocal</span> valid
+</span></span><span style="display:flex;"><span>        visited[u]<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#75715e"># 正在搜索</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> v <span style="color:#f92672">in</span> edges[u]:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> visited[v]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>: <span style="color:#75715e"># 当前节点未被搜索</span>
+</span></span><span style="display:flex;"><span>                dfs(v)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> valid: <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> visited[v]<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>: <span style="color:#75715e"># 遇到环</span>
+</span></span><span style="display:flex;"><span>                valid<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>        visited[u]<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span> <span style="color:#75715e"># 完成搜索</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(numCourses):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> valid <span style="color:#f92672">and</span> <span style="color:#f92672">not</span> visited[i]:
+</span></span><span style="display:flex;"><span>            dfs(i)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> valid
+</span></span></code></pre></div></li>
+<li>
+<p>BFS</p>
+<p>若一个课程节点的入度为 0，则表示该课程没有先修课程或先修课程已经学完，可以学习当前课程，去掉该节点的所有出边，则表示它的相邻节点少了一门先修课程。维护一个队列，不断地将入度为 0 的课程节点加入，直到答案中包含所有的节点（得到了一种拓扑排序）或者不存在没有入边的节点（图中包含环）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">canFinish</span>(self, numCourses: int, prerequisites: List[List[int]]) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>    edges <span style="color:#f92672">=</span> defaultdict(list)
+</span></span><span style="display:flex;"><span>    indeg <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>numCourses
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> cour,pre <span style="color:#f92672">in</span> prerequisites:
+</span></span><span style="display:flex;"><span>        edges[pre]<span style="color:#f92672">.</span>append(cour)
+</span></span><span style="display:flex;"><span>        indeg[cour]<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span> <span style="color:#75715e"># 入度</span>
+</span></span><span style="display:flex;"><span>    q <span style="color:#f92672">=</span> collections<span style="color:#f92672">.</span>deque([u <span style="color:#66d9ef">for</span> u <span style="color:#f92672">in</span> range(numCourses) <span style="color:#66d9ef">if</span> indeg[u]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>]) <span style="color:#75715e"># 将入度为 0 的节点加入队列</span>
+</span></span><span style="display:flex;"><span>    visited<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> <span style="color:#75715e"># 遍历的节点数</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> q:
+</span></span><span style="display:flex;"><span>        u<span style="color:#f92672">=</span>q<span style="color:#f92672">.</span>popleft()
+</span></span><span style="display:flex;"><span>        visited<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> v <span style="color:#f92672">in</span> edges[u]:
+</span></span><span style="display:flex;"><span>            indeg[v]<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> indeg[v]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>: <span style="color:#75715e"># 入度为 0，加入队列</span>
+</span></span><span style="display:flex;"><span>                q<span style="color:#f92672">.</span>append(v)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> visited<span style="color:#f92672">==</span>numCourses 
+</span></span></code></pre></div></li>
+</ul>
 <h2 id="回溯">回溯<a hidden class="anchor" aria-hidden="true" href="#回溯">#</a></h2>
 <h3 id="56-全排列中等httpsleetcodecnproblemspermutations">56. <a href="https://leetcode.cn/problems/permutations/">全排列（中等）</a><a hidden class="anchor" aria-hidden="true" href="#56-全排列中等httpsleetcodecnproblemspermutations">#</a></h3>
 <div align=center><img src="56.png" style="zoom:50%;" /></div>
@@ -2361,6 +2497,76 @@ $$</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(stack)
 </span></span></code></pre></div></li>
 </ul>
+<h3 id="73-每日温度中等httpsleetcodecnproblemsdaily-temperatures">73. <a href="https://leetcode.cn/problems/daily-temperatures/">每日温度（中等）</a><a hidden class="anchor" aria-hidden="true" href="#73-每日温度中等httpsleetcodecnproblemsdaily-temperatures">#</a></h3>
+<div align=center><img src="73.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>单调栈</p>
+<p>维护一个单调栈，存储温度下标，保证栈内下标对应的温度呈单调下降。每当遇到比栈顶对应温度高的温度时，将栈顶出栈，对应下标的 answer[idx] = i-idx。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dailyTemperatures</span>(self, temperatures: List[int]) <span style="color:#f92672">-&gt;</span> List[int]:
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>len(temperatures)
+</span></span><span style="display:flex;"><span>    answer,stack <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>]<span style="color:#f92672">*</span>n,[]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i,temp <span style="color:#f92672">in</span> enumerate(temperatures):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> stack <span style="color:#f92672">and</span> temp<span style="color:#f92672">&gt;</span>temperatures[stack[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]]:
+</span></span><span style="display:flex;"><span>            idx <span style="color:#f92672">=</span> stack<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>            answer[idx]<span style="color:#f92672">=</span>i<span style="color:#f92672">-</span>idx
+</span></span><span style="display:flex;"><span>        stack<span style="color:#f92672">.</span>append(i)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> answer
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="74--柱状图中最大的矩形困难httpsleetcodecnproblemslargest-rectangle-in-histogram">74. ⭐️ <a href="https://leetcode.cn/problems/largest-rectangle-in-histogram/">柱状图中最大的矩形（困难）</a><a hidden class="anchor" aria-hidden="true" href="#74--柱状图中最大的矩形困难httpsleetcodecnproblemslargest-rectangle-in-histogram">#</a></h3>
+<div align=center><img src="74.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>暴力解法</p>
+</li>
+<li>
+<p>单调栈</p>
+<p>遍历每一柱子，找到左右两侧最近的高度小于 h 的柱子，这两根柱子之间的高度均不小于 h，则以当前柱子高度为高度的矩形面积为 (right-left-1)*h。维护一个单调栈使得栈中元素的高度非递减。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">largestRectangleArea</span>(self, heights: List[int]) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>len(heights)
+</span></span><span style="display:flex;"><span>    left,right<span style="color:#f92672">=</span>[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>n,[n]<span style="color:#f92672">*</span>n
+</span></span><span style="display:flex;"><span>    stack<span style="color:#f92672">=</span>[(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>)]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i,h <span style="color:#f92672">in</span> enumerate(heights):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> stack <span style="color:#f92672">and</span> h<span style="color:#f92672">&lt;</span>stack[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>]:
+</span></span><span style="display:flex;"><span>            ii,hh<span style="color:#f92672">=</span>stack<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>            right[ii]<span style="color:#f92672">=</span>i
+</span></span><span style="display:flex;"><span>        left[i]<span style="color:#f92672">=</span>stack[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        stack<span style="color:#f92672">.</span>append((i,h))
+</span></span><span style="display:flex;"><span>    ans <span style="color:#f92672">=</span> max((right[i]<span style="color:#f92672">-</span>left[i]<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>heights[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="extra--最大矩形困难httpsleetcodecnproblemsmaximal-rectangle">extra. ⭐️ <a href="https://leetcode.cn/problems/maximal-rectangle/">最大矩形（困难）</a><a hidden class="anchor" aria-hidden="true" href="#extra--最大矩形困难httpsleetcodecnproblemsmaximal-rectangle">#</a></h3>
+<div align=center><img src="741.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>前缀和+单调栈</p>
+<p>把本题转换为上一题的解法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">maximalRectangle</span>(self, matrix: List[List[str]]) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> matrix: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    m,n<span style="color:#f92672">=</span>len(matrix),len(matrix[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_heights</span>(heights,n): <span style="color:#75715e"># 单调栈求解单层最大矩形</span>
+</span></span><span style="display:flex;"><span>        left,right<span style="color:#f92672">=</span>[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">*</span>n,[n]<span style="color:#f92672">*</span>n
+</span></span><span style="display:flex;"><span>        stack<span style="color:#f92672">=</span>[(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>)]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i,h <span style="color:#f92672">in</span> enumerate(heights):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> stack <span style="color:#f92672">and</span> h<span style="color:#f92672">&lt;</span>stack[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>]:
+</span></span><span style="display:flex;"><span>                ii,hh<span style="color:#f92672">=</span>stack<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>                right[ii]<span style="color:#f92672">=</span>i
+</span></span><span style="display:flex;"><span>            left[i]<span style="color:#f92672">=</span>stack[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>            stack<span style="color:#f92672">.</span>append((i,h))
+</span></span><span style="display:flex;"><span>        ans <span style="color:#f92672">=</span> max((right[i]<span style="color:#f92672">-</span>left[i]<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>heights[i] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>        matrix[<span style="color:#ae81ff">0</span>][j]<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> matrix[<span style="color:#ae81ff">0</span>][j]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;1&#39;</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,m): <span style="color:#75715e"># 前缀和</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>                matrix[i][j]<span style="color:#f92672">=</span>matrix[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][j]<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> matrix[i][j]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;1&#39;</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    ans <span style="color:#f92672">=</span> max(get_heights(matrix[i],n) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(m))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
 <h2 id="堆">堆<a hidden class="anchor" aria-hidden="true" href="#堆">#</a></h2>
 <h3 id="75-数组中的第k个最大元素中等httpsleetcodecnproblemskth-largest-element-in-an-array">75. <a href="https://leetcode.cn/problems/kth-largest-element-in-an-array/">数组中的第K个最大元素（中等）</a><a hidden class="anchor" aria-hidden="true" href="#75-数组中的第k个最大元素中等httpsleetcodecnproblemskth-largest-element-in-an-array">#</a></h3>
 <div align=center><img src="75.png" style="zoom:50%;" /></div>
@@ -2419,6 +2625,19 @@ $$</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> profit
 </span></span></code></pre></div></li>
 </ul>
+<h3 id="extra-买卖股票的最佳时机-ii中等httpsleetcodecnproblemsbest-time-to-buy-and-sell-stock-ii">extra. <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/">买卖股票的最佳时机 II（中等）</a><a hidden class="anchor" aria-hidden="true" href="#extra-买卖股票的最佳时机-ii中等httpsleetcodecnproblemsbest-time-to-buy-and-sell-stock-ii">#</a></h3>
+<div align=center><img src="e77.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>贪心</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">maxProfit</span>(self, prices: List[int]) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    ans<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(prices)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> prices[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">&gt;</span>prices[i]:
+</span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">+=</span>prices[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">-</span>prices[i] <span style="color:#75715e"># 能赚钱就赚</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
 <h3 id="78-跳跃游戏中等httpsleetcodecnproblemsjump-game">78. <a href="https://leetcode.cn/problems/jump-game/">跳跃游戏（中等）</a><a hidden class="anchor" aria-hidden="true" href="#78-跳跃游戏中等httpsleetcodecnproblemsjump-game">#</a></h3>
 <div align=center><img src="78.png" style="zoom:50%;" /></div>
 <ul>
@@ -2449,6 +2668,27 @@ $$</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i<span style="color:#f92672">==</span>end: <span style="color:#75715e"># 达到当前最远位置</span>
 </span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>            end<span style="color:#f92672">=</span>maxi
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="80-划分字母区间中等httpsleetcodecnproblemspartition-labels">80. <a href="https://leetcode.cn/problems/partition-labels/">划分字母区间（中等）</a><a hidden class="anchor" aria-hidden="true" href="#80-划分字母区间中等httpsleetcodecnproblemspartition-labels">#</a></h3>
+<ul>
+<li>
+<p>贪心</p>
+<p>记录每个字母最右边出现的位置。当前遍历位置超出当前区间内字母最右出现位置时得到一个划分区间。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">partitionLabels</span>(self, s: str) <span style="color:#f92672">-&gt;</span> List[int]:
+</span></span><span style="display:flex;"><span>    tab,ans<span style="color:#f92672">=</span>{},[]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i,c <span style="color:#f92672">in</span> enumerate(s):
+</span></span><span style="display:flex;"><span>        tab[c]<span style="color:#f92672">=</span>i
+</span></span><span style="display:flex;"><span>    start,far<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,tab[s[<span style="color:#ae81ff">0</span>]]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,len(s)):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i<span style="color:#f92672">&gt;</span>far:
+</span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">.</span>append(far<span style="color:#f92672">-</span>start<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            start<span style="color:#f92672">=</span>i
+</span></span><span style="display:flex;"><span>            far<span style="color:#f92672">=</span>tab[s[i]]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            far <span style="color:#f92672">=</span> max(far,tab[s[i]])
+</span></span><span style="display:flex;"><span>    ans<span style="color:#f92672">.</span>append(len(s)<span style="color:#f92672">-</span>start)
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
 </span></span></code></pre></div></li>
 </ul>
@@ -3511,6 +3751,36 @@ $$</p>
 </span></span><span style="display:flex;"><span>                dp[i][j]<span style="color:#f92672">=</span>dp[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>][j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>: dp[i][j]<span style="color:#f92672">=</span>max(dp[i][j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>],dp[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>][j])
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dp[<span style="color:#ae81ff">0</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="122-三角形最小路径和中等httpsleetcodecnproblemstriangle">122. <a href="https://leetcode.cn/problems/triangle/">三角形最小路径和（中等）</a><a hidden class="anchor" aria-hidden="true" href="#122-三角形最小路径和中等httpsleetcodecnproblemstriangle">#</a></h3>
+<div align=center><img src="e122.png" style="zoom:50%;" /></div> 
+<ul>
+<li>
+<p>动态规划+空间优化</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">minimumTotal</span>(self, triangle: List[List[int]]) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>len(triangle)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,n):
+</span></span><span style="display:flex;"><span>        triangle[i][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+=</span>triangle[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>,len(triangle[i])<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            triangle[i][j]<span style="color:#f92672">+=</span>min(triangle[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][j],triangle[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][j<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>        triangle[i][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">+=</span>triangle[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> min(triangle[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>])
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="123-删除字符串中的所有相邻重复项简单httpsleetcodecnproblemsremove-all-adjacent-duplicates-in-string">123. <a href="https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/">删除字符串中的所有相邻重复项（简单）</a><a hidden class="anchor" aria-hidden="true" href="#123-删除字符串中的所有相邻重复项简单httpsleetcodecnproblemsremove-all-adjacent-duplicates-in-string">#</a></h3>
+<div align=center><img src="e123.png" style="zoom:50%;" /></div> 
+<ul>
+<li>
+<p>栈</p>
+<p>每当当前字符和栈顶元素相等时，则遇到了相邻重复项，弹出栈顶元素</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">removeDuplicates</span>(self, s: str) <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    i,stack<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,[]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> i<span style="color:#f92672">&lt;</span>len(s):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> stack <span style="color:#f92672">or</span> stack[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">!=</span>s[i]: stack<span style="color:#f92672">.</span>append(s[i])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>: stack<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>        i<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(stack)
 </span></span></code></pre></div></li>
 </ul>
 
