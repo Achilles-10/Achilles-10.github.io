@@ -41,7 +41,7 @@ cover:
 
 76,80,82,83,84,
 
-88,89,96,98,100
+88,96,100
 
 ## 哈希
 
@@ -1447,7 +1447,25 @@ cover:
           return ans
   ```
 
+### 43. [将有序数组转换为二叉搜索树（简单）](https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/)
+
+<div align=center><img src="43.png" style="zoom:50%;" /></div>
+
+* 递归
+
+  ```python
+  def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+      if not nums: return None
+      mid=len(nums)//2
+      root = TreeNode(nums[mid])
+      root.left = self.sortedArrayToBST(nums[:mid])
+      root.right = self.sortedArrayToBST(nums[mid+1:])
+      return root
+  ```
+
 ### 44. [验证二叉搜索树（中等）](https://leetcode.cn/problems/validate-binary-search-tree/)
+
+<div align=center><img src="44.png" style="zoom:50%;" /></div>
 
 * DFS
 
@@ -1464,7 +1482,82 @@ cover:
       return dfs(root,-inf,inf)
   ```
 
+
+### 45. [二叉搜索树中第K小的元素（中等）](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/)
+
+<div align=center><img src="45.png" style="zoom:50%;" /></div>
+
+* 中序遍历（递归）
+
+  ```python
+  def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+      self.cnt,self.ans=0,-1
+      def dfs(node):
+          if not node or self.ans!=-1:
+              return
+          dfs(node.left)
+          self.cnt+=1
+          if self.cnt==k:
+              self.ans=node.val
+          dfs(node.right)
+      dfs(root)
+      return self.ans
+  ```
+
+* 中序遍历（遍历）
+
+  ```python
+  def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+      stack = []
+      while stack or root:
+          while root:
+              stack.append(root)
+              root=root.left
+          root=stack.pop()
+          k-=1
+          if k==0: return root.val
+          root=root.right
+  ```
+
+* 记录子树节点数
+
+  > 如果你需要频繁地查找第 k 小的值，你将如何优化算法？
+
+  记录下以每个结点为根结点的子树的结点数，使用类似二分查找的方法搜索
+
+  ```python
+  class Bst:
+      def __init__(self,root):
+          self.root=root
+          self._node_num = {}
+          self._count_node_num(root)
+          
+      def _count_node_num(self,node):
+          if not node:
+              return 0
+          self._node_num[node] = 1+self._count_node_num(node.left)+self._count_node_num(node.right)
+          return self._node_num[node]
   
+      def _get_node_num(self,node):
+          return self._node_num[node] if node else 0
+  
+      def kth_smallest(self,k):
+          node = self.root
+          while node:
+              left = self._get_node_num(node.left)
+              if left==k-1:
+                  return node.val
+              elif left<k-1:
+                  node = node.right
+                  k-=left+1
+              else:
+                  node = node.left
+      
+  class Solution:
+      def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+          bst = Bst(root)
+          return bst.kth_smallest(k)
+  ```
 
 ### 46. [二叉树的右视图（中等）](https://leetcode.cn/problems/binary-tree-right-side-view/)
 
@@ -2480,7 +2573,27 @@ cover:
       return ans
   ```
 
-  
+
+### 89. [分割等和子集（中等）](https://leetcode.cn/problems/partition-equal-subset-sum/)
+
+<div align=center><img src="89.png" style="zoom:50%;" /></div>
+
+* 动态规划
+
+  转换为 0-1 背包问题，判断数组能否有子集的和为 s/2。使用滚动数组优化空间。
+
+  ```python
+  def canPartition(self, nums: List[int]) -> bool:
+      s,n=sum(nums),len(nums)
+      if s%2: return False
+      target = s//2
+      dp = [True]+[False]*target
+      for i in range(n):
+          for j in range(target,nums[i]-1,-1):
+              dp[j]|=dp[j-nums[i]]
+          if dp[-1]: return True
+      return False
+  ```
 
 ### 90. ⭐️ [最长有效括号（困难）](https://leetcode.cn/problems/longest-valid-parentheses/)
 
@@ -2690,6 +2803,38 @@ cover:
   ```
 
 ## 技巧
+
+### 98. ⭐️ [颜色分类（中等）](https://leetcode.cn/problems/sort-colors/)
+
+<div align=center><img src="98.png" style="zoom:50%;" /></div>
+
+* 单指针+两次遍历
+
+  第一次遍历移动 0，第二次遍历移动 1
+
+* ⭐️ 双指针
+
+  设置两个指针 p0 和 p1，分别指向 0 和 1 需要放置的位置。
+
+  当遇到 1 时，将 1 交换至 p1 处，p1 右移一位；
+
+  当遇到 0 时，将 0 交换至 p0 处，但原本 p0 处可能为 1，此时还需将 1 移动至 p1 处。
+
+  ```python
+  def sortColors(self, nums: List[int]) -> None:
+      n=len(nums)
+      p0=p1=0
+      for i in range(n):
+          if nums[i]==1:
+              nums[i],nums[p1]=nums[p1],nums[i]
+              p1+=1
+          elif nums[i]==0:
+              nums[i],nums[p0]=nums[p0],nums[i]
+              if nums[i]==1:
+                  nums[i],nums[p1]=nums[p1],nums[i]
+              p0+=1
+              p1+=1
+  ```
 
 ### 99. ⭐️ [下一个排列（中等）](https://leetcode.cn/problems/next-permutation/)
 
@@ -3547,4 +3692,103 @@ cover:
       return ''.join(stack)
   ```
 
-  
+### 124. [长度最小的子数组（中等）](https://leetcode.cn/problems/minimum-size-subarray-sum/)
+
+<div align=center><img src="e124.png" style="zoom:50%;" /></div> 
+
+* 滑动窗口
+
+  ```python
+  def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+      n=len(nums)
+      if sum(nums)<target:
+          return 0
+      ans,s=n,0
+      i,j=0,0
+      while j<n:
+          s+=nums[j]
+          while s>=target:
+              ans = min(ans,j-i+1)
+              s-=nums[i]
+              i+=1
+          j+=1
+      return ans
+  ```
+
+### 125. [被围绕的区域（中等）](https://leetcode.cn/problems/surrounded-regions/)
+
+<div align=center><img src="e125.png" style="zoom:50%;" /></div> 
+
+* DFS
+
+  沿着边缘的 `O` 深度搜索，标记不会被围绕的位置为 `-`。再一次遍历，将 `-` 修改为 `O` 即可。
+
+  ```python
+  def solve(self, board: List[List[str]]) -> None:
+      m,n=len(board),len(board[0])
+      directions = [(1,0),(0,1),(-1,0),(0,-1)]
+      def dfs(i,j):
+          if i<0 or i>=m or j<0 or j>=n or board[i][j]!='O': return
+          board[i][j]='-'
+          for di,dj in directions:
+              dfs(i+di,j+dj)
+      for i in [0,m-1]:
+          for j in range(n):
+              dfs(i,j)
+      for j in [0,n-1]:
+          for i in range(m):
+              dfs(i,j)
+      for i in range(m):
+          for j in range(n):
+              board[i][j]='O' if board[i][j]=='-' else 'X'
+  ```
+
+* BFS
+
+  用队列来存储与边界 `O` 相连的坐标。
+
+  ```python
+  def solve(self, board: List[List[str]]) -> None:
+      m,n=len(board),len(board[0])
+      directions = [(1,0),(0,1),(-1,0),(0,-1)]
+      q = deque()
+      for i in [0,m-1]:
+          for j in range(n):
+              if board[i][j]=='O':
+                  q.append((i,j))
+      for j in [0,n-1]:
+          for i in range(m):
+              if board[i][j]=='O':
+                  q.append((i,j))
+      while q:
+          x,y = q.popleft()
+          board[x][y]='-'
+          for di,dj in directions:
+              if 0<=x+di<m and 0<=y+dj<n and board[x+di][y+dj]=='O':
+                  q.append((x+di,y+dj))
+      for i in range(m):
+          for j in range(n):
+              board[i][j]='O' if board[i][j]=='-' else 'X'
+  ```
+
+### 126. [把二叉搜索树转换为累加树（中等）](https://leetcode.cn/problems/convert-bst-to-greater-tree/)
+
+<div align=center><img src="e126.png" style="zoom:50%;" /></div> 
+
+* DFS
+
+  逆中序遍历
+
+  ```python
+  def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+      self.s=0
+      def dfs(node):
+          if not node: return
+          dfs(node.right)
+          self.s+=node.val
+          node.val=self.s
+          dfs(node.left)
+      dfs(root)
+      return root
+  ```
+

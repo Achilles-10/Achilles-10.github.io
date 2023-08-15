@@ -6,7 +6,16 @@
     <description>Recent content in 👨🏻‍💻 技术 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 10 Aug 2023 15:43:02 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Aug 2023 16:41:52 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>判断点是否在矩形内？复习向量点乘与叉乘</title>
+      <link>https://Achilles-10.github.io/posts/tech/rectangle/</link>
+      <pubDate>Tue, 15 Aug 2023 16:41:52 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/rectangle/</guid>
+      <description>利用向量叉乘判断一个点是否在矩形内</description>
+    </item>
+    
     <item>
       <title>深度学习面试题：初始化方法</title>
       <link>https://Achilles-10.github.io/posts/tech/init/</link>

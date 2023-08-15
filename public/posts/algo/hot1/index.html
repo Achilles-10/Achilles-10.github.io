@@ -7,7 +7,7 @@
 <meta name="robots" content="index, follow">
 <title>LeetCode 热题 100 与 CodeTop | 烈烈风中、的博客</title>
 <meta name="keywords" content="算法题, 学习笔记">
-<meta name="description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list">
+<meta name="description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,96,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list">
 <meta name="author" content="Achilles">
 <link rel="canonical" href="https://Achilles-10.github.io/posts/algo/hot1/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
@@ -97,7 +97,7 @@ var _hmt = _hmt || [];
 </script>
 
 <meta property="og:title" content="LeetCode 热题 100 与 CodeTop" />
-<meta property="og:description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list" />
+<meta property="og:description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,96,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://Achilles-10.github.io/posts/algo/hot1/" />
 <meta property="og:image" content="https://Achilles-10.github.io/posts/algo/hot1/cover.png" /><meta property="article:section" content="posts" />
@@ -107,7 +107,7 @@ var _hmt = _hmt || [];
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://Achilles-10.github.io/posts/algo/hot1/cover.png" />
 <meta name="twitter:title" content="LeetCode 热题 100 与 CodeTop"/>
-<meta name="twitter:description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list"/>
+<meta name="twitter:description" content="持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,96,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -&gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = &#39;&#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数&#43;哈希 def groupAnagrams(self, strs: List[str]) -&gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(&#34;a&#34;)] &#43;= 1 # 需要将 list"/>
 
 
 <script type="application/ld+json">
@@ -144,12 +144,12 @@ var _hmt = _hmt || [];
   "@type": "BlogPosting",
   "headline": "LeetCode 热题 100 与 CodeTop",
   "name": "LeetCode 热题 100 与 CodeTop",
-  "description": "持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,89,96,98,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -\u0026gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希 def groupAnagrams(self, strs: List[str]) -\u0026gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = \u0026#39;\u0026#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希 def groupAnagrams(self, strs: List[str]) -\u0026gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(\u0026#34;a\u0026#34;)] += 1 # 需要将 list",
+  "description": "持续更新。。。 9,16,18,28, 31,33,43,45,47, 53,55,58,61, 62,63,64,68,74, 76,80,82,83,84, 88,96,100 哈希 1. 两数之和（简单） 哈希 def twoSum(self, nums: List[int], target: int) -\u0026gt; List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希 def groupAnagrams(self, strs: List[str]) -\u0026gt; List[List[str]]: tab = defaultdict(list) for s in strs: key = \u0026#39;\u0026#39;.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希 def groupAnagrams(self, strs: List[str]) -\u0026gt; List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(\u0026#34;a\u0026#34;)] += 1 # 需要将 list",
   "keywords": [
     "算法题", "学习笔记"
   ],
-  "articleBody": "持续更新。。。 9,16,18,28,\n31,33,43,45,47,\n53,55,58,61,\n62,63,64,68,74,\n76,80,82,83,84,\n88,89,96,98,100\n哈希 1. 两数之和（简单） 哈希\ndef twoSum(self, nums: List[int], target: int) -\u003e List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希\ndef groupAnagrams(self, strs: List[str]) -\u003e List[List[str]]: tab = defaultdict(list) for s in strs: key = ''.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希\ndef groupAnagrams(self, strs: List[str]) -\u003e List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(\"a\")] += 1 # 需要将 list 转换成 tuple 才能进行哈希 mp[tuple(counts)].append(st) return list(mp.values()) 3. 最长连续序列（中等） 哈希\n当 num-1 在集合中时，跳过。\n当 num-1 不在集合中，说明 num 为一个序列的起点，依次判断 cur+1 是否在集合中。\ndef longestConsecutive(self, nums: List[int]) -\u003e int: ans=0 nums_set = set(nums) for num in nums: if num-1 not in nums_set: cur,long = num,1 while cur+1 in nums_set: cur = cur+1 long += 1 ans = max(ans,long) return ans 哈希+动规\n记录序列端点的最大长度，每次遍历到 num，得到 num-1 和 num+1 序列的长度 l 和 r，则连续长度为 l+r+1，更新哈希表。\ndef longestConsecutive(self, nums: List[int]) -\u003e int: tab = dict() ans = 0 for num in nums: if num not in tab: l = tab.get(num-1,0) r = tab.get(num+1,0) cur = l+r+1 ans = max(ans,cur) tab[num]=cur tab[num-l]=cur tab[num+r]=cur return ans 双指针 4. 移动零（简单） 双指针\n将把 0 移动到末尾转换为把非零数字移动到数组开头，这样可以保证非零数字的相对顺序。\n设置左右指针 l 和 r，l 指向非零数字需要放置的地方，遍历 r，每当遇到 0 就和 l 处交换。\ndef moveZeroes(self, nums: List[int]) -\u003e None: \"\"\" Do not return anything, modify nums in-place instead. \"\"\" l,r,n=0,0,len(nums) while r\u003cn: if nums[r]!=0: nums[l],nums[r]=nums[r],nums[l] l+=1 r+=1 5. 盛最多水的容器（中等） 双指针\n每次移动较小的指针，才有可能使存储的水量变多。\ndef maxArea(self, height: List[int]) -\u003e int: n=len(height) ans,i,j=0,0,n-1 while i\u003cj: water = min(height[i],height[j])*(j-i) ans = max(water,ans) if height[i]\u003c=height[j]: i+=1 else: j-=1 return ans 6. 三数之和（中等） 双指针+排序\n排序，遍历到相同的数时跳过以达到去重的目的。\ndef threeSum(self, nums: List[int]) -\u003e List[List[int]]: n=len(nums) ans=[] nums.sort() for i in range(n-2): if i!=0 and nums[i]==nums[i-1]: continue if nums[i]\u003e0: break l,r=i+1,n-1 while l\u003cr: if nums[l]+nums[r]==-nums[i]: ans.append([nums[i],nums[l],nums[r]]) while l\u003cr and nums[l+1]==nums[l]: l+=1 while l\u003cr and nums[r-1]==nums[r]: r-=1 l+=1 r-=1 elif nums[l]+nums[r]\u003e-nums[i]: r-=1 else: l+=1 return ans extra. 合并两个有序数组（简单） 逆向双指针\ndef merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -\u003e None: p1,p2=m-1,n-1 idx = m+n-1 while p2\u003e=0: if p1\u003c0 or nums1[p1]\u003cnums2[p2]: nums1[idx]=nums2[p2] p2-=1 else: nums1[idx]=nums1[p1] p1-=1 idx-=1 7. ⭐️ 接雨水（困难） 动态规划\n维护两个数组 left 和 right，分别表示 i 处左右最高柱子的高度。i 处接的雨水为 min(left[i],right[i])-height[i]。\ndef trap(self, height: List[int]) -\u003e int: n=len(height) left,right=[height[0]]+[0]*(n-1),[0]*(n-1)+[height[-1]] for i in range(1,n): left[i]=max(left[i-1],height[i]) right[n-i-1]=max(right[n-i],height[n-i-1]) return sum(min(left[i],right[i])-height[i] for i in range(n)) 双指针\n使用双指针优化动态规划方法的空间复杂度。维护双指针 left 和 right 以及 两个变量 leftmax 和 rightmax 标志左右两侧柱子最高的高度。\ndef trap(self, height: List[int]) -\u003e int: n,ans=len(height),0 left,right=0,n-1 leftmax,rightmax=0,0 while left\u003cright: leftmax=max(leftmax,height[left]) rightmax=max(rightmax,height[right]) if height[left]\u003cheight[right]: ans+=leftmax-height[left] left+=1 else: ans+=rightmax-height[right] right-=1 return ans 单调栈\n维护一个单调栈，存储下标，保证下标对应的柱子高度递减。\n当遍历到下标 i 时，若下标 i 的柱子的高度大于栈顶元素 top 的高度，由于 height[top-1]\u003eheight[top]，此时得到一个可以接雨水的区域。重复这个操作直至栈空或 height[top]\u003e=height[i]。将 i 入栈。\ndef trap(self, height: List[int]) -\u003e int: n,ans,stack=len(height),0,[] for i, hi in enumerate(height): while stack and hi\u003eheight[stack[-1]]: top = stack.pop() if not stack: break w = i-stack[-1]-1 h = min(hi,height[stack[-1]])-height[top] ans += w*h stack.append(i) return ans 滑动窗口 8. 无重复字符的最长子串（中等） 滑动窗口+哈希\n哈希表存储窗口内的子串，遇到重复则更新左指针。\ndef lengthOfLongestSubstring(self, s: str) -\u003e int: seen=set() n=len(s) rp,ans=-1,0 for i in range(n): if i!=0: seen.remove(s[i-1]) while rp+1\u003cn and s[rp+1] not in seen: seen.add(s[rp+1]) rp+=1 ans = max(ans,rp-i+1) return ans #################################################### def lengthOfLongestSubstring(self, s: str) -\u003e int: n,ans=len(s),0 i,j=0,0 tab = dict() while j\u003cn: if s[j] in tab: i = max(i,tab[s[j]]+1) # 更新左指针 ans = max(j-i+1,ans) tab[s[j]]=j j+=1 return ans 子串 10. ⭐️ 和为 K 的子数组（中等） ⭐️ 哈希表+前缀和\n用哈希表记录前缀和出现的次数，若当前 s-k 在哈表中出现过，则说明可以构成 dict[s-k] 个和为 k 的子数组。\ndef subarraySum(self, nums: List[int], k: int) -\u003e int: s=ans=0 my_dict = defaultdict(int) my_dict[0]=1 for num in nums: s += num ans += my_dict[s-k] my_dict[s]+=1 return ans 11. ⭐️ 滑动窗口最大值（困难） ⭐️ 堆\n维护一个大根堆，存储元素为 (-nums[i], i)。当窗口右端点遍历到 j 处时，将窗口右边的数加入到堆中，若堆顶元素 i",
-  "wordCount" : "15361",
+  "articleBody": "持续更新。。。 9,16,18,28,\n31,33,43,45,47,\n53,55,58,61,\n62,63,64,68,74,\n76,80,82,83,84,\n88,96,100\n哈希 1. 两数之和（简单） 哈希\ndef twoSum(self, nums: List[int], target: int) -\u003e List[int]: tab = {} for i in range(len(nums)): if target-nums[i] in tab: return [i,tab[target-nums[i]]] tab[nums[i]]=i 2. 字母异位词分组（中等） 排序+哈希\ndef groupAnagrams(self, strs: List[str]) -\u003e List[List[str]]: tab = defaultdict(list) for s in strs: key = ''.join(sorted(s)) # list需要转换为字符串才能进行哈希 tab[key].append(s) return list(tab.values()) 计数+哈希\ndef groupAnagrams(self, strs: List[str]) -\u003e List[List[str]]: mp = defaultdict(list) for st in strs: counts = [0] * 26 for ch in st: counts[ord(ch) - ord(\"a\")] += 1 # 需要将 list 转换成 tuple 才能进行哈希 mp[tuple(counts)].append(st) return list(mp.values()) 3. 最长连续序列（中等） 哈希\n当 num-1 在集合中时，跳过。\n当 num-1 不在集合中，说明 num 为一个序列的起点，依次判断 cur+1 是否在集合中。\ndef longestConsecutive(self, nums: List[int]) -\u003e int: ans=0 nums_set = set(nums) for num in nums: if num-1 not in nums_set: cur,long = num,1 while cur+1 in nums_set: cur = cur+1 long += 1 ans = max(ans,long) return ans 哈希+动规\n记录序列端点的最大长度，每次遍历到 num，得到 num-1 和 num+1 序列的长度 l 和 r，则连续长度为 l+r+1，更新哈希表。\ndef longestConsecutive(self, nums: List[int]) -\u003e int: tab = dict() ans = 0 for num in nums: if num not in tab: l = tab.get(num-1,0) r = tab.get(num+1,0) cur = l+r+1 ans = max(ans,cur) tab[num]=cur tab[num-l]=cur tab[num+r]=cur return ans 双指针 4. 移动零（简单） 双指针\n将把 0 移动到末尾转换为把非零数字移动到数组开头，这样可以保证非零数字的相对顺序。\n设置左右指针 l 和 r，l 指向非零数字需要放置的地方，遍历 r，每当遇到 0 就和 l 处交换。\ndef moveZeroes(self, nums: List[int]) -\u003e None: \"\"\" Do not return anything, modify nums in-place instead. \"\"\" l,r,n=0,0,len(nums) while r\u003cn: if nums[r]!=0: nums[l],nums[r]=nums[r],nums[l] l+=1 r+=1 5. 盛最多水的容器（中等） 双指针\n每次移动较小的指针，才有可能使存储的水量变多。\ndef maxArea(self, height: List[int]) -\u003e int: n=len(height) ans,i,j=0,0,n-1 while i\u003cj: water = min(height[i],height[j])*(j-i) ans = max(water,ans) if height[i]\u003c=height[j]: i+=1 else: j-=1 return ans 6. 三数之和（中等） 双指针+排序\n排序，遍历到相同的数时跳过以达到去重的目的。\ndef threeSum(self, nums: List[int]) -\u003e List[List[int]]: n=len(nums) ans=[] nums.sort() for i in range(n-2): if i!=0 and nums[i]==nums[i-1]: continue if nums[i]\u003e0: break l,r=i+1,n-1 while l\u003cr: if nums[l]+nums[r]==-nums[i]: ans.append([nums[i],nums[l],nums[r]]) while l\u003cr and nums[l+1]==nums[l]: l+=1 while l\u003cr and nums[r-1]==nums[r]: r-=1 l+=1 r-=1 elif nums[l]+nums[r]\u003e-nums[i]: r-=1 else: l+=1 return ans extra. 合并两个有序数组（简单） 逆向双指针\ndef merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -\u003e None: p1,p2=m-1,n-1 idx = m+n-1 while p2\u003e=0: if p1\u003c0 or nums1[p1]\u003cnums2[p2]: nums1[idx]=nums2[p2] p2-=1 else: nums1[idx]=nums1[p1] p1-=1 idx-=1 7. ⭐️ 接雨水（困难） 动态规划\n维护两个数组 left 和 right，分别表示 i 处左右最高柱子的高度。i 处接的雨水为 min(left[i],right[i])-height[i]。\ndef trap(self, height: List[int]) -\u003e int: n=len(height) left,right=[height[0]]+[0]*(n-1),[0]*(n-1)+[height[-1]] for i in range(1,n): left[i]=max(left[i-1],height[i]) right[n-i-1]=max(right[n-i],height[n-i-1]) return sum(min(left[i],right[i])-height[i] for i in range(n)) 双指针\n使用双指针优化动态规划方法的空间复杂度。维护双指针 left 和 right 以及 两个变量 leftmax 和 rightmax 标志左右两侧柱子最高的高度。\ndef trap(self, height: List[int]) -\u003e int: n,ans=len(height),0 left,right=0,n-1 leftmax,rightmax=0,0 while left\u003cright: leftmax=max(leftmax,height[left]) rightmax=max(rightmax,height[right]) if height[left]\u003cheight[right]: ans+=leftmax-height[left] left+=1 else: ans+=rightmax-height[right] right-=1 return ans 单调栈\n维护一个单调栈，存储下标，保证下标对应的柱子高度递减。\n当遍历到下标 i 时，若下标 i 的柱子的高度大于栈顶元素 top 的高度，由于 height[top-1]\u003eheight[top]，此时得到一个可以接雨水的区域。重复这个操作直至栈空或 height[top]\u003e=height[i]。将 i 入栈。\ndef trap(self, height: List[int]) -\u003e int: n,ans,stack=len(height),0,[] for i, hi in enumerate(height): while stack and hi\u003eheight[stack[-1]]: top = stack.pop() if not stack: break w = i-stack[-1]-1 h = min(hi,height[stack[-1]])-height[top] ans += w*h stack.append(i) return ans 滑动窗口 8. 无重复字符的最长子串（中等） 滑动窗口+哈希\n哈希表存储窗口内的子串，遇到重复则更新左指针。\ndef lengthOfLongestSubstring(self, s: str) -\u003e int: seen=set() n=len(s) rp,ans=-1,0 for i in range(n): if i!=0: seen.remove(s[i-1]) while rp+1\u003cn and s[rp+1] not in seen: seen.add(s[rp+1]) rp+=1 ans = max(ans,rp-i+1) return ans #################################################### def lengthOfLongestSubstring(self, s: str) -\u003e int: n,ans=len(s),0 i,j=0,0 tab = dict() while j\u003cn: if s[j] in tab: i = max(i,tab[s[j]]+1) # 更新左指针 ans = max(j-i+1,ans) tab[s[j]]=j j+=1 return ans 子串 10. ⭐️ 和为 K 的子数组（中等） ⭐️ 哈希表+前缀和\n用哈希表记录前缀和出现的次数，若当前 s-k 在哈表中出现过，则说明可以构成 dict[s-k] 个和为 k 的子数组。\ndef subarraySum(self, nums: List[int], k: int) -\u003e int: s=ans=0 my_dict = defaultdict(int) my_dict[0]=1 for num in nums: s += num ans += my_dict[s-k] my_dict[s]+=1 return ans 11. ⭐️ 滑动窗口最大值（困难） ⭐️ 堆\n维护一个大根堆，存储元素为 (-nums[i], i)。当窗口右端点遍历到 j 处时，将窗口右边的数加入到堆中，若堆顶元素 i",
+  "wordCount" : "16134",
   "inLanguage": "en",
   "image":"https://Achilles-10.github.io/posts/algo/hot1/cover.png","datePublished": "2023-07-23T16:11:27+08:00",
   "dateModified": "2023-07-23T16:11:27+08:00",
@@ -307,13 +307,13 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>15361字
+        <span>16134字
             &nbsp;&nbsp;
         </span>
     </span>
     <span id="post_meta_style_4">
         <span class="fa fa-clock-o"></span>
-        <span>31分钟
+        <span>33分钟
             &nbsp;&nbsp;
         </span>
     </span>
@@ -506,7 +506,11 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#extra-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e9%94%af%e9%bd%bf%e5%bd%a2%e5%b1%82%e5%ba%8f%e9%81%8d%e5%8e%86%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsbinary-tree-zigzag-level-order-traversal" aria-label="extra. 二叉树的锯齿形层序遍历（中等）">extra. <a href="https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/">二叉树的锯齿形层序遍历（中等）</a></a></li>
                 <li>
+                    <a href="#43-%e5%b0%86%e6%9c%89%e5%ba%8f%e6%95%b0%e7%bb%84%e8%bd%ac%e6%8d%a2%e4%b8%ba%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e7%ae%80%e5%8d%95httpsleetcodecnproblemsconvert-sorted-array-to-binary-search-tree" aria-label="43. 将有序数组转换为二叉搜索树（简单）">43. <a href="https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/">将有序数组转换为二叉搜索树（简单）</a></a></li>
+                <li>
                     <a href="#44-%e9%aa%8c%e8%af%81%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsvalidate-binary-search-tree" aria-label="44. 验证二叉搜索树（中等）">44. <a href="https://leetcode.cn/problems/validate-binary-search-tree/">验证二叉搜索树（中等）</a></a></li>
+                <li>
+                    <a href="#45-%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e4%b8%ad%e7%ac%ack%e5%b0%8f%e7%9a%84%e5%85%83%e7%b4%a0%e4%b8%ad%e7%ad%89httpsleetcodecnproblemskth-smallest-element-in-a-bst" aria-label="45. 二叉搜索树中第K小的元素（中等）">45. <a href="https://leetcode.cn/problems/kth-smallest-element-in-a-bst/">二叉搜索树中第K小的元素（中等）</a></a></li>
                 <li>
                     <a href="#46-%e4%ba%8c%e5%8f%89%e6%a0%91%e7%9a%84%e5%8f%b3%e8%a7%86%e5%9b%be%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsbinary-tree-right-side-view" aria-label="46. 二叉树的右视图（中等）">46. <a href="https://leetcode.cn/problems/binary-tree-right-side-view/">二叉树的右视图（中等）</a></a></li>
                 <li>
@@ -612,6 +616,8 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#88-%e4%b9%98%e7%a7%af%e6%9c%80%e5%a4%a7%e5%ad%90%e6%95%b0%e7%bb%84%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsmaximum-product-subarray" aria-label="88. 乘积最大子数组（中等）">88. <a href="https://leetcode.cn/problems/maximum-product-subarray/">乘积最大子数组（中等）</a></a></li>
                 <li>
+                    <a href="#89-%e5%88%86%e5%89%b2%e7%ad%89%e5%92%8c%e5%ad%90%e9%9b%86%e4%b8%ad%e7%ad%89httpsleetcodecnproblemspartition-equal-subset-sum" aria-label="89. 分割等和子集（中等）">89. <a href="https://leetcode.cn/problems/partition-equal-subset-sum/">分割等和子集（中等）</a></a></li>
+                <li>
                     <a href="#90--%e6%9c%80%e9%95%bf%e6%9c%89%e6%95%88%e6%8b%ac%e5%8f%b7%e5%9b%b0%e9%9a%behttpsleetcodecnproblemslongest-valid-parentheses" aria-label="90. ⭐️ 最长有效括号（困难）">90. ⭐️ <a href="https://leetcode.cn/problems/longest-valid-parentheses/">最长有效括号（困难）</a></a></li></ul>
                 </li>
                 <li>
@@ -633,6 +639,8 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#%e6%8a%80%e5%b7%a7" aria-label="技巧">技巧</a><ul>
                         
+                <li>
+                    <a href="#98--%e9%a2%9c%e8%89%b2%e5%88%86%e7%b1%bb%e4%b8%ad%e7%ad%89httpsleetcodecnproblemssort-colors" aria-label="98. ⭐️ 颜色分类（中等）">98. ⭐️ <a href="https://leetcode.cn/problems/sort-colors/">颜色分类（中等）</a></a></li>
                 <li>
                     <a href="#99--%e4%b8%8b%e4%b8%80%e4%b8%aa%e6%8e%92%e5%88%97%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsnext-permutation" aria-label="99. ⭐️ 下一个排列（中等）">99. ⭐️ <a href="https://leetcode.cn/problems/next-permutation/">下一个排列（中等）</a></a></li></ul>
                 </li>
@@ -684,7 +692,13 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#122-%e4%b8%89%e8%a7%92%e5%bd%a2%e6%9c%80%e5%b0%8f%e8%b7%af%e5%be%84%e5%92%8c%e4%b8%ad%e7%ad%89httpsleetcodecnproblemstriangle" aria-label="122. 三角形最小路径和（中等）">122. <a href="https://leetcode.cn/problems/triangle/">三角形最小路径和（中等）</a></a></li>
                 <li>
-                    <a href="#123-%e5%88%a0%e9%99%a4%e5%ad%97%e7%ac%a6%e4%b8%b2%e4%b8%ad%e7%9a%84%e6%89%80%e6%9c%89%e7%9b%b8%e9%82%bb%e9%87%8d%e5%a4%8d%e9%a1%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemsremove-all-adjacent-duplicates-in-string" aria-label="123. 删除字符串中的所有相邻重复项（简单）">123. <a href="https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/">删除字符串中的所有相邻重复项（简单）</a></a>
+                    <a href="#123-%e5%88%a0%e9%99%a4%e5%ad%97%e7%ac%a6%e4%b8%b2%e4%b8%ad%e7%9a%84%e6%89%80%e6%9c%89%e7%9b%b8%e9%82%bb%e9%87%8d%e5%a4%8d%e9%a1%b9%e7%ae%80%e5%8d%95httpsleetcodecnproblemsremove-all-adjacent-duplicates-in-string" aria-label="123. 删除字符串中的所有相邻重复项（简单）">123. <a href="https://leetcode.cn/problems/remove-all-adjacent-duplicates-in-string/">删除字符串中的所有相邻重复项（简单）</a></a></li>
+                <li>
+                    <a href="#124-%e9%95%bf%e5%ba%a6%e6%9c%80%e5%b0%8f%e7%9a%84%e5%ad%90%e6%95%b0%e7%bb%84%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsminimum-size-subarray-sum" aria-label="124. 长度最小的子数组（中等）">124. <a href="https://leetcode.cn/problems/minimum-size-subarray-sum/">长度最小的子数组（中等）</a></a></li>
+                <li>
+                    <a href="#125-%e8%a2%ab%e5%9b%b4%e7%bb%95%e7%9a%84%e5%8c%ba%e5%9f%9f%e4%b8%ad%e7%ad%89httpsleetcodecnproblemssurrounded-regions" aria-label="125. 被围绕的区域（中等）">125. <a href="https://leetcode.cn/problems/surrounded-regions/">被围绕的区域（中等）</a></a></li>
+                <li>
+                    <a href="#126-%e6%8a%8a%e4%ba%8c%e5%8f%89%e6%90%9c%e7%b4%a2%e6%a0%91%e8%bd%ac%e6%8d%a2%e4%b8%ba%e7%b4%af%e5%8a%a0%e6%a0%91%e4%b8%ad%e7%ad%89httpsleetcodecnproblemsconvert-bst-to-greater-tree" aria-label="126. 把二叉搜索树转换为累加树（中等）">126. <a href="https://leetcode.cn/problems/convert-bst-to-greater-tree/">把二叉搜索树转换为累加树（中等）</a></a>
                 </li>
             </ul>
             </li>
@@ -757,7 +771,7 @@ var _hmt = _hmt || [];
 <p>53,55,58,61,</p>
 <p>62,63,64,68,74,</p>
 <p>76,80,82,83,84,</p>
-<p>88,89,96,98,100</p>
+<p>88,96,100</p>
 <h2 id="哈希">哈希<a hidden class="anchor" aria-hidden="true" href="#哈希">#</a></h2>
 <h3 id="1-两数之和简单httpsleetcodecnproblemstwo-sum">1. <a href="https://leetcode.cn/problems/two-sum/">两数之和（简单）</a><a hidden class="anchor" aria-hidden="true" href="#1-两数之和简单httpsleetcodecnproblemstwo-sum">#</a></h3>
 <div align=center><img src="1.png" style="zoom:50%;" /></div>
@@ -1958,7 +1972,22 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        return ans
 </span></span></code></pre></div></li>
 </ul>
+<h3 id="43-将有序数组转换为二叉搜索树简单httpsleetcodecnproblemsconvert-sorted-array-to-binary-search-tree">43. <a href="https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/">将有序数组转换为二叉搜索树（简单）</a><a hidden class="anchor" aria-hidden="true" href="#43-将有序数组转换为二叉搜索树简单httpsleetcodecnproblemsconvert-sorted-array-to-binary-search-tree">#</a></h3>
+<div align=center><img src="43.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>递归</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sortedArrayToBST</span>(self, nums: List[int]) <span style="color:#f92672">-&gt;</span> Optional[TreeNode]:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> nums: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span><span style="display:flex;"><span>    mid<span style="color:#f92672">=</span>len(nums)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    root <span style="color:#f92672">=</span> TreeNode(nums[mid])
+</span></span><span style="display:flex;"><span>    root<span style="color:#f92672">.</span>left <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>sortedArrayToBST(nums[:mid])
+</span></span><span style="display:flex;"><span>    root<span style="color:#f92672">.</span>right <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>sortedArrayToBST(nums[mid<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>:])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> root
+</span></span></code></pre></div></li>
+</ul>
 <h3 id="44-验证二叉搜索树中等httpsleetcodecnproblemsvalidate-binary-search-tree">44. <a href="https://leetcode.cn/problems/validate-binary-search-tree/">验证二叉搜索树（中等）</a><a hidden class="anchor" aria-hidden="true" href="#44-验证二叉搜索树中等httpsleetcodecnproblemsvalidate-binary-search-tree">#</a></h3>
+<div align=center><img src="44.png" style="zoom:50%;" /></div>
 <ul>
 <li>
 <p>DFS</p>
@@ -1971,6 +2000,76 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> dfs(node<span style="color:#f92672">.</span>left,low,node<span style="color:#f92672">.</span>val) <span style="color:#f92672">and</span> dfs(node<span style="color:#f92672">.</span>right,node<span style="color:#f92672">.</span>val,high)
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dfs(root,<span style="color:#f92672">-</span>inf,inf)
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="45-二叉搜索树中第k小的元素中等httpsleetcodecnproblemskth-smallest-element-in-a-bst">45. <a href="https://leetcode.cn/problems/kth-smallest-element-in-a-bst/">二叉搜索树中第K小的元素（中等）</a><a hidden class="anchor" aria-hidden="true" href="#45-二叉搜索树中第k小的元素中等httpsleetcodecnproblemskth-smallest-element-in-a-bst">#</a></h3>
+<div align=center><img src="45.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>中序遍历（递归）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kthSmallest</span>(self, root: Optional[TreeNode], k: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>cnt,self<span style="color:#f92672">.</span>ans<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dfs</span>(node):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> node <span style="color:#f92672">or</span> self<span style="color:#f92672">.</span>ans<span style="color:#f92672">!=-</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>        dfs(node<span style="color:#f92672">.</span>left)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>cnt<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> self<span style="color:#f92672">.</span>cnt<span style="color:#f92672">==</span>k:
+</span></span><span style="display:flex;"><span>            self<span style="color:#f92672">.</span>ans<span style="color:#f92672">=</span>node<span style="color:#f92672">.</span>val
+</span></span><span style="display:flex;"><span>        dfs(node<span style="color:#f92672">.</span>right)
+</span></span><span style="display:flex;"><span>    dfs(root)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>ans
+</span></span></code></pre></div></li>
+<li>
+<p>中序遍历（遍历）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kthSmallest</span>(self, root: Optional[TreeNode], k: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    stack <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> stack <span style="color:#f92672">or</span> root:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> root:
+</span></span><span style="display:flex;"><span>            stack<span style="color:#f92672">.</span>append(root)
+</span></span><span style="display:flex;"><span>            root<span style="color:#f92672">=</span>root<span style="color:#f92672">.</span>left
+</span></span><span style="display:flex;"><span>        root<span style="color:#f92672">=</span>stack<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>        k<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> k<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span> root<span style="color:#f92672">.</span>val
+</span></span><span style="display:flex;"><span>        root<span style="color:#f92672">=</span>root<span style="color:#f92672">.</span>right
+</span></span></code></pre></div></li>
+<li>
+<p>记录子树节点数</p>
+<blockquote>
+<p>如果你需要频繁地查找第 k 小的值，你将如何优化算法？</p>
+</blockquote>
+<p>记录下以每个结点为根结点的子树的结点数，使用类似二分查找的方法搜索</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Bst</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self,root):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>root<span style="color:#f92672">=</span>root
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_node_num <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_count_node_num(root)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_count_node_num</span>(self,node):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> node:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>_node_num[node] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">+</span>self<span style="color:#f92672">.</span>_count_node_num(node<span style="color:#f92672">.</span>left)<span style="color:#f92672">+</span>self<span style="color:#f92672">.</span>_count_node_num(node<span style="color:#f92672">.</span>right)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_node_num[node]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_get_node_num</span>(self,node):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_node_num[node] <span style="color:#66d9ef">if</span> node <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kth_smallest</span>(self,k):
+</span></span><span style="display:flex;"><span>        node <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>root
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> node:
+</span></span><span style="display:flex;"><span>            left <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>_get_node_num(node<span style="color:#f92672">.</span>left)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> left<span style="color:#f92672">==</span>k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> node<span style="color:#f92672">.</span>val
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">elif</span> left<span style="color:#f92672">&lt;</span>k<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                node <span style="color:#f92672">=</span> node<span style="color:#f92672">.</span>right
+</span></span><span style="display:flex;"><span>                k<span style="color:#f92672">-=</span>left<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                node <span style="color:#f92672">=</span> node<span style="color:#f92672">.</span>left
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">kthSmallest</span>(self, root: Optional[TreeNode], k: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        bst <span style="color:#f92672">=</span> Bst(root)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> bst<span style="color:#f92672">.</span>kth_smallest(k)
 </span></span></code></pre></div></li>
 </ul>
 <h3 id="46-二叉树的右视图中等httpsleetcodecnproblemsbinary-tree-right-side-view">46. <a href="https://leetcode.cn/problems/binary-tree-right-side-view/">二叉树的右视图（中等）</a><a hidden class="anchor" aria-hidden="true" href="#46-二叉树的右视图中等httpsleetcodecnproblemsbinary-tree-right-side-view">#</a></h3>
@@ -2849,6 +2948,24 @@ $$</p>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
 </span></span></code></pre></div></li>
 </ul>
+<h3 id="89-分割等和子集中等httpsleetcodecnproblemspartition-equal-subset-sum">89. <a href="https://leetcode.cn/problems/partition-equal-subset-sum/">分割等和子集（中等）</a><a hidden class="anchor" aria-hidden="true" href="#89-分割等和子集中等httpsleetcodecnproblemspartition-equal-subset-sum">#</a></h3>
+<div align=center><img src="89.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>动态规划</p>
+<p>转换为 0-1 背包问题，判断数组能否有子集的和为 s/2。使用滚动数组优化空间。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">canPartition</span>(self, nums: List[int]) <span style="color:#f92672">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>    s,n<span style="color:#f92672">=</span>sum(nums),len(nums)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> s<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span>: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>    target <span style="color:#f92672">=</span> s<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    dp <span style="color:#f92672">=</span> [<span style="color:#66d9ef">True</span>]<span style="color:#f92672">+</span>[<span style="color:#66d9ef">False</span>]<span style="color:#f92672">*</span>target
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(target,nums[i]<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>            dp[j]<span style="color:#f92672">|=</span>dp[j<span style="color:#f92672">-</span>nums[i]]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> dp[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]: <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span></code></pre></div></li>
+</ul>
 <h3 id="90--最长有效括号困难httpsleetcodecnproblemslongest-valid-parentheses">90. ⭐️ <a href="https://leetcode.cn/problems/longest-valid-parentheses/">最长有效括号（困难）</a><a hidden class="anchor" aria-hidden="true" href="#90--最长有效括号困难httpsleetcodecnproblemslongest-valid-parentheses">#</a></h3>
 <div align=center><img src="90.png" style="zoom:50%;" /></div>
 <ul>
@@ -3031,6 +3148,33 @@ $$</p>
 </span></span></code></pre></div></li>
 </ul>
 <h2 id="技巧">技巧<a hidden class="anchor" aria-hidden="true" href="#技巧">#</a></h2>
+<h3 id="98--颜色分类中等httpsleetcodecnproblemssort-colors">98. ⭐️ <a href="https://leetcode.cn/problems/sort-colors/">颜色分类（中等）</a><a hidden class="anchor" aria-hidden="true" href="#98--颜色分类中等httpsleetcodecnproblemssort-colors">#</a></h3>
+<div align=center><img src="98.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>单指针+两次遍历</p>
+<p>第一次遍历移动 0，第二次遍历移动 1</p>
+</li>
+<li>
+<p>⭐️ 双指针</p>
+<p>设置两个指针 p0 和 p1，分别指向 0 和 1 需要放置的位置。</p>
+<p>当遇到 1 时，将 1 交换至 p1 处，p1 右移一位；</p>
+<p>当遇到 0 时，将 0 交换至 p0 处，但原本 p0 处可能为 1，此时还需将 1 移动至 p1 处。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">sortColors</span>(self, nums: List[int]) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>len(nums)
+</span></span><span style="display:flex;"><span>    p0<span style="color:#f92672">=</span>p1<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> nums[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>            nums[i],nums[p1]<span style="color:#f92672">=</span>nums[p1],nums[i]
+</span></span><span style="display:flex;"><span>            p1<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">elif</span> nums[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>            nums[i],nums[p0]<span style="color:#f92672">=</span>nums[p0],nums[i]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> nums[i]<span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                nums[i],nums[p1]<span style="color:#f92672">=</span>nums[p1],nums[i]
+</span></span><span style="display:flex;"><span>            p0<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            p1<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div></li>
+</ul>
 <h3 id="99--下一个排列中等httpsleetcodecnproblemsnext-permutation">99. ⭐️ <a href="https://leetcode.cn/problems/next-permutation/">下一个排列（中等）</a><a hidden class="anchor" aria-hidden="true" href="#99--下一个排列中等httpsleetcodecnproblemsnext-permutation">#</a></h3>
 <div align=center><img src="99.png" style="zoom:50%;" /></div>
 <ul>
@@ -3781,6 +3925,95 @@ $$</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>: stack<span style="color:#f92672">.</span>pop()
 </span></span><span style="display:flex;"><span>        i<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(stack)
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="124-长度最小的子数组中等httpsleetcodecnproblemsminimum-size-subarray-sum">124. <a href="https://leetcode.cn/problems/minimum-size-subarray-sum/">长度最小的子数组（中等）</a><a hidden class="anchor" aria-hidden="true" href="#124-长度最小的子数组中等httpsleetcodecnproblemsminimum-size-subarray-sum">#</a></h3>
+<div align=center><img src="e124.png" style="zoom:50%;" /></div> 
+<ul>
+<li>
+<p>滑动窗口</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">minSubArrayLen</span>(self, target: int, nums: List[int]) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>len(nums)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> sum(nums)<span style="color:#f92672">&lt;</span>target:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    ans,s<span style="color:#f92672">=</span>n,<span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    i,j<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> j<span style="color:#f92672">&lt;</span>n:
+</span></span><span style="display:flex;"><span>        s<span style="color:#f92672">+=</span>nums[j]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> s<span style="color:#f92672">&gt;=</span>target:
+</span></span><span style="display:flex;"><span>            ans <span style="color:#f92672">=</span> min(ans,j<span style="color:#f92672">-</span>i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>            s<span style="color:#f92672">-=</span>nums[i]
+</span></span><span style="display:flex;"><span>            i<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        j<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="125-被围绕的区域中等httpsleetcodecnproblemssurrounded-regions">125. <a href="https://leetcode.cn/problems/surrounded-regions/">被围绕的区域（中等）</a><a hidden class="anchor" aria-hidden="true" href="#125-被围绕的区域中等httpsleetcodecnproblemssurrounded-regions">#</a></h3>
+<div align=center><img src="e125.png" style="zoom:50%;" /></div> 
+<ul>
+<li>
+<p>DFS</p>
+<p>沿着边缘的 <code>O</code> 深度搜索，标记不会被围绕的位置为 <code>-</code>。再一次遍历，将 <code>-</code> 修改为 <code>O</code> 即可。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solve</span>(self, board: List[List[str]]) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    m,n<span style="color:#f92672">=</span>len(board),len(board[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>    directions <span style="color:#f92672">=</span> [(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>),(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>),(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>),(<span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dfs</span>(i,j):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> i<span style="color:#f92672">&gt;=</span>m <span style="color:#f92672">or</span> j<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span> <span style="color:#f92672">or</span> j<span style="color:#f92672">&gt;=</span>n <span style="color:#f92672">or</span> board[i][j]<span style="color:#f92672">!=</span><span style="color:#e6db74">&#39;O&#39;</span>: <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>        board[i][j]<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;-&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> di,dj <span style="color:#f92672">in</span> directions:
+</span></span><span style="display:flex;"><span>            dfs(i<span style="color:#f92672">+</span>di,j<span style="color:#f92672">+</span>dj)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>,m<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>            dfs(i,j)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>,n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(m):
+</span></span><span style="display:flex;"><span>            dfs(i,j)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(m):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>            board[i][j]<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;O&#39;</span> <span style="color:#66d9ef">if</span> board[i][j]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;-&#39;</span> <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;X&#39;</span>
+</span></span></code></pre></div></li>
+<li>
+<p>BFS</p>
+<p>用队列来存储与边界 <code>O</code> 相连的坐标。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solve</span>(self, board: List[List[str]]) <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">None</span>:
+</span></span><span style="display:flex;"><span>    m,n<span style="color:#f92672">=</span>len(board),len(board[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>    directions <span style="color:#f92672">=</span> [(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>),(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>),(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>),(<span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)]
+</span></span><span style="display:flex;"><span>    q <span style="color:#f92672">=</span> deque()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>,m<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> board[i][j]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;O&#39;</span>:
+</span></span><span style="display:flex;"><span>                q<span style="color:#f92672">.</span>append((i,j))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> [<span style="color:#ae81ff">0</span>,n<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(m):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> board[i][j]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;O&#39;</span>:
+</span></span><span style="display:flex;"><span>                q<span style="color:#f92672">.</span>append((i,j))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> q:
+</span></span><span style="display:flex;"><span>        x,y <span style="color:#f92672">=</span> q<span style="color:#f92672">.</span>popleft()
+</span></span><span style="display:flex;"><span>        board[x][y]<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;-&#39;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> di,dj <span style="color:#f92672">in</span> directions:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">&lt;=</span>x<span style="color:#f92672">+</span>di<span style="color:#f92672">&lt;</span>m <span style="color:#f92672">and</span> <span style="color:#ae81ff">0</span><span style="color:#f92672">&lt;=</span>y<span style="color:#f92672">+</span>dj<span style="color:#f92672">&lt;</span>n <span style="color:#f92672">and</span> board[x<span style="color:#f92672">+</span>di][y<span style="color:#f92672">+</span>dj]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;O&#39;</span>:
+</span></span><span style="display:flex;"><span>                q<span style="color:#f92672">.</span>append((x<span style="color:#f92672">+</span>di,y<span style="color:#f92672">+</span>dj))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(m):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n):
+</span></span><span style="display:flex;"><span>            board[i][j]<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;O&#39;</span> <span style="color:#66d9ef">if</span> board[i][j]<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;-&#39;</span> <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#39;X&#39;</span>
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="126-把二叉搜索树转换为累加树中等httpsleetcodecnproblemsconvert-bst-to-greater-tree">126. <a href="https://leetcode.cn/problems/convert-bst-to-greater-tree/">把二叉搜索树转换为累加树（中等）</a><a hidden class="anchor" aria-hidden="true" href="#126-把二叉搜索树转换为累加树中等httpsleetcodecnproblemsconvert-bst-to-greater-tree">#</a></h3>
+<div align=center><img src="e126.png" style="zoom:50%;" /></div> 
+<ul>
+<li>
+<p>DFS</p>
+<p>逆中序遍历</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">convertBST</span>(self, root: Optional[TreeNode]) <span style="color:#f92672">-&gt;</span> Optional[TreeNode]:
+</span></span><span style="display:flex;"><span>    self<span style="color:#f92672">.</span>s<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">dfs</span>(node):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> node: <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>        dfs(node<span style="color:#f92672">.</span>right)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>s<span style="color:#f92672">+=</span>node<span style="color:#f92672">.</span>val
+</span></span><span style="display:flex;"><span>        node<span style="color:#f92672">.</span>val<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>s
+</span></span><span style="display:flex;"><span>        dfs(node<span style="color:#f92672">.</span>left)
+</span></span><span style="display:flex;"><span>    dfs(root)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> root
 </span></span></code></pre></div></li>
 </ul>
 
