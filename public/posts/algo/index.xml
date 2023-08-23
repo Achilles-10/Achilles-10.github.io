@@ -6,7 +6,16 @@
     <description>Recent content in 📕 算法 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 23 Jul 2023 16:11:27 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/algo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Aug 2023 16:27:41 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/algo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>LeetCode 热题 100 : 51~100</title>
+      <link>https://Achilles-10.github.io/posts/algo/hot2/</link>
+      <pubDate>Mon, 21 Aug 2023 16:27:41 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/algo/hot2/</guid>
+      <description>图论 51. 岛屿数量（中等） DFS 当面试时不能修改原数组时需要使用标记。 def numIslands(self, grid: List[List[str]]) -&amp;gt; int: directions=[(1,0),(0,1),(-1,0),(0,-1)] m,n,ans=len(grid),len(grid[0]),0 vis = set() def dfs(i,j): vis.add((i,j)) for di,dj in directions: ii,jj = i+di,j+dj if 0&amp;lt;=ii&amp;lt;m and 0&amp;lt;=jj&amp;lt;n and grid[ii][jj]==&amp;#39;1&amp;#39; and (ii,jj) not in vis: dfs(ii,jj) for i in range(m): for j in range(n): if grid[i][j]==&amp;#39;1&amp;#39; and (i,j) not in vis: dfs(i,j) ans+=1 return ans 52. 腐烂的橘子（中等） BFS def orangesRotting(self, grid: List[List[int]]) -&amp;gt; int: m,n=len(grid),len(grid[0]) direction=[(1,0),(0,1),(-1,0),(0,-1)] ans,remain,stack=0,0,[] for i in range(m): for j in range(n): if grid[i][j]==2: stack.append((i,j)) elif grid[i][j]==1: remain+=1 while stack and remain: for _ in range(len(stack)): i,j=stack.pop(0) for di,dj in direction: ii,jj=i+di,j+dj if 0&amp;lt;=ii&amp;lt;m and 0&amp;lt;=jj&amp;lt;n and grid[ii][jj]==1: grid[ii][jj]=2 remain-=1 stack.append((ii,jj))</description>
+    </item>
+    
     <item>
       <title>LeetCode 热题 100 : 0~50</title>
       <link>https://Achilles-10.github.io/posts/algo/hot1/</link>
