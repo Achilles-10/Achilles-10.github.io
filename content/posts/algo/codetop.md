@@ -1040,4 +1040,40 @@ cover:
       return dfs(0,0,k-1)
   ```
 
+### 129. ⭐️ [字典序的第K小数字（困难）](https://leetcode.cn/problems/k-th-smallest-in-lexicographical-order/)
+
+<div align=center><img src="e129.png" style="zoom:50%;" /></div> 
+
+* 字典树思想+前缀和
+
+  统计以 cur 为根节点的子树节点总数 steps，若 k<steps，则目标数字在 cur 为根节点的子树里；否则在 cur 的兄弟节点构成的子树中。
+
+  用 first 和 last 分别指向子树左侧和右侧节点，则该层有 last-first+1 个节点，当 first 小于 n 时，更新 first 和 last。
+
+  <div align=center><img src="e1291.png" style="zoom:50%;" /></div> 
+
+  ```
+  class Solution:
+      def getSteps(self, cur, n):
+          steps,first,last=0,cur,cur
+          while first<=n:
+              steps+=min(last,n)-first+1
+              first*=10
+              last=last*10+9
+          return steps
+  
+      def findKthNumber(self, n: int, k: int) -> int:
+          cur=1
+          k-=1
+          while k:
+              steps = self.getSteps(cur,n)
+              if steps<=k:
+                  k-=steps
+                  cur+=1
+              else:
+                  cur*=10
+                  k-=1
+          return cur
+  ```
+
   
