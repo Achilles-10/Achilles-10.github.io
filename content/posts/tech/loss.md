@@ -11,7 +11,7 @@ tags: ["面试","学习笔记"] # 标签
 description: "深度学习算法岗损失函数常见面试题"
 weight:
 slug: ""
-draft: true # 是否为草稿
+draft: false # 是否为草稿
 comments: true # 本页面是否显示评论
 # reward: true # 打赏
 mermaid: true #是否开启mermaid
@@ -22,7 +22,7 @@ disableShare: true # 底部不显示分享栏
 showbreadcrumbs: true #顶部显示路径
 math: true
 cover:
-    image: "" #图片路径例如：posts/tech/123/123.png
+    image: "posts/tech/loss/cover.png" #图片路径例如：posts/tech/123/123.png
     zoom: # 图片大小，例如填写 50% 表示原图像的一半大小
     caption: "" #图片底部描述
     alt: ""
@@ -94,6 +94,15 @@ cover:
 * **Dice 损失**：
 
   衡量两个样本（ *A* 和 *B* ）的重叠部分。
+  
+  TP: True Positive，GT 和分割掩码 S 之间的交集区域
+  
+  FP: False Positive，GT 外的分割掩码 S 区域
+  
+  FN: False Negative，分割掩码外的 GT 区域
+  
+  <div align=center><img src="dice.png" style="zoom:50%;" /></div>
+  
   $$
   L_{Dice}=1-Dice=1-\frac{2\cdot|A\cap B|}{|A|+|B|}=1-\frac{2\cdot TP}{2\cdot TP+FP+FN}
   $$
@@ -142,9 +151,14 @@ cover:
   $$
   分别求 w 和 b 的梯度，有：
   $$
-  \frac{\partial L}{\partial w}=\frac{\partial L}{\partial a}\cdot\frac{\partial a}{\partial z}\cdot\frac{\partial z}{\partial w}=(a-y)\cdot\sigma'(z)x\\\\
+  \frac{\partial L}{\partial w}=\frac{\partial L}{\partial a}\cdot\frac{\partial a}{\partial z}\cdot\frac{\partial z}{\partial w}=(a-y)\cdot\sigma'(z)x
+  $$
+  $$
   \frac{\partial L}{\partial b}=\frac{\partial L}{\partial a}\cdot\frac{\partial a}{\partial z}\cdot\frac{\partial z}{\partial b}=(a-y)\cdot\sigma'(z)
   $$
+
+  
+
   可见，梯度大小与 $\sigma'(z)$ 有关，若使用 sigmoid 函数，则两端梯度很小，参数更新缓慢。
 
   对于交叉熵损失函数，有
@@ -189,17 +203,26 @@ cover:
 
   MSE 适合回归问题，CE 适合分类问题。
 
-## 6. 为什么交叉熵损失函数有 log 项
+## 6. BCE 和 CE 的区别
+
+* $BCE(y,\hat{y})=-[y\cdot\log(\hat{y})+(1-y)\cdot\log(1-\hat{y})]$
+  * 适用于二分类任务
+  * 通常与 sigmoid 一起使用：$sigmoid(x)=\frac{1}{1+e^{-z}}$
+* $CE(y,\hat{y})=-\sum{y\cdot\log(\hat{y})}$
+  * 适用于多分类任务
+  * 通常与 softmax 一起使用：$softmax(x)=\frac{e^{-z_i}}{\sum_{k=1}^{n}{e^{-z_k}}}$
+
+## 7. 为什么交叉熵损失函数有 log 项
 
 通过最大似然估计的方式求得交叉熵公式，这个时候引入 log 项。这是因为似然函数（概率）是乘性的，而 loss 函数是加性的，所以需要引入 log 项 “**转积为和**”，而且也是为了**简化运算**。
 
-## 7. 交叉熵损失函数的设计思想是什么
+## 8. 交叉熵损失函数的设计思想是什么
 
 - 信息论的概念： 交叉熵是基于信息论中的熵和相对熵（KL 散度）的概念。熵用于度量随机事件的不确定性，而相对熵用于衡量两个概率分布之间的差异。在分类任务中，我们希望通过损失函数来最小化预测结果与真实标签之间的差异，从而减少不确定性并增加对正确类别的置信度。
 - 最大似然估计： 交叉熵损失函数可以解释为最大似然估计的一种形式。在分类任务中，我们可以将模型的输出看作是对样本属于各个类别的概率分布的估计，而真实标签则表示样本的真实分布。通过最大化样本真实分布的似然概率，可以得到与真实标签最匹配的模型参数，从而提高分类准确性。
 - 反映预测概率与真实标签之间的差异： 交叉熵损失函数的计算方式可以将模型的预测概率与真实标签之间的差异量化为一个标量值。通过最小化交叉熵损失函数，模型可以进行梯度下降优化，调整参数以使预测概率更接近真实标签。
 
-## 8. IoU 的计算与实现
+## 9. IoU 的计算与实现
 
 $$
 IoU=\frac{|A\cap B|}{|A\cup B|}=\frac{|A\cap B|}{|A|+|B|-|A\cap B|}
@@ -225,3 +248,83 @@ def IoU(A: Bbox, B: Bbox) -> int:
     return C/(S-C)
 ```
 
+## 10. mIoU 的计算与实现
+
+Mean Intersection over Union(MIoU， 均交并比)，为语义分割的标准度量。
+
+计算时在每个类上计算IoU，然后取平均。
+
+## 11. 如何选择 MAE 和 MSE
+
+* 异常值敏感性：
+
+  MSE 对异常值/离群值敏感，若数据中包含噪声或明显的异常值，MAE 会比 MSE 更加合适
+
+* 中位数优化：
+
+  MAE 在优化过程中更倾向于找到中位数，而 MSE 更倾向于找到平均数，对于异常值而言，中位数比平均数更为鲁棒
+
+* 梯度更新：
+
+  MAE 存在梯度始终相同的问题，即使对于很小的损失值，梯度也很大，需要调整学习率；而 MSE 使用固定的学习率也能有效收敛
+
+## 12. 什么是 Focal Loss
+
+Focal Loss 主要用于解决类别不平衡问题，主要思想是对难样本赋予更大的权重，对于易于分类的样本赋予较小的权重。
+$$
+FL(p_t)=-α_t\cdot(1 - p_t)^γ\cdot\log(p_t)
+$$
+其中 $p_t$ 为预测概率，$\alpha_t$ 是平衡因子，$\gamma$ 是调制参数。
+
+<div align=center><img src="focal.png" style="zoom:50%;" /></div>
+
+当 $p_t$ 趋近 1 时，说明他是易分样本，$(1-p_t)^\gamma$ 趋近于 0，对损失贡献较小；
+
+$\alpha_t$ 用于解决类别不平衡问题，用于指定每个类别的权重，对于出现较少的类别，具有较大的权重。例如，在二分类中，前景使用 $\alpha_t$ 时，背景为 $1-\alpha_t$。
+
+## 13. 什么是 InfoNCE Loss
+
+InfoNCE（Normalized Information Neural Estimation）Loss 是一种用于训练自编码器、对比学习和表示学习模型的损失函数。它试图最大化正样本对之间的互信息，并最小化与负样本对之间的互信息。
+
+InfoNCE loss 公式如下：
+$$
+L=-\log\cdot\frac{\exp(q\cdot k_+/\tau)}{\sum_{i=0}^{k}(q\cdot k_i/\tau)}
+$$
+$q,k_+$ 互为正样本对，在交叉熵里，k 表示类别总数，在 InfoNCE 里，k 表示负样本数量。本质是一个 k+1 分类任务，将 q 分类到 $k_+$ 类。
+
+<div align=center><img src="contra.png" style="zoom:60%;" /></div>
+
+温度系数 $\tau$ 类似知识蒸馏里温度系数的作用，$\tau$ 越大，logits 分布越平滑，对比损失将所有负样本一视同仁会，太过关注更困难的负样本；$\tau$ 越小，logits 分布越集中，模型关注与正样本样本相似的难负样本，给予难负样本更大的梯度与正样本分离，但与正样本相似的难样本可能是潜在的正样本，可能导致模型**难收敛或泛化性变差**。
+
+即温度系数决定了对比损失**对困难负样本的关注程度**。
+
+Pytorch 类代码实现如下：
+
+<div align=center><img src="moco.png" style="zoom:50%;" /></div>
+
+## 14. 什么是 KL 散度
+
+KL 散度（Kullback–Leibler divergence，KLD）是**一种统计学度量，表示的是一个概率分布相对于另一个概率分布的差异程度**，在信息论中又称为相对熵（Relative entropy）。
+
+对于随机变量 $\xi$，存在两个概率分布 $P,Q$，当变量为离散或连续时，KL 散度的定义如下：
+$$
+\mathbb{D}\_{KL}(P||Q)=\sum{P(x)\log\frac{P(x)}{Q(x)}}
+$$
+
+$$
+\mathbb{D}\_{KL}(P||Q)=\int P(x)\log\frac{P(x)}{Q(x)} dx
+$$
+
+
+
+其中，$Q(x)$ 为理论概率分布，$P(x)$ 为模型预测概率分布。KL 值越小，表明两个分布越接近。
+
+KL 散度基本性质如下：
+
+* 非负性：$\mathbb{D}\_{KL}\geq0,\mathbb{D}_{KL}=0$ 当且仅当 $P=Q$。
+* 仿射不变性：$y=ax+b$，$\mathbb{D}\_{KL}(x)=\mathbb{D}_{KL}(y)$
+* 非对称性：$\mathbb{D}\_{KL}(P||Q)\neq\mathbb{D}_{KL}(Q||P)$
+
+## 15. 为什么分类用交叉熵不用 MSE
+
+同问题4，分类任务需要通过 sigmoid 或 softmax 将输出映射到 [0,1]，若使用 MSE，则梯度与激活函数的梯度有关，可能导致梯度消失或梯度爆炸，导致训练困难。而交叉熵损失则不会出现这个问题。

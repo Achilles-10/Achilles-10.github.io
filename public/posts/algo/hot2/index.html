@@ -149,7 +149,7 @@ var _hmt = _hmt || [];
     "算法题", "学习笔记"
   ],
   "articleBody": "图论 51. 岛屿数量（中等） DFS\n当面试时不能修改原数组时需要使用标记。\ndef numIslands(self, grid: List[List[str]]) -\u003e int: directions=[(1,0),(0,1),(-1,0),(0,-1)] m,n,ans=len(grid),len(grid[0]),0 vis = set() def dfs(i,j): vis.add((i,j)) for di,dj in directions: ii,jj = i+di,j+dj if 0\u003c=ii\u003cm and 0\u003c=jj\u003cn and grid[ii][jj]=='1' and (ii,jj) not in vis: dfs(ii,jj) for i in range(m): for j in range(n): if grid[i][j]=='1' and (i,j) not in vis: dfs(i,j) ans+=1 return ans 52. 腐烂的橘子（中等） BFS\ndef orangesRotting(self, grid: List[List[int]]) -\u003e int: m,n=len(grid),len(grid[0]) direction=[(1,0),(0,1),(-1,0),(0,-1)] ans,remain,stack=0,0,[] for i in range(m): for j in range(n): if grid[i][j]==2: stack.append((i,j)) elif grid[i][j]==1: remain+=1 while stack and remain: for _ in range(len(stack)): i,j=stack.pop(0) for di,dj in direction: ii,jj=i+di,j+dj if 0\u003c=ii\u003cm and 0\u003c=jj\u003cn and grid[ii][jj]==1: grid[ii][jj]=2 remain-=1 stack.append((ii,jj)) ans+=1 return ans if remain==0 else -1 53. ⭐️ 课程表（中等） DFS\n定义节点三个状态，0：待搜索；1：正在搜索；2：完成搜索。如果在 DFS 过程中遇到了状态为 1 的节点，说明遇到了环，无法完成所有课程的学习。\ndef canFinish(self, numCourses: int, prerequisites: List[List[int]]) -\u003e bool: edges = defaultdict(list) for cour,pre in prerequisites: edges[pre].append(cour) visited = [0]*numCourses valid=True def dfs(u): nonlocal valid visited[u]=1 # 正在搜索 for v in edges[u]: if visited[v]==0: # 当前节点未被搜索 dfs(v) if not valid: return elif visited[v]==1: # 遇到环 valid=False return visited[u]=2 # 完成搜索 for i in range(numCourses): if valid and not visited[i]: dfs(i) return valid BFS\n若一个课程节点的入度为 0，则表示该课程没有先修课程或先修课程已经学完，可以学习当前课程，去掉该节点的所有出边，则表示它的相邻节点少了一门先修课程。维护一个队列，不断地将入度为 0 的课程节点加入，直到答案中包含所有的节点（得到了一种拓扑排序）或者不存在没有入边的节点（图中包含环）。\ndef canFinish(self, numCourses: int, prerequisites: List[List[int]]) -\u003e bool: edges = defaultdict(list) indeg = [0]*numCourses for cour,pre in prerequisites: edges[pre].append(cour) indeg[cour]+=1 # 入度 q = collections.deque([u for u in range(numCourses) if indeg[u]==0]) # 将入度为 0 的节点加入队列 visited=0 # 遍历的节点数 while q: u=q.popleft() visited+=1 for v in edges[u]: indeg[v]-=1 if indeg[v]==0: # 入度为 0，加入队列 q.append(v) return visited==numCourses 54. 实现 Trie (前缀树)（中等） 设计\n将 Trie 视作一个节点\nclass Trie: def __init__(self): self.child = [None]*26 self.isEnd = False def insert(self, word: str) -\u003e None: node = self for c in word: idx = ord(c)-ord('a') if not node.child[idx]: node.child[idx]=Trie() node=node.child[idx] node.isEnd=True def searchPrefix(self, word): node=self for c in word: idx = ord(c)-ord('a') if not node.child[idx]: return None node = node.child[idx] return node def search(self, word: str) -\u003e bool: node = self.searchPrefix(word) return node is not None and node.isEnd def startsWith(self, prefix: str) -\u003e bool: node = self.searchPrefix(prefix) return node is not None 回溯 55. 全排列（中等） 回溯\n回溯到 idx 处时，依次将后面未排列的数交换到 idx 处。\ndef permute(self, nums: List[int]) -\u003e List[List[int]]: ans=[] n=len(nums) def backtracking(idx): if idx==n: ans.append(nums[:]) for i in range(idx,n): nums[idx],nums[i]=nums[i],nums[idx] backtracking(idx+1) nums[idx],nums[i]=nums[i],nums[idx] backtracking(0) return ans 56. 子集（中等） 回溯\ndef subsets(self, nums: List[int]) -\u003e List[List[int]]: ans = [] def dfs(path,idx): if idx==len(nums): ans.append(path[:]) return dfs(path+[nums[idx]],idx+1) dfs(path,idx+1) dfs([],0) return ans 57. 电话号码的字母组合（中等） 回溯\ndef letterCombinations(self, digits: str) -\u003e List[str]: maps = {'2':'abc','3':'def','4':'ghi','5':'jkl','6':'mno','7':'pqrs','8':'tuv','9':'wxyz'} if not digits: return [] ans,n=[],len(digits) def dfs(idx,path): if idx==n: ans.append(''.join(path)) return for c in maps[digits[idx]]: path.append(c) dfs(idx+1,path) path.pop() dfs(0,[]) return ans 58. 组合总和（中等） 回溯+剪枝\ndef combinationSum(self, candidates: List[int], target: int) -\u003e List[List[int]]: candidates.sort(reverse=True) ans,n=[],len(candidates) def backtracking(idx,path,s): if s==target: ans.append(path[:]) return if s\u003etarget: return for i in range(idx,n): path.append(candidates[i]) backtracking(i,path,s+candidates[i]) path.pop() backtracking(0,[],0) return ans 59. 括号生成（中等） 回溯\n定义回溯函数 backtracking(path,left,right)，其中 left 和 right 表示还能添加的左括号和右括号的数量。每次添加左括号时，left=left-1, right=right+1；添加右括号时，right=right-1。\ndef generateParenthesis(self, n: int) -\u003e List[str]: ans = [] def backtracking(path,left,right): if len(path)==2*n: ans.append(''.join(path)) return if left\u003e0: path.append('(') backtracking(i+1,path,left-1,right+1) path.pop() if right\u003e0: path.append(')') backtracking(i+1,path,left,right-1) path.pop() backtracking([],n,0) return ans 60. ⭐️ 单词搜索（中等） 回溯\n设置标志，注意返回条件\ndef exist(self, board: List[List[str]], word: str) -\u003e bool: directions = [(1,0),(0,1),(-1,0),(0,-1)] m,n = len(board),len(board[0]) length = len(word) seen = set() def dfs(i,j,cnt): if board[i][j]!=word[cnt]: return False if cnt==length-1: return True flag=False seen.add((i,j)) for di,dj in directions: ii,jj=i+di,j+dj if (ii,jj) not in seen and 0\u003c=ii\u003cm and 0\u003c=jj\u003cn: if dfs(ii,jj,cnt+1): flag = True break seen.remove((i,j)) return flag for i in range(m): for j in range(n): if dfs(i,j,0): return True return False 61. 分割回文串（中等） 回溯\ndef partition(self, s: str) -\u003e List[List[str]]: def check(i,j): while i\u003cj: if s[i]!=s[j]: return False i+=1 j-=1 return True n=len(s) ans=[] def dfs(idx,path): if idx==n: ans.append(path[:]) return for j in range(idx,n): if check(idx,j): path.append(s[idx:j+1]) dfs(j+1,path) path.pop() dfs(0,[]) return ans 62. ⭐️ N 皇后（困难） 回溯\n按行生成合法的棋盘\ndef solveNQueens(self, n: int) -\u003e List[List[str]]: ans=[] grid = [['.' for _ in range(n)]for _ in range(n)] def check(i,j,grid): for ii in range(n): for jj in range(n): if grid[ii][jj]=='Q' and (ii==i or jj==j or ii+jj==i+j or ii-jj==i-j): return False return True def backtracking(i): if i==n: ans.append([''.join(tmp) for tmp in grid]) return for j in range(n): if check(i,j,grid): grid[i][j]='Q' backtracking(i+1) grid[i][j]='.' backtracking(0) return ans 二分查找 63. 搜索插入位置（简单） 二分查找\ndef searchInsert(self, nums: List[int], target: int) -\u003e int: n=len(nums) i,j=0,n-1 while i\u003c=j: mid=i+(j-i)//2 if target==nums[mid]: return mid elif target\u003enums[mid]: i=mid+1 else: j=mid-1 return i extra. 二分查找（简单） 二分查找\ndef search(self, nums: List[int], target: int) -\u003e int: n=len(nums) left,right=0,n-1 while left\u003c=right: mid = left+(right-left)//2 if nums[mid]==target: return mid elif nums[mid]\u003etarget: right=mid-1 else: left=mid+1 return -1 64. 搜索二维矩阵（中等） 二分查找\n从右上角出发\ndef searchMatrix(self, matrix: List[List[int]], target: int) -\u003e bool: m,n=len(matrix),len(matrix[0]) i,j=0,n-1 while i\u003cm and 0\u003c=j: if target==matrix[i][j]: return True elif target\u003ematrix[i][j]: i+=1 else: j-=1 return False 65. ⭐️ 在排序数组中查找元素的第一个和最后一个位置（中等） 二分查找\n设置一个 lower 标志，控制二分查找是查找第一个大于等于 target 值还是第一个大于 target 值的下标。\ndef searchRange(self, nums: List[int], target: int) -\u003e List[int]: def bisearch(nums,target,lower): left,right,ans=0,len(nums)-1,len(nums) while left\u003c=right: mid = left+(right-left)//2 # 若 lower = True，即使 mid=target，也继续向左搜索。否则，向右搜索第一个大于 target 的下标 if nums[mid]\u003etarget or (lower and nums[mid]\u003e=target): right=mid-1 ans=mid else: left=mid+1 return ans n=len(nums) l = bisearch(nums,target,True) if l\u003e=n or nums[l]!=target: return [-1,-1] # 判断 target 在数组中是否存在 r = bisearch(nums,target,False) return [l,r-1] 66. ⭐️ 搜索旋转排序数组（中等） 二分查找\n判断 mid 左右是否有序。 $$ \\begin{cases} left\\leq mid: 左侧有序 \\begin{cases} left\\leq tar",
-  "wordCount" : "6909",
+  "wordCount" : "7146",
   "inLanguage": "en",
   "image":"https://Achilles-10.github.io/posts/algo/hot2/cover.png","datePublished": "2023-08-21T16:27:41+08:00",
   "dateModified": "2023-08-21T16:27:41+08:00",
@@ -307,13 +307,13 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>6909字
+        <span>7146字
             &nbsp;&nbsp;
         </span>
     </span>
     <span id="post_meta_style_4">
         <span class="fa fa-clock-o"></span>
-        <span>14分钟
+        <span>15分钟
             &nbsp;&nbsp;
         </span>
     </span>
@@ -466,7 +466,9 @@ var _hmt = _hmt || [];
                 <li>
                     <a href="#75-%e5%89%8d-k-%e4%b8%aa%e9%ab%98%e9%a2%91%e5%85%83%e7%b4%a0%e4%b8%ad%e7%ad%89httpsleetcodecnproblemstop-k-frequent-elements" aria-label="75. 前 K 个高频元素（中等）">75. <a href="https://leetcode.cn/problems/top-k-frequent-elements/">前 K 个高频元素（中等）</a></a></li>
                 <li>
-                    <a href="#76-%e6%95%b0%e6%8d%ae%e6%b5%81%e7%9a%84%e4%b8%ad%e4%bd%8d%e6%95%b0%e5%9b%b0%e9%9a%behttpsleetcodecnproblemsfind-median-from-data-stream" aria-label="76. 数据流的中位数（困难）">76. <a href="https://leetcode.cn/problems/find-median-from-data-stream/">数据流的中位数（困难）</a></a></li></ul>
+                    <a href="#76-%e6%95%b0%e6%8d%ae%e6%b5%81%e7%9a%84%e4%b8%ad%e4%bd%8d%e6%95%b0%e5%9b%b0%e9%9a%behttpsleetcodecnproblemsfind-median-from-data-stream" aria-label="76. 数据流的中位数（困难）">76. <a href="https://leetcode.cn/problems/find-median-from-data-stream/">数据流的中位数（困难）</a></a></li>
+                <li>
+                    <a href="#extra--%e6%bb%91%e5%8a%a8%e7%aa%97%e5%8f%a3%e4%b8%ad%e4%bd%8d%e6%95%b0%e5%9b%b0%e9%9a%behttpsleetcodecnproblemssliding-window-median" aria-label="extra. ⭐️ 滑动窗口中位数（困难）">extra. ⭐️ <a href="https://leetcode.cn/problems/sliding-window-median/">滑动窗口中位数（困难）</a></a></li></ul>
                 </li>
                 <li>
                     <a href="#%e8%b4%aa%e5%bf%83%e7%ae%97%e6%b3%95" aria-label="贪心算法">贪心算法</a><ul>
@@ -1359,6 +1361,57 @@ $$</p>
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>: <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>self<span style="color:#f92672">.</span>left[<span style="color:#ae81ff">0</span>]
 </span></span></code></pre></div></li>
 </ul>
+<h3 id="extra--滑动窗口中位数困难httpsleetcodecnproblemssliding-window-median">extra. ⭐️ <a href="https://leetcode.cn/problems/sliding-window-median/">滑动窗口中位数（困难）</a><a hidden class="anchor" aria-hidden="true" href="#extra--滑动窗口中位数困难httpsleetcodecnproblemssliding-window-median">#</a></h3>
+<div align=center><img src="e76.png" style="zoom:50%;" /></div>
+<ul>
+<li>
+<p>双堆+延迟删除</p>
+<p>此题为<code>数据流中的中位数</code>的进阶版，使用两个堆来维护窗口内的元素，中位数只与堆顶元素有关。关键在于延迟删除，使用一个计数器来记录需要删除的元素，当堆顶元素的计数大于 1 时，表示该元素需要删除。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> heapq
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> Counter
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Solution</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">medianSlidingWindow</span>(self, nums: List[int], k: int) <span style="color:#f92672">-&gt;</span> List[float]:
+</span></span><span style="display:flex;"><span>        n,small,big<span style="color:#f92672">=</span>len(nums),[],[]
+</span></span><span style="display:flex;"><span>        delay<span style="color:#f92672">=</span>Counter()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_mid</span>():
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> k<span style="color:#f92672">%</span><span style="color:#ae81ff">2</span><span style="color:#f92672">==</span><span style="color:#ae81ff">1</span>: <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>small[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (<span style="color:#f92672">-</span>small[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">+</span>big[<span style="color:#ae81ff">0</span>])<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(k):
+</span></span><span style="display:flex;"><span>            heapq<span style="color:#f92672">.</span>heappush(small,<span style="color:#f92672">-</span>nums[i])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(k<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>            heapq<span style="color:#f92672">.</span>heappush(big,<span style="color:#f92672">-</span>heapq<span style="color:#f92672">.</span>heappop(small))
+</span></span><span style="display:flex;"><span>        ans <span style="color:#f92672">=</span> [get_mid()]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(k,n):
+</span></span><span style="display:flex;"><span>            l,balance <span style="color:#f92672">=</span> nums[i<span style="color:#f92672">-</span>k],<span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>            delay[l]<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> small <span style="color:#f92672">and</span> l<span style="color:#f92672">&lt;=-</span>small[<span style="color:#ae81ff">0</span>]: balance<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>: balance<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> small <span style="color:#f92672">and</span> nums[i]<span style="color:#f92672">&lt;=-</span>small[<span style="color:#ae81ff">0</span>]: <span style="color:#75715e"># 窗口外元素在小部分</span>
+</span></span><span style="display:flex;"><span>                heapq<span style="color:#f92672">.</span>heappush(small,<span style="color:#f92672">-</span>nums[i])
+</span></span><span style="display:flex;"><span>                balance<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>: <span style="color:#75715e"># 窗口外元素在大部分</span>
+</span></span><span style="display:flex;"><span>                heapq<span style="color:#f92672">.</span>heappush(big,nums[i])
+</span></span><span style="display:flex;"><span>                balance<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 平衡大小堆数量</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> balance<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                heapq<span style="color:#f92672">.</span>heappush(big,<span style="color:#f92672">-</span>heapq<span style="color:#f92672">.</span>heappop(small))
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> balance<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                heapq<span style="color:#f92672">.</span>heappush(small,<span style="color:#f92672">-</span>heapq<span style="color:#f92672">.</span>heappop(big))
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 延迟删除</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> small <span style="color:#f92672">and</span> delay[<span style="color:#f92672">-</span>small[<span style="color:#ae81ff">0</span>]]<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                delay[<span style="color:#f92672">-</span>small[<span style="color:#ae81ff">0</span>]]<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> delay[<span style="color:#f92672">-</span>small[<span style="color:#ae81ff">0</span>]]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                    delay<span style="color:#f92672">.</span>pop(<span style="color:#f92672">-</span>small[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>                heapq<span style="color:#f92672">.</span>heappop(small)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> big <span style="color:#f92672">and</span> delay[big[<span style="color:#ae81ff">0</span>]]<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                delay[big[<span style="color:#ae81ff">0</span>]]<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> delay[big[<span style="color:#ae81ff">0</span>]]<span style="color:#f92672">==</span><span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                    delay<span style="color:#f92672">.</span>pop(big[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>                heapq<span style="color:#f92672">.</span>heappop(big)
+</span></span><span style="display:flex;"><span>            ans<span style="color:#f92672">.</span>append(get_mid())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> ans
+</span></span></code></pre></div></li>
+</ul>
 <h2 id="贪心算法">贪心算法<a hidden class="anchor" aria-hidden="true" href="#贪心算法">#</a></h2>
 <h3 id="77-买卖股票的最佳时机简单httpsleetcodecnproblemsbest-time-to-buy-and-sell-stock">77. <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/">买卖股票的最佳时机（简单）</a><a hidden class="anchor" aria-hidden="true" href="#77-买卖股票的最佳时机简单httpsleetcodecnproblemsbest-time-to-buy-and-sell-stock">#</a></h3>
 <div align=center><img src="77.png" style="zoom:50%;" /></div>
@@ -1968,10 +2021,10 @@ $$</p>
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="next" href="https://Achilles-10.github.io/posts/tech/rectangle/">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/loss/">
     <span class="title">下一页 »</span>
     <br>
-    <span>判断点是否在矩形内？复习向量点乘与叉乘</span>
+    <span>深度学习面试题：损失函数</span>
   </a>
 </nav>
 

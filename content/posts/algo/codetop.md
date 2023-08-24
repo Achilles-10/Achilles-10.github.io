@@ -1076,4 +1076,56 @@ cover:
           return cur
   ```
 
+
+### 130. ⭐️ [递增子序列（中等）](https://leetcode.cn/problems/non-decreasing-subsequences/)
+
+<div align=center><img src="e130.png" style="zoom:50%;" /></div> 
+
+* 二进制去重+回溯
+
+  在每层回溯时，使用一个数组判断当前的元素是否加入了序列。
+
+  ```python
+  def findSubsequences(self, nums: List[int]) -> List[List[int]]:
+      ans,n=[],len(nums)
+      def dfs(idx,path):
+          if len(path)>=2: ans.append(path[:])
+          if idx==n: return
+          usage_list = [False]*201
+          for i in range(idx,n):
+              if path and nums[i]<path[-1] or usage_list[nums[i]+100]==True:
+                  continue
+              usage_list[nums[i]+100]=True
+              path.append(nums[i])
+              dfs(i+1,path)
+              path.pop()
+      dfs(0,[])
+      return ans
+  ```
+
+### 131. [最低票价（中等）](https://leetcode.cn/problems/minimum-cost-for-tickets/)
+
+<div align=center><img src="e131.png" style="zoom:50%;" /></div> 
+
+* 动态规划
+
+  dp[i] 表示 到 i 天的最低票价；当 i 天要出行时，dp[i]=min(dp[i-1]+cost[0],dp[i-7]+cost[1],dp[i-30]+cost[2])
+
+  ```python
+  def mincostTickets(self, days: List[int], costs: List[int]) -> int:
+      n=len(days)
+      dp=[0 for _ in range(days[-1]+1)]
+      for i in range(1,len(dp)):
+          if i in days:
+              if i<7:
+                  dp[i]=min(dp[i-1]+costs[0],costs[1],costs[2])
+              elif i<30:
+                  dp[i]=min(dp[i-1]+costs[0],dp[i-7]+costs[1],costs[2])
+              else:
+                  dp[i]=min(dp[i-1]+costs[0],dp[i-7]+costs[1],dp[i-30]+costs[2])
+          else:
+              dp[i]=dp[i-1]
+      return dp[-1]
+  ```
+
   

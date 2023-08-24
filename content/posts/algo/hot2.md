@@ -886,6 +886,60 @@ cover:
           else: return -self.left[0]
   ```
 
+### extra. ⭐️ [滑动窗口中位数（困难）](https://leetcode.cn/problems/sliding-window-median/)
+
+<div align=center><img src="e76.png" style="zoom:50%;" /></div>
+
+* 双堆+延迟删除
+
+  此题为`数据流中的中位数`的进阶版，使用两个堆来维护窗口内的元素，中位数只与堆顶元素有关。关键在于延迟删除，使用一个计数器来记录需要删除的元素，当堆顶元素的计数大于 1 时，表示该元素需要删除。
+
+  ```python
+  import heapq
+  from collections import Counter
+  class Solution:
+      def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
+          n,small,big=len(nums),[],[]
+          delay=Counter()
+          def get_mid():
+              if k%2==1: return -small[0]
+              return (-small[0]+big[0])/2
+          for i in range(k):
+              heapq.heappush(small,-nums[i])
+          for i in range(k//2):
+              heapq.heappush(big,-heapq.heappop(small))
+          ans = [get_mid()]
+          for i in range(k,n):
+              l,balance = nums[i-k],0
+              delay[l]+=1
+              if small and l<=-small[0]: balance-=1
+              else: balance+=1
+              if small and nums[i]<=-small[0]: # 窗口外元素在小部分
+                  heapq.heappush(small,-nums[i])
+                  balance+=1
+              else: # 窗口外元素在大部分
+                  heapq.heappush(big,nums[i])
+                  balance-=1
+              # 平衡大小堆数量
+              if balance>0:
+                  heapq.heappush(big,-heapq.heappop(small))
+              if balance<0:
+                  heapq.heappush(small,-heapq.heappop(big))
+              # 延迟删除
+              while small and delay[-small[0]]>0:
+                  delay[-small[0]]-=1
+                  if delay[-small[0]]==0:
+                      delay.pop(-small[0])
+                  heapq.heappop(small)
+              while big and delay[big[0]]>0:
+                  delay[big[0]]-=1
+                  if delay[big[0]]==0:
+                      delay.pop(big[0])
+                  heapq.heappop(big)
+              ans.append(get_mid())
+          return ans
+  ```
+
 ## 贪心算法
 
 ### 77. [买卖股票的最佳时机（简单）](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/)
