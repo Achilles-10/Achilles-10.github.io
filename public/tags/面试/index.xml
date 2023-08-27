@@ -6,7 +6,16 @@
     <description>Recent content in 面试 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 17 Aug 2023 16:48:58 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Aug 2023 15:07:49 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/tags/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深度学习面试题：正则化</title>
+      <link>https://Achilles-10.github.io/posts/tech/regular/</link>
+      <pubDate>Sun, 27 Aug 2023 15:07:49 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/tech/regular/</guid>
+      <description>深度学习算法岗正则化相关常见面试题</description>
+    </item>
+    
     <item>
       <title>深度学习面试题：损失函数</title>
       <link>https://Achilles-10.github.io/posts/tech/loss/</link>

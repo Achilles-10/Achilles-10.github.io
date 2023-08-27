@@ -1128,4 +1128,57 @@ cover:
       return dp[-1]
   ```
 
+
+### 132. [丢失的数字（简单）](https://leetcode.cn/problems/missing-number/)
+
+<div align=center><img src="e132.png" style="zoom:50%;" /></div> 
+
+* 排序
+
+* 哈希
+
+* 位运算（异或）
+
+  在这个数组里再添加 0~n 的每个整数，则缺失的数只出现了一次，其他数均出现了两次，进行异或操作则可以得到缺失的数。
+
+  ```python
+  def missingNumber(self, nums: List[int]) -> int:
+      xor=0
+      for i,num in enumerate(nums):
+          xor ^= i^num
+      return xor^len(nums)
+  ```
+
+* 数学（求和）
+
+  求出 0~n 的和减去数组的和，即是缺失的数。
+
+  ```python
+  def missingNumber(self, nums: List[int]) -> int:
+      n=len(nums)
+      return n*(n+1)//2-sum(nums)
+  ```
+
+### 133. [最大数（中等）](https://leetcode.cn/problems/largest-number/)
+
+<div align=center><img src="e133.png" style="zoom:50%;" /></div> 
+
+* 排序
+
+  使用 `functools.cmp_to_key` 自定义排序函数。
+
+  `cmp_to_key(a,b)` 返回负数表示a < b，返回0表示a == b，返回正数表示a > b。
+
+  ```python
+  from functools import cmp_to_key
+  def largestNumber(self, nums: List[int]) -> str:
+      def comp(s1,s2):
+          if s1 + s2 < s2 + s1: return 1
+          elif s1 + s2 > s2 + s1: return -1
+          else: return 0
+      str_arr = list(map(str,nums))
+      str_arr.sort(key=cmp_to_key(comp))
+      return ''.join(str_arr).lstrip('0') or '0'
+  ```
+
   

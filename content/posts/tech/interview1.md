@@ -239,7 +239,7 @@ cover:
 
   <div align=center><img src="13.png" style="zoom:20%;" /></div>
 
-* ResNet
+* **ResNet**
 
   ResNet 的提出基于这样一种现象：随着网络层数加深，训练误差和测试误差都会上升，这种现象称为**网络退化**（degeneration）。ResNet 使用**跳层连接**（shortcut connection）来解决这个问题，跳层连接有以下两点好处：
 
