@@ -224,7 +224,7 @@ class Transformer(nn.Module):
 
   点积结果需要除以一个数防止 softmax 结果过大使得梯度趋于 0。假设 Q 和 K 每一维都满足 0 均值 1 方差的分布，那么 Q*K 的方差为 n，除以 $\sqrt{n}$ 使结果满足方差为 1 的分布，达到归一化的效果。$aX\sim(0,a^2),X\sim(0,1)$
 
-  <div align=center><img src="qkv.png" style="zoom:40%"/></div>
+  <div align=center><img src="qkv.png" style="zoom:60%"/></div>
   
 * 自注意力计算复杂度为 $O(n^2)$，怎么优化？
 
@@ -250,4 +250,22 @@ class Transformer(nn.Module):
 
   除了将 cls token 用于最后 MLP 分类的输入，还可以对输出特征进行池化或直接将所有特征输出 MLP 分类层。
 
-  
+* 为何使用多头注意力机制而非一个头？
+
+  多头注意力机制可以在多个子空间中独立地学习不同的注意力权重，进一步增强网络的容量和表达能力，从而更好地捕捉序列中的信息。
+
+* 计算自注意力为何不能使用同一个值进行自身的点乘？
+
+  向量的点乘表示两个向量的相似度，用不同的 Q 和 K 进行点乘才能计算每个 token 对其他 token 的相似度分数。
+
+* 为什么 Q 和 K 使用不同的权重矩阵生成
+
+  使用 Q/K/V 不相同可以保证在不同空间进行投影，增强了表达能力，提高了泛化能力。
+
+* PreNorm 和 PostNorm 区别
+
+  <div align=center><img src="prepost.png" style="zoom:30%"/></div>
+
+  PreNorm 的残差结构相当于增加了模型的宽度而降低了模型的深度，可以防止模型的梯度爆炸或者梯度消失，更好训练。
+
+  PostNorm 在在残差之后做归一化，对参数正则化的效果更强，进而模型的鲁棒性也会更好，但在较深的网络中难以控制梯度。

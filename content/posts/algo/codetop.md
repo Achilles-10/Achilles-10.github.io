@@ -1181,4 +1181,96 @@ cover:
       return ''.join(str_arr).lstrip('0') or '0'
   ```
 
+
+### 134. ⭐️ [从链表中删去总和值为零的连续节点（中等）](https://leetcode.cn/problems/remove-zero-sum-consecutive-nodes-from-linked-list/)
+
+<div align=center><img src="e134.png" style="zoom:50%;" /></div> 
+
+* 前缀和+哈希表
+
+  两次遍历，第一次遍历，以前缀和为 key，节点为 value，若相同前缀和存在，则说明出现了和为零的连续节点，直接覆盖即可。
+
+  第二次遍历，记录前缀和 s，哈希表中对应 s 的节点为最后一次出现相同前缀和的节点，跳过中间部分连接即可。
+
+  ```python
+  def removeZeroSumSublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
+      pre_sum,s = {},0
+      p = dummy = ListNode(next=head)
+      while p:
+          s+=p.val
+          pre_sum[s]=p # 若 s 相同，覆盖更新
+          p=p.next
+      s,p = 0,dummy
+      while p:
+          s+=p.val
+          p.next = pre_sum[s].next # 跳过中间部分连接
+          p=p.next
+      return dummy.next
+  ```
+
+### 135. [直线上最多的点数（困难）](https://leetcode.cn/problems/max-points-on-a-line/)
+
+<div align=center><img src="e135.png" style="zoom:50%;" /></div> 
+
+* 哈希表
+
+  通过一个点和斜率即可确定一条直线，遍历每个点与其余点
+
+  ```python
+  def maxPoints(self, points: List[List[int]]) -> int:
+      def get_k(x1,y1,x2,y2):
+          if x1==x2: return '-'
+          return (y2-y1)/(x2-x1)
+      n,ans=len(points),0
+      if n==1: return 1
+      for i in range(n):
+          ks=defaultdict(int)
+          for j in range(n):
+              if i==j: continue
+              ks[get_k(points[i][0],points[i][1],points[j][0],points[j][1])]+=1
+          ans = max(ans,max(ks.values())+1)
+      return ans
+  ```
+
+
+### 136. [盛最多水的容器（中等）](https://leetcode.cn/problems/container-with-most-water/)
+
+<div align=center><img src="e136.png" style="zoom:50%;" /></div> 
+
+* 双指针+贪心
+
+  从左右两端开始计算，每次移动高度较小的端点，因为这样才有提升的空间
+
+  ```python
+  def maxArea(self, height: List[int]) -> int:
+      n=len(height)
+      left,right=0,n-1
+      ans=0
+      while left<right:
+          ans=max(ans,(right-left)*min(height[left],height[right]))
+          if height[left]<=height[right]: left+=1
+          else: right-=1
+      return ans
+  ```
+
+### 137. [从中序与后序遍历序列构造二叉树（中等）](https://leetcode.cn/problems/construct-binary-tree-from-inorder-and-postorder-traversal/)
+
+<div align=center><img src="e137.png" style="zoom:50%;" /></div> 
+
+* 递归
+
+  后序遍历的末尾元素为根节点，找到根节点在中序遍历中的下标 idx，根据下标 idx 划分成左右子树，递归构造。
+
+  ```python
+  def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+      if not postorder:
+          return None
+      root_val = postorder[-1]
+      root = TreeNode(val=root_val)
+      index = inorder.index(root_val)
+      root.left = self.buildTree(inorder[:index],postorder[:index])
+      root.right = self.buildTree(inorder[index+1:],postorder[index:-1])
+      return root
+  ```
+
   
