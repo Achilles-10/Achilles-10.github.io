@@ -224,7 +224,7 @@ class Transformer(nn.Module):
 
   点积结果需要除以一个数防止 softmax 结果过大使得梯度趋于 0。假设 Q 和 K 每一维都满足 0 均值 1 方差的分布，那么 Q*K 的方差为 n，除以 $\sqrt{n}$ 使结果满足方差为 1 的分布，达到归一化的效果。$aX\sim(0,a^2),X\sim(0,1)$
 
-  <div align=center><img src="qkv.png" style="zoom:60%"/></div>
+  <div align=center><img src="qkv.png" style="zoom:70%"/></div>
   
 * 自注意力计算复杂度为 $O(n^2)$，怎么优化？
 

@@ -1273,4 +1273,424 @@ cover:
       return root
   ```
 
+
+### 138. [二叉树的所有路径（简单）](https://leetcode.cn/problems/binary-tree-paths/)
+
+<div align=center><img src="e138.png" style="zoom:50%;" /></div> 
+
+* 递归
+
+  ```python
+  def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+      ans=[]
+      def dfs(node,path):
+          if not node: return
+          path.append(str(node.val))
+          if not node.left and not node.right:
+              ans.append('->'.join(path))
+          else:
+              dfs(node.left,path)
+              dfs(node.right,path)
+          path.pop()
+      dfs(root,[])
+      return ans
+  ```
+
+### 139. ⭐️ [二叉树的完全性检验（中等）](https://leetcode.cn/problems/check-completeness-of-a-binary-tree/)
+
+<div align=center><img src="e139.png" style="zoom:50%;" /></div> 
+
+* BFS
+
+  给树节点编号，若某节点编号为 i，则其左子节点为 2\*i，右子节点为 2\*i+1，令根节点编号为 1。
+
+  于是问题被转换为树的最后一个节点编号是否等于树的节点数。
+
+  ```python
+  def isCompleteTree(self, root: Optional[TreeNode]) -> bool:
+      q = [(root,1)]
+      i = 0
+      while i<len(q):
+          node,v = q[i]
+          if node:
+              q.append((node.left,2*v))
+              q.append((node.right,2*v+1))
+          i+=1
+      return q[-1][1]==len(q)
+  ```
+
+* 判断是否出现过空节点
+
+  用一个标志符判断是否遇到空节点，若遇到非空节点前遇到过空节点，则返回 False
+
+  ```python
+  def isCompleteTree(self, root: Optional[TreeNode]) -> bool:
+      q = deque([root])
+      none_flag = False
+      while q:
+          curr = q.popleft()
+          if curr==None: none_flag=True
+          else:
+              if none_flag: return False
+              q.append(curr.left)
+              q.append(curr.right)
+      return True
+  ```
+
+### 140. ⭐️ [插入区间（中等）](https://leetcode.cn/problems/insert-interval/)
+
+<div align=center><img src="e140.png" style="zoom:50%;" /></div> 
+
+* 区间合并
+
+  遍历区间，若无交集且区间在待插入区间左侧，则直接将当前区间加入到答案中；若无交集且在待插入区间右侧，则先将插入区间插入再将当前区间加入到答案中；若出现交集，则更新待插入区间为两个区间的并集。
+
+  ```python
+  def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+      ans,placed = [],False
+      left,right=newInterval
+      for li,ri in intervals:
+          if ri<left: # 当前区间在插入区间左侧无交集
+              ans.append([li,ri])
+          elif li>right: # 当前区间在插入区间右侧无交集
+              if not placed: # 插入区间还未插入
+                  ans.append([left,right])
+                  placed=True
+              ans.append([li,ri])
+          else: # 出现交集，计算并集
+              left = min(left,li)
+              right= max(right,ri)
+      if not placed: # 插入区间在最后
+          ans.append([left,right])
+      return ans
+  ```
+
+
+### 141. ⭐️ [克隆图（中等）](https://leetcode.cn/problems/clone-graph/)
+
+<div align=center><img src="e141.png" style="zoom:50%;" /></div> 
+
+* DFS
+
+  1. 使用一个哈希表存储所有已被访问和克隆的节点。哈希表中的 `key` 是原始图中的节点，`value` 是克隆图中的对应节点；
+  2. 从给定节点开始遍历图。如果某个节点已经被访问过，则返回其克隆图中的对应节点；
+  3. 如果当前访问的节点不在哈希表中，则创建它的克隆节点并存储在哈希表中。进入递归前，必须先创建克隆节点并保存在哈希表中；
+  4. 递归调用每个节点的邻接点。每个节点递归调用的次数等于邻接点的数量，每一次调用返回其对应邻接点的克隆节点。
+
+
+  ```python
+  class Solution:
+      def __init__(self):
+          self.vis = {}
+      def cloneGraph(self, node: 'Node') -> 'Node':
+          if not node:
+              return node
+          if node in self.vis:
+              return self.vis[node]
+          clone_node = Node(node.val,[])
+          self.vis[node] = clone_node
+          if node.neighbors:
+              clone_node.neighbors = [self.cloneGraph(n) for n in node.neighbors]
+          return clone_node
+  ```
+
+* BFS
+
+  用一个哈希表存储，若搜索到的节点不在表中，则新建一个节点，否则直接用其在表中的值。
+
+  ```python
+  def cloneGraph(self, node: 'Node') -> 'Node':
+      if not node:
+          return node
+      vis = {}
+      queue = deque([node])
+      vis[node] = Node(node.val,[])
+      while queue:
+          n = queue.popleft()
+          for u in n.neighbors:
+              if u not in vis:
+                  vis[u] = Node(u.val,[])
+                  queue.append(u)
+              vis[n].neighbors.append(vis[u])
+      return vis[node]
+  ```
+
+### 142. ⭐️ [砖墙（中等）](https://leetcode.cn/problems/brick-wall/)
+
+<div align=center><img src="e142.png" style="zoom:50%;" /></div> 
+
+* 前缀和+哈希表
+
+  统计各个间隔出现的次数，答案为砖墙的层数减去间隔出现最多的次数。
+
+  <div align=center><img src="e1421.png" style="zoom:50%;" /></div> 
+
+  ```python
+  def leastBricks(self, wall: List[List[int]]) -> int:
+      n=len(wall)
+      interval = defaultdict(int)
+      for i in range(n):
+          s=0
+          for j in range(len(wall[i])-1):
+              s+=wall[i][j]
+              interval[s]+=1
+      return n-max(interval.values(),default=0)
+  ```
+
+
+### 143. ⭐️ [非递减数列（中等）](https://leetcode.cn/problems/non-decreasing-array/)
+
+<div align=center><img src="e143.png" style="zoom:50%;" /></div> 
+
+* 数组
+
+  考虑以下几个样例：
+
+  1. [4,2,5]，由于 4 前面没有数字，将 4 调整为 2
+  2. [1,4,2,5]，4 前面有数字，且小于 2，调整 4 为 2
+  3. [3,4,2,5]，4 前面有数字，大于 2，调整 2 为 4
+
+  在判断递减的对数是否大于 1
+
+  ```python
+  def checkPossibility(self, nums):
+      n = len(nums)
+      count = 0
+      for i in range(1, n):
+          if nums[i] < nums[i - 1]:
+              count += 1
+              if i==1 or nums[i]>=nums[i-2]:
+                  nums[i-1]=nums[i]
+              else:
+                  nums[i]=nums[i-1]
+      return count<=1
+  ```
+
+
+### 144. ⭐️ [交错字符串（中等）](https://leetcode.cn/problems/interleaving-string/)
+
+<div align=center><img src="e144.png" style="zoom:50%;" /></div> 
+
+* 动态规划
+
+  dp\[i]\[j] 表示 s1 前 i 个元素和 s2 前 j 个元素能否交错组成 s3 前 i+j 个元素。
+
+  ```python
+  def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+      m,n=len(s1),len(s2)
+      if m+n!=len(s3):
+          return False
+      dp = [[False for _ in range(n+1)] for _ in range(m+1)]
+      dp[0][0]=True
+      for i in range(m+1):
+          for j in range(n+1):
+              if i>0 and s1[i-1]==s3[i+j-1]:
+                  dp[i][j] |= dp[i-1][j]
+              if j>0 and s2[j-1]==s3[i+j-1]:
+                  dp[i][j] |= dp[i][j-1]
+      return dp[-1][-1]
+  ```
+
+  滚动数组优化
+
+  ```python
+  def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+      m,n=len(s1),len(s2)
+      if m+n!=len(s3):
+          return False
+      dp = [False for _ in range(n+1)]
+      dp[0] = True
+      for i in range(m+1):
+          for j in range(n+1):
+              if i>0:
+                  dp[j] &= (s1[i-1]==s3[i+j-1])
+              if j>0:
+                  dp[j] |= (dp[j-1] and s2[j-1]==s3[i+j-1])
+      return dp[-1]
+  ```
+
+
+### 145. ⭐️ [下一个更大元素 I（简单）](https://leetcode.cn/problems/next-greater-element-i/)
+
+<div align=center><img src="e145.png" style="zoom:90%;" /></div> 
+
+* 单调栈+哈希
+
+  倒序遍历 nums2，用单调栈维护当前位置右边更大的元素列表并用哈希表存储。
+
+  ```python
+  def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+      stack=[]
+      query={}
+      for num in reversed(nums2):
+          while stack and stack[-1]<=num:
+              stack.pop()
+          query[num]=stack[-1] if stack else -1 # 哈希表存储当前元素右边更大的元素
+          stack.append(num)
+      return [query[num] for num in nums1]
+  ```
+
+### 146. [下一个更大元素 III（中等）](https://leetcode.cn/problems/next-greater-element-iii/)
+
+<div align=center><img src="e146.png" style="zoom:90%;" /></div> 
+
+* 双指针
+
+  类似下一个排列，倒序找到第一个递减的位置
+
+  ```python
+  def nextGreaterElement(self, n: int) -> int:
+      nums = list(str(n))
+      i = len(nums)-1
+      while i>0 and nums[i]<=nums[i-1]: # 倒序找第一个倒序递减的位置
+          i-=1
+      if i==0:
+          return -1
+      j = len(nums)-1
+      while j>=i and nums[j]<=nums[i-1]: # 倒序找到第一个大于递减位置的数
+          j-=1
+      nums[i-1],nums[j]=nums[j],nums[i-1]
+      nums[i:]=nums[i:][::-1]
+      ans = int(''.join(nums))
+      return ans if ans<2**31 else -1
+  ```
+
+### 147. [最大连续1的个数 III（中等）](https://leetcode.cn/problems/max-consecutive-ones-iii/)
+
+<div align=center><img src="e147.png" style="zoom:90%;" /></div> 
+
+* 滑动窗口
+
+  保持滑动窗口内最大 0 个数为 k
+
+  ```python
+  def longestOnes(self, nums: List[int], k: int) -> int:
+      n=len(nums)
+      zeros,ans,l = 0,0,0
+      for r in range(n):
+          if nums[r]==0:
+              zeros+=1
+              if zeros>k:
+                  while l<r and nums[l]!=0:
+                      l+=1
+                  l+=1
+          ans=max(ans,r-l+1)
+      return ans
+  ```
+
+### 148. [尽可能使字符串相等（中等）](https://leetcode.cn/problems/get-equal-substrings-within-budget/)
+
+<div align=center><img src="e148.png" style="zoom:90%;" /></div> 
+
+* 滑动窗口
+
+  ```python
+  def equalSubstring(self, s: str, t: str, maxCost: int) -> int:
+      n=len(s)
+      diff = [abs(ord(sc)-ord(tc)) for sc,tc in zip(s,t)]
+      l=cost=ans=0
+      for r in range(n):
+          cost+=diff[r]
+          while cost>maxCost:
+              cost-= diff[l]
+              l+=1
+          ans=max(ans,r-l+1)
+      return ans
+  ```
+
+### 149. [买卖股票的最佳时机 III（困难）](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/)
+
+<div align=center><img src="e149.png" style="zoom:90%;" /></div> 
+
+* 动态规划
+
+  设置四个变量，buy1，sell1，buy2 和 sell2，分别表示第 1/2 次买入/出售的最大利润，其中 buy1 和 buy2 初始化为 -prices[0]。
+
+  ```python
+  def maxProfit(self, prices: List[int]) -> int:
+      n=len(prices)
+      buy1=buy2=-prices[0]
+      sell1=sell2=0
+      for i in range(1,n):
+          buy1=max(buy1,-prices[i])
+          sell1=max(sell1,buy1+prices[i])
+          buy2=max(buy2,sell1-prices[i])
+          sell2=max(sell2,buy2+prices[i])
+      return sell2
+  ```
+
+### 150. [完全二叉树的节点个数（中等）](https://leetcode.cn/problems/count-complete-tree-nodes/)
+
+<div align=center><img src="e150.png" style="zoom:70%;" /></div> 
+
+* 递归
+
+  判断当前根节点的左右高度是否相同
+
+  ```python
+  def countNodes(self, root: Optional[TreeNode]) -> int:
+      if not root:
+          return 0
+      cntL,cntR=0,0
+      pl=pr=root
+      while pl:
+          pl=pl.left
+          cntL+=1
+      while pr:
+          pr=pr.right
+          cntR+=1
+      if cntL==cntR:
+          return 2**cntL-1
+      return self.countNodes(root.left)+self.countNodes(root.right)+1
+  ```
+
+### 151. [替换子串得到平衡字符串（中等）](https://leetcode.cn/problems/replace-the-substring-for-balanced-string/)
+
+<div align=center><img src="e151.png" style="zoom:90%;" /></div> 
+
+* 滑动窗口
+
+  判断窗口外的元素数量是否都小于 n/4
+
+  ```python
+  from collections import Counter
+  def balancedString(self, s: str) -> int:
+      n=len(s)
+      ans=n
+      cnt = Counter(s)
+      if all(v<=n//4 for v in cnt.values()):
+          return 0
+      left = 0
+      for right in range(n):
+          cnt[s[right]]-=1
+          while all(v<=n//4 for v in cnt.values()):
+              ans = min(ans,right-left+1)
+              cnt[s[left]]+=1
+              left+=1
+      return ans
+  ```
+
+### 152. [单词规律（简单）](https://leetcode.cn/problems/word-pattern/)
+
+<div align=center><img src="e152.png" style="zoom:99%;" /></div> 
+
+* 哈希表
+
+  判断字符与字符串是否一一对应
+
+  ```python
+  def wordPattern(self, pattern: str, s: str) -> bool:
+      ptos={}
+      stop={}
+      ss = s.split(' ')
+      if len(ss)!=len(pattern):
+          return False
+      for c,sc in zip(pattern,ss):
+          if (c in ptos and ptos[c]!=sc) or (sc in stop and stop[sc]!=c):
+              return False
+          ptos[c]=sc
+          stop[sc]=c
+      return True
+  ```
+
   
