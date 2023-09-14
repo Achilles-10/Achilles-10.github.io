@@ -6,7 +6,16 @@
     <description>Recent content in 📕 算法 on 烈烈风中、的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 21 Aug 2023 16:27:41 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/algo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Aug 2023 16:46:01 +0800</lastBuildDate><atom:link href="https://Achilles-10.github.io/posts/algo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CodeTop 企业题库刷题笔记</title>
+      <link>https://Achilles-10.github.io/posts/algo/codetop/</link>
+      <pubDate>Mon, 21 Aug 2023 16:46:01 +0800</pubDate>
+      
+      <guid>https://Achilles-10.github.io/posts/algo/codetop/</guid>
+      <description>CodeTop 101. ⭐️ 手撕排序（中等） 快速排序：不稳定排序，时间复杂度$O(n\log\ n)$，最坏时间复杂度$O(n^2)$（有序数组或重复数组） def sortArray(nums): def partition(arr,left,right): pivot = arr[left] idx = left+1 for i in range(idx,right+1): if arr[i]&amp;lt;pivot: arr[i],arr[idx]=arr[idx],arr[i] idx+=1 nums[left],nums[idx-1]=nums[idx-1],nums[left] return idx-1 # 双指针 def partition2(arr,left,right): pivot = arr[left] l,r = left+1,right while l&amp;lt;=r: while nums[l]&amp;lt;=pivot and l&amp;lt;=r: l+=1 while nums[r]&amp;gt;pivot and l&amp;lt;=r: r-=1 if l&amp;lt;=r: nums[l],nums[r]=nums[r],nums[l] l+=1 r-=1 nums[left],nums[r]=nums[r],nums[left] return r def quicksort(arr,left,right): if left&amp;lt;right: idx = partition(arr,left,right) quicksort(arr,left,idx-1) quicksort(arr,idx+1,right) n=len(nums) quicksort(nums,0,n-1) return nums 优化方法：选择</description>
+    </item>
+    
     <item>
       <title>LeetCode 热题 100 : 51~100</title>
       <link>https://Achilles-10.github.io/posts/algo/hot2/</link>
