@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>深度学习面试题：正则化 | 烈烈风中、的博客</title>
+<title>深度学习面试题：评价指标 | 烈烈风中、的博客</title>
 <meta name="keywords" content="面试, 学习笔记">
-<meta name="description" content="深度学习算法岗正则化相关常见面试题">
+<meta name="description" content="深度学习算法岗评价指标相关常见面试题">
 <meta name="author" content="Achilles">
-<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/regular/">
+<link rel="canonical" href="https://Achilles-10.github.io/posts/tech/eval/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.5f0dd219ed8bdc295d1cda8e0687931360db45762f55d74830834defe744a8a6.css" integrity="sha256-Xw3SGe2L3CldHNqOBoeTE2DbRXYvVddIMINN7&#43;dEqKY=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
         onload="hljs.initHighlightingOnLoad();"></script>
@@ -96,18 +96,18 @@ var _hmt = _hmt || [];
     });
 </script>
 
-<meta property="og:title" content="深度学习面试题：正则化" />
-<meta property="og:description" content="深度学习算法岗正则化相关常见面试题" />
+<meta property="og:title" content="深度学习面试题：评价指标" />
+<meta property="og:description" content="深度学习算法岗评价指标相关常见面试题" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/regular/" />
-<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/regular/cover.png" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-08-27T15:07:49+08:00" />
-<meta property="article:modified_time" content="2023-08-27T15:07:49+08:00" />
+<meta property="og:url" content="https://Achilles-10.github.io/posts/tech/eval/" />
+<meta property="og:image" content="https://Achilles-10.github.io/posts/tech/eval/confusion.png" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-09-16T15:11:51+08:00" />
+<meta property="article:modified_time" content="2023-09-16T15:11:51+08:00" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/regular/cover.png" />
-<meta name="twitter:title" content="深度学习面试题：正则化"/>
-<meta name="twitter:description" content="深度学习算法岗正则化相关常见面试题"/>
+<meta name="twitter:image" content="https://Achilles-10.github.io/posts/tech/eval/confusion.png" />
+<meta name="twitter:title" content="深度学习面试题：评价指标"/>
+<meta name="twitter:description" content="深度学习算法岗评价指标相关常见面试题"/>
 
 
 <script type="application/ld+json">
@@ -132,8 +132,8 @@ var _hmt = _hmt || [];
     {
       "@type": "ListItem",
       "position":  4 ,
-      "name": "深度学习面试题：正则化",
-      "item": "https://Achilles-10.github.io/posts/tech/regular/"
+      "name": "深度学习面试题：评价指标",
+      "item": "https://Achilles-10.github.io/posts/tech/eval/"
     }
   ]
 }
@@ -142,24 +142,24 @@ var _hmt = _hmt || [];
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "深度学习面试题：正则化",
-  "name": "深度学习面试题：正则化",
-  "description": "深度学习算法岗正则化相关常见面试题",
+  "headline": "深度学习面试题：评价指标",
+  "name": "深度学习面试题：评价指标",
+  "description": "深度学习算法岗评价指标相关常见面试题",
   "keywords": [
     "面试", "学习笔记"
   ],
-  "articleBody": "1. 什么是正则化 正则化通过在损失函数中引入惩罚项来限制模型的复杂度，以防止模型过度拟合训练数据。惩罚项会在优化过程中对模型的参数进行调整，以平衡模型的拟合能力和泛化能力。\n正则化的作用如下：\n防止过拟合：正则化通过限制模型的复杂度，减少模型对训练数据的过度拟合，提高模型的泛化能力 特征选择：L1 正则化可以使得部分参数变为 0，从而实现特征选择，减少冗余特征的影响 改善模型稳定性：正则化可以降低模型对数据中噪声的敏感性，提高模型的稳定性 常见正则化方法有 L1 正则化、L2 正则化和 Dropout。\n2. L1 正则化 对于待正则的网络参数 $w$，L1 正则化： $$ L_1=\\lambda||w||_1=\\lambda\\sum_i|w_i| $$ 其中，$\\lambda$ 用来控制正则程度的大小。L1 不仅可以约束参数量，还可以是参数更稀疏，即部分参数为零（部分特征被去除），实现了特征选择。\nL1 正则化的优点和应用如下：\n特征选择：L1 正则化倾向于生成稀疏的参数，即将一部分参数变为 0，减少冗余特征，实现特征选择 模型解释性：L1 正则化的特征选择能够确定对预测结果贡献较大的特征，一定程度上解释模型的结果 防止过拟合：限制模型的复杂度，防止模型过度拟合训练数据 稀疏性：L1 正则化可以产生稀疏的参数，使得模型的计算效率更高，减少存储空间 3. L2 正则化 对于待正则的网络参数 $w$，L2 正则化： $$ L_2=\\lambda||w||_2=\\lambda\\sum_{i}{|w_i|^2} $$ L2 正则化会使部分特征趋近于 0，达到正则化的效果。\nL2 正则化的优点和应用包括：\n参数稳定性：L2 正则化可以使模型参数更稳定，减少参数的震荡，使模型对噪声和细节不敏感，提高模型的泛化能力。 防止过拟合：L2 正则化限制了模型参数的大小，使得模型更加平滑。 权重衰减：L2 正则化可以促使模型参数向较小的值靠拢，实现权重衰减，减少复杂模型对训练数据的过度拟合。 L1 正则化和 L2 正则化可以被联合使用，这种方法被称为 Elastic Net 正则化，它综合了两者的优势。可以同时实现特征选择和参数大小的控制。\n4. L1 正则化使得模型参数具有稀疏性的原理是什么 4.1 解空间形状 如下图，在二维情况下，黄色部分为 L2 和 L1 正则约束后的解空间（相当于约束 $w$ 的范数不能超过常数 m），蓝色等高线是凸优化问题中目标函数的等高线。最小化损失函数就是求蓝圈+黄圈的和的最小值，显然 L1 正则的解空间更容易在夹角处与等高线碰撞出稀疏解。\n4.2 函数叠加 如下图，棕线是原始目标函数 $L(w)$ 曲线图，显然最小值在蓝点处，对应的 $w^*$ 值非 0。\n考虑加上 L2 正则化项，目标函数变为黄线 $L(w)+Cw^2$，最小值在黄点处，对应 $w^*$ 绝对值减小了，仍然非 0。\n考虑加上 L1 正则化项，目标函数变为绿线 $L(w)+C|w|$，最小值在红点处，对应 $w^*$ 为 0，产生了稀疏性。\n由于加入 L1 正则化项，对目标函数求导，在原点左侧为 -C，右侧为 C，只要原目标函数导数绝对值小于 C，那么带正则项的目标函数在原点左侧递减，右侧递增，即最小值点在原点处。\n相反 L2 正则化项在原点处的导数为 0，只要原始目标函数导数值在原点不为 0，那么最小值点就不会在原点。所以 L2 正则项只有减小 w 绝对值的作用。\n4.3 贝叶斯先验 L2 正则化相当于引入了高斯先验，L1 正则化相当于对模型参数引入了拉普拉斯先验，使参数为 0 的可能性更大。\n下图为高斯分布曲线图，可见高斯分布在极值处是平滑的，即取不同值的可能性是接近的，因此 L2 正则化只会让 $w$ 更接近 0 点，但不会等于 0。\n下图为拉普拉斯分布曲线图，可见拉普拉斯分布在极值点是一个尖峰，所以 $w$ 的取值为 0 的概率更大。\n5. Dropout 的作用和原理 Dropout 在前向传播时，以一定的概率使部分神经元停止工作，增强模型泛化性。\n前向传播：以概率 p 丢弃 K 维输入向量 $[x_1,x_2,\\dots,x_k]$ 的某些值，有 $$ x’ = dropout(x) $$ 其过程相当于生成一个随机的 K 维 mask，下式中 @ 表示点乘： $$ r = rand(K) = [r_1,r_2,\\dots,r_k],0\\leq r_i\\leq 1\\\\ mask=\\begin{cases}0,r_i",
-  "wordCount" : "2748",
+  "articleBody": "1. 说说机器学习评价指标 混淆矩阵 准确率（Accuracy, ACC） 所有分类正确的样本占全部样本的比例。 $$ \\text{ACC} = \\frac{TP+TN}{TP+FN+TN+FP} $$\n精确率（Precision） 表示预测为正例的样本中真正为正例的比例，较高的 Precision 意味着模型预测为正例的样本中有很少的错误，衡量误检。 $$ \\text{Precision} = \\frac{TP}{TP+FP} $$\n召回率（Recall） 表示所有正例中被正确预测为正例的比例，较高的 Recall 意味着模型对于正例的检测能力较强，衡量漏检。 $$ \\text{Recall} = \\frac{TP}{TP+FN} $$\nF1-Score F1 分数是 Precision 和 Recall 的调和平均值，用于综合考虑模型的精确性和召回率。 $$ \\text{F1\\ Score}=\\frac{2}{\\frac{1}{\\text{Precision}}+\\frac{1}{\\text{Recall}}}=\\frac{2\\cdot \\text{Precision}\\cdot \\text{Recall}}{\\text{Precision}+\\text{Recall}} $$\nAUC 与 ROC AUC 衡量二分类模型在不同阈值下的分类能力，表示 ROC 曲线下的面积。适用于处理不同阈值下分类性能变化较大和类别不平衡的情况。ROC 曲线横坐标为 FPR，纵坐标为 TPR。\nPrecision-Recall 曲线 PR 曲线的横坐标是精确率 P，纵坐标是召回率 R，曲线上的点就对应 F1-score。\nIoU 和 mIoU $$ \\text{IoU}=\\frac{|A\\cap B|}{|A|+|B|-|A\\cap B|} $$\nmIoU 一般都是基于类进行计算的，将每一类的IOU计算之后累加，再进行平均，得到的就是mIOU。\nAP 和 mAP AP（Average Precision）和 mAP（mean Average Precision）常用于目标检测任务中。AP 就是每一类的Precision 的平均值。而 mAP 是所有类的AP的平均值。\n2. AUC 是什么？是否对正负样本比例敏感 AUC 定义：AUC 值为 ROC 曲线所覆盖的区域面积，AUC 越大，分类器分类效果越好。\nAUC 还有另一个意义：分别随机从正负样本集中抽取一个正样本，一个负样本，正样本的预测值大于负样本的概率。 $$ \\text{AUC} = \\frac{\\sum(pred_{pos}\u003epred_{neg})}{Num_{pos}*Num_{neg}} $$ AUC对正负样本比例不敏感\n3. 讲讲分类，回归，推荐，搜索的评价指标 分类：Acc, Precision, Recall, F1-score, AUC\n回归：MSE, RMSE, MAE, R Squared\n推荐任务：\n离线评估 offline evaluation\n评分预测，预测用户对物品的评分，用 MAE 和 RMSE\n对于 Top N 模型：对排名进行评估，用 Precision、Recall 和 F1\n在线评估 online evaluation\nA/B Test，用 CTR（用户点击率）和 CR（用户转化率）。\nCTR (点击率, Click-Through Rate)\nCTR 是用于衡量推荐内容或广告的点击效果。它表示了推荐或展示多少次内容之后，用户点击了该内容的次数。 $$ CTR=\\frac{点击次数}{展示次数} $$\nCR (转化率, Conversion Rate)\nCR 用于衡量用户从点击到完成某个目标行为（如购买、注册等）的转化效果。 $$ CR=\\frac{完成目标行为的用户数}{点击数} $$\n4. A/B Test 的原理 也称为拆分测试或两样本假设测试，用于比较两个（或更多）版本的网页或应用程序，以确定哪一个版本的表现更好。\n将用户划分为 A，B 两组，A 实验组用户，接受所设计的推荐算法推荐的商品，B 对照组用户，接受基线方法推荐的商品。通过对比两组用户的行为来评估推荐算法的性能。\nA/B 测试的考虑因素：\n持续时间与样本大小：为了得到可靠的结果，测试需要运行足够长的时间，并有足够大的样本大小。 单变量测试：通常，一次 A/B 测试只会测试一个变化（例如，更改按钮的颜色或文本），这样可以确定是哪个具体变化导致了结果的变动。 外部因素：确保外部事件（例如，节日、促销活动或新闻事件）不会对 A/B 测试结果产生影响。 ",
+  "wordCount" : "1188",
   "inLanguage": "en",
-  "image":"https://Achilles-10.github.io/posts/tech/regular/cover.png","datePublished": "2023-08-27T15:07:49+08:00",
-  "dateModified": "2023-08-27T15:07:49+08:00",
+  "image":"https://Achilles-10.github.io/posts/tech/eval/confusion.png","datePublished": "2023-09-16T15:11:51+08:00",
+  "dateModified": "2023-09-16T15:11:51+08:00",
   "author":[{
     "@type": "Person",
     "name": "Achilles"
   }],
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://Achilles-10.github.io/posts/tech/regular/"
+    "@id": "https://Achilles-10.github.io/posts/tech/eval/"
   },
   "publisher": {
     "@type": "Organization",
@@ -275,10 +275,10 @@ var _hmt = _hmt || [];
         <header class="post-header">
             <div class="breadcrumbs"><a href="https://Achilles-10.github.io">🏠 主页</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://Achilles-10.github.io/posts/tech/">👨🏻‍💻 技术</a></div>
             <h1 class="post-title">
-                深度学习面试题：正则化
+                深度学习面试题：评价指标
             </h1>
             <div class="post-description">
-                深度学习算法岗正则化相关常见面试题
+                深度学习算法岗评价指标相关常见面试题
             </div>
             <div class="post-meta"><style>
     i[id*="post_meta_style"] {
@@ -297,7 +297,7 @@ var _hmt = _hmt || [];
 <span class="parent-post-meta">
     <span id="post_meta_style_1">
         <span class="fa fa-calendar-check-o"></span>
-        <span>2023 年 8 月 27 日
+        <span>2023 年 9 月 16 日
             &nbsp;&nbsp;
         </span>
     </span>
@@ -310,13 +310,13 @@ var _hmt = _hmt || [];
     
     <span id="post_meta_style_3">
         <span class="fa fa-file-word-o"></span>
-        <span>2748字
+        <span>1188字
             &nbsp;&nbsp;
         </span>
     </span>
     <span id="post_meta_style_4">
         <span class="fa fa-clock-o"></span>
-        <span>6分钟
+        <span>3分钟
             &nbsp;&nbsp;
         </span>
     </span>
@@ -385,7 +385,7 @@ var _hmt = _hmt || [];
 
 </div>
         </header> 
-<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/regular/cover.png" alt="">
+<figure class="entry-cover1"><img style="zoom:;" loading="lazy" src="https://Achilles-10.github.io/posts/tech/eval/confusion.png" alt="">
     
 </figure><aside id="toc-container" class="toc-container wide">
     <div class="toc">
@@ -396,35 +396,33 @@ var _hmt = _hmt || [];
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#1-%e4%bb%80%e4%b9%88%e6%98%af%e6%ad%a3%e5%88%99%e5%8c%96" aria-label="1. 什么是正则化">1. 什么是正则化</a></li>
-                <li>
-                    <a href="#2-l1-%e6%ad%a3%e5%88%99%e5%8c%96" aria-label="2. L1 正则化">2. L1 正则化</a></li>
-                <li>
-                    <a href="#3-l2-%e6%ad%a3%e5%88%99%e5%8c%96" aria-label="3. L2 正则化">3. L2 正则化</a></li>
-                <li>
-                    <a href="#4-l1-%e6%ad%a3%e5%88%99%e5%8c%96%e4%bd%bf%e5%be%97%e6%a8%a1%e5%9e%8b%e5%8f%82%e6%95%b0%e5%85%b7%e6%9c%89%e7%a8%80%e7%96%8f%e6%80%a7%e7%9a%84%e5%8e%9f%e7%90%86%e6%98%af%e4%bb%80%e4%b9%88" aria-label="4. L1 正则化使得模型参数具有稀疏性的原理是什么">4. L1 正则化使得模型参数具有稀疏性的原理是什么</a><ul>
+                    <a href="#1-%e8%af%b4%e8%af%b4%e6%9c%ba%e5%99%a8%e5%ad%a6%e4%b9%a0%e8%af%84%e4%bb%b7%e6%8c%87%e6%a0%87" aria-label="1. 说说机器学习评价指标">1. 说说机器学习评价指标</a><ul>
                         
                 <li>
-                    <a href="#41-%e8%a7%a3%e7%a9%ba%e9%97%b4%e5%bd%a2%e7%8a%b6" aria-label="4.1 解空间形状">4.1 解空间形状</a></li>
+                    <a href="#%e6%b7%b7%e6%b7%86%e7%9f%a9%e9%98%b5" aria-label="混淆矩阵">混淆矩阵</a></li>
                 <li>
-                    <a href="#42-%e5%87%bd%e6%95%b0%e5%8f%a0%e5%8a%a0" aria-label="4.2 函数叠加">4.2 函数叠加</a></li>
+                    <a href="#%e5%87%86%e7%a1%ae%e7%8e%87accuracy-acc" aria-label="准确率（Accuracy, ACC）">准确率（Accuracy, ACC）</a></li>
                 <li>
-                    <a href="#43-%e8%b4%9d%e5%8f%b6%e6%96%af%e5%85%88%e9%aa%8c" aria-label="4.3 贝叶斯先验">4.3 贝叶斯先验</a></li></ul>
+                    <a href="#%e7%b2%be%e7%a1%ae%e7%8e%87precision" aria-label="精确率（Precision）">精确率（Precision）</a></li>
+                <li>
+                    <a href="#%e5%8f%ac%e5%9b%9e%e7%8e%87recall" aria-label="召回率（Recall）">召回率（Recall）</a></li>
+                <li>
+                    <a href="#f1-score" aria-label="F1-Score">F1-Score</a></li>
+                <li>
+                    <a href="#auc-%e4%b8%8e-roc" aria-label="AUC 与 ROC">AUC 与 ROC</a></li>
+                <li>
+                    <a href="#precision-recall-%e6%9b%b2%e7%ba%bf" aria-label="Precision-Recall 曲线">Precision-Recall 曲线</a></li>
+                <li>
+                    <a href="#iou-%e5%92%8c-miou" aria-label="IoU 和 mIoU">IoU 和 mIoU</a></li>
+                <li>
+                    <a href="#ap-%e5%92%8c-map" aria-label="AP 和 mAP">AP 和 mAP</a></li></ul>
                 </li>
                 <li>
-                    <a href="#5-dropout-%e7%9a%84%e4%bd%9c%e7%94%a8%e5%92%8c%e5%8e%9f%e7%90%86" aria-label="5. Dropout 的作用和原理">5. Dropout 的作用和原理</a></li>
+                    <a href="#2-auc-%e6%98%af%e4%bb%80%e4%b9%88%e6%98%af%e5%90%a6%e5%af%b9%e6%ad%a3%e8%b4%9f%e6%a0%b7%e6%9c%ac%e6%af%94%e4%be%8b%e6%95%8f%e6%84%9f" aria-label="2. AUC 是什么？是否对正负样本比例敏感">2. AUC 是什么？是否对正负样本比例敏感</a></li>
                 <li>
-                    <a href="#6-l1-%e6%ad%a3%e5%88%99%e5%8c%96%e7%9a%84%e7%bc%ba%e7%82%b9" aria-label="6. L1 正则化的缺点">6. L1 正则化的缺点</a></li>
+                    <a href="#3-%e8%ae%b2%e8%ae%b2%e5%88%86%e7%b1%bb%e5%9b%9e%e5%bd%92%e6%8e%a8%e8%8d%90%e6%90%9c%e7%b4%a2%e7%9a%84%e8%af%84%e4%bb%b7%e6%8c%87%e6%a0%87" aria-label="3. 讲讲分类，回归，推荐，搜索的评价指标">3. 讲讲分类，回归，推荐，搜索的评价指标</a></li>
                 <li>
-                    <a href="#7-batchnorm-%e7%9a%84%e5%8e%9f%e7%90%86%e5%92%8c%e4%bd%9c%e7%94%a8" aria-label="7. BatchNorm 的原理和作用">7. BatchNorm 的原理和作用</a></li>
-                <li>
-                    <a href="#8-bn-%e7%9a%84%e8%ae%ad%e7%bb%83%e5%92%8c%e6%8e%a8%e7%90%86%e6%9c%89%e4%bb%80%e4%b9%88%e4%b8%8d%e5%90%8c" aria-label="8. BN 的训练和推理有什么不同">8. BN 的训练和推理有什么不同</a></li>
-                <li>
-                    <a href="#9-bn-%e7%9a%84%e5%8f%af%e5%ad%a6%e4%b9%a0%e5%8f%82%e6%95%b0%e4%bd%9c%e7%94%a8" aria-label="9. BN 的可学习参数作用">9. BN 的可学习参数作用</a></li>
-                <li>
-                    <a href="#10-bn-%e5%92%8c-ln-%e7%9a%84%e5%8c%ba%e5%88%ab" aria-label="10. BN 和 LN 的区别">10. BN 和 LN 的区别</a></li>
-                <li>
-                    <a href="#11-%e5%b0%86-bn-%e7%94%a8%e4%ba%8e%e6%8e%a8%e8%8d%90%e7%b3%bb%e7%bb%9f%e6%97%b6%e7%9a%84%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9" aria-label="11. 将 BN 用于推荐系统时的注意事项">11. 将 BN 用于推荐系统时的注意事项</a>
+                    <a href="#4-ab-test-%e7%9a%84%e5%8e%9f%e7%90%86" aria-label="4. A/B Test 的原理">4. A/B Test 的原理</a>
                 </li>
             </ul>
         </div>
@@ -489,146 +487,97 @@ var _hmt = _hmt || [];
         return rect.top + win.pageYOffset;
     }
 </script>
-        <div class="post-content"><h2 id="1-什么是正则化">1. 什么是正则化<a hidden class="anchor" aria-hidden="true" href="#1-什么是正则化">#</a></h2>
-<p>正则化通过在损失函数中<strong>引入惩罚项来限制模型的复杂度</strong>，以防止模型过度拟合训练数据。惩罚项会在优化过程中对模型的参数进行调整，以平衡模型的拟合能力和泛化能力。</p>
-<p>正则化的作用如下：</p>
-<ul>
-<li><strong>防止过拟合</strong>：正则化通过限制模型的复杂度，减少模型对训练数据的过度拟合，提高模型的泛化能力</li>
-<li><strong>特征选择</strong>：L1 正则化可以使得部分参数变为 0，从而实现特征选择，减少冗余特征的影响</li>
-<li><strong>改善模型稳定性</strong>：正则化可以降低模型对数据中噪声的敏感性，提高模型的稳定性</li>
-</ul>
-<p>常见正则化方法有 L1 正则化、L2 正则化和 Dropout。</p>
-<h2 id="2-l1-正则化">2. L1 正则化<a hidden class="anchor" aria-hidden="true" href="#2-l1-正则化">#</a></h2>
-<p>对于待正则的网络参数 $w$，L1 正则化：
+        <div class="post-content"><h2 id="1-说说机器学习评价指标">1. 说说机器学习评价指标<a hidden class="anchor" aria-hidden="true" href="#1-说说机器学习评价指标">#</a></h2>
+<h3 id="混淆矩阵">混淆矩阵<a hidden class="anchor" aria-hidden="true" href="#混淆矩阵">#</a></h3>
+<div align=center><img src="confusion.png" style="zoom:50%;" /></div>
+<h3 id="准确率accuracy-acc">准确率（Accuracy, ACC）<a hidden class="anchor" aria-hidden="true" href="#准确率accuracy-acc">#</a></h3>
+<p>所有分类正确的样本占全部样本的比例。
 $$
-L_1=\lambda||w||_1=\lambda\sum_i|w_i|
-$$
-其中，$\lambda$ 用来控制正则程度的大小。L1 不仅可以约束参数量，还可以是参数更稀疏，即部分参数为零（部分特征被去除），实现了特征选择。</p>
-<p>L1 正则化的优点和应用如下：</p>
-<ul>
-<li>特征选择：L1 正则化倾向于生成稀疏的参数，即将一部分参数变为 0，减少冗余特征，实现特征选择</li>
-<li>模型解释性：L1 正则化的特征选择能够确定对预测结果贡献较大的特征，一定程度上解释模型的结果</li>
-<li>防止过拟合：限制模型的复杂度，防止模型过度拟合训练数据</li>
-<li>稀疏性：L1 正则化可以产生稀疏的参数，使得模型的计算效率更高，减少存储空间</li>
-</ul>
-<h2 id="3-l2-正则化">3. L2 正则化<a hidden class="anchor" aria-hidden="true" href="#3-l2-正则化">#</a></h2>
-<p>对于待正则的网络参数 $w$，L2 正则化：
-$$
-L_2=\lambda||w||_2=\lambda\sum_{i}{|w_i|^2}
-$$
-L2 正则化会使部分特征趋近于 0，达到正则化的效果。</p>
-<p>L2 正则化的优点和应用包括：</p>
-<ul>
-<li>参数稳定性：L2 正则化可以使模型参数更稳定，减少参数的震荡，使模型对噪声和细节不敏感，提高模型的泛化能力。</li>
-<li>防止过拟合：L2 正则化限制了模型参数的大小，使得模型更加平滑。</li>
-<li>权重衰减：L2 正则化可以促使模型参数向较小的值靠拢，实现权重衰减，减少复杂模型对训练数据的过度拟合。</li>
-</ul>
-<p>L1 正则化和 L2 正则化可以被联合使用，这种方法被称为 Elastic Net 正则化，它综合了两者的优势。可以同时实现特征选择和参数大小的控制。</p>
-<h2 id="4-l1-正则化使得模型参数具有稀疏性的原理是什么">4. L1 正则化使得模型参数具有稀疏性的原理是什么<a hidden class="anchor" aria-hidden="true" href="#4-l1-正则化使得模型参数具有稀疏性的原理是什么">#</a></h2>
-<h3 id="41-解空间形状">4.1 解空间形状<a hidden class="anchor" aria-hidden="true" href="#41-解空间形状">#</a></h3>
-<p>如下图，在二维情况下，黄色部分为 L2 和 L1 正则约束后的解空间（相当于约束 $w$ 的范数不能超过常数 m），蓝色等高线是凸优化问题中目标函数的等高线。最小化损失函数就是求蓝圈+黄圈的和的最小值，显然 L1 正则的解空间更容易在夹角处与等高线碰撞出稀疏解。</p>
-<div align=center><img src="jiekongjian.png" style="zoom:50%;" /></div>
-<h3 id="42-函数叠加">4.2 函数叠加<a hidden class="anchor" aria-hidden="true" href="#42-函数叠加">#</a></h3>
-<p>如下图，棕线是原始目标函数 $L(w)$ 曲线图，显然最小值在蓝点处，对应的 $w^*$ 值非 0。</p>
-<div align=center><img src="func.png" style="zoom:25%;" /></div>
-<p>考虑加上 L2 正则化项，目标函数变为黄线 $L(w)+Cw^2$，最小值在黄点处，对应 $w^*$ 绝对值减小了，仍然非 0。</p>
-<p>考虑加上 L1 正则化项，目标函数变为绿线 $L(w)+C|w|$，最小值在红点处，对应 $w^*$ 为 0，产生了稀疏性。</p>
-<p>由于加入 L1 正则化项，对目标函数求导，在原点左侧为 -C，右侧为 C，只要原目标函数导数绝对值小于 C，那么带正则项的目标函数在原点左侧递减，右侧递增，即最小值点在原点处。</p>
-<p>相反 L2 正则化项在原点处的导数为 0，只要原始目标函数导数值在原点不为 0，那么最小值点就不会在原点。所以 L2 正则项只有减小 w 绝对值的作用。</p>
-<h3 id="43-贝叶斯先验">4.3 贝叶斯先验<a hidden class="anchor" aria-hidden="true" href="#43-贝叶斯先验">#</a></h3>
-<p>L2 正则化相当于引入了<strong>高斯先验</strong>，L1 正则化相当于对模型参数引入了<strong>拉普拉斯先验</strong>，使参数为 0 的可能性更大。</p>
-<p>下图为高斯分布曲线图，可见高斯分布在极值处是平滑的，即取不同值的可能性是接近的，因此 L2 正则化只会让 $w$ 更接近 0 点，但不会等于 0。</p>
-<div align=center><img src="gauss.png" style="zoom:25%;" /></div>
-<p>下图为拉普拉斯分布曲线图，可见拉普拉斯分布在极值点是一个尖峰，所以 $w$ 的取值为 0 的概率更大。</p>
-<div align=center><img src="lasso.png" style="zoom:25%;" /></div>
-<h2 id="5-dropout-的作用和原理">5. Dropout 的作用和原理<a hidden class="anchor" aria-hidden="true" href="#5-dropout-的作用和原理">#</a></h2>
-<p>Dropout 在前向传播时，以一定的概率使部分神经元停止工作，增强模型泛化性。</p>
-<div align=center><img src="dropout.png" style="zoom:25%;" /></div>
-<p><strong>前向传播</strong>：以概率 p 丢弃 K 维输入向量 $[x_1,x_2,\dots,x_k]$ 的某些值，有
-$$
-x&rsquo; = dropout(x)
-$$
-其过程相当于生成一个随机的 K 维 mask，下式中 @ 表示点乘：
-$$
-r = rand(K) = [r_1,r_2,\dots,r_k],0\leq r_i\leq 1\\
-mask=\begin{cases}0,r_i&lt;p\\1,r_i\geq p\end{cases}\\
-x&rsquo;=dropoout(x)=x@mask
-$$
-这样的 dropout，在训练中会使 x&rsquo; 的期望改变：
-$$
-E(X&rsquo;)=p*0+(1-p)*x=(1-p)x
-$$
-在测试时，dropout 不工作，此时 x&rsquo; 的期望为 x，使得训练和测试时的期望不一致，因此在训练时，可以将 dropout 后的结果除以 1-p，此时 mask 为：
-$$
-mask=\begin{cases}0,r_i&lt;p\\\frac{1}{1-p},r_i\geq p\end{cases}
-$$
-<strong>反向传播</strong>：
-$$
-x=[x_1,x_2,\dots,x_k]\
-x&rsquo;=dropout(x)=x@mask\
-y=forward(x&rsquo;)
-$$
-则有
-$$
-\frac{\partial y}{\partial x}=\frac{\partial y}{\partial x&rsquo;}\cdot\frac{\partial x&rsquo;}{\partial x}
+\text{ACC} = \frac{TP+TN}{TP+FN+TN+FP}
 $$</p>
-<p>其中
+<h3 id="精确率precision">精确率（Precision）<a hidden class="anchor" aria-hidden="true" href="#精确率precision">#</a></h3>
+<p>表示预测为正例的样本中真正为正例的比例，较高的 Precision 意味着模型预测为正例的样本中有很少的错误，衡量<strong>误检</strong>。
 $$
-\frac{\partial x&rsquo;}{\partial x}=
-\begin{cases}
-0,r_i&lt;p\\
-\frac{1}{1-p},r_i\geq p
-\end{cases}
+\text{Precision} = \frac{TP}{TP+FP}
 $$</p>
-<h2 id="6-l1-正则化的缺点">6. L1 正则化的缺点<a hidden class="anchor" aria-hidden="true" href="#6-l1-正则化的缺点">#</a></h2>
-<ul>
-<li>非光滑性：L1 正则化的正则化项是参数的绝对值之和，这导致目标函数在参数为零时不可导。在参数为零附近，梯度不连续，可能导致优化过程出现问题。</li>
-<li>特征选择过于严格：当特征之间存在高度相关性（多重共线性）时，L1 正则化倾向于选择其中一个特征，而忽略其他相关特征，可能会丢失有用信息。相比之下，L2 正则化对相关特征的惩罚更均衡，可以保留更多相关特征的权重。</li>
-<li>不适用于高维问题：虽然 L1 正则化在稀疏数据下表现出色，但对于高维稀疏数据，特征的选择过程可能不够稳定，可能会因微小的数据变动而导致不同的特征被选择。</li>
-</ul>
-<h2 id="7-batchnorm-的原理和作用">7. BatchNorm 的原理和作用<a hidden class="anchor" aria-hidden="true" href="#7-batchnorm-的原理和作用">#</a></h2>
-<p>BN 对每个批次的输入进行归一化，将输入的均值和方差调整到一个稳定的范围内，用于解决深度网络<strong>梯度消失</strong>和<strong>梯度爆炸</strong>的问题，可以起到一定的<strong>正则化作用</strong>。</p>
-<p>首先计算 mini-batch 的均值 $\mu$ 和方差 $\sigma^2$，然后进行规范化得到：
+<h3 id="召回率recall">召回率（Recall）<a hidden class="anchor" aria-hidden="true" href="#召回率recall">#</a></h3>
+<p>表示所有正例中被正确预测为正例的比例，较高的 Recall 意味着模型对于正例的检测能力较强，衡量<strong>漏检</strong>。
 $$
-x_i^*=\frac{x_i-\mu}{\sqrt{\sigma^2+\epsilon}}
+\text{Recall} = \frac{TP}{TP+FN}
 $$</p>
-<p>最后进行尺度变换和偏移得到：</p>
+<h3 id="f1-score">F1-Score<a hidden class="anchor" aria-hidden="true" href="#f1-score">#</a></h3>
+<p>F1 分数是 Precision 和 Recall 的调和平均值，用于综合考虑模型的精确性和召回率。
+$$
+\text{F1\ Score}=\frac{2}{\frac{1}{\text{Precision}}+\frac{1}{\text{Recall}}}=\frac{2\cdot \text{Precision}\cdot \text{Recall}}{\text{Precision}+\text{Recall}}
+$$</p>
+<h3 id="auc-与-roc">AUC 与 ROC<a hidden class="anchor" aria-hidden="true" href="#auc-与-roc">#</a></h3>
+<p>AUC 衡量二分类模型在不同阈值下的分类能力，表示 ROC 曲线下的面积。适用于处理不同阈值下分类性能变化较大和类别不平衡的情况。ROC 曲线<strong>横坐标为 FPR</strong>，<strong>纵坐标为 TPR</strong>。</p>
+<div align=center><img src="roc.png" style="zoom:50%;" /></div>
+<h3 id="precision-recall-曲线">Precision-Recall 曲线<a hidden class="anchor" aria-hidden="true" href="#precision-recall-曲线">#</a></h3>
+<div align=center><img src="pr.png" style="zoom:70%;" /></div>
+<p>PR 曲线的横坐标是精确率 P，纵坐标是召回率 R，曲线上的点就对应 F1-score。</p>
+<h3 id="iou-和-miou">IoU 和 mIoU<a hidden class="anchor" aria-hidden="true" href="#iou-和-miou">#</a></h3>
 <p>$$
-y_i=\gamma\cdot x^*_i+\beta
+\text{IoU}=\frac{|A\cap B|}{|A|+|B|-|A\cap B|}
 $$</p>
-<p>BN 是一个可学习、有参数（$\gamma,\beta$）的网络层。</p>
-<h2 id="8-bn-的训练和推理有什么不同">8. BN 的训练和推理有什么不同<a hidden class="anchor" aria-hidden="true" href="#8-bn-的训练和推理有什么不同">#</a></h2>
-<p>BN 在训练时会更新</p>
-<p>BN 训练时记录每个 batch 的均值和方差，测试时用全部训练数据的均值(期望)和方差(无偏估计)。
+<p>mIoU 一般都是基于类进行计算的，将每一类的IOU计算之后累加，再进行平均，得到的就是mIOU。</p>
+<h3 id="ap-和-map">AP 和 mAP<a hidden class="anchor" aria-hidden="true" href="#ap-和-map">#</a></h3>
+<p>AP（Average Precision）和 mAP（mean Average Precision）常用于目标检测任务中。AP 就是每一类的Precision 的平均值。而 mAP 是所有类的AP的平均值。</p>
+<h2 id="2-auc-是什么是否对正负样本比例敏感">2. AUC 是什么？是否对正负样本比例敏感<a hidden class="anchor" aria-hidden="true" href="#2-auc-是什么是否对正负样本比例敏感">#</a></h2>
+<p>AUC 定义：AUC 值为 ROC 曲线所覆盖的区域面积，AUC 越大，分类器分类效果越好。</p>
+<p>AUC 还有另一个意义：分别随机从正负样本集中抽取一个正样本，一个负样本，正样本的预测值大于负样本的概率。
 $$
-E[x]\leftarrow E_\beta[\mu_\beta]\\
-Var[x]\leftarrow\frac{m}{m-1}E_\beta[\sigma_\beta^2]
+\text{AUC} = \frac{\sum(pred_{pos}&gt;pred_{neg})}{Num_{pos}*Num_{neg}}
 $$
-推理<strong>使用训练阶段累积的统计量（均值和方差的移动平均值）来进行标准化</strong>。将训练时的均值和方差的平均值代入如下公式即可：
+AUC对正负样本比例<strong>不敏感</strong></p>
+<h2 id="3-讲讲分类回归推荐搜索的评价指标">3. 讲讲分类，回归，推荐，搜索的评价指标<a hidden class="anchor" aria-hidden="true" href="#3-讲讲分类回归推荐搜索的评价指标">#</a></h2>
+<ul>
+<li>
+<p>分类：Acc, Precision, Recall, F1-score, AUC</p>
+</li>
+<li>
+<p>回归：MSE, RMSE, MAE, R Squared</p>
+</li>
+<li>
+<p>推荐任务：</p>
+<ul>
+<li>
+<p>离线评估 offline evaluation</p>
+<p>评分预测，预测用户对物品的评分，用 MAE 和 RMSE</p>
+<p>对于 Top N 模型：对排名进行评估，用 Precision、Recall 和 F1</p>
+</li>
+<li>
+<p>在线评估 online evaluation</p>
+<p>A/B Test，用 CTR（用户点击率）和 CR（用户转化率）。</p>
+<ul>
+<li>
+<p><strong>CTR (点击率, Click-Through Rate)</strong></p>
+<p>CTR 是用于衡量推荐内容或广告的点击效果。它表示了推荐或展示多少次内容之后，用户点击了该内容的次数。
 $$
-y=\frac{\gamma}{\sqrt{Var[x]+\epsilon}}\cdot x+(\beta-\frac{\gamma\cdot E[x]}{\sqrt{Var[x]+\epsilon}})
+CTR=\frac{点击次数}{展示次数}
+$$</p>
+</li>
+<li>
+<p><strong>CR (转化率, Conversion Rate)</strong></p>
+<p>CR 用于衡量用户从点击到完成某个目标行为（如购买、注册等）的转化效果。
 $$
-有$\frac{\gamma}{\sqrt{Var[x]+\epsilon}}$ 和 $(\beta-\frac{\gamma\cdot E[x]}{\sqrt{Var[x]+\epsilon}})$ 两项固定值，可以加速计算。</p>
-<p>即使在推理时输入是 mini-batch，也应该使用训练时的移动平均值和方差，这样是为了保证模型在训练和推理时行为的一致性。</p>
-<h2 id="9-bn-的可学习参数作用">9. BN 的可学习参数作用<a hidden class="anchor" aria-hidden="true" href="#9-bn-的可学习参数作用">#</a></h2>
-<p>BN 有 $\gamma,\beta$ 两个可学习的平移参数和缩放参数，具有以下作用：</p>
-<ol>
-<li><strong>保留网络各层在训练过程中的学习成果</strong>。若没有这两个参数，BN 退化为普通的标准化，不能有效学习。添加参数后可以保留每个神经元学习的成果；</li>
-<li><strong>保证激活单元的非线性表达能力</strong>。添加参数后，BN 的数据可以进入到激活函数的非线性区域；</li>
-<li><strong>使 BN 模块具有自我关闭功能</strong>。若 $\gamma,\beta$ 分别取数据的均值和标准差，则可以回复初始的输入值，即关闭 BN 模块。</li>
-</ol>
-<h2 id="10-bn-和-ln-的区别">10. BN 和 LN 的区别<a hidden class="anchor" aria-hidden="true" href="#10-bn-和-ln-的区别">#</a></h2>
-<p>BN 是在每个批次中对每个特征的维度进行归一化。LN 是在每一层中对每个样本的所有特征维度进行归一化。</p>
-<p>BN 适用于批次训练的情况，LN 更适用于变长序列数据的处理。</p>
-<p>如以下两图，直观地展示了 BN、LN、IN 和 GN 的区别。</p>
-<div align=center><img src="bnln.png" style="zoom:50%;" /></div>
-<div align=center><img src="norm.png" style="zoom:50%;" /></div>
-<h2 id="11-将-bn-用于推荐系统时的注意事项">11. 将 BN 用于推荐系统时的注意事项<a hidden class="anchor" aria-hidden="true" href="#11-将-bn-用于推荐系统时的注意事项">#</a></h2>
-<ol>
-<li><strong>数据稀疏性</strong>：推荐系统的输入往往非常稀疏，直接使用 BN 可能导致不稳定的统计量，BN 通常在嵌入层之后的稠密表征或者深层网络中表现得更好；</li>
-<li><strong>动态范围的特征</strong>：在推荐系统中，某些特征的范围可能动态变化，可能需要频繁地更新 BN 的统计数据或考虑使用其他归一化技巧；</li>
-<li><strong>序列化的数据</strong>：推荐系统中经常处理序列化的数据，例如用户的行为序列，BN 不适用。</li>
-</ol>
+CR=\frac{完成目标行为的用户数}{点击数}
+$$</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-ab-test-的原理">4. A/B Test 的原理<a hidden class="anchor" aria-hidden="true" href="#4-ab-test-的原理">#</a></h2>
+<p>也称为拆分测试或两样本假设测试，用于比较两个（或更多）版本的网页或应用程序，以确定哪一个版本的表现更好。</p>
+<p>将用户划分为 A，B 两组，A 实验组用户，接受所设计的推荐算法推荐的商品，B 对照组用户，接受基线方法推荐的商品。通过对比两组用户的行为来评估推荐算法的性能。</p>
+<p>A/B 测试的考虑因素：</p>
+<ul>
+<li><strong>持续时间与样本大小</strong>：为了得到可靠的结果，测试需要运行足够长的时间，并有足够大的样本大小。</li>
+<li><strong>单变量测试</strong>：通常，一次 A/B 测试只会测试一个变化（例如，更改按钮的颜色或文本），这样可以确定是哪个具体变化导致了结果的变动。</li>
+<li><strong>外部因素</strong>：确保外部事件（例如，节日、促销活动或新闻事件）不会对 A/B 测试结果产生影响。</li>
+</ul>
 
 
         </div>
@@ -638,15 +587,10 @@ $$
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://Achilles-10.github.io/posts/tech/eval/">
-    <span class="title">« 上一页</span>
-    <br>
-    <span>深度学习面试题：评价指标</span>
-  </a>
-  <a class="next" href="https://Achilles-10.github.io/posts/algo/codetop/">
+  <a class="next" href="https://Achilles-10.github.io/posts/tech/regular/">
     <span class="title">下一页 »</span>
     <br>
-    <span>CodeTop 企业题库刷题笔记</span>
+    <span>深度学习面试题：正则化</span>
   </a>
 </nav>
 
