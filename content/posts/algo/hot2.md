@@ -1246,6 +1246,38 @@ cover:
       return res
   ```
 
+### extra. [俄罗斯套娃信封问题（困难）](https://leetcode.cn/problems/russian-doll-envelopes/)
+
+<div align=center><img src="e87.png" style="zoom:50%;" /></div>
+
+* 排序+最长递增子序列
+
+  按宽度 w 进行升序排序，宽度 w 相同时按高度 h 进行降序排列，然后把 h 作为一个数组计算其最长递增子序列。
+
+  ```python
+  class Solution:
+      def lengthOfLIS(self,nums): # 最长递增子序列
+          n=len(nums)
+          res,tails=0,[0]*n
+          for num in nums:
+              i,j=0,res
+              while i<j:
+                  m=i+(j-i)//2
+                  if tails[m]<num: i=m+1
+                  else: j=m
+              tails[i]=num
+              if j==res: res+=1
+          return res
+      def maxEnvelopes(self, envelopes: List[List[int]]) -> int:
+          envelopes.sort(key=lambda x:(x[0],-x[1])) # 排序
+          n=len(envelopes)
+          height = [0]*n
+          for i in range(n):
+              height[i]=envelopes[i][1]
+          ans = self.lengthOfLIS(height)
+          return ans
+  ```
+
 ### 88. [乘积最大子数组（中等）](https://leetcode.cn/problems/maximum-product-subarray/)
 
 <div align=center><img src="88.png" style="zoom:50%;" /></div>
